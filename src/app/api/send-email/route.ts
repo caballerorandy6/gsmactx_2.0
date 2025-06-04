@@ -13,7 +13,7 @@ export async function POST(request: Request) {
       from: "GSMACTX <no-reply@gsmactx.com>",
       to: ["contactus@gsmactx.com"],
       subject: `New message from ${firstName} ${lastName}`,
-      text: `You have received a new message from ${firstName} (${lastName}, ${email}, ${phoneNumber}): ${message}`,
+      text: `You have received a new message from ${firstName} ${lastName}.\n\nCustomer request details:\nEmail: ${email}\nPhone: ${phoneNumber}\n\nMessage:\n${message}`,
     });
 
     return NextResponse.json({ success: true, data });
