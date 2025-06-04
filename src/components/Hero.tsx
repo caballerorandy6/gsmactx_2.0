@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useGSMStore } from "@/store/gsmactx-store";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import Header from "./Header";
+import CustomBadge from "./CustomBadge";
 
 export default function Hero() {
   const { setScrolled } = useGSMStore();
@@ -48,17 +49,10 @@ export default function Hero() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
             <div className="mb-8 flex justify-center">
-              <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-200 ring-1 ring-white/20 hover:ring-white/40 transition-colors">
-                Easy financing available{" "}
-                <Link
-                  href="https://apply.optimusfinancing.com/EG-51065"
-                  target="_blank"
-                  className="font-semibold text-white"
-                >
-                  <span className="absolute inset-0" />
-                  Apply now! <span>&rarr;</span>
-                </Link>
-              </div>
+              <CustomBadge>
+                Easy financing available
+                <span className="font-bold ml-2">Apply now! &rarr;</span>
+              </CustomBadge>
             </div>
             <div className="text-center">
               <h1 className="text-5xl font-semibold tracking-tight text-balance text-white sm:text-7xl">
@@ -81,7 +75,7 @@ export default function Hero() {
                 </Link>
                 <Link
                   href="/#about"
-                  className="text-sm/6 font-semibold text-white"
+                  className="text-sm/6 font-semibold text-white hover:text-indigo-400 transition-colors"
                 >
                   Learn more <span>→</span>
                 </Link>

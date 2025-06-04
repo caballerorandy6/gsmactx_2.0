@@ -54,3 +54,25 @@ p {
 .gold {
   color: #cbb26a;
 }
+
+@keyframes continuous-spring {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.05);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  75% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.spring-bounce {
+  animation: continuous-spring 1.2s linear infinite;
+}

@@ -33,9 +33,39 @@ export default function Contact() {
   });
 
   const onSubmit = async (data: UserFormData) => {
-    console.log("Form submitted:", data);
-    toast.success("Message sent successfully!");
-    reset();
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          phoneNumber: data.phone,
+          message: data.message,
+        }),
+      });
+
+      if (!response.ok) {
+        toast.error("Failed to send message. Please try again later.");
+        reset();
+        return;
+      }
+
+      const result = await response.json();
+      if (result.success) {
+        toast.success("Message sent successfully!");
+        reset();
+      } else {
+        toast.error("Failed to send message. Please try again later.");
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast.error("An unexpected error occurred. Please try again later.");
+      reset();
+    }
   };
 
   return (
