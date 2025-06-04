@@ -16,8 +16,6 @@ const Testimonials = () => {
     }
   }, []);
 
-  //console.log("Testimonials component rendered", testimonials);
-
   const fetchTestimonials = async () => {
     try {
       const response = await fetch(`/api/reviews`);
