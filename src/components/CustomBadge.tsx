@@ -8,7 +8,7 @@ interface CustomBadgeProps {
 const CustomBadge = ({ children }: CustomBadgeProps) => {
   return (
     <Link
-      href="https://www.linkedin.com/in/caballerorandy/"
+      href="https://apply.optimusfinancing.com/EG-51065"
       target="_blank"
       className="flex items-center justify-center mt-10 hover:scale-105 transition-transform duration-200 ease-in-out"
     >
