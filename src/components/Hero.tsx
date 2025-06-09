@@ -27,7 +27,7 @@ export default function Hero() {
       <Header />
       <div className="relative isolate overflow-hidden pt-14">
         <Image
-          src="/home.avif"
+          src="/main.webp"
           alt="GSM AC Background"
           priority
           quality={90}
@@ -36,6 +36,8 @@ export default function Hero() {
           sizes="100vw"
           className="absolute inset-0 -z-10 w-full h-full object-cover"
         />
+
+        <div className="absolute inset-0 -z-10 bg-black/60" />
 
         <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
           <div
