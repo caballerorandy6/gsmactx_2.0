@@ -33,6 +33,10 @@ export const useGSMStore = create<RCWebState>()(
       showFooter: false,
       setShowHeader: (show) => set({ showHeader: show }),
       setShowFooter: (show) => set({ showFooter: show }),
+      isLoadingAuth: false,
+      setIsLoadingAuth: (loading) => set({ isLoadingAuth: loading }),
+      admin: null,
+      setAdmin: (admin) => set({ admin }),
     }),
     {
       name: "gsmactx-storage",

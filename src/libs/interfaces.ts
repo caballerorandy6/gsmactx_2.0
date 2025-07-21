@@ -1,4 +1,5 @@
 import { SectionName } from "./types";
+import { SafeAdmin } from "@/libs/types";
 
 export interface RCWebState {
   activeSection: SectionName;
@@ -24,6 +25,10 @@ export interface RCWebState {
   showFooter: boolean;
   setShowHeader: (show: boolean) => void;
   setShowFooter: (show: boolean) => void;
+  isLoadingAuth: boolean;
+  setIsLoadingAuth: (loading: boolean) => void;
+  admin: SafeAdmin | null;
+  setAdmin: (admin: SafeAdmin | null) => void;
 }
 
 export interface GooglePlacesReview {
