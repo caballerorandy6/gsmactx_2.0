@@ -28,3 +28,11 @@ model Campaign {
   createdBy    String
   admin        Admin     @relation(fields: [createdBy], references: [id])
 }
+
+model Subscriber {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  isSubscribed Boolean  @default(true)
+  createdAt    DateTime @default(now())
+}
+
