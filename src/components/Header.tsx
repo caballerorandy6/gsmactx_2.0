@@ -81,7 +81,7 @@ const Header = () => {
         <div className="fixed inset-0 z-50" />
         <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
           <div className="flex items-center justify-between">
-            <Link href="/#" className="-m-1.5 p-1.5">
+            <Link href="/home" className="-m-1.5 p-1.5">
               <Image
                 alt="GSM AC Logo"
                 width={1000}

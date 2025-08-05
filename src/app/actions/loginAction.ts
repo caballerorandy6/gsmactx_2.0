@@ -53,7 +53,6 @@ export async function loginAction(data: AdminFormData): Promise<ActionResult> {
     console.log("Login error:", error);
     return { error: "Internal server error." };
   }
+  // Redirect to the admin dashboard, never use inside a try/catch block
+  redirect("/admin-dashboard");
 }
-
-// Redirect to the admin dashboard, never use inside a try/catch block
-redirect("/admin-dashboard");

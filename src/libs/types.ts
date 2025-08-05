@@ -34,6 +34,8 @@ export type Admin = {
 
 export type SafeAdmin = Omit<Admin, "password">;
 
+export type CurrentAdmin = Omit<Admin, "password" | "campaigns">;
+
 export type ActionResult = {
   error?: string;
 };
