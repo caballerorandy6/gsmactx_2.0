@@ -76,3 +76,9 @@ p {
 .spring-bounce {
   animation: continuous-spring 1.2s linear infinite;
 }
+
+@layer components {
+  .spinner {
+    @apply w-4 h-4 border-4 border-white border-t-transparent rounded-full animate-spin;
+  }
+}

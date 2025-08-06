@@ -1,5 +1,6 @@
 "use client";
 
+import { useTransition } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,9 +13,12 @@ import {
   PhoneIcon,
 } from "@heroicons/react/24/outline";
 import { toast } from "sonner";
+import { saveEmailAction } from "@/app/actions/saveEmailAction";
+import { sendEmailContactAction } from "@/app/actions/sendEmailContactAction";
 
 export default function Contact() {
   const ref = useSectionObserver({ sectionName: "Contact" });
+  const [isPending, startTransition] = useTransition();
 
   const {
     register,
@@ -29,43 +33,31 @@ export default function Contact() {
       email: "",
       phone: "",
       message: "",
+      subscribe: true,
     },
   });
 
-  const onSubmit = async (data: UserFormData) => {
-    try {
-      const response = await fetch("/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          phoneNumber: data.phone,
-          message: data.message,
-        }),
-      });
+  const onSubmit = (data: UserFormData) => {
+    // startTransition envuelve toda la lógica asíncrona
+    startTransition(async () => {
+      try {
+        // Llama a las acciones del servidor una por una
+        if (data.subscribe) {
+          await saveEmailAction(data);
+        }
+        await sendEmailContactAction(data);
 
-      if (!response.ok) {
-        toast.error("Failed to send message. Please try again later.");
-        reset();
-        return;
-      }
-
-      const result = await response.json();
-      if (result.success) {
+        // Si todo va bien, muestra un mensaje de éxito y resetea el formulario
         toast.success("Message sent successfully!");
         reset();
-      } else {
-        toast.error("Failed to send message. Please try again later.");
+      } catch (error) {
+        // Si alguna de las acciones falla, el catch lo capturará
+        console.error("Error sending message:", error);
+        toast.error(
+          "An unexpected error occurred. Please try again."
+        );
       }
-    } catch (error) {
-      console.error("Error sending message:", error);
-      toast.error("An unexpected error occurred. Please try again later.");
-      reset();
-    }
+    });
   };
 
   return (
@@ -290,12 +282,28 @@ export default function Contact() {
                 </div>
               </div>
             </div>
+
+            <div className="mt-6 flex items-center gap-x-3">
+              <input
+                {...register("subscribe")}
+                id="subscribe"
+                name="subscribe"
+                type="checkbox"
+                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              <label
+                htmlFor="subscribe"
+                className="text-sm/6 font-semibold text-white"
+              >
+                Subscribe to our newsletter
+              </label>
+            </div>
             <div className="mt-8 flex justify-end">
               <button
                 type="submit"
                 className="rounded-md cursor-pointer bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-colors"
               >
-                Send message
+                {isPending ? "Sending..." : "Send Message"}
               </button>
             </div>
           </div>

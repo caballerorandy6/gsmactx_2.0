@@ -11,6 +11,7 @@ export const UserSchema = z.object({
   email: z.string().email("Invalid email address"),
   phone: z.string().min(10, "Phone number is required"),
   message: z.string().optional(),
+  subscribe: z.boolean().default(true),
 });
 
 export const AdminSchema = z.object({
