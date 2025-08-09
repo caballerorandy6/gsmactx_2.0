@@ -148,10 +148,6 @@ export async function sendCampaignEmailAction(data: {
   }
 
   const { id } = data;
-  if (!id) {
-    return { success: false, message: "Campaign ID is required" };
-  }
-
   const campaign = await prisma.campaign.findUnique({ where: { id } });
   if (!campaign) {
     return { success: false, message: "Campaign not found" };
@@ -176,17 +172,21 @@ export async function sendCampaignEmailAction(data: {
         break;
       }
 
-      const emailProps: CampaignEmailProps = {
-        subject: campaign.subject,
-        title: campaign.title,
-        content: campaign.content,
-        imageUrl: campaign.imageUrl || undefined,
-      };
-
-      const html = await render(CampaignEmail(emailProps));
-
       for (const sub of subscribers) {
         try {
+          // 1. Prepare the email properties
+          const emailProps: CampaignEmailProps = {
+            subject: campaign.subject,
+            title: campaign.title,
+            content: campaign.content,
+            imageUrl: campaign.imageUrl || undefined,
+            recipientEmail: sub.email,
+          };
+
+          // 2. Render the personalized HTML for this subscriber
+          const html = await render(CampaignEmail(emailProps));
+
+          // 3. Send the email with the personalized HTML
           await resend.emails.send({
             from: "GSMACTX <no-reply@gsmactx.com>",
             to: sub.email,
@@ -208,15 +208,18 @@ export async function sendCampaignEmailAction(data: {
 
     if (totalSent > 0) {
       await prisma.campaign.update({
-        where: { id },
+        where: { id: id },
         data: { sent: true },
       });
     }
 
     revalidatePath("/campaign-list");
 
-    if (totalSent === 0 && totalFailed > 0) {
-      return { success: false, message: "All emails failed to send." };
+    if (totalSent === 0) {
+      return {
+        success: false,
+        message: "No subscribed users found or all emails failed.",
+      };
     }
 
     return {
