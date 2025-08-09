@@ -30,8 +30,8 @@ const GSMSlider = ({ reviews }: GSMSliderProps) => {
             <div className="relative overflow-hidden bg-gray-900 px-6 py-20 shadow-xl sm:rounded-3xl sm:px-10 sm:py-24 md:px-12 lg:px-20">
               <Image
                 priority={false}
-                width={1000}
-                height={1000}
+                width={200}
+                height={200}
                 alt="GSM AC Background"
                 src="/home.avif"
                 className="absolute inset-0 size-full object-cover brightness-150 saturate-0 sepia-100"

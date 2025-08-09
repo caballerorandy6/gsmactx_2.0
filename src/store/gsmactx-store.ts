@@ -37,6 +37,8 @@ export const useGSMStore = create<RCWebState>()(
       setIsLoadingAuth: (loading) => set({ isLoadingAuth: loading }),
       admin: null,
       setAdmin: (admin) => set({ admin }),
+      hasMounted: false,
+      setHasMounted: (mounted) => set({ hasMounted: mounted }),
     }),
     {
       name: "gsmactx-storage",

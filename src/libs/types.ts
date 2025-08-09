@@ -29,7 +29,7 @@ export type Admin = {
   email: string;
   password: string;
   name: string;
-  campaigns: Campaign[];
+  campaigns?: Campaign[];
 };
 
 export type SafeAdmin = Omit<Admin, "password">;
@@ -37,5 +37,6 @@ export type SafeAdmin = Omit<Admin, "password">;
 export type CurrentAdmin = Omit<Admin, "password" | "campaigns">;
 
 export type ActionResult = {
-  error?: string;
+  success: boolean;
+  message: string;
 };

@@ -24,7 +24,11 @@ const nextConfig = {
       // ... otros dominios seguros
     ],
   },
-  // ... otras configuraciones de Next.js
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "5mb", // Aumenta el límite a 4MB (puedes poner el valor que necesites)
+    },
+  },
 };
 
 module.exports = nextConfig;

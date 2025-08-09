@@ -7,6 +7,12 @@ export const navigation = [
   { name: "FAQ", href: "#faq" },
 ];
 
+export const adminNavigation = [
+  { name: "Admin Dashboard", href: "/admin-dashboard" },
+  { name: "Campaign Form", href: "/campaign-form" },
+  { name: "Campaign List", href: "/campaign-list" },
+];
+
 export const allServices = [
   {
     id: "air-conditioning-installation",
@@ -260,4 +266,13 @@ export const faqs = [
     answer:
       "Yes, we provide emergency HVAC services to ensure your comfort and safety at all times.",
   },
+];
+
+export const emailsToSeed = [
+  "mchapelli305@yahoo.com",
+  "mchapelli305@gmail.com",
+  "mchapelli305@outlook.com",
+  "caballerorandy6@gmail.com",
+  "caballerorandy7@gmail.com",
+  "caballerorandy10@gmail.com",
 ];

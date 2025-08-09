@@ -22,6 +22,7 @@ model Campaign {
   title        String
   subject      String
   content      String    // HTML o texto plano
+  imageUrl     String? 
   createdAt    DateTime  @default(now())
   sent         Boolean   @default(false)
   sentAt       DateTime?

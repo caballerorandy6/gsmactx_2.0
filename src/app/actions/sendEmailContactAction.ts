@@ -12,13 +12,13 @@ export async function sendEmailContactAction(
   const validateFields = UserSchema.safeParse(data);
 
   if (!validateFields.success) {
-    return { error: "Invalid Data. Please check your input and try again." };
+    return { success: false, message: "Invalid Data. Please check your input and try again." };
   }
 
   const { firstName, lastName, phone, email, message } = validateFields.data;
 
   if (!email || !firstName || !lastName || !phone) {
-    return { error: "All fields are required." };
+    return { success: false, message: "All fields are required." };
   }
 
   try {

@@ -27,8 +27,8 @@ const Header = () => {
           <Link href="/#home" className="-m-1.5 p-1.5">
             <Image
               alt="GSM AC Logo"
-              width={1000}
-              height={1000}
+              width={500}
+              height={500}
               src="/logo.avif"
               className="h-20 w-auto"
               priority
