@@ -1,14 +1,10 @@
 import UnsubscribeButtonAction from "@/components/admin-components/UnsubscribeButtonAction";
 import Image from "next/image";
 
-type SearchParams = { [key: string]: string | string[] | undefined };
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
-const UnsubscribePage = async ({
-  searchParams,
-}: {
-  searchParams: SearchParams;
-}) => {
-  const { email } = searchParams;
+const UnsubscribePage = async (props: { searchParams: SearchParams }) => {
+  const { email } = await props.searchParams;
 
   if (!email) {
     return (
