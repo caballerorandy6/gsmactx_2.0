@@ -148,22 +148,20 @@ export async function sendCampaignEmailAction(data: {
   }
 
   const { id } = data;
-
   if (!id) {
     return { success: false, message: "Campaign ID is required" };
   }
 
-  // Buscar campaña
   const campaign = await prisma.campaign.findUnique({ where: { id } });
   if (!campaign) {
     return { success: false, message: "Campaign not found" };
   }
 
-  // Obtener suscriptores suscritos en lotes (paginación simple para evitar sobrecarga)
   const batchSize = 100;
   let page = 0;
   let hasMore = true;
   let totalSent = 0;
+  let totalFailed = 0;
 
   try {
     while (hasMore) {
@@ -175,13 +173,9 @@ export async function sendCampaignEmailAction(data: {
 
       if (subscribers.length === 0) {
         hasMore = false;
-        if (totalSent === 0) {
-          return { success: false, message: "No subscribers found." };
-        }
         break;
       }
 
-      // Emails Props
       const emailProps: CampaignEmailProps = {
         subject: campaign.subject,
         title: campaign.title,
@@ -189,34 +183,81 @@ export async function sendCampaignEmailAction(data: {
         imageUrl: campaign.imageUrl || undefined,
       };
 
-      // Rendering the email HTML
       const html = await render(CampaignEmail(emailProps));
 
-      // Send emails using Resend
-      await Promise.all(
-        subscribers.map((sub) =>
-          resend.emails.send({
+      for (const sub of subscribers) {
+        try {
+          await resend.emails.send({
             from: "GSMACTX <no-reply@gsmactx.com>",
             to: sub.email,
             subject: campaign.subject,
             html,
-            text: `${campaign.title}\n\n${campaign.content}\n\nCall Us: +1 (281) 235-4684`,
-          })
-        )
-      );
+            text: `${campaign.title}\n\n${campaign.content}`,
+          });
+          totalSent++;
+        } catch (error) {
+          console.error(`Failed to send email to ${sub.email}:`, error);
+          totalFailed++;
+        }
 
-      revalidatePath("/campaign-list");
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
 
-      totalSent += subscribers.length;
       page++;
+    }
+
+    if (totalSent > 0) {
+      await prisma.campaign.update({
+        where: { id },
+        data: { sent: true },
+      });
+    }
+
+    revalidatePath("/campaign-list");
+
+    if (totalSent === 0 && totalFailed > 0) {
+      return { success: false, message: "All emails failed to send." };
     }
 
     return {
       success: true,
-      message: `Campaign sent to ${totalSent} subscribers.`,
+      message: `Campaign process finished. Sent: ${totalSent}, Failed: ${totalFailed}.`,
     };
   } catch (error) {
-    console.error("Error sending campaign emails:", error);
-    return { success: false, message: "Failed to send campaign emails." };
+    console.error(
+      "A critical error occurred during the campaign sending process:",
+      error
+    );
+    return { success: false, message: "A critical error occurred." };
+  }
+}
+
+export async function unsubscribeFromCampaignAction(
+  email: string
+): Promise<ActionResult> {
+  const cookieStore = await cookies();
+  const user = await getCurrentUser(cookieStore.get("token")?.value);
+  if (!user) {
+    notFound();
+  }
+
+  try {
+    const subscriber = await prisma.subscriber.findUnique({
+      where: { email },
+    });
+
+    if (!subscriber) {
+      return { success: false, message: "Subscriber not found." };
+    }
+
+    await prisma.subscriber.update({
+      where: { email },
+      data: { isSubscribed: false },
+    });
+
+    return { success: true, message: "Unsubscribed successfully." };
+  } catch (error) {
+    console.error("Error unsubscribing:", error);
+    return { success: false, message: "Failed to unsubscribe." };
   }
 }
