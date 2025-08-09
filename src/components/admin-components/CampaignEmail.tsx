@@ -22,7 +22,7 @@ export interface CampaignEmailProps {
   title: string;
   content: string;
   imageUrl?: string;
-  recipientEmail: string;
+  recipientEmail?: string;
 }
 
 const CampaignEmail = ({

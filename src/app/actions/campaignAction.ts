@@ -261,4 +261,3 @@ export async function unsubscribeFromCampaignAction(
     return { success: false, message: "Failed to unsubscribe." };
   }
 }
-
