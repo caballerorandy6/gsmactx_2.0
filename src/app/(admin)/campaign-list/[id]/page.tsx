@@ -29,7 +29,6 @@ const CampaignPage = async ({ params }: { params: Params }) => {
     title: campaign.title,
     content: campaign.content,
     imageUrl: campaign.imageUrl || undefined,
-    recipientEmail: user.email,
   };
 
   const emailHtmlString = await render(<CampaignEmail {...emailProps} />);
