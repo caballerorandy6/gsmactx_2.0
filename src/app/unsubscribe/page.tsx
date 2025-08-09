@@ -1,43 +1,27 @@
-"use client";
-
+import UnsubscribeButtonAction from "@/components/admin-components/UnsubscribeButtonAction";
 import Image from "next/image";
-import { unsubscribeFromCampaignAction } from "@/app/actions/campaignAction";
-import { useTransition } from "react";
-import { toast } from "sonner";
-import { redirect } from "next/navigation";
 
-const UnsubscribePage = ({ email }: { email: string }) => {
-  const [isPending, startTransition] = useTransition();
+type SearchParams = { [key: string]: string | string[] | undefined };
 
-  const handleUnsubscribe = () => {
-    startTransition(() => {
-      try {
-        toast.loading("Unsubscribing...");
-        unsubscribeFromCampaignAction(email)
-          .then((result) => {
-            if (result.success) {
-              toast.dismiss();
-              toast.success(result.message);
-              redirect("/"); // Redirect to home or a confirmation page after successful unsubscribe
-            } else {
-              toast.error("Failed to unsubscribe: " + result.message);
-            }
-          })
-          .catch((error) => {
-            console.error("Error during unsubscribe action:", error);
-            toast.error("An error occurred while trying to unsubscribe.");
-          });
-      } catch (error) {
-        console.error("Error during unsubscribe action:", error);
-        toast.error("An error occurred while trying to unsubscribe.");
-      }
-    });
-  };
+const UnsubscribePage = async ({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) => {
+  const { email } = searchParams;
+
+  if (!email) {
+    return (
+      <div className="text-center text-red-500">
+        Invalid or missing email parameter.
+      </div>
+    );
+  }
 
   return (
     <section
       id="unsubscribe"
-      className="min-h-screen flex items-center justify-center px-4 flex-col text-center "
+      className="min-h-screen flex items-center justify-center px-4 flex-col text-center"
     >
       <Image
         src="/logo.avif"
@@ -48,14 +32,11 @@ const UnsubscribePage = ({ email }: { email: string }) => {
       />
       <h2 className="text-center text-xl font-mono tracking-tight text-white mb-8">
         If you no longer wish to receive our newsletter, you can unsubscribe at
-        any time by clicking the link below.
+        any time by clicking the button below.
       </h2>
-      <button
-        onClick={handleUnsubscribe}
-        className="bg-red-600 font-semibold text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors cursor-pointer"
-      >
-        {isPending ? "Unsubscribing..." : "Unsubscribe"}
-      </button>
+      <UnsubscribeButtonAction
+        email={Array.isArray(email) ? email[0] : email}
+      />
     </section>
   );
 };
