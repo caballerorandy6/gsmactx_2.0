@@ -29,6 +29,8 @@ export interface RCWebState {
   setIsLoadingAuth: (loading: boolean) => void;
   admin: SafeAdmin | null;
   setAdmin: (admin: SafeAdmin | null) => void;
+  hasMounted: boolean;
+  setHasMounted: (mounted: boolean) => void;
 }
 
 export interface GooglePlacesReview {
@@ -55,4 +57,21 @@ export interface Review extends GooglePlacesReview {
 export interface IImage {
   src: string;
   alt: string;
+}
+
+export interface CampaignEmailProps {
+  content: string;
+  imageUrl?: string; // La URL de la imagen de la campaña es opcional
+}
+
+export interface Campaign {
+  id: string;
+  title: string;
+  subject: string;
+  content: string;
+  createdAt: Date;
+  sent: boolean;
+  sentAt: Date | null;
+  createdBy: string;
+  admin: SafeAdmin;
 }

@@ -45,7 +45,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased text-pretty custom-blue custom-scrollbar`}
       >
         {children}
-        <Toaster richColors />
+        <Toaster richColors theme="dark" position="bottom-right" />
       </body>
     </html>
   );

@@ -5,6 +5,7 @@ import { z } from "zod";
 //   /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/
 // );
 
+// Zod schema for user
 export const UserSchema = z.object({
   firstName: z.string().min(2, "Name is required"),
   lastName: z.string().min(2, "Last name is required"),
@@ -14,6 +15,7 @@ export const UserSchema = z.object({
   subscribe: z.boolean().default(true),
 });
 
+// Zod schema for admin
 export const AdminSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z
@@ -27,5 +29,35 @@ export const AdminSchema = z.object({
     ),
 });
 
+// Zod schema for campaign
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+const ACCEPTED_FILE_TYPES = [
+  "image/jpg",
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+  "image/avif",
+];
+
+export const CampaignSchema = z.object({
+  id: z.string().optional(),
+  title: z.string().min(2, "Title is required"),
+  subject: z.string().min(2, "Subject is required"),
+  content: z.string().min(10, "Content is required"),
+  image: z
+    .any()
+    .optional()
+    .refine(
+      (file) => !file || file.size <= MAX_FILE_SIZE,
+      `El tamaño máximo de la imagen es 5MB.`
+    )
+    .refine(
+      (file) => !file || ACCEPTED_FILE_TYPES.includes(file.type),
+      "Unsupported file type. Accepted types are: jpg, jpeg, png, gif, webp, avif."
+    ),
+});
+
 export type UserFormData = z.infer<typeof UserSchema>;
 export type AdminFormData = z.infer<typeof AdminSchema>;
+export type CampaignFormData = z.infer<typeof CampaignSchema>;

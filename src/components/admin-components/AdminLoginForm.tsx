@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { AdminFormData, AdminSchema } from "@/libs/zod";
 import { loginAction } from "@/app/actions/loginAction";
 
-import ButtonSpinner from "@/components/admin-components/ButtonSpinner";
+import ButtonSpinner from "@/components/ButtonSpinner";
 
 const AdminLoginForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -63,8 +63,8 @@ const AdminLoginForm = () => {
       try {
         const result = await loginAction(data);
 
-        if (result.error) {
-          toast.error(result.error);
+        if (result.message) {
+          toast.error(result.message);
           reset();
         }
       } catch (error) {

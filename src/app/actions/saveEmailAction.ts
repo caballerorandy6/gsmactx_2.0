@@ -10,13 +10,19 @@ export async function saveEmailAction(
   const validateFields = UserSchema.safeParse(data);
 
   if (!validateFields.success) {
-    throw new Error("Invalid input data.");
+    return {
+      success: false,
+      message: "Invalid Data. Please check your input and try again.",
+    };
   }
 
   const { email, subscribe } = validateFields.data;
 
   if (!subscribe || !email) {
-    return;
+    return {
+      success: false,
+      message: "All fields are required.",
+    };
   }
   try {
     // Save the email data to the database
@@ -27,6 +33,9 @@ export async function saveEmailAction(
     });
   } catch (error) {
     console.error("Error saving email:", error);
-    throw new Error("Failed to save email");
+    return {
+      success: false,
+      message: "Failed to save email",
+    };
   }
 }
