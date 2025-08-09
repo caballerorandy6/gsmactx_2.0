@@ -7,6 +7,7 @@ import {
   Hr,
   Html,
   Img,
+  Link, // ✅ 1. Asegúrate de importar Link
   Preview,
   Section,
   Text,
@@ -15,7 +16,7 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
-// ✅ 1. Props actualizadas para coincidir con tus campos
+// ... (tus props se quedan igual)
 export interface CampaignEmailProps {
   subject: string;
   title: string;
@@ -33,16 +34,19 @@ const CampaignEmail = ({
     <Html>
       <Head />
       <Tailwind>
-        {/* ✅ El "Subject" se convierte en el "Preview" */}
         <Preview>{subject}</Preview>
         <Body style={main}>
           <Container style={container}>
+            {/* ... (resto del cuerpo del email se queda igual) ... */}
             <Section style={headerSection}>
               <Column style={logoColumn}>
-                <Img src="/logo2.avif" width="150" alt="GSMACTX Logo" />
+                <Img
+                  src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
+                  width="150"
+                  alt="GSMACTX Logo"
+                />
               </Column>
               <Column style={headerTextColumn}>
-                {/* ✅ El "Title" se convierte en el "Heading" */}
                 <Heading style={heading}>{title}</Heading>
               </Column>
             </Section>
@@ -62,7 +66,7 @@ const CampaignEmail = ({
               <Column style={textColumn}>
                 <Text style={text}>{content}</Text>
                 <Section style={buttonContainer}>
-                  <Button style={button} href="tel:12812354684">
+                  <Button style={button} href="tel:+12812354684">
                     Call Us Now
                   </Button>
                 </Section>
@@ -72,6 +76,14 @@ const CampaignEmail = ({
             <Hr style={hr} />
 
             <Section style={footer}>
+              <Text>
+                <Link
+                  style={unsubscribeLink}
+                  href="https://gsmactx.com/unsubscribe"
+                >
+                  Unsubscribe
+                </Link>
+              </Text>
               <Text style={footerText}>
                 © {new Date().getFullYear()} GSMACTX, Inc. All rights reserved.
               </Text>
@@ -83,7 +95,7 @@ const CampaignEmail = ({
   );
 };
 
-// --- Estilos (sin cambios, ya son profesionales y compactos) ---
+// --- Estilos ---
 const main = {
   backgroundColor: "transparent",
   fontFamily: "'Inter', sans-serif",
@@ -130,7 +142,14 @@ const button = {
   padding: "12px 25px",
 };
 const hr = { borderColor: "#e6ebf1", margin: "20px 0" };
-const footer = { textAlign: "center" as const };
-const footerText = { color: "#0a0f1a", fontSize: "12px", margin: 0 };
+const footer = { textAlign: "center" as const, paddingTop: "10px" };
+const footerText = { color: "#0a0f1a", fontSize: "12px", margin: "4px 0" };
+
+// ✅ 3. NUEVO ESTILO PARA EL ENLACE
+const unsubscribeLink = {
+  color: "#007bff",
+  textDecoration: "underline",
+  fontSize: "12px",
+};
 
 export default CampaignEmail;

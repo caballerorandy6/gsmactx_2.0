@@ -200,6 +200,7 @@ export async function sendCampaignEmailAction(data: {
             to: sub.email,
             subject: campaign.subject,
             html,
+            text: `${campaign.title}\n\n${campaign.content}\n\nCall Us: +1 (281) 235-4684`,
           })
         )
       );
