@@ -7,7 +7,7 @@ import {
   Hr,
   Html,
   Img,
-  Link, // ✅ 1. Asegúrate de importar Link
+  Link,
   Preview,
   Section,
   Text,
@@ -22,6 +22,7 @@ export interface CampaignEmailProps {
   title: string;
   content: string;
   imageUrl?: string;
+  recipientEmail: string;
 }
 
 const CampaignEmail = ({
@@ -29,6 +30,7 @@ const CampaignEmail = ({
   title,
   content,
   imageUrl,
+  recipientEmail,
 }: CampaignEmailProps) => {
   return (
     <Html>
@@ -79,7 +81,7 @@ const CampaignEmail = ({
               <Text>
                 <Link
                   style={unsubscribeLink}
-                  href="https://gsmactx.com/unsubscribe"
+                  href={`https://gsmactx.com/unsubscribe?email=${encodeURIComponent(recipientEmail)}`}
                 >
                   Unsubscribe
                 </Link>
