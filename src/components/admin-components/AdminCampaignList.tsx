@@ -47,12 +47,12 @@ const AdminCampaignList = async ({ user }) => {
                     <p
                       className={clsx(
                         "mt-0.5 rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset",
-                        campaign.sent
+                        campaign.sent === true
                           ? "bg-green-900/50 text-green-300 ring-green-400/20"
                           : "bg-red-900/50 text-red-300 ring-red-400/20"
                       )}
                     >
-                      {campaign.sent ? "Sent" : "Not Sent"}
+                      {campaign.sent === true ? "Sent" : "Not Sent"}
                     </p>
                   </div>
                   <div className="mt-1 flex items-center gap-x-2 text-xs/5 text-gray-400">
