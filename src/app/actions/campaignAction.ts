@@ -160,3 +160,48 @@ export async function unsubscribeFromCampaignAction(
     return { success: false, message: "Failed to unsubscribe." };
   }
 }
+
+export async function subscribeToCampaignAction(
+  email: string
+): Promise<ActionResult> {
+  const cookieStore = await cookies();
+  const user = await getCurrentUser(cookieStore.get("token")?.value);
+  if (!user) {
+    notFound();
+  }
+
+  if (!email || typeof email !== "string") {
+    return { success: false, message: "A valid email is required." };
+  }
+
+  try {
+    const existingSubscriber = await prisma.subscriber.findUnique({
+      where: { email },
+    });
+
+    // If the subscriber exists and is not subscribed, update their status
+    if (existingSubscriber) {
+      if (!existingSubscriber.isSubscribed) {
+        await prisma.subscriber.update({
+          where: { email },
+          data: { isSubscribed: true },
+        });
+        return {
+          success: true,
+          message: "Subscribed successfully, welcome back!",
+        };
+      }
+      return { success: false, message: "This email is already subscribed." };
+    }
+
+    // If the subscriber does not exist, create a new one
+    await prisma.subscriber.create({
+      data: { email, isSubscribed: true },
+    });
+
+    return { success: true, message: "Subscribed successfully, welcome!" };
+  } catch (error) {
+    console.error("Error subscribing:", error);
+    return { success: false, message: "Failed to subscribe." };
+  }
+}
