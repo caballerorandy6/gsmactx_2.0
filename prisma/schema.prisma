@@ -31,9 +31,10 @@ model Campaign {
 }
 
 model Subscriber {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  isSubscribed Boolean  @default(true)
-  createdAt    DateTime @default(now())
+  id               String   @id @default(uuid())
+  email            String   @unique
+  isSubscribed     Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  unsubscribeToken String?  @unique
 }
 

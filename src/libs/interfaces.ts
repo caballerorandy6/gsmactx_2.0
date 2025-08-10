@@ -82,4 +82,5 @@ export interface CampaignEmailProps {
   content: string;
   imageUrl?: string;
   recipientEmail?: string;
+  unsubscribeUrl?: string;
 }
