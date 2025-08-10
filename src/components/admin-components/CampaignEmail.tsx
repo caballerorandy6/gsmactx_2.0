@@ -24,7 +24,7 @@ const CampaignEmail = ({
   title,
   content,
   imageUrl,
-  recipientEmail,
+  unsubscribeUrl,
 }: CampaignEmailProps) => {
   return (
     <Html>
@@ -73,10 +73,7 @@ const CampaignEmail = ({
 
             <Section style={footer}>
               <Text>
-                <Link
-                  style={unsubscribeLink}
-                  href={`https://gsmactx.com/unsubscribe?email=${encodeURIComponent(recipientEmail)}`}
-                >
+                <Link style={unsubscribeLink} href={unsubscribeUrl}>
                   Unsubscribe
                 </Link>
               </Text>

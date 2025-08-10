@@ -1,7 +1,7 @@
 "use server";
 
 import { Resend } from "resend";
-
+import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "@/libs/getCurrentUser";
 import { prisma } from "@/libs/prisma";
@@ -48,6 +48,9 @@ export async function sendCampaignEmailAction(data: {
 
       for (const sub of subscribers) {
         try {
+          // 1. Generate a unique unsubscribe token for the subscriber
+          const unsubscribeToken = randomUUID();
+
           // 1. Prepare the email properties
           const emailProps: CampaignEmailProps = {
             subject: campaign.subject,
@@ -55,6 +58,7 @@ export async function sendCampaignEmailAction(data: {
             content: campaign.content,
             imageUrl: campaign.imageUrl || undefined,
             recipientEmail: sub.email,
+            unsubscribeUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/unsubscribe?token=${unsubscribeToken}`,
           };
 
           // 2. Render the personalized HTML for this subscriber
