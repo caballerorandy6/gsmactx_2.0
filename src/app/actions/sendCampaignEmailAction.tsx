@@ -51,6 +51,11 @@ export async function sendCampaignEmailAction(data: {
           // 1. Generate a unique unsubscribe token for the subscriber
           const unsubscribeToken = randomUUID();
 
+            await prisma.subscriber.update({
+            where: { id: sub.id }, 
+            data: { unsubscribeToken: unsubscribeToken },
+          });
+
           // 1. Prepare the email properties
           const emailProps: CampaignEmailProps = {
             subject: campaign.subject,
