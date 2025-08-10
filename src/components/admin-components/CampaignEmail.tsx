@@ -15,15 +15,9 @@ import {
   Tailwind,
 } from "@react-email/components";
 import * as React from "react";
+import { CampaignEmailProps } from "@/libs/interfaces";
 
 // ... (tus props se quedan igual)
-export interface CampaignEmailProps {
-  subject: string;
-  title: string;
-  content: string;
-  imageUrl?: string;
-  recipientEmail?: string;
-}
 
 const CampaignEmail = ({
   subject,

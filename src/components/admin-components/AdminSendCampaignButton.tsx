@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import { MenuItem } from "@headlessui/react";
-import { sendCampaignEmailAction } from "@/app/actions/campaignAction";
+import { sendCampaignEmailAction } from "@/app/actions/sendCampaignEmailAction";
 import { toast } from "sonner";
 
 const AdminSendCampaignButton = ({ id }: { id: string }) => {

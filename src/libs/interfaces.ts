@@ -75,3 +75,11 @@ export interface Campaign {
   createdBy: string;
   admin: SafeAdmin;
 }
+
+export interface CampaignEmailProps {
+  subject: string;
+  title: string;
+  content: string;
+  imageUrl?: string;
+  recipientEmail?: string;
+}
