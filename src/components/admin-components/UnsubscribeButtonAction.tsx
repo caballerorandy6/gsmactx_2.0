@@ -1,13 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import { unsubscribeFromCampaignAction } from "@/app/actions/campaignAction";
 
 const UnsubscribeButtonAction = ({ email }: { email: string }) => {
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
 
   const handleUnsubscribe = async () => {
     startTransition(async () => {
@@ -18,7 +16,6 @@ const UnsubscribeButtonAction = ({ email }: { email: string }) => {
 
         if (result.success) {
           toast.success(result.message);
-          router.push("/");
         } else {
           toast.error(`Failed to unsubscribe: ${result.message}`);
         }

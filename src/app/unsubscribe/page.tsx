@@ -1,18 +1,10 @@
-import UnsubscribeButtonAction from "@/components/admin-components/UnsubscribeButtonAction";
 import Image from "next/image";
-
+import UnsubscribeButtonAction from "@/components/admin-components/UnsubscribeButtonAction";
+import SubscribeToCampaign from "@/components/admin-components/SubscribeToCampaign";
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 const UnsubscribePage = async (props: { searchParams: SearchParams }) => {
   const { email } = await props.searchParams;
-
-  if (!email) {
-    return (
-      <div className="text-center text-red-500">
-        Invalid or missing email parameter.
-      </div>
-    );
-  }
 
   return (
     <section
@@ -26,13 +18,27 @@ const UnsubscribePage = async (props: { searchParams: SearchParams }) => {
         width={500}
         height={500}
       />
-      <h2 className="text-center text-xl font-mono tracking-tight text-white mb-8">
-        If you no longer wish to receive our newsletter, you can unsubscribe at
-        any time by clicking the button below.
-      </h2>
-      <UnsubscribeButtonAction
-        email={Array.isArray(email) ? email[0] : email}
-      />
+      {email ? (
+        <>
+          <h2 className="text-center text-xl font-mono tracking-tight text-white mb-8">
+            If you no longer wish to receive our newsletter, you can unsubscribe
+            at any time by clicking the button below.
+          </h2>
+          <UnsubscribeButtonAction
+            email={Array.isArray(email) ? email[0] : email}
+          />
+        </>
+      ) : (
+        <>
+          <h2 className="text-center text-xl font-mono tracking-tight text-white mb-8">
+            You are not subscribed to any campaign. If you wish to receive our
+            newsletter, please subscribe below.
+          </h2>
+          <SubscribeToCampaign
+            email={Array.isArray(email) ? email[0] : email}
+          />
+        </>
+      )}
     </section>
   );
 };
