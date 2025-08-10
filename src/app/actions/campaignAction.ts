@@ -132,17 +132,15 @@ export async function getCampaignsListAction(): Promise<Campaign[]> {
 }
 
 export async function unsubscribeFromCampaignAction(
-  email: string
+  token: string
 ): Promise<ActionResult> {
-  const cookieStore = await cookies();
-  const user = await getCurrentUser(cookieStore.get("token")?.value);
-  if (!user) {
-    notFound();
+  if (!token) {
+    return { success: false, message: "Unsubscribe token is missing." };
   }
 
   try {
     const subscriber = await prisma.subscriber.findUnique({
-      where: { email },
+      where: { unsubscribeToken: token },
     });
 
     if (!subscriber) {
@@ -150,7 +148,7 @@ export async function unsubscribeFromCampaignAction(
     }
 
     await prisma.subscriber.update({
-      where: { email },
+      where: { id: subscriber.id },
       data: { isSubscribed: false },
     });
 
@@ -164,12 +162,6 @@ export async function unsubscribeFromCampaignAction(
 export async function subscribeToCampaignAction(
   email: string
 ): Promise<ActionResult> {
-  const cookieStore = await cookies();
-  const user = await getCurrentUser(cookieStore.get("token")?.value);
-  if (!user) {
-    notFound();
-  }
-
   if (!email || typeof email !== "string") {
     return { success: false, message: "A valid email is required." };
   }
