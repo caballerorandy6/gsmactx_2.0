@@ -21,7 +21,7 @@ const CampaignList = async ({ user }) => {
   return (
     <section
       id="admin-dashboard"
-      className="bg-transparent px-4 sm:px-6 lg:px-8"
+      className="bg-transparent px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 mt-10 min-h-screen"
     >
       {/* Main content */}
       <main className="pt-20">
