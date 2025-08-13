@@ -96,7 +96,7 @@ export async function sendCampaignEmailAction(data: {
       });
     }
 
-    revalidatePath("/campaign-list");
+    revalidatePath("/view-campaigns");
 
     if (totalSent === 0) {
       return {

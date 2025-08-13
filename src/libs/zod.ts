@@ -48,14 +48,34 @@ export const CampaignSchema = z.object({
   image: z
     .any()
     .optional()
-    .refine(
-      (file) => !file || file.size <= MAX_FILE_SIZE,
-      `El tamaño máximo de la imagen es 5MB.`
-    )
-    .refine(
-      (file) => !file || ACCEPTED_FILE_TYPES.includes(file.type),
-      "Unsupported file type. Accepted types are: jpg, jpeg, png, gif, webp, avif."
-    ),
+    .refine((file) => {
+      // Si no hay archivo, está bien
+      if (!file) return true;
+
+      // Si es un string (URL existente), está bien
+      if (typeof file === "string") return true;
+
+      // Si es un File, validar tamaño
+      if (file instanceof File) {
+        return file.size <= MAX_FILE_SIZE;
+      }
+
+      return true;
+    }, `El tamaño máximo de la imagen es 5MB.`)
+    .refine((file) => {
+      // Si no hay archivo, está bien
+      if (!file) return true;
+
+      // Si es un string (URL existente), está bien
+      if (typeof file === "string") return true;
+
+      // Si es un File, validar tipo
+      if (file instanceof File) {
+        return ACCEPTED_FILE_TYPES.includes(file.type);
+      }
+
+      return true;
+    }, "Unsupported file type. Accepted types are: jpg, jpeg, png, gif, webp, avif."),
 });
 
 export type UserFormData = z.infer<typeof UserSchema>;

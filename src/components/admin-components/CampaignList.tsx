@@ -1,12 +1,13 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { Menu, MenuButton, MenuItems } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
 import { getCampaignsListAction } from "@/app/actions/campaignAction";
 import Link from "next/link";
 import clsx from "clsx";
-import AdminDeleteCampaignButton from "@/components/admin-components/AdminDeleteCampaignButton";
-import AdminSendCampaignButton from "@/components/admin-components/AdminSendCampaignButton";
+import AdminDeleteCampaignButton from "@/components/admin-components/DeleteCampaignButton";
+import AdminSendCampaignButton from "@/components/admin-components/SendCampaignButton";
+import AdminEditCampaignButton from "@/components/admin-components/EditCampaignButton";
 
-const AdminCampaignList = async ({ user }) => {
+const CampaignList = async ({ user }) => {
   const campaigns = await getCampaignsListAction();
 
   if (campaigns.length === 0) {
@@ -73,39 +74,36 @@ const AdminCampaignList = async ({ user }) => {
                 <div className="flex flex-none items-center gap-x-4">
                   {/* Button with dark theme styles */}
                   <Link
-                    href={`/campaign-list/${campaign.id}`} // Link to a detail/preview page
+                    href={`/view-campaigns/${campaign.id}`} // Link to a detail/preview page
                     className="hidden rounded-md bg-white/10 px-2.5 py-1.5 text-sm font-semibold text-white shadow-xs ring-1 ring-inset ring-white/20 hover:bg-white/20 sm:block"
                   >
                     View campaign
                     <span className="sr-only">, {campaign.id}</span>
                   </Link>
-                  <Menu as="div" className="relative flex-none">
-                    {/* Menu icon with dark theme colors */}
-                    <MenuButton className="relative block text-gray-400 hover:text-white cursor-pointer">
-                      <span className="absolute -inset-2.5" />
-                      <span className="sr-only">Open options</span>
-                      <EllipsisVerticalIcon
-                        aria-hidden="true"
-                        className="size-5"
-                      />
-                    </MenuButton>
-                    {/* Dropdown menu with dark theme styles */}
-                    <MenuItems
-                      transition
-                      className="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-gray-800 py-2 shadow-lg ring-1 ring-white/10 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in "
-                    >
-                      <AdminSendCampaignButton id={campaign.id} />
-                      <MenuItem
-                        as={Link}
-                        href={`/campaign-list/${campaign.title}`}
+                  {campaign.sent === true ? (
+                    ""
+                  ) : (
+                    <Menu as="div" className="relative flex-none">
+                      {/* Menu icon with dark theme colors */}
+                      <MenuButton className="relative block text-gray-400 hover:text-white cursor-pointer">
+                        <span className="absolute -inset-2.5" />
+                        <span className="sr-only">Open options</span>
+                        <EllipsisVerticalIcon
+                          aria-hidden="true"
+                          className="size-5"
+                        />
+                      </MenuButton>
+                      {/* Dropdown menu with dark theme styles */}
+                      <MenuItems
+                        transition
+                        className="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-gray-800 py-2 shadow-lg ring-1 ring-white/10 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in "
                       >
-                        <span className="block px-3 py-1 text-sm/6 text-gray-300 data-[focus]:bg-white/10 transition-colors cursor-pointer">
-                          Edit
-                        </span>
-                      </MenuItem>
-                      <AdminDeleteCampaignButton id={campaign.id} />
-                    </MenuItems>
-                  </Menu>
+                        <AdminSendCampaignButton id={campaign.id} />
+                        <AdminEditCampaignButton id={campaign.id} />
+                        <AdminDeleteCampaignButton id={campaign.id} />
+                      </MenuItems>
+                    </Menu>
+                  )}
                 </div>
               </li>
             ))}
@@ -116,4 +114,4 @@ const AdminCampaignList = async ({ user }) => {
   );
 };
 
-export default AdminCampaignList;
+export default CampaignList;

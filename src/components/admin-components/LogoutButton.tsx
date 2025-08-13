@@ -1,6 +1,6 @@
 import { logoutAction } from "@/app/actions/logoutAction";
 
-const AdminLogoutButton = () => {
+const LogoutButton = () => {
   return (
     <form action={logoutAction}>
       <button
@@ -13,4 +13,4 @@ const AdminLogoutButton = () => {
   );
 };
 
-export default AdminLogoutButton;
+export default LogoutButton;

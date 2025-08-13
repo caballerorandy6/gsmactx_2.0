@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import AdminCampaignForm from "@/components/admin-components/AdminCampaignForm";
+import CampaignForm from "@/components/admin-components/CampaignForm";
 import { getCurrentUser } from "@/libs/getCurrentUser";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "Create and manage campaigns for GSM A/C General & Contractor Inc",
 };
 
-const CampaignFormPage = async () => {
+const CampaignCreatePage = async () => {
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
 
@@ -18,7 +18,7 @@ const CampaignFormPage = async () => {
     notFound();
   }
 
-  return <AdminCampaignForm user={user} />;
+  return <CampaignForm user={user} />;
 };
 
-export default CampaignFormPage;
+export default CampaignCreatePage;

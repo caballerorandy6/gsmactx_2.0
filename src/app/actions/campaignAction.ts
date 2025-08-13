@@ -56,13 +56,15 @@ export async function upsertCampaignAction(
     }
 
     if (id) {
+      // EDITAR CAMPAÑA EXISTENTE
       await prisma.campaign.update({
         where: { id },
         data: { title, subject, content, imageUrl },
       });
-      revalidatePath("/campaign-list");
+      revalidatePath("/view-campaigns");
       return { success: true, message: "Campaign updated successfully." };
     } else {
+      // CREAR NUEVA CAMPAÑA
       await prisma.campaign.create({
         data: {
           title,
@@ -72,14 +74,12 @@ export async function upsertCampaignAction(
           createdBy: user.id,
         },
       });
+      revalidatePath("/view-campaigns");
+      return {
+        success: true,
+        message: "Campaign created successfully.",
+      };
     }
-    revalidatePath("/campaign-list");
-    return {
-      success: true,
-      message: id
-        ? "Campaign updated successfully."
-        : "Campaign created successfully.",
-    };
   } catch (error) {
     console.error("Error to save campaign:", error);
     return { success: false, message: "Failed to save campaign." };
@@ -100,7 +100,7 @@ export const deleteCampaignAction = async (
     await prisma.campaign.delete({
       where: { id },
     });
-    revalidatePath("/campaign-list");
+    revalidatePath("/view-campaigns");
     return { success: true, message: "Campaign deleted successfully." };
   } catch (error) {
     console.error("Error deleting campaign:", error);
@@ -195,5 +195,31 @@ export async function subscribeToCampaignAction(
   } catch (error) {
     console.error("Error subscribing:", error);
     return { success: false, message: "Failed to subscribe." };
+  }
+}
+
+export async function getCampaignByIdAction(
+  id: string
+): Promise<Campaign | null> {
+  const cookieStore = await cookies();
+  const user = await getCurrentUser(cookieStore.get("token")?.value);
+  if (!user) {
+    notFound();
+  }
+
+  try {
+    const campaign = await prisma.campaign.findUnique({
+      where: { id },
+      include: { admin: true },
+    });
+
+    if (!campaign) {
+      return null;
+    }
+
+    return campaign;
+  } catch (error) {
+    console.error("Error fetching campaign by ID:", error);
+    return null;
   }
 }
