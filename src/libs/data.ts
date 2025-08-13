@@ -1,3 +1,5 @@
+import { getCampaignsListAction } from "@/app/actions/campaignAction";
+
 export const navigation = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
@@ -9,8 +11,8 @@ export const navigation = [
 
 export const adminNavigation = [
   { name: "Admin Dashboard", href: "/admin-dashboard" },
-  { name: "Campaign Form", href: "/campaign-form" },
-  { name: "Campaign List", href: "/campaign-list" },
+  { name: "Create Campaign", href: "/create-campaign" },
+  { name: "View Campaigns", href: "/view-campaigns" },
 ];
 
 export const allServices = [
@@ -276,3 +278,20 @@ export const emailsToSeed = [
   "caballerorandy7@gmail.com",
   "caballerorandy10@gmail.com",
 ];
+
+export const getSidebarNavigation = async () => {
+  const campaigns = await getCampaignsListAction();
+  return [
+    { id: "all", label: "All Campaigns", count: campaigns.length },
+    {
+      id: "sent",
+      label: "Sent",
+      count: campaigns.filter((c) => c.sent === true).length,
+    },
+    {
+      id: "not-sent",
+      label: "Not Sent",
+      count: campaigns.filter((c) => c.sent === false).length,
+    },
+  ];
+};

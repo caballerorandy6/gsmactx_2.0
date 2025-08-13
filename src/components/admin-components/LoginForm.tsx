@@ -10,7 +10,7 @@ import { loginAction } from "@/app/actions/loginAction";
 
 import ButtonSpinner from "@/components/ButtonSpinner";
 
-const AdminLoginForm = () => {
+const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
 
   const {
@@ -26,38 +26,7 @@ const AdminLoginForm = () => {
     },
   });
 
-  // const onSubmit = async (data: AdminFormData) => {
-  //   setIsLoadingAuth(true);
-  //   try {
-  //     const response = await fetch("/api/admin/login", {
-  //       method: "POST",
-  //       credentials: "include",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(data),
-  //     });
-
-  //     if (!response.ok) {
-  //       toast.error("Login failed. Please check your credentials.");
-  //     }
-
-  //     const result = await response.json();
-
-  //     localStorage.setItem("token", result.token);
-
-  //     setAdmin(result.admin);
-
-  //     toast.success("Login successful!");
-  //     router.push("/admin-dashboard");
-  //     reset();
-  //   } catch {
-  //     toast.error("An unexpected error occurred. Please try again later.");
-  //   } finally {
-  //     setIsLoadingAuth(false);
-  //   }
-  // };
-
+  // 1. Manejo del envío del formulario
   const onSubmit = async (data: AdminFormData) => {
     startTransition(async () => {
       try {
@@ -151,4 +120,4 @@ const AdminLoginForm = () => {
   );
 };
 
-export default AdminLoginForm;
+export default LoginForm;

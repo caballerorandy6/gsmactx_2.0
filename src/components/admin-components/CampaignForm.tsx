@@ -8,10 +8,25 @@ import { toast } from "sonner";
 import { CampaignSchema, CampaignFormData } from "@/libs/zod";
 import { upsertCampaignAction } from "@/app/actions/campaignAction";
 import { ErrorMessage } from "@hookform/error-message";
+import { SafeAdmin } from "@/libs/types";
+import { Campaign } from "@/libs/interfaces";
+import { useRouter } from "next/navigation";
 
-const AdminCampaignForm = ({ user }) => {
+const CampaignForm = ({
+  campaign,
+  user,
+}: {
+  campaign?: Campaign;
+  user: SafeAdmin | null;
+}) => {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    campaign?.imageUrl || null
+  );
+
+  // Check if we are editing an existing campaign
+  const isEditing = !!campaign?.id;
 
   const {
     register,
@@ -22,9 +37,9 @@ const AdminCampaignForm = ({ user }) => {
   } = useForm<CampaignFormData>({
     resolver: zodResolver(CampaignSchema),
     defaultValues: {
-      title: "",
-      subject: "",
-      content: "",
+      title: campaign?.title || "",
+      subject: campaign?.subject || "",
+      content: campaign?.content || "",
       image: undefined,
     },
   });
@@ -43,42 +58,59 @@ const AdminCampaignForm = ({ user }) => {
   const onSubmit = async (data: CampaignFormData) => {
     const formData = new FormData();
 
-    // Append the image file if it exists
-    if (data.image instanceof File) {
-      formData.append("image", data.image);
-    }
-    // Append the image URL if it exists
-    else if (imagePreview && imagePreview.startsWith("http")) {
-      formData.append("image", imagePreview);
+    // Añade los campos de texto manualmente para mayor claridad
+    formData.append("title", data.title);
+    formData.append("subject", data.subject);
+    formData.append("content", data.content);
+
+    //  2. AÑADE EL ID SI ESTAMOS EDITANDO (ESTE ERA EL ERROR PRINCIPAL)
+    if (isEditing) {
+      formData.append("id", campaign.id);
     }
 
-    Object.entries(data).forEach(([key, value]) => {
-      if (value) {
-        formData.append(key, value);
-      }
-    });
+    //  3. LÓGICA DE IMAGEN MEJORADA
+    if (data.image instanceof File) {
+      // Si el usuario sube un archivo nuevo, lo añadimos
+      formData.append("image", data.image);
+    } else if (isEditing && campaign.imageUrl) {
+      // Si no se sube un archivo nuevo, pero estamos editando y había una imagen,
+      // enviamos la URL antigua para que no se borre en el servidor.
+      formData.append("image", campaign.imageUrl);
+    }
 
     startTransition(async () => {
       try {
+        toast.loading(
+          isEditing ? "Updating campaign..." : "Creating campaign..."
+        );
         const result = await upsertCampaignAction(formData);
 
+        toast.dismiss();
         if (result.success) {
           toast.success(result.message);
-          reset();
-          setImagePreview(null);
+
+          //  4. SOLO SE RESETEA EL FORMULARIO AL CREAR, NO AL EDITAR
+          if (!isEditing) {
+            reset();
+            setImagePreview(null);
+          }
+          router.push("/view-campaigns");
+        } else {
+          toast.error(result.message);
         }
       } catch (error) {
-        if (error instanceof Error && error.message === "NEXT_REDIRECT") {
-          return;
-        }
+        toast.dismiss();
         console.error("Campaign upsert error:", error);
-        toast.error("An unexpected error occurred. Please try again later.");
+        toast.error("An unexpected error occurred.");
       }
     });
   };
 
   return (
-    <section id="admin-form" className="bg-[rgba(10,15,26,0.50)]">
+    <section
+      id="admin-form"
+      className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 mt-10"
+    >
       {/* Main content */}
 
       <main className="py-20">
@@ -88,7 +120,7 @@ const AdminCampaignForm = ({ user }) => {
         <div className="min-h-screen flex justify-center pt-20">
           <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md">
             <h2 className="text-center text-3xl font-bold tracking-tight text-white mb-8">
-              Create Campaign
+              {isEditing ? "Edit Campaign" : "Create Campaign"}
             </h2>
 
             {/* Title */}
@@ -159,7 +191,7 @@ const AdminCampaignForm = ({ user }) => {
                     id="image"
                     type="file"
                     accept="image/png, image/jpeg, image/webp, image/gif, image/avif"
-                    // No usamos 'register' directamente para tener control sobre el onChange
+                    // No use `register` here to avoid issues with file inputs
                     onChange={handleImageChange}
                     className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-500 file:text-white hover:file:bg-indigo-400"
                   />
@@ -218,7 +250,13 @@ const AdminCampaignForm = ({ user }) => {
                 disabled={isPending}
                 className="flex w-full justify-center rounded-md cursor-pointer bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-colors disabled:bg-indigo-300 disabled:cursor-not-allowed"
               >
-                {isPending ? "Creating..." : "Create Campaign"}
+                {isPending
+                  ? isEditing
+                    ? "Updating..."
+                    : "Creating..."
+                  : isEditing
+                    ? "Update Campaign"
+                    : "Create Campaign"}
               </button>
             </div>
           </form>
@@ -228,4 +266,4 @@ const AdminCampaignForm = ({ user }) => {
   );
 };
 
-export default AdminCampaignForm;
+export default CampaignForm;

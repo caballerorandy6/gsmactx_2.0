@@ -1,22 +1,73 @@
-import { Metadata } from "next";
+// src/components/admin-components/AdminDashboard.tsx
+"use client";
 
-export const metadata: Metadata = {
-  title: "Admin Dashboard",
-  description:
-    "Welcome to the GSM A/C General & Contractor Inc Admin Dashboard",
-};
+import { useState } from "react";
+import { notFound } from "next/navigation";
+import DashboardSidebar from "@/components/admin-components/DashboardSidebar";
+import CampaignsListDashboard from "@/components/admin-components/CampaignListDashboard";
+import EmptyDashboardState from "./EmptyDashboardState";
+import { Campaign } from "@/libs/interfaces";
+import { SafeAdmin } from "@/libs/types";
+import AdminHeader from "./AdminHeader";
 
-export default function AdminDashboard({ user }) {
+type FilterType = "all" | "sent" | "not-sent";
+
+interface AdminDashboardProps {
+  user: SafeAdmin | null;
+  campaigns: Campaign[];
+}
+
+const AdminDashboard = ({ user, campaigns }: AdminDashboardProps) => {
+  const [selectedFilter, setSelectedFilter] = useState<FilterType>("all");
+
+  // Redirect to 404 if user is not authenticated
+  if (!user) {
+    notFound();
+  }
+
+  // Show empty state if no campaigns exist
+  if (campaigns.length === 0) {
+    return <EmptyDashboardState userName={user.name} />;
+  }
+
+  // Filter campaigns based on selected filter
+  const filteredCampaigns = campaigns.filter((campaign) => {
+    switch (selectedFilter) {
+      case "sent":
+        return campaign.sent === true;
+      case "not-sent":
+        return campaign.sent === false;
+      default:
+        return true; // 'all'
+    }
+  });
+
+  // Calculate counts for sidebar
+  const sentCount = campaigns.filter((c) => c.sent === true).length;
+  const notSentCount = campaigns.filter((c) => c.sent === false).length;
+
   return (
-    <section id="admin-dashboard" className="bg-[rgba(10,15,26,0.50)]">
-      {/* Main content */}
+    <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 mt-10">
+      <AdminHeader />
 
-      <main className="pt-20">
-        <h1 className="text-4xl font-bold text-center">
-          Welcome, {user?.name}!
-        </h1>
-        {/* Aquí va el contenido principal del dashboard */}
-      </main>
+      <div className="flex pt-20">
+        <DashboardSidebar
+          userName={user.name}
+          totalCampaigns={campaigns.length}
+          sentCampaigns={sentCount}
+          notSentCampaigns={notSentCount}
+          selectedFilter={selectedFilter}
+          onFilterChange={setSelectedFilter}
+        />
+
+        <CampaignsListDashboard
+          campaigns={filteredCampaigns}
+          totalCount={campaigns.length}
+        />
+      </div>
     </section>
   );
-}
+};
+
+// Add default export
+export default AdminDashboard;

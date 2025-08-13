@@ -17,8 +17,6 @@ import {
 import * as React from "react";
 import { CampaignEmailProps } from "@/libs/interfaces";
 
-// ... (tus props se quedan igual)
-
 const CampaignEmail = ({
   subject,
   title,
@@ -28,17 +26,33 @@ const CampaignEmail = ({
 }: CampaignEmailProps) => {
   return (
     <Html>
-      <Head />
+      <Head>
+        <style>
+          {`
+            @media (max-width: 600px) {
+              .stack-column-mobile {
+                display: block !important;
+                width: 100% !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+              }
+              .button-mobile {
+                width: 100% !important;
+                max-width: 100% !important;
+              }
+            }
+          `}
+        </style>
+      </Head>
       <Tailwind>
         <Preview>{subject}</Preview>
         <Body style={main}>
           <Container style={container}>
-            {/* ... (resto del cuerpo del email se queda igual) ... */}
             <Section style={headerSection}>
               <Column style={logoColumn}>
                 <Img
                   src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
-                  width="150"
+                  width="200"
                   alt="GSMACTX Logo"
                 />
               </Column>
@@ -51,7 +65,7 @@ const CampaignEmail = ({
 
             <Section style={contentSection}>
               {imageUrl && (
-                <Column style={imageColumn}>
+                <Column className="stack-column-mobile" style={imageColumn}>
                   <Img
                     style={image}
                     src={imageUrl}
@@ -59,13 +73,37 @@ const CampaignEmail = ({
                   />
                 </Column>
               )}
-              <Column style={textColumn}>
+              <Column className="stack-column-mobile" style={textColumn}>
                 <Text style={text}>{content}</Text>
-                <Section style={buttonContainer}>
-                  <Button style={button} href="tel:+12812354684">
-                    Call Us Now
-                  </Button>
-                </Section>
+              </Column>
+            </Section>
+
+            <Section
+              style={{
+                paddingTop: "20px",
+                textAlign: "center",
+                display: "flex",
+                justifyContent: "center",
+                gap: "10px",
+              }}
+            >
+              <Column className="stack-column-mobile" style={buttonColumn}>
+                <Button
+                  className="button-mobile"
+                  style={button}
+                  href="tel:+12812354684"
+                >
+                  Call Now
+                </Button>
+              </Column>
+              <Column className="stack-column-mobile" style={buttonColumn}>
+                <Link
+                  className="button-mobile"
+                  style={contactLink}
+                  href="https://gsmactx.com"
+                >
+                  Visit Our Website
+                </Link>
               </Column>
             </Section>
 
@@ -88,60 +126,72 @@ const CampaignEmail = ({
   );
 };
 
-// --- Estilos ---
 const main = {
-  backgroundColor: "transparent",
-  fontFamily: "'Inter', sans-serif",
+  backgroundColor: "#f4f5f7",
+  fontFamily:
+    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
 };
+
 const container = {
   backgroundColor: "#ffffff",
   margin: "40px auto",
-  padding: "20px",
-  border: "1px solid #f0f0f0",
+  padding: "40px",
+  border: "1px solid #eaeaea",
   borderRadius: "8px",
-  maxWidth: "700px",
+  maxWidth: "640px",
 };
+
 const headerSection = { width: "100%" };
-const logoColumn = { width: "120px", verticalAlign: "middle" };
+const logoColumn = { width: "160px", verticalAlign: "middle" };
 const headerTextColumn = { paddingLeft: "20px", verticalAlign: "middle" };
+
 const heading = {
-  color: "#0a0f1a",
-  fontSize: "24px",
-  fontWeight: "bold",
+  color: "#1d232e",
+  fontSize: "26px",
+  fontWeight: "600",
   margin: 0,
 };
+
 const contentSection = { padding: "10px 0" };
-const imageColumn = {
-  width: "50%",
-  paddingRight: "10px",
-  verticalAlign: "top",
-};
-const textColumn = { paddingLeft: "10px", verticalAlign: "top" };
+const imageColumn = { width: "50%", paddingRight: "15px" };
+const textColumn = { width: "50%", paddingLeft: "15px" };
+
 const image = { borderRadius: "8px", width: "100%" };
-const text = {
-  color: "#0a0f1a",
-  fontSize: "15px",
-  lineHeight: "1.6",
-  margin: "0 0 15px 0",
+const text = { color: "#3c4858", fontSize: "16px", lineHeight: "1.6" };
+
+const buttonColumn = {
+  width: "50%",
+  padding: "0 8px",
 };
-const buttonContainer = { padding: "0" };
+
 const button = {
   backgroundColor: "#007bff",
   borderRadius: "6px",
-  color: "#fff",
+  color: "#ffffff",
   fontSize: "15px",
   fontWeight: "bold",
   textDecoration: "none",
-  padding: "12px 25px",
+  padding: "14px 0",
+  width: "100%",
+  textAlign: "center" as const,
 };
-const hr = { borderColor: "#e6ebf1", margin: "20px 0" };
-const footer = { textAlign: "center" as const, paddingTop: "10px" };
-const footerText = { color: "#0a0f1a", fontSize: "12px", margin: "4px 0" };
 
-// ✅ 3. NUEVO ESTILO PARA EL ENLACE
+// const buttonSecondary = {
+//   ...button,
+//   backgroundColor: "#6c757d",
+// };
+
+const hr = { borderColor: "#eaeaea", margin: "28px 0" };
+const footer = { textAlign: "center" as const, paddingTop: "20px" };
+const footerText = { color: "#8898aa", fontSize: "12px", margin: "4px 0" };
 const unsubscribeLink = {
-  color: "#007bff",
+  color: "#8898aa",
   textDecoration: "underline",
+  fontSize: "12px",
+};
+const contactLink = {
+  color: "#007bff",
+  textDecoration: "none",
   fontSize: "12px",
 };
 

@@ -74,6 +74,7 @@ export interface Campaign {
   sentAt: Date | null;
   createdBy: string;
   admin: SafeAdmin;
+  imageUrl?: string;
 }
 
 export interface CampaignEmailProps {

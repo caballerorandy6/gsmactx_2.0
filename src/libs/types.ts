@@ -21,6 +21,7 @@ export type Campaign = {
   sent: boolean;
   sentAt: Date | null;
   createdBy: string;
+  imageUrl?: string | null;
   admin: Admin;
 };
 
@@ -40,4 +41,3 @@ export type ActionResult = {
   success: boolean;
   message: string;
 };
-

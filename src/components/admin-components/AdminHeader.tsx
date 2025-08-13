@@ -6,7 +6,7 @@ import { useGSMStore } from "@/store/gsmactx-store";
 import { adminNavigation } from "@/libs/data";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import LogoutButton from "./AdminLogoutButton";
+import LogoutButton from "./LogoutButton";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { useEffect, useState } from "react";

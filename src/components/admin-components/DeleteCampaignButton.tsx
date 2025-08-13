@@ -4,8 +4,9 @@ import { useTransition } from "react";
 import { deleteCampaignAction } from "@/app/actions/campaignAction";
 import { MenuItem } from "@headlessui/react";
 import { toast } from "sonner";
+import { Link } from "@react-email/components";
 
-const AdminDeleteCampaignButton = ({ id }: { id: string }) => {
+const DeleteCampaignButton = ({ id }: { id: string }) => {
   const [isPending, startTransition] = useTransition();
 
   const handleDelete = () => {
@@ -29,9 +30,9 @@ const AdminDeleteCampaignButton = ({ id }: { id: string }) => {
   };
 
   return (
-    <MenuItem as="button" onClick={handleDelete} disabled={isPending}>
+    <MenuItem as={Link} onClick={handleDelete} disabled={isPending}>
       <span
-        className={`block w-full text-left px-3 py-1 text-sm/6 text-red-400 data-[focus]:bg-white/10 cursor-pointer transition-colors ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
+        className={`block w-full text-left px-3 py-1 text-sm/6 text-red-400 data-[focus]:bg-white/10 cursor-pointer transition-colors hover:bg-red-500/10 ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
       >
         Delete
       </span>
@@ -39,4 +40,4 @@ const AdminDeleteCampaignButton = ({ id }: { id: string }) => {
   );
 };
 
-export default AdminDeleteCampaignButton;
+export default DeleteCampaignButton;

@@ -4,8 +4,9 @@ import { useTransition } from "react";
 import { MenuItem } from "@headlessui/react";
 import { sendCampaignEmailAction } from "@/app/actions/sendCampaignEmailAction";
 import { toast } from "sonner";
+import { Link } from "node_modules/@react-email/components/dist";
 
-const AdminSendCampaignButton = ({ id }: { id: string }) => {
+const SendCampaignButton = ({ id }: { id: string }) => {
   const [isPending, startTransition] = useTransition();
 
   const handleSend = async () => {
@@ -27,9 +28,9 @@ const AdminSendCampaignButton = ({ id }: { id: string }) => {
   };
 
   return (
-    <MenuItem as="button" onClick={handleSend} disabled={isPending}>
+    <MenuItem as={Link} onClick={handleSend} disabled={isPending}>
       <span
-        className={`block w-full text-left px-3 py-1 text-sm/6 text-green-500 data-[focus]:bg-white/10 cursor-pointer transition-colors ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
+        className={`flex w-full px-3 py-1 text-sm/6 data-[focus]:bg-white/10 transition-colors cursor-pointer text-green-500 hover:bg-green-500/10 ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
       >
         Send
       </span>
@@ -37,4 +38,4 @@ const AdminSendCampaignButton = ({ id }: { id: string }) => {
   );
 };
 
-export default AdminSendCampaignButton;
+export default SendCampaignButton;
