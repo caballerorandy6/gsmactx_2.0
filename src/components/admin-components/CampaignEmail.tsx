@@ -1,6 +1,5 @@
 import {
   Body,
-  Button,
   Container,
   Head,
   Heading,
@@ -12,6 +11,7 @@ import {
   Section,
   Text,
   Column,
+  Row,
   Tailwind,
 } from "@react-email/components";
 import * as React from "react";
@@ -26,96 +26,144 @@ const CampaignEmail = ({
 }: CampaignEmailProps) => {
   return (
     <Html>
-      <Head>
-        <style>
-          {`
-            @media (max-width: 600px) {
-              .stack-column-mobile {
-                display: block !important;
-                width: 100% !important;
-                padding: 0 !important;
-                max-width: 100% !important;
-              }
-              .button-mobile {
-                width: 100% !important;
-                max-width: 100% !important;
-              }
-            }
-          `}
-        </style>
-      </Head>
       <Tailwind>
+        <Head>
+          <style>
+            {`
+              .cta-button:hover {
+                color: #007bff !important;
+                text-decoration: underline !important;
+              }
+              
+              @media (max-width: 600px) {
+                .stack-column-mobile {
+                  display: block !important;
+                  width: 100% !important;
+                  padding: 0 !important;
+                  max-width: 100% !important;
+                }
+                .header-logo {
+                  text-align: center !important;
+                  margin-bottom: 20px !important;
+                }
+                .header-title {
+                  text-align: center !important;
+                }
+                .content-image {
+                  margin-bottom: 20px !important;
+                }
+                .cta-button {
+                  display: block !important;
+                  width: 100% !important;
+                  margin: 10px auto !important;
+                }
+              }
+            `}
+          </style>
+        </Head>
         <Preview>{subject}</Preview>
-        <Body style={main}>
-          <Container style={container}>
-            <Section style={headerSection}>
-              <Column style={logoColumn}>
-                <Img
-                  src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
-                  width="200"
-                  alt="GSMACTX Logo"
-                />
-              </Column>
-              <Column style={headerTextColumn}>
-                <Heading style={heading}>{title}</Heading>
-              </Column>
-            </Section>
-
-            <Hr style={hr} />
-
-            <Section style={contentSection}>
-              {imageUrl && (
-                <Column className="stack-column-mobile" style={imageColumn}>
+        <Body className="bg-gray-100">
+          <Container className="bg-white mx-auto my-10 p-8 border border-gray-200 rounded-lg max-w-2xl">
+            {/* Header Section */}
+            <Section className="w-full">
+              <Row>
+                <Column className="header-logo w-40 align-middle">
                   <Img
-                    style={image}
-                    src={imageUrl}
-                    alt="Imagen de la Campaña"
+                    src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
+                    width="200"
+                    alt="GSMACTX Logo"
+                    className="max-w-full h-auto"
                   />
                 </Column>
-              )}
-              <Column className="stack-column-mobile" style={textColumn}>
-                <Text style={text}>{content}</Text>
-              </Column>
+                <Column className="header-title pl-5 align-middle">
+                  <Heading className="text-gray-900 text-2xl font-semibold m-0">
+                    {title}
+                  </Heading>
+                </Column>
+              </Row>
             </Section>
 
-            <Section
-              style={{
-                paddingTop: "20px",
-                textAlign: "center",
-                display: "flex",
-                justifyContent: "center",
-                gap: "10px",
-              }}
-            >
-              <Column className="stack-column-mobile" style={buttonColumn}>
-                <Button
-                  className="button-mobile"
-                  style={button}
+            <Hr className="border-gray-200 my-7" />
+
+            {/* Content Section */}
+            <Section className="py-2">
+              <Row>
+                {imageUrl && (
+                  <Column className="stack-column-mobile content-image w-1/2 pr-4">
+                    <Img
+                      className="rounded-lg w-full"
+                      src={imageUrl}
+                      alt="Imagen de la Campaña"
+                    />
+                  </Column>
+                )}
+                <Column
+                  className={`stack-column-mobile ${imageUrl ? "w-1/2 pl-4" : "w-full"}`}
+                >
+                  <Text className="text-gray-700 text-base leading-relaxed">
+                    {content}
+                  </Text>
+                </Column>
+              </Row>
+            </Section>
+
+            {/* CTA Buttons Section */}
+            <Section className="pt-5 text-center">
+              <div style={{ textAlign: "center", paddingTop: "20px" }}>
+                <Link
+                  className="cta-button"
+                  style={{
+                    backgroundColor: "transparent",
+                    border: "none",
+                    color: "#333333",
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    textDecoration: "none",
+                    padding: "10px 20px",
+                    display: "inline-block",
+                    marginRight: "10px",
+                    transition: "color 0.3s ease",
+                    cursor: "pointer",
+                  }}
                   href="tel:+12812354684"
                 >
                   Call Now
-                </Button>
-              </Column>
-              <Column className="stack-column-mobile" style={buttonColumn}>
+                </Link>
                 <Link
-                  className="button-mobile"
-                  style={contactLink}
+                  className="cta-button"
+                  style={{
+                    backgroundColor: "transparent",
+                    border: "none",
+                    color: "#333333",
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    textDecoration: "none",
+                    padding: "10px 20px",
+                    display: "inline-block",
+                    marginLeft: "10px",
+                    transition: "color 0.3s ease",
+                    cursor: "pointer",
+                  }}
                   href="https://gsmactx.com"
                 >
                   Visit Our Website
                 </Link>
-              </Column>
+              </div>
             </Section>
 
-            <Hr style={hr} />
+            <Hr className="border-gray-200 my-7" />
 
-            <Section style={footer}>
-              <Text>
-                <Link style={unsubscribeLink} href={unsubscribeUrl}>
+            {/* Footer Section */}
+            <Section className="text-center pt-5">
+              <Text className="m-0 mb-2">
+                <Link
+                  className="text-gray-500 underline text-xs"
+                  href={unsubscribeUrl}
+                >
                   Unsubscribe
                 </Link>
               </Text>
-              <Text style={footerText}>
+              <Text className="text-gray-500 text-xs m-1">
                 © {new Date().getFullYear()} GSMACTX, Inc. All rights reserved.
               </Text>
             </Section>
@@ -124,75 +172,6 @@ const CampaignEmail = ({
       </Tailwind>
     </Html>
   );
-};
-
-const main = {
-  backgroundColor: "#f4f5f7",
-  fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
-};
-
-const container = {
-  backgroundColor: "#ffffff",
-  margin: "40px auto",
-  padding: "40px",
-  border: "1px solid #eaeaea",
-  borderRadius: "8px",
-  maxWidth: "640px",
-};
-
-const headerSection = { width: "100%" };
-const logoColumn = { width: "160px", verticalAlign: "middle" };
-const headerTextColumn = { paddingLeft: "20px", verticalAlign: "middle" };
-
-const heading = {
-  color: "#1d232e",
-  fontSize: "26px",
-  fontWeight: "600",
-  margin: 0,
-};
-
-const contentSection = { padding: "10px 0" };
-const imageColumn = { width: "50%", paddingRight: "15px" };
-const textColumn = { width: "50%", paddingLeft: "15px" };
-
-const image = { borderRadius: "8px", width: "100%" };
-const text = { color: "#3c4858", fontSize: "16px", lineHeight: "1.6" };
-
-const buttonColumn = {
-  width: "50%",
-  padding: "0 8px",
-};
-
-const button = {
-  backgroundColor: "#007bff",
-  borderRadius: "6px",
-  color: "#ffffff",
-  fontSize: "15px",
-  fontWeight: "bold",
-  textDecoration: "none",
-  padding: "14px 0",
-  width: "100%",
-  textAlign: "center" as const,
-};
-
-// const buttonSecondary = {
-//   ...button,
-//   backgroundColor: "#6c757d",
-// };
-
-const hr = { borderColor: "#eaeaea", margin: "28px 0" };
-const footer = { textAlign: "center" as const, paddingTop: "20px" };
-const footerText = { color: "#8898aa", fontSize: "12px", margin: "4px 0" };
-const unsubscribeLink = {
-  color: "#8898aa",
-  textDecoration: "underline",
-  fontSize: "12px",
-};
-const contactLink = {
-  color: "#007bff",
-  textDecoration: "none",
-  fontSize: "12px",
 };
 
 export default CampaignEmail;
