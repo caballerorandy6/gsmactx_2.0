@@ -10,8 +10,6 @@ import {
   Preview,
   Section,
   Text,
-  Column,
-  Row,
   Tailwind,
 } from "@react-email/components";
 import * as React from "react";
@@ -30,11 +28,45 @@ const CampaignEmail = ({
         <Head>
           <style>
             {`
-              .cta-button:hover {
-                color: #007bff !important;
-                text-decoration: underline !important;
+              body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
               }
-              
+
+              .cta-button {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white !important;
+                padding: 14px 32px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-weight: 600;
+                display: inline-block;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+              }
+
+              .cta-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+                color: white !important;
+              }
+
+              .secondary-button {
+                background: white;
+                color: #667eea !important;
+                border: 2px solid #667eea;
+                padding: 12px 30px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-weight: 600;
+                display: inline-block;
+                transition: all 0.3s ease;
+              }
+
+              .secondary-button:hover {
+                background: #667eea;
+                color: white !important;
+              }
+
               @media (max-width: 600px) {
                 .stack-column-mobile {
                   display: block !important;
@@ -52,118 +84,153 @@ const CampaignEmail = ({
                 .content-image {
                   margin-bottom: 20px !important;
                 }
-                .cta-button {
+                .cta-button, .secondary-button {
                   display: block !important;
-                  width: 100% !important;
+                  width: 90% !important;
                   margin: 10px auto !important;
+                  text-align: center;
                 }
               }
             `}
           </style>
         </Head>
         <Preview>{subject}</Preview>
-        <Body className="bg-gray-100">
-          <Container className="bg-white mx-auto my-10 p-8 border border-gray-200 rounded-lg max-w-2xl">
-            {/* Header Section */}
-            <Section className="w-full">
-              <Row>
-                <Column className="header-logo w-40 align-middle">
-                  <Img
-                    src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
-                    width="200"
-                    alt="GSMACTX Logo"
-                    className="max-w-full h-auto"
-                  />
-                </Column>
-                <Column className="header-title pl-5 align-middle">
-                  <Heading className="text-gray-900 text-2xl font-semibold m-0">
-                    {title}
-                  </Heading>
-                </Column>
-              </Row>
+        <Body style={{ backgroundColor: "#f3f4f6" }}>
+          <Container style={{
+            backgroundColor: "white",
+            margin: "40px auto",
+            padding: "0",
+            borderRadius: "16px",
+            maxWidth: "600px",
+            boxShadow: "0 10px 40px rgba(0,0,0,0.1)",
+            overflow: "hidden"
+          }}>
+            {/* Header with gradient background */}
+            <Section style={{
+              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              padding: "40px 32px",
+              textAlign: "center"
+            }}>
+              <Img
+                src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
+                width="180"
+                alt="GSMACTX Logo"
+                style={{ margin: "0 auto", display: "block" }}
+              />
             </Section>
 
-            <Hr className="border-gray-200 my-7" />
+            {/* Title Section */}
+            <Section style={{ padding: "40px 32px 20px" }}>
+              <Heading style={{
+                color: "#1f2937",
+                fontSize: "28px",
+                fontWeight: "700",
+                margin: "0 0 16px",
+                lineHeight: "1.3",
+                textAlign: "center"
+              }}>
+                {title}
+              </Heading>
+            </Section>
 
             {/* Content Section */}
-            <Section className="py-2">
-              <Row>
-                {imageUrl && (
-                  <Column className="stack-column-mobile content-image w-1/2 pr-4">
-                    <Img
-                      className="rounded-lg w-full"
-                      src={imageUrl}
-                      alt="Imagen de la Campaña"
-                    />
-                  </Column>
-                )}
-                <Column
-                  className={`stack-column-mobile ${imageUrl ? "w-1/2 pl-4" : "w-full"}`}
-                >
-                  <Text className="text-gray-700 text-base leading-relaxed">
-                    {content}
-                  </Text>
-                </Column>
-              </Row>
+            <Section style={{ padding: "0 32px 32px" }}>
+              {imageUrl && (
+                <Img
+                  src={imageUrl}
+                  alt="Campaign Image"
+                  style={{
+                    width: "100%",
+                    borderRadius: "12px",
+                    marginBottom: "24px",
+                    display: "block"
+                  }}
+                />
+              )}
+              <Text style={{
+                color: "#4b5563",
+                fontSize: "16px",
+                lineHeight: "1.6",
+                margin: "0",
+                whiteSpace: "pre-wrap"
+              }}>
+                {content}
+              </Text>
             </Section>
 
             {/* CTA Buttons Section */}
-            <Section className="pt-5 text-center">
-              <div style={{ textAlign: "center", paddingTop: "20px" }}>
-                <Link
-                  className="cta-button"
-                  style={{
-                    backgroundColor: "transparent",
-                    border: "none",
-                    color: "#333333",
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                    textDecoration: "none",
-                    padding: "10px 20px",
-                    display: "inline-block",
-                    marginRight: "10px",
-                    transition: "color 0.3s ease",
-                    cursor: "pointer",
-                  }}
-                  href="tel:+12812354684"
-                >
-                  Call Now
-                </Link>
-                <Link
-                  className="cta-button"
-                  style={{
-                    backgroundColor: "transparent",
-                    border: "none",
-                    color: "#333333",
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                    textDecoration: "none",
-                    padding: "10px 20px",
-                    display: "inline-block",
-                    marginLeft: "10px",
-                    transition: "color 0.3s ease",
-                    cursor: "pointer",
-                  }}
-                  href="https://gsmactx.com"
-                >
-                  Visit Our Website
-                </Link>
-              </div>
+            <Section style={{ padding: "20px 32px 40px", textAlign: "center" }}>
+              <Link
+                className="cta-button"
+                href="tel:+12812354684"
+                style={{
+                  backgroundColor: "#667eea",
+                  color: "white",
+                  padding: "14px 32px",
+                  borderRadius: "8px",
+                  textDecoration: "none",
+                  fontWeight: "600",
+                  display: "inline-block",
+                  margin: "0 8px 12px"
+                }}
+              >
+                📞 Call Now
+              </Link>
+              <Link
+                className="secondary-button"
+                href="https://gsmactx.com"
+                style={{
+                  backgroundColor: "white",
+                  color: "#667eea",
+                  border: "2px solid #667eea",
+                  padding: "12px 30px",
+                  borderRadius: "8px",
+                  textDecoration: "none",
+                  fontWeight: "600",
+                  display: "inline-block",
+                  margin: "0 8px 12px"
+                }}
+              >
+                🌐 Visit Website
+              </Link>
             </Section>
 
-            <Hr className="border-gray-200 my-7" />
+            <Hr style={{ borderColor: "#e5e7eb", margin: "0" }} />
 
             {/* Footer Section */}
-            <Section className="text-center pt-5">
-              <Text className="m-0 mb-2">
+            <Section style={{
+              padding: "32px",
+              textAlign: "center",
+              backgroundColor: "#f9fafb"
+            }}>
+              <Text style={{
+                color: "#9ca3af",
+                fontSize: "14px",
+                margin: "0 0 12px",
+                lineHeight: "1.5"
+              }}>
+                📍 Cypress, TX | ☎️ (281) 235-4684 | 🌐 gsmactx.com
+              </Text>
+              <Text style={{
+                color: "#9ca3af",
+                fontSize: "12px",
+                margin: "0 0 8px"
+              }}>
                 <Link
-                  className="text-gray-500 underline text-xs"
                   href={unsubscribeUrl}
+                  style={{
+                    color: "#6b7280",
+                    textDecoration: "underline"
+                  }}
                 >
                   Unsubscribe
                 </Link>
               </Text>
-              <Text className="text-gray-500 text-xs m-1">
+              <Text style={{
+                color: "#9ca3af",
+                fontSize: "11px",
+                margin: "0"
+              }}>
                 © {new Date().getFullYear()} GSMACTX, Inc. All rights reserved.
               </Text>
             </Section>
