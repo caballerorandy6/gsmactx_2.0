@@ -12,6 +12,7 @@ export const navigation = [
 export const adminNavigation = [
   { name: "Admin Dashboard", href: "/admin-dashboard" },
   { name: "Create Campaign", href: "/create-campaign" },
+  { name: "Test Campaign", href: "/test-campaign" },
   { name: "View Campaigns", href: "/view-campaigns" },
 ];
 
