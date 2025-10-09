@@ -3,8 +3,9 @@
 
 import { useState } from "react";
 import { notFound } from "next/navigation";
-import DashboardSidebar from "@/components/admin-components/DashboardSidebar";
+import ImprovedDashboardSidebar from "@/components/admin-components/ImprovedDashboardSidebar";
 import CampaignsListDashboard from "@/components/admin-components/CampaignListDashboard";
+import DashboardStats from "@/components/admin-components/DashboardStats";
 import EmptyDashboardState from "./EmptyDashboardState";
 import { Campaign } from "@/libs/interfaces";
 import { SafeAdmin } from "@/libs/types";
@@ -15,9 +16,28 @@ type FilterType = "all" | "sent" | "not-sent";
 interface AdminDashboardProps {
   user: SafeAdmin | null;
   campaigns: Campaign[];
+  dashboardStats?: {
+    success: boolean;
+    stats: {
+      totalSubscribers: number;
+      activeSubscribers: number;
+      inactiveSubscribers: number;
+      totalCampaigns: number;
+      sentCampaigns: number;
+      notSentCampaigns: number;
+      emailsSent: number;
+      emailsFailed: number;
+      emailsPending: number;
+    } | null;
+    recentCampaigns: unknown[];
+  };
 }
 
-const AdminDashboard = ({ user, campaigns }: AdminDashboardProps) => {
+const AdminDashboard = ({
+  user,
+  campaigns,
+  dashboardStats,
+}: AdminDashboardProps) => {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>("all");
 
   // Redirect to 404 if user is not authenticated
@@ -47,11 +67,11 @@ const AdminDashboard = ({ user, campaigns }: AdminDashboardProps) => {
   const notSentCount = campaigns.filter((c) => c.sent === false).length;
 
   return (
-    <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 mt-10">
+    <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 mt-10 min-h-screen">
       <AdminHeader />
 
       <div className="flex pt-20">
-        <DashboardSidebar
+        <ImprovedDashboardSidebar
           userName={user.name}
           totalCampaigns={campaigns.length}
           sentCampaigns={sentCount}
@@ -60,10 +80,18 @@ const AdminDashboard = ({ user, campaigns }: AdminDashboardProps) => {
           onFilterChange={setSelectedFilter}
         />
 
-        <CampaignsListDashboard
-          campaigns={filteredCampaigns}
-          totalCount={campaigns.length}
-        />
+        <div className="flex-1 p-8">
+          {/* Dashboard Stats */}
+          {dashboardStats?.success && dashboardStats.stats && (
+            <DashboardStats stats={dashboardStats.stats} />
+          )}
+
+          {/* Campaigns List */}
+          <CampaignsListDashboard
+            campaigns={filteredCampaigns}
+            totalCount={campaigns.length}
+          />
+        </div>
       </div>
     </section>
   );
