@@ -15,6 +15,7 @@ model Admin {
   name     String
 
   campaigns Campaign[]
+  smsCampaigns SMSCampaign[]
 }
 
 model Campaign {
@@ -22,12 +23,14 @@ model Campaign {
   title        String
   subject      String
   content      String    // HTML o texto plano
-  imageUrl     String? 
+  imageUrl     String?
   createdAt    DateTime  @default(now())
   sent         Boolean   @default(false)
   sentAt       DateTime?
   createdBy    String
   admin        Admin     @relation(fields: [createdBy], references: [id])
+
+  emailLogs    CampaignEmailLog[]
 }
 
 model Subscriber {
@@ -36,5 +39,46 @@ model Subscriber {
   isSubscribed     Boolean  @default(true)
   createdAt        DateTime @default(now())
   unsubscribeToken String?  @unique
+
+  emailLogs        CampaignEmailLog[]
 }
 
+model SMSCampaign {
+  id        String    @id @default(uuid())
+  title     String
+  content   String    // Texto del mensaje
+  createdAt DateTime  @default(now())
+  sent      Boolean   @default(false)
+  sentAt    DateTime?
+  createdBy String
+  admin     Admin     @relation(fields: [createdBy], references: [id])
+
+  messages  SMSMessage[]
+}
+
+model SMSMessage {
+  id           String       @id @default(uuid())
+  smsCampaignId String
+  phoneNumber  String
+  status       String       @default("pending")
+  sentAt       DateTime?
+  createdAt    DateTime     @default(now())
+  campaign     SMSCampaign @relation(fields: [smsCampaignId], references: [id])
+}
+
+model CampaignEmailLog {
+  id           String      @id @default(uuid())
+  campaignId   String
+  campaign     Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  subscriberId String
+  subscriber   Subscriber  @relation(fields: [subscriberId], references: [id], onDelete: Cascade)
+
+  status       String      @default("pending") // pending, sent, failed, bounced
+  error        String?
+  sentAt       DateTime?
+  createdAt    DateTime    @default(now())
+
+  @@index([campaignId, status])
+  @@index([subscriberId])
+}

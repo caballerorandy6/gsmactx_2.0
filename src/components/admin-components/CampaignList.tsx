@@ -5,6 +5,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import AdminDeleteCampaignButton from "@/components/admin-components/DeleteCampaignButton";
 import AdminSendCampaignButton from "@/components/admin-components/SendCampaignButton";
+import AdminSendTestCampaignButton from "@/components/admin-components/SendTestCampaignButton";
 import AdminEditCampaignButton from "@/components/admin-components/EditCampaignButton";
 
 const CampaignList = async ({ user }) => {
@@ -96,8 +97,9 @@ const CampaignList = async ({ user }) => {
                       {/* Dropdown menu with dark theme styles */}
                       <MenuItems
                         transition
-                        className="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-gray-800 py-2 shadow-lg ring-1 ring-white/10 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in "
+                        className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-gray-800 py-2 shadow-lg ring-1 ring-white/10 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in "
                       >
+                        <AdminSendTestCampaignButton id={campaign.id} />
                         <AdminSendCampaignButton id={campaign.id} />
                         <AdminEditCampaignButton id={campaign.id} />
                         <AdminDeleteCampaignButton id={campaign.id} />

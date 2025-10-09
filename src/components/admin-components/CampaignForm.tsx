@@ -11,6 +11,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { SafeAdmin } from "@/libs/types";
 import { Campaign } from "@/libs/interfaces";
 import { useRouter } from "next/navigation";
+import CampaignEmail from "./CampaignEmail";
 
 const CampaignForm = ({
   campaign,
@@ -24,6 +25,7 @@ const CampaignForm = ({
   const [imagePreview, setImagePreview] = useState<string | null>(
     campaign?.imageUrl || null
   );
+  const [showPreview, setShowPreview] = useState(false);
 
   // Check if we are editing an existing campaign
   const isEditing = !!campaign?.id;
@@ -33,6 +35,7 @@ const CampaignForm = ({
     handleSubmit,
     setValue,
     reset,
+    watch,
     formState: { errors },
   } = useForm<CampaignFormData>({
     resolver: zodResolver(CampaignSchema),
@@ -137,8 +140,9 @@ const CampaignForm = ({
                     {...register("title")}
                     id="title"
                     name="title"
-                    type="title"
-                    autoComplete="title"
+                    type="text"
+                    autoComplete="off"
+                    placeholder="e.g., Summer Promotion 2025"
                     className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
                   />
                   <ErrorMessage
@@ -157,15 +161,16 @@ const CampaignForm = ({
                   htmlFor="subject"
                   className="block text-sm/6 font-semibold text-white"
                 >
-                  Subject
+                  Subject <span className="text-gray-400 text-xs">(what subscribers will see in their inbox)</span>
                 </label>
                 <div className="mt-2.5">
                   <input
                     {...register("subject")}
                     id="subject"
                     name="subject"
-                    type="subject"
-                    autoComplete="current-subject"
+                    type="text"
+                    autoComplete="off"
+                    placeholder="e.g., 🔥 50% OFF on all our services!"
                     className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
                   />
                   <ErrorMessage
@@ -184,7 +189,7 @@ const CampaignForm = ({
                   htmlFor="image"
                   className="block text-sm/6 font-semibold text-white"
                 >
-                  Imagen
+                  Image <span className="text-gray-400 text-xs">(optional - max. 5MB)</span>
                 </label>
                 <div className="mt-2.5">
                   <input
@@ -231,37 +236,96 @@ const CampaignForm = ({
                     id="content"
                     name="content"
                     rows={6}
-                    autoComplete="current-content"
+                    maxLength={2000}
+                    autoComplete="off"
+                    placeholder="Write your email content here. You can include promotion details, important dates, etc."
                     className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
                   />
-                  <ErrorMessage
-                    errors={errors}
-                    name="content"
-                    render={({ message }) => (
-                      <p className="text-red-500 text-sm mt-1">{message}</p>
-                    )}
-                  />
+                  <div className="flex justify-between items-center mt-1">
+                    <ErrorMessage
+                      errors={errors}
+                      name="content"
+                      render={({ message }) => (
+                        <p className="text-red-500 text-sm">{message}</p>
+                      )}
+                    />
+                    <p className="text-sm text-gray-400">
+                      {watch("content")?.length || 0}/2000 characters
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="mt-8 flex justify-end">
+            <div className="mt-8 flex gap-4 justify-between">
               <button
-                type="submit"
-                disabled={isPending}
-                className="flex w-full justify-center rounded-md cursor-pointer bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-colors disabled:bg-indigo-300 disabled:cursor-not-allowed"
+                type="button"
+                onClick={() => setShowPreview(true)}
+                disabled={!watch("title") || !watch("subject") || !watch("content")}
+                className="flex justify-center rounded-md cursor-pointer bg-purple-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-purple-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 transition-colors disabled:bg-purple-300 disabled:cursor-not-allowed"
               >
-                {isPending
-                  ? isEditing
-                    ? "Updating..."
-                    : "Creating..."
-                  : isEditing
-                    ? "Update Campaign"
-                    : "Create Campaign"}
+                Preview Email
               </button>
+              <div className="flex gap-4">
+                <button
+                  type="button"
+                  onClick={() => router.back()}
+                  className="flex justify-center rounded-md cursor-pointer bg-gray-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isPending}
+                  className="flex justify-center rounded-md cursor-pointer bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-colors disabled:bg-indigo-300 disabled:cursor-not-allowed"
+                >
+                  {isPending
+                    ? isEditing
+                      ? "Updating..."
+                      : "Creating..."
+                    : isEditing
+                      ? "Update Campaign"
+                      : "Create Campaign"}
+                </button>
+              </div>
             </div>
           </form>
         </div>
       </main>
+
+      {/* Email Preview Modal */}
+      {showPreview && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center">
+              <h3 className="text-xl font-bold text-gray-900">Email Preview</h3>
+              <button
+                onClick={() => setShowPreview(false)}
+                className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
+              >
+                ×
+              </button>
+            </div>
+            <div className="p-6">
+              <CampaignEmail
+                subject={watch("subject") || ""}
+                title={watch("title") || ""}
+                content={watch("content") || ""}
+                imageUrl={imagePreview || undefined}
+                recipientEmail="subscriber@example.com"
+                unsubscribeUrl="#"
+              />
+            </div>
+            <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 p-4 flex justify-end">
+              <button
+                onClick={() => setShowPreview(false)}
+                className="bg-indigo-500 hover:bg-indigo-400 text-white px-4 py-2 rounded-md transition-colors"
+              >
+                Close Preview
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
