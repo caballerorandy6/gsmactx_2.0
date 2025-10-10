@@ -194,26 +194,50 @@ const DAILY_LIMIT = 100; // Change this according to your plan
 - **Solution**: Campaign is ready, just click "Send Next Batch"
 
 ### Emails remain "pending" without sending
-- **Solution**: Click "Send Next Batch" manually each day
+- **Solution**: Click "Send Next Batch" manually each day, or enable automatic sending
 
-## 🚀 Automation (Optional)
+## 🚀 Automatic Daily Sending (NEW!)
 
-To send automatically each day, you can use:
+### ✨ Now Available: Automated Cron Job
 
-1. **Vercel Cron Jobs** (Recommended)
-2. **GitHub Actions**
-3. **External Cron Service**
+The system now includes **automatic daily sending** that:
 
-Example with Vercel Cron:
+✅ Runs every day at **8:00 AM Central Standard Time (CST)**
+✅ Automatically sends pending emails (up to 100/day)
+✅ Processes multiple campaigns intelligently
+✅ **Sends completion notifications to all admins** when campaigns finish
 
-```typescript
-// app/api/cron/send-campaigns/route.ts
-export async function GET() {
-  // Get all campaigns with pending emails
-  // Send batch for each one
-  // Respect total limit of 100
-}
-```
+### How It Works:
+
+1. **Every day at 8 AM CST**, the system automatically:
+   - Checks how many emails can be sent today (respects 100/day limit)
+   - Finds all campaigns with pending emails
+   - Sends emails in batches until quota is reached
+   - Marks completed campaigns as "sent"
+   - **Sends beautiful email notifications to admins** when campaigns complete
+
+2. **Admin Notifications**: When a campaign finishes, all admins receive:
+   - Campaign title
+   - Total emails sent
+   - Completion date and time
+   - Beautiful branded email template
+
+### Setup:
+
+**See `/CRON_SETUP.md` for complete setup instructions.**
+
+Quick setup:
+1. Add `CRON_SECRET` to your `.env` (generate with `openssl rand -base64 32`)
+2. Add `CRON_SECRET` to Vercel environment variables
+3. Deploy to Vercel
+4. Done! Campaigns will send automatically at 8 AM CST
+
+### Manual vs. Automatic:
+
+You can choose:
+- **Manual**: Click "Send Next Batch" when you want
+- **Automatic**: Set it and forget it (8 AM CST daily)
+- **Both**: Mix manual and automatic (they share the same quota)
 
 ## 📞 Support
 

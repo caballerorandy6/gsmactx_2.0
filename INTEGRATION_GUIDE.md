@@ -149,11 +149,39 @@ To increase this limit:
    - Check error messages in failed emails
    - Update invalid subscriber emails if needed
 
+## 🤖 NEW: Automatic Daily Sending
+
+The system now includes **automatic daily sending** via Vercel Cron Jobs!
+
+### Features:
+- ✅ Runs every day at **8:00 AM CST** automatically
+- ✅ Sends up to 100 emails per day across all campaigns
+- ✅ **Sends completion notifications to admins** when campaigns finish
+- ✅ No manual intervention needed
+
+### Setup:
+1. See `/CRON_SETUP.md` for complete setup instructions
+2. Add `CRON_SECRET` to your environment variables
+3. Deploy to Vercel
+4. Done! Campaigns send automatically
+
+### Duplicate Prevention:
+**Don't worry about duplicates!** Each email has a unique status in the database:
+- When initialized: All emails marked as `"pending"`
+- When sent: Changed to `"sent"`
+- Next day: Only `"pending"` emails are sent
+
+The system **cannot** send the same email twice because it only processes emails with `status: "pending"`.
+
 ## 📖 Full Documentation
 
 For complete details, troubleshooting, and examples, see:
 - `/CAMPAIGN_SYSTEM.md` - Complete system documentation
+- `/CRON_SETUP.md` - Automatic sending setup guide
+- `/INTEGRATION_GUIDE.md` - This file
 
 ## 🎉 Ready to Go!
 
-The system is fully integrated and ready to use. Just navigate to any campaign in your admin dashboard and start sending!
+The system is fully integrated and ready to use. Choose your preferred method:
+- **Manual**: Navigate to any campaign and click "Send Next Batch"
+- **Automatic**: Set up the cron job and let it run daily at 8 AM CST
