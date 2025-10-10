@@ -3,7 +3,7 @@
 import { duplicateCampaignAction } from "@/app/actions/campaignAction";
 import { MenuItem } from "@headlessui/react";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { toast } from "sonner";
 
 const AdminDuplicateCampaignButton = ({ id }: { id: string }) => {
