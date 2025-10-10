@@ -78,7 +78,3 @@ export const emailTemplates: EmailTemplate[] = [
     },
   },
 ];
-
-export const getTemplateById = (id: EmailTemplateType): EmailTemplate | undefined => {
-  return emailTemplates.find((template) => template.id === id);
-};

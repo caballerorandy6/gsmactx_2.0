@@ -13,7 +13,8 @@ import { Campaign } from "@/libs/interfaces";
 import { useRouter } from "next/navigation";
 import CampaignEmailPreview from "./CampaignEmailPreview";
 import TemplateSelector from "./TemplateSelector";
-import { EmailTemplateType, getTemplateById } from "@/libs/emailTemplates";
+import { EmailTemplateType } from "@/libs/emailTemplates";
+import { getTemplateById } from "@/libs/utils";
 
 const CampaignForm = ({
   campaign,

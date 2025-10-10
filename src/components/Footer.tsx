@@ -43,53 +43,76 @@ const images = [
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900">
-      <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
-        <div className="flex justify-center items-center mb-10">
+    <footer className="bg-gray-900 border-t border-white/10">
+      <div className="mx-auto max-w-7xl overflow-hidden px-6 py-16 sm:py-20 lg:px-8">
+        {/* Badges Section */}
+        <div className="flex flex-wrap justify-center items-center gap-6 mb-12">
           {images.map((image) => (
-            <Image
+            <div
               key={image.id}
-              width={100}
-              height={100}
-              src={image.src}
-              alt={image.alt}
-              priority={false}
-              className="object-contain w-32 h-auto"
-            />
+              className="transition-transform duration-300 hover:scale-110"
+            >
+              <Image
+                width={100}
+                height={100}
+                src={image.src}
+                alt={image.alt}
+                priority={false}
+                className="object-contain w-28 h-auto opacity-90 hover:opacity-100 transition-opacity"
+              />
+            </div>
           ))}
         </div>
+
+        {/* Divider */}
+        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-12" />
+
+        {/* Navigation Links */}
         <nav
           aria-label="Footer"
-          className="-mb-6 flex flex-wrap justify-center gap-x-12 gap-y-3 text-sm/6"
+          className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm/6 mb-10"
         >
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="text-gray-400 hover:text-gray-300"
+              className="text-gray-400 hover:text-white transition-colors duration-200 font-medium"
             >
               {item.name}
             </Link>
           ))}
         </nav>
-        <div className="mt-16 flex justify-center gap-x-10">
+
+        {/* Social Media Icons */}
+        <div className="flex justify-center gap-x-8 mb-10">
           {social.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="text-gray-400 hover:text-gray-300"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-all duration-200 hover:scale-110"
             >
               <span className="sr-only">{item.name}</span>
               <item.icon className="h-6 w-6" />
             </Link>
           ))}
         </div>
-        <p className="mt-10 text-center mx-auto text-sm/6 text-gray-400">
-          {`© ${new Date().getFullYear()} GSM A/C & General Contractor INC. All rights reserved.`}
-        </p>
-        <p className="mt-4 text-center mx-auto text-sm/6 text-gray-400">
-          Developed by RC WEB
-        </p>
+
+        {/* Divider */}
+        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8" />
+
+        {/* Copyright & Credits */}
+        <div className="text-center space-y-2 flex flex-col justify-center items-center">
+          <p className="text-sm text-gray-400">
+            {`© ${new Date().getFullYear()} GSM A/C & General Contractor INC.`}
+          </p>
+          <p className="text-xs text-gray-500">All rights reserved.</p>
+          <p className="text-xs text-gray-500 mt-4">
+            Developed by{" "}
+            <span className="text-gray-400 font-semibold">RC WEB</span>
+          </p>
+        </div>
       </div>
     </footer>
   );
