@@ -10,7 +10,7 @@ interface CampaignEmailPreviewProps {
 }
 
 const CampaignEmailPreview = ({
-  subject,
+  //subject,
   title,
   content,
   imageUrl,
@@ -141,7 +141,9 @@ const CampaignEmailPreview = ({
 
           <div className="mb-6">
             <div className="py-2">
-              <p className="text-white text-xs font-semibold m-0">📍 Cypress, TX</p>
+              <p className="text-white text-xs font-semibold m-0">
+                📍 Cypress, TX
+              </p>
             </div>
             <div className="py-2">
               <a
