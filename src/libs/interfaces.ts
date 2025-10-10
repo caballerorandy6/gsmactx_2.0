@@ -75,6 +75,7 @@ export interface Campaign {
   createdBy: string;
   admin: SafeAdmin;
   imageUrl?: string;
+  templateType?: string;
 }
 
 export interface CampaignEmailProps {

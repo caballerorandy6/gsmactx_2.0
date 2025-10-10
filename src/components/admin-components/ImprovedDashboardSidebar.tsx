@@ -79,38 +79,38 @@ const ImprovedDashboardSidebar = ({
   ];
 
   return (
-    <aside className="w-72 min-h-screen bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 backdrop-blur-sm border-r border-white/10 p-6 shadow-2xl">
+    <aside className="w-full lg:w-72 lg:min-h-screen bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 backdrop-blur-sm lg:border-r border-b lg:border-b-0 border-white/10 p-4 sm:p-6 shadow-2xl">
       {/* User Welcome Section */}
-      <div className="mb-8 pb-6 border-b border-white/10">
+      <div className="mb-6 lg:mb-8 pb-4 lg:pb-6 border-b border-white/10">
         <div className="flex items-center gap-3 mb-2">
-          <div className="h-12 w-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+          <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-lg">
             {userName.charAt(0).toUpperCase()}
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-white">Dashboard</h2>
+            <h2 className="text-base sm:text-lg font-semibold text-white">Dashboard</h2>
             <p className="text-gray-400 text-xs">Welcome, {userName}</p>
           </div>
         </div>
       </div>
 
       {/* Filter Navigation */}
-      <div className="mb-8">
+      <div className="mb-6 lg:mb-8">
         <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
           Filters
         </h3>
-        <nav className="space-y-1">
+        <nav className="grid grid-cols-3 lg:grid-cols-1 gap-2 lg:space-y-1 lg:gap-0">
           {sidebarItems.map((item) => (
             <button
               key={item.id}
               onClick={() => onFilterChange(item.id)}
               className={clsx(
-                "w-full text-left px-4 py-3 rounded-lg transition-all flex items-center justify-between group",
+                "w-full text-left px-3 sm:px-4 py-2 sm:py-3 rounded-lg transition-all flex flex-col lg:flex-row items-center lg:items-center justify-center lg:justify-between group",
                 selectedFilter === item.id
                   ? "bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-white border border-indigo-500/30 shadow-lg shadow-indigo-500/10"
                   : "text-gray-300 hover:bg-white/5 hover:text-white hover:border hover:border-white/10"
               )}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col lg:flex-row items-center gap-1 lg:gap-3">
                 <item.icon
                   className={clsx(
                     "h-5 w-5 transition-colors",
@@ -119,11 +119,11 @@ const ImprovedDashboardSidebar = ({
                       : "text-gray-400 group-hover:text-gray-300"
                   )}
                 />
-                <span className="font-medium text-sm">{item.label}</span>
+                <span className="font-medium text-xs sm:text-sm text-center lg:text-left">{item.label}</span>
               </div>
               <span
                 className={clsx(
-                  "px-2.5 py-0.5 text-xs font-semibold rounded-full transition-colors",
+                  "px-2.5 py-0.5 text-xs font-semibold rounded-full transition-colors mt-1 lg:mt-0",
                   selectedFilter === item.id
                     ? "bg-indigo-500/30 text-indigo-200"
                     : "bg-gray-700/50 text-gray-400 group-hover:bg-gray-600/50"
@@ -137,49 +137,50 @@ const ImprovedDashboardSidebar = ({
       </div>
 
       {/* Quick Actions */}
-      <div className="mb-8">
+      <div className="mb-6 lg:mb-8">
         <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
           Quick Actions
         </h3>
-        <div className="space-y-2">
+        <div className="grid grid-cols-3 lg:grid-cols-1 gap-2 lg:space-y-2 lg:gap-0">
           {quickActions.map((action) => (
             <Link
               key={action.href}
               href={action.href}
               className={clsx(
-                "w-full flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium text-white transition-all shadow-md",
+                "w-full flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1 lg:gap-3 rounded-lg px-2 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-white transition-all shadow-md",
                 action.color
               )}
             >
               <action.icon className="h-5 w-5" />
-              {action.label}
+              <span className="hidden sm:inline lg:inline">{action.label}</span>
+              <span className="sm:hidden lg:hidden text-[10px] text-center">{action.label.split(' ')[0]}</span>
             </Link>
           ))}
         </div>
       </div>
 
       {/* Stats Summary */}
-      <div className="rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 p-4">
+      <div className="rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 p-3 sm:p-4">
         <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
           Overview
         </h3>
-        <div className="space-y-3">
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-300">Total</span>
-            <span className="text-lg font-bold text-white">
+        <div className="grid grid-cols-3 lg:grid-cols-1 gap-3 lg:space-y-3 lg:gap-0">
+          <div className="flex flex-col lg:flex-row justify-between items-center">
+            <span className="text-xs sm:text-sm text-gray-300">Total</span>
+            <span className="text-base sm:text-lg font-bold text-white">
               {totalCampaigns}
             </span>
           </div>
-          <div className="h-px bg-white/10"></div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-green-400">Sent</span>
-            <span className="text-lg font-bold text-green-400">
+          <div className="hidden lg:block h-px bg-white/10"></div>
+          <div className="flex flex-col lg:flex-row justify-between items-center">
+            <span className="text-xs sm:text-sm text-green-400">Sent</span>
+            <span className="text-base sm:text-lg font-bold text-green-400">
               {sentCampaigns}
             </span>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-orange-400">Pending</span>
-            <span className="text-lg font-bold text-orange-400">
+          <div className="flex flex-col lg:flex-row justify-between items-center">
+            <span className="text-xs sm:text-sm text-orange-400">Pending</span>
+            <span className="text-base sm:text-lg font-bold text-orange-400">
               {notSentCampaigns}
             </span>
           </div>
