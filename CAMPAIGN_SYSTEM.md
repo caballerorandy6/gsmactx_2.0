@@ -196,48 +196,60 @@ const DAILY_LIMIT = 100; // Change this according to your plan
 ### Emails remain "pending" without sending
 - **Solution**: Click "Send Next Batch" manually each day, or enable automatic sending
 
-## 🚀 Automatic Daily Sending (NEW!)
+## 🎉 Admin Notifications (NEW!)
 
-### ✨ Now Available: Automated Cron Job
+### ✨ Automatic Notifications When Campaigns Complete
 
-The system now includes **automatic daily sending** that:
+The system now includes **automatic admin notifications**:
 
-✅ Runs every day at **8:00 AM Central Standard Time (CST)**
-✅ Automatically sends pending emails (up to 100/day)
-✅ Processes multiple campaigns intelligently
-✅ **Sends completion notifications to all admins** when campaigns finish
+✅ **Sends email to all admins** when a campaign finishes sending
+✅ Beautiful branded notification email
+✅ Complete campaign statistics
+✅ Instant notification upon completion
 
 ### How It Works:
 
-1. **Every day at 8 AM CST**, the system automatically:
-   - Checks how many emails can be sent today (respects 100/day limit)
-   - Finds all campaigns with pending emails
-   - Sends emails in batches until quota is reached
-   - Marks completed campaigns as "sent"
-   - **Sends beautiful email notifications to admins** when campaigns complete
+When you click "Send Next Batch" and the campaign completes (all emails sent):
 
-2. **Admin Notifications**: When a campaign finishes, all admins receive:
+1. **System detects completion**:
+   - Checks if all emails have been sent (no pending emails left)
+   - Marks campaign as "sent"
+   - Gets all admin emails from database
+
+2. **Sends notifications to all admins**:
    - Campaign title
    - Total emails sent
    - Completion date and time
    - Beautiful branded email template
 
-### Setup:
+3. **Admin receives email**:
+   ```
+   ✅ Campaign Completed!
 
-**See `/CRON_SETUP.md` for complete setup instructions.**
+   Hello [Admin Name],
 
-Quick setup:
-1. Add `CRON_SECRET` to your `.env` (generate with `openssl rand -base64 32`)
-2. Add `CRON_SECRET` to Vercel environment variables
-3. Deploy to Vercel
-4. Done! Campaigns will send automatically at 8 AM CST
+   Great news! Your email campaign has been successfully completed.
 
-### Manual vs. Automatic:
+   Campaign Details:
+   - Campaign: [Campaign Title]
+   - Total Emails Sent: [Number]
+   - Completed: [Date and Time]
+   ```
 
-You can choose:
-- **Manual**: Click "Send Next Batch" when you want
-- **Automatic**: Set it and forget it (8 AM CST daily)
-- **Both**: Mix manual and automatic (they share the same quota)
+### Example Flow:
+
+**Day 1:**
+- You click "Send Next Batch" → 100 emails sent
+- System: "Progress: 100/250 sent, 150 pending" (no notification yet)
+
+**Day 2:**
+- You click "Send Next Batch" → 100 emails sent
+- System: "Progress: 200/250 sent, 50 pending" (no notification yet)
+
+**Day 3:**
+- You click "Send Next Batch" → 50 emails sent
+- System: "Campaign completed! All 250 emails sent. **Admins have been notified.**"
+- **All admins receive completion email** ✅
 
 ## 📞 Support
 

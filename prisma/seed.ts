@@ -5,12 +5,13 @@ import { emailsToSeed } from "@/libs/data";
 async function main() {
   console.log("Iniciando seed...");
 
+  // Admin 1: From environment variables (main admin)
   const adminEmail = process.env.ADMIN_EMAIL!;
   const adminPassword = process.env.ADMIN_PASSWORD!;
 
   if (!adminEmail || !adminPassword) {
     throw new Error(
-      "Las variables de entorno ADMIN_EMAIL y ADMIN_PASSWORD deben estar definidas."
+      "The ADMIN_EMAIL and ADMIN_PASSWORD environment variables must be defined."
     );
   }
 
@@ -27,6 +28,28 @@ async function main() {
       name: "Admin",
     },
   });
+
+  console.log("✅ Admin 1 created/updated:", adminEmail);
+
+  // Admin 2: Secondary admin (hardcoded for seed)
+  const secondAdminEmail = "admin2@gsmactx.com";
+  const secondAdminPassword = "Admin123!"; // Change this in production
+  const hashedPassword2 = await bcrypt.hash(secondAdminPassword, 10);
+
+  await prisma.admin.upsert({
+    where: {
+      email: secondAdminEmail,
+    },
+    update: {},
+    create: {
+      email: secondAdminEmail,
+      password: hashedPassword2,
+      name: "Secondary Admin",
+    },
+  });
+
+  console.log("✅ Admin 2 created/updated:", secondAdminEmail);
+  console.log("📧 Admin 2 password:", secondAdminPassword);
 
   console.log("Seeding completed successfully!");
 }

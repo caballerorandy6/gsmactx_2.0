@@ -1,12 +1,19 @@
-# Automated Campaign Sending - Cron Job Setup
+# Automated Campaign Sending - Cron Job Setup (OPTIONAL)
+
+> **⚠️ NOTE**: This cron job is **OPTIONAL** and currently **DISABLED** by default.
+>
+> The system works perfectly in **manual mode** where you click "Send Next Batch" whenever you want to send emails. Admin notifications work automatically in manual mode.
+>
+> Only enable this if you want fully automated sending without manual clicks.
 
 ## 🎯 Overview
 
-The system now includes an **automated daily cron job** that:
-- ✅ Runs every day at **8:00 AM Central Standard Time (CST)**
-- ✅ Automatically sends pending campaign emails (up to 100/day)
-- ✅ Sends completion notifications to all admins when campaigns finish
-- ✅ Processes multiple campaigns intelligently
+This **optional** automated daily cron job can:
+- ✅ Run every day at **8:00 AM Central Standard Time (CST)**
+- ✅ Automatically send pending campaign emails (up to 100/day)
+- ✅ Send completion notifications to all admins when campaigns finish
+- ✅ Process multiple campaigns intelligently
+- ✅ Work completely hands-free
 
 ## ⏰ Schedule
 
