@@ -7,6 +7,7 @@ import AdminDeleteCampaignButton from "@/components/admin-components/DeleteCampa
 import AdminSendCampaignButton from "@/components/admin-components/SendCampaignButton";
 import AdminSendTestCampaignButton from "@/components/admin-components/SendTestCampaignButton";
 import AdminEditCampaignButton from "@/components/admin-components/EditCampaignButton";
+import AdminDuplicateCampaignButton from "@/components/admin-components/DuplicateCampaignButton";
 
 const CampaignList = async ({ user }) => {
   const campaigns = await getCampaignsListAction();
@@ -102,6 +103,7 @@ const CampaignList = async ({ user }) => {
                         <AdminSendTestCampaignButton id={campaign.id} />
                         <AdminSendCampaignButton id={campaign.id} />
                         <AdminEditCampaignButton id={campaign.id} />
+                        <AdminDuplicateCampaignButton id={campaign.id} />
                         <AdminDeleteCampaignButton id={campaign.id} />
                       </MenuItems>
                     </Menu>
