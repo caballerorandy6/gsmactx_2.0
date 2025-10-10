@@ -3,10 +3,6 @@
     {
       "path": "/api/cron/keepalive",
       "schedule": "0 0 */5 * *"
-    },
-    {
-      "path": "/api/cron/send-campaigns",
-      "schedule": "0 13 * * *"
     }
   ]
 }
