@@ -5,51 +5,53 @@ import { emailsToSeed } from "@/libs/data";
 async function main() {
   console.log("Iniciando seed...");
 
-  // Admin 1: From environment variables (main admin)
-  const adminEmail = process.env.ADMIN_EMAIL!;
-  const adminPassword = process.env.ADMIN_PASSWORD!;
-
-  if (!adminEmail || !adminPassword) {
-    throw new Error(
-      "The ADMIN_EMAIL and ADMIN_PASSWORD environment variables must be defined."
-    );
-  }
-
-  const hashedPassword = await bcrypt.hash(adminPassword, 10);
+  // Admin 1: admin@rcweb.dev
+  const admin1Email = "admin@rcweb.dev";
+  const admin1Password = "***REMOVED***";
+  const hashedPassword1 = await bcrypt.hash(admin1Password, 10);
 
   await prisma.admin.upsert({
     where: {
-      email: adminEmail,
+      email: admin1Email,
     },
     update: {},
     create: {
-      email: adminEmail,
-      password: hashedPassword,
-      name: "Admin",
+      email: admin1Email,
+      password: hashedPassword1,
+      name: "RC Web Admin",
     },
   });
 
-  console.log("✅ Admin 1 created/updated:", adminEmail);
+  console.log("✅ Admin 1 created/updated:", admin1Email);
 
-  // Admin 2: Secondary admin (hardcoded for seed)
-  const secondAdminEmail = "admin2@gsmactx.com";
-  const secondAdminPassword = "Admin123!"; // Change this in production
-  const hashedPassword2 = await bcrypt.hash(secondAdminPassword, 10);
+  // Admin 2: gsmactx@gmail.com
+  const admin2Email = "gsmactx@gmail.com";
+  const admin2Password = "***REMOVED***";
+  const hashedPassword2 = await bcrypt.hash(admin2Password, 10);
 
   await prisma.admin.upsert({
     where: {
-      email: secondAdminEmail,
+      email: admin2Email,
     },
     update: {},
     create: {
-      email: secondAdminEmail,
+      email: admin2Email,
       password: hashedPassword2,
-      name: "Secondary Admin",
+      name: "GSM AC Admin",
     },
   });
 
-  console.log("✅ Admin 2 created/updated:", secondAdminEmail);
-  console.log("📧 Admin 2 password:", secondAdminPassword);
+  console.log("✅ Admin 2 created/updated:", admin2Email);
+
+  console.log("\n📋 Admin Credentials:");
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+  console.log("Admin 1:");
+  console.log("  Email:    ", admin1Email);
+  console.log("  Password: ", admin1Password);
+  console.log("\nAdmin 2:");
+  console.log("  Email:    ", admin2Email);
+  console.log("  Password: ", admin2Password);
+  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 
   console.log("Seeding completed successfully!");
 }

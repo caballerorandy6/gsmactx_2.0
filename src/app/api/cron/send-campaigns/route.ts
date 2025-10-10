@@ -6,7 +6,7 @@ import CampaignEmailTemplate from "@/components/admin-components/CampaignEmailPr
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const DAILY_LIMIT = 100;
-const FROM_EMAIL = process.env.FROM_EMAIL || "onboarding@resend.dev";
+const FROM_EMAIL = process.env.FROM_EMAIL!;
 
 /**
  * Check how many emails have been sent today across all campaigns

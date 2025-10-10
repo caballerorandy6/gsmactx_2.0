@@ -11,7 +11,7 @@ import CampaignEmailTemplate from "@/components/admin-components/CampaignEmailPr
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const DAILY_LIMIT = 100; // Resend free tier limit
-const FROM_EMAIL = process.env.FROM_EMAIL || "onboarding@resend.dev";
+const FROM_EMAIL = process.env.FROM_EMAIL!;
 
 /**
  * Send completion notification to all admins
