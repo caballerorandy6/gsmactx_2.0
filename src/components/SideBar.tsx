@@ -5,59 +5,82 @@ import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
+import { PhoneIcon, HomeIcon } from "@heroicons/react/24/outline";
 
 export default function SideBar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden sm:flex fixed z-10 top-0 px-6 flex-col justify-between h-screen border-r bg-transparent transition duration-300 w-64 py-10">
-      <Link href="/#home">
-        <span className="sr-only">Your Company</span>
+    <aside className="hidden sm:flex fixed z-10 top-0 px-6 flex-col justify-between h-screen border-r border-white/10 bg-gray-900/95 backdrop-blur-sm transition duration-300 w-64 py-8 shadow-xl">
+      {/* Logo */}
+      <Link
+        href="/#home"
+        className="transition-transform hover:scale-105 duration-300"
+      >
+        <span className="sr-only">GSM AC - Home</span>
         <Image
           alt="GSM AC Logo"
           width={1000}
           height={1000}
           src="/logo.avif"
-          className="h-20 w-auto"
+          className="h-16 w-auto"
           priority
         />
       </Link>
 
-      <nav className="flex flex-1 flex-col mt-10">
-        <ul role="list" className="flex flex-1 flex-col gap-y-7">
+      {/* Navigation */}
+      <nav className="flex flex-1 flex-col mt-8">
+        <ul role="list" className="flex flex-1 flex-col gap-y-6">
           <li>
+            <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
+              Our Services
+            </p>
             <ul role="list" className="-mx-2 space-y-1">
               {allServices.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={`/services/${item.id}`}
                     className={clsx(
-                      "text-sm/6 font-semibold transition-colors px-2 py-1 rounded-md",
+                      "block text-sm/6 font-semibold transition-all duration-200 px-3 py-2.5 rounded-lg group",
                       pathname === `/services/${item.id}`
-                        ? "text-indigo-300 bg-gray-800"
+                        ? "text-white bg-indigo-600 shadow-lg shadow-indigo-600/50"
                         : "text-gray-400 hover:text-white hover:bg-gray-800"
                     )}
                   >
-                    {item.name}
+                    <span className="flex items-center gap-2">
+                      <span
+                        className={clsx(
+                          "inline-block w-1.5 h-1.5 rounded-full transition-colors",
+                          pathname === `/services/${item.id}`
+                            ? "bg-white"
+                            : "bg-gray-600 group-hover:bg-gray-400"
+                        )}
+                      />
+                      {item.name}
+                    </span>
                   </Link>
                 </li>
               ))}
             </ul>
           </li>
-          <li className="-mx-6 mt-auto flex flex-col">
+
+          {/* Bottom Actions */}
+          <li className="-mx-6 mt-auto flex flex-col gap-3 pt-6 border-t border-white/10">
+            {/* Phone Number */}
             <Link
               href="tel:+12812354684"
-              passHref
-              className="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-400 hover:text-indigo-300 transition-colors"
+              className="flex items-center gap-x-3 px-6 py-2.5 text-sm/6 font-semibold text-gray-400 hover:text-white transition-colors group"
             >
-              <span className="sr-only">Phone Number</span>
+              <PhoneIcon className="h-5 w-5 text-gray-500 group-hover:text-white transition-colors" />
               <span>+1 (281) 235-4684</span>
             </Link>
+
+            {/* Back to Home Button */}
             <Link
               href="/#home"
-              passHref
-              className="flex items-center justify-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-white transition-colors w-10/12 bg-indigo-500 hover:bg-indigo-400 focus-visible:outline-indigo-400 rounded mx-auto"
+              className="flex items-center justify-center gap-x-2 mx-6 py-3 text-sm font-bold text-white transition-all duration-200 bg-indigo-600 hover:bg-indigo-500 focus-visible:outline-indigo-400 rounded-lg shadow-lg hover:shadow-indigo-600/50 hover:scale-105"
             >
+              <HomeIcon className="h-5 w-5" />
               Back to Home
             </Link>
           </li>

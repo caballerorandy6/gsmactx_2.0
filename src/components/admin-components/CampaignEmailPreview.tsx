@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface CampaignEmailPreviewProps {
   subject: string;
@@ -81,7 +82,7 @@ const CampaignEmailPreview = ({
           <p className="text-[#1e3a8a] text-lg font-bold mb-6">
             Ready to Get Started?
           </p>
-          <a
+          <Link
             href="tel:+12812354684"
             style={{
               background: "linear-gradient(135deg, #f59e0b 0%, #f97316 100%)",
@@ -90,8 +91,8 @@ const CampaignEmailPreview = ({
             className="inline-block text-white px-10 py-[18px] rounded-xl font-bold text-base mx-[6px] mb-4 hover:shadow-2xl transition-all w-full sm:w-auto max-w-[280px] sm:max-w-none"
           >
             📞 Call Now: (281) 235-4684
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://gsmactx.com"
             style={{
               background: "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
@@ -100,7 +101,7 @@ const CampaignEmailPreview = ({
             className="inline-block text-white px-10 py-[18px] rounded-xl font-bold text-base mx-[6px] mb-4 hover:shadow-2xl transition-all w-full sm:w-auto max-w-[280px] sm:max-w-none"
           >
             🌐 Visit Our Website
-          </a>
+          </Link>
         </div>
 
         {/* Feature Highlights */}
