@@ -65,19 +65,19 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-6 lg:mb-8">
       {statCards.map((stat) => (
         <div
           key={stat.name}
-          className={`rounded-xl border p-6 backdrop-blur-sm transition-all hover:scale-105 ${stat.color}`}
+          className={`rounded-xl border p-3 sm:p-4 lg:p-6 backdrop-blur-sm transition-all hover:scale-105 ${stat.color}`}
         >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-400">{stat.name}</p>
-              <p className="mt-2 text-3xl font-bold">{stat.value.toLocaleString()}</p>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+            <div className="w-full sm:w-auto">
+              <p className="text-xs sm:text-sm font-medium text-gray-400 line-clamp-1">{stat.name}</p>
+              <p className="mt-1 sm:mt-2 text-xl sm:text-2xl lg:text-3xl font-bold">{stat.value.toLocaleString()}</p>
             </div>
-            <div className={`rounded-full p-3 ${stat.iconBg}`}>
-              <stat.icon className="h-6 w-6" />
+            <div className={`rounded-full p-2 sm:p-3 ${stat.iconBg} ml-auto sm:ml-0`}>
+              <stat.icon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
             </div>
           </div>
         </div>

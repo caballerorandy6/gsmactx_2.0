@@ -79,6 +79,7 @@ const CampaignForm = ({
     if (template && !isEditing) {
       // Only auto-fill if creating new campaign
       setValue("title", template.defaultTitle);
+      setValue("subject", template.defaultSubject);
       setValue("content", template.defaultContent);
     }
   };
@@ -89,6 +90,7 @@ const CampaignForm = ({
       const template = getTemplateById(selectedTemplate);
       if (template) {
         setValue("title", template.defaultTitle);
+        setValue("subject", template.defaultSubject);
         setValue("content", template.defaultContent);
       }
     }

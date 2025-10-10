@@ -70,7 +70,7 @@ const AdminDashboard = ({
     <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 mt-10 min-h-screen">
       <AdminHeader />
 
-      <div className="flex pt-20">
+      <div className="flex flex-col lg:flex-row pt-20">
         <ImprovedDashboardSidebar
           userName={user.name}
           totalCampaigns={campaigns.length}
@@ -80,7 +80,7 @@ const AdminDashboard = ({
           onFilterChange={setSelectedFilter}
         />
 
-        <div className="flex-1 p-8">
+        <div className="flex-1 p-4 sm:p-6 lg:p-8">
           {/* Dashboard Stats */}
           {dashboardStats?.success && dashboardStats.stats && (
             <DashboardStats stats={dashboardStats.stats} />
