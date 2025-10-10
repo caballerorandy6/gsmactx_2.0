@@ -24,6 +24,7 @@ model Campaign {
   subject      String
   content      String    // HTML o texto plano
   imageUrl     String?
+  templateType String?   @default("promotional") // promotional, newsletter, service-reminder, seasonal
   createdAt    DateTime  @default(now())
   sent         Boolean   @default(false)
   sentAt       DateTime?

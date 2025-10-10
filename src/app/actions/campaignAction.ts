@@ -30,6 +30,8 @@ export async function upsertCampaignAction(
     image: formData.get("image"),
   };
 
+  const templateType = formData.get("templateType") as string | null;
+
   // Validate the input data
   const validateFields = CampaignSchema.safeParse(rawData);
   if (!validateFields.success) {
@@ -71,6 +73,7 @@ export async function upsertCampaignAction(
           subject,
           content,
           imageUrl,
+          templateType: templateType || "promotional",
           createdBy: user.id,
         },
       });
@@ -221,5 +224,46 @@ export async function getCampaignByIdAction(
   } catch (error) {
     console.error("Error fetching campaign by ID:", error);
     return null;
+  }
+}
+
+// Action to duplicate a campaign
+export async function duplicateCampaignAction(
+  id: string
+): Promise<ActionResult> {
+  const cookieStore = await cookies();
+  const user = await getCurrentUser(cookieStore.get("token")?.value);
+  if (!user) {
+    notFound();
+  }
+
+  try {
+    // Get the original campaign
+    const originalCampaign = await prisma.campaign.findUnique({
+      where: { id },
+    });
+
+    if (!originalCampaign) {
+      return { success: false, message: "Campaign not found." };
+    }
+
+    // Create a duplicate with "(Copy)" appended to the title
+    await prisma.campaign.create({
+      data: {
+        title: `${originalCampaign.title} (Copy)`,
+        subject: originalCampaign.subject,
+        content: originalCampaign.content,
+        imageUrl: originalCampaign.imageUrl,
+        templateType: originalCampaign.templateType,
+        createdBy: user.id,
+        sent: false, // New duplicate is never sent
+      },
+    });
+
+    revalidatePath("/view-campaigns");
+    return { success: true, message: "Campaign duplicated successfully." };
+  } catch (error) {
+    console.error("Error duplicating campaign:", error);
+    return { success: false, message: "Failed to duplicate campaign." };
   }
 }

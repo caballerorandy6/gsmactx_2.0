@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,6 +12,8 @@ import { SafeAdmin } from "@/libs/types";
 import { Campaign } from "@/libs/interfaces";
 import { useRouter } from "next/navigation";
 import CampaignEmailPreview from "./CampaignEmailPreview";
+import TemplateSelector from "./TemplateSelector";
+import { EmailTemplateType, getTemplateById } from "@/libs/emailTemplates";
 
 const CampaignForm = ({
   campaign,
@@ -26,6 +28,9 @@ const CampaignForm = ({
     campaign?.imageUrl || null
   );
   const [showPreview, setShowPreview] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<EmailTemplateType>(
+    (campaign?.templateType as EmailTemplateType) || "promotional"
+  );
 
   // Check if we are editing an existing campaign
   const isEditing = !!campaign?.id;
@@ -68,6 +73,27 @@ const CampaignForm = ({
     }
   };
 
+  const handleTemplateChange = (templateId: EmailTemplateType) => {
+    setSelectedTemplate(templateId);
+    const template = getTemplateById(templateId);
+    if (template && !isEditing) {
+      // Only auto-fill if creating new campaign
+      setValue("title", template.defaultTitle);
+      setValue("content", template.defaultContent);
+    }
+  };
+
+  // Auto-fill on initial load if not editing
+  useEffect(() => {
+    if (!isEditing && !watch("title")) {
+      const template = getTemplateById(selectedTemplate);
+      if (template) {
+        setValue("title", template.defaultTitle);
+        setValue("content", template.defaultContent);
+      }
+    }
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+
   const onSubmit = async (data: CampaignFormData) => {
     const formData = new FormData();
 
@@ -75,6 +101,7 @@ const CampaignForm = ({
     formData.append("title", data.title);
     formData.append("subject", data.subject);
     formData.append("content", data.content);
+    formData.append("templateType", selectedTemplate);
 
     //  2. AÑADE EL ID SI ESTAMOS EDITANDO (ESTE ERA EL ERROR PRINCIPAL)
     if (isEditing) {
@@ -135,6 +162,14 @@ const CampaignForm = ({
             <h2 className="text-center text-3xl font-bold tracking-tight text-white mb-8">
               {isEditing ? "Edit Campaign" : "Create Campaign"}
             </h2>
+
+            {/* Template Selector - Only show when creating new campaign */}
+            {!isEditing && (
+              <TemplateSelector
+                selectedTemplate={selectedTemplate}
+                onSelectTemplate={handleTemplateChange}
+              />
+            )}
 
             {/* Title */}
             <div className="grid grid-cols-1 gap-y-6">
