@@ -8,6 +8,7 @@ import { cookies } from "next/headers";
 import CampaignEmail from "@/components/admin-components/CampaignEmail";
 import { render } from "@react-email/render";
 import { CampaignEmailProps } from "@/libs/interfaces";
+import { put } from "@vercel/blob";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -41,25 +42,14 @@ export async function createAndSendTestCampaignAction(
   try {
     let imageUrl: string | undefined;
 
-    // Upload image if provided
-    if (imageFile && imageFile.size > 0) {
-      const formDataUpload = new FormData();
-      formDataUpload.append("file", imageFile);
-
-      const uploadResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/upload`,
-        {
-          method: "POST",
-          body: formDataUpload,
-        }
-      );
-
-      if (!uploadResponse.ok) {
-        return { success: false, message: "Failed to upload image" };
-      }
-
-      const uploadData = await uploadResponse.json();
-      imageUrl = uploadData.url;
+    // Upload image if provided (same logic as campaignAction)
+    if (imageFile instanceof File && imageFile.size > 0) {
+      // Upload the image to Vercel Blob
+      const blob = await put(imageFile.name, imageFile, {
+        access: "public",
+        allowOverwrite: true,
+      });
+      imageUrl = blob.url;
     }
 
     // Get test subscribers
