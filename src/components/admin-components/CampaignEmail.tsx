@@ -108,68 +108,72 @@ const CampaignEmail = ({
             {/* Header with gradient background */}
             <Section style={{
               background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-              padding: "40px 32px",
+              padding: "50px 32px",
               textAlign: "center"
             }}>
               <Img
                 src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
-                width="180"
+                width="240"
                 alt="GSMACTX Logo"
                 style={{ margin: "0 auto", display: "block" }}
               />
             </Section>
 
             {/* Title Section */}
-            <Section style={{ padding: "40px 32px 20px" }}>
+            <Section style={{ padding: "48px 32px 24px" }}>
               <Heading style={{
                 color: "#1f2937",
-                fontSize: "28px",
+                fontSize: "32px",
                 fontWeight: "700",
-                margin: "0 0 16px",
-                lineHeight: "1.3",
-                textAlign: "center"
+                margin: "0 0 20px",
+                lineHeight: "1.2",
+                textAlign: "center",
+                letterSpacing: "-0.5px"
               }}>
                 {title}
               </Heading>
             </Section>
 
             {/* Content Section */}
-            <Section style={{ padding: "0 32px 32px" }}>
+            <Section style={{ padding: "0 32px 40px" }}>
               {imageUrl && (
                 <Img
                   src={imageUrl}
                   alt="Campaign Image"
                   style={{
                     width: "100%",
-                    borderRadius: "12px",
-                    marginBottom: "24px",
-                    display: "block"
+                    borderRadius: "16px",
+                    marginBottom: "32px",
+                    display: "block",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
                   }}
                 />
               )}
               <Text style={{
-                color: "#4b5563",
-                fontSize: "16px",
-                lineHeight: "1.6",
+                color: "#374151",
+                fontSize: "17px",
+                lineHeight: "1.7",
                 margin: "0",
-                whiteSpace: "pre-wrap"
+                whiteSpace: "pre-wrap",
+                textAlign: "left"
               }}>
                 {content}
               </Text>
             </Section>
 
             {/* CTA Buttons Section */}
-            <Section style={{ padding: "20px 32px 40px", textAlign: "center" }}>
+            <Section style={{ padding: "32px 32px 48px", textAlign: "center" }}>
               <Link
                 className="cta-button"
                 href="tel:+12812354684"
                 style={{
                   backgroundColor: "#667eea",
                   color: "white",
-                  padding: "14px 32px",
-                  borderRadius: "8px",
+                  padding: "16px 40px",
+                  borderRadius: "10px",
                   textDecoration: "none",
                   fontWeight: "600",
+                  fontSize: "16px",
                   display: "inline-block",
                   margin: "0 8px 12px"
                 }}
@@ -183,10 +187,11 @@ const CampaignEmail = ({
                   backgroundColor: "white",
                   color: "#667eea",
                   border: "2px solid #667eea",
-                  padding: "12px 30px",
-                  borderRadius: "8px",
+                  padding: "14px 38px",
+                  borderRadius: "10px",
                   textDecoration: "none",
                   fontWeight: "600",
+                  fontSize: "16px",
                   display: "inline-block",
                   margin: "0 8px 12px"
                 }}
@@ -199,22 +204,23 @@ const CampaignEmail = ({
 
             {/* Footer Section */}
             <Section style={{
-              padding: "32px",
+              padding: "40px 32px",
               textAlign: "center",
               backgroundColor: "#f9fafb"
             }}>
               <Text style={{
-                color: "#9ca3af",
-                fontSize: "14px",
-                margin: "0 0 12px",
-                lineHeight: "1.5"
+                color: "#6b7280",
+                fontSize: "15px",
+                margin: "0 0 16px",
+                lineHeight: "1.6",
+                fontWeight: "500"
               }}>
                 📍 Cypress, TX | ☎️ (281) 235-4684 | 🌐 gsmactx.com
               </Text>
               <Text style={{
                 color: "#9ca3af",
-                fontSize: "12px",
-                margin: "0 0 8px"
+                fontSize: "13px",
+                margin: "0 0 12px"
               }}>
                 <Link
                   href={unsubscribeUrl}
@@ -223,12 +229,12 @@ const CampaignEmail = ({
                     textDecoration: "underline"
                   }}
                 >
-                  Unsubscribe
+                  Unsubscribe from emails
                 </Link>
               </Text>
               <Text style={{
                 color: "#9ca3af",
-                fontSize: "11px",
+                fontSize: "12px",
                 margin: "0"
               }}>
                 © {new Date().getFullYear()} GSMACTX, Inc. All rights reserved.

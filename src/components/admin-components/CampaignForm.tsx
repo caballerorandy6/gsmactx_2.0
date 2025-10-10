@@ -11,7 +11,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { SafeAdmin } from "@/libs/types";
 import { Campaign } from "@/libs/interfaces";
 import { useRouter } from "next/navigation";
-import CampaignEmail from "./CampaignEmail";
+import CampaignEmailPreview from "./CampaignEmailPreview";
 
 const CampaignForm = ({
   campaign,
@@ -55,6 +55,16 @@ const CampaignForm = ({
     } else {
       setImagePreview(null);
       setValue("image", undefined, { shouldValidate: true });
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+    setValue("image", undefined, { shouldValidate: true });
+    // Reset file input
+    const fileInput = document.getElementById("image") as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = "";
     }
   };
 
@@ -210,9 +220,18 @@ const CampaignForm = ({
                 </div>
                 {imagePreview && (
                   <div className="mt-4 rounded-lg bg-[#0a0f1a] p-4 border border-white/10">
-                    <p className="text-sm font-medium text-white mb-2">
-                      Image Preview:
-                    </p>
+                    <div className="flex justify-between items-center mb-2">
+                      <p className="text-sm font-medium text-white">
+                        Image Preview:
+                      </p>
+                      <button
+                        type="button"
+                        onClick={handleRemoveImage}
+                        className="text-red-400 hover:text-red-300 text-sm font-medium transition-colors"
+                      >
+                        Remove
+                      </button>
+                    </div>
                     <Image
                       src={imagePreview}
                       alt="Image Preview"
@@ -306,7 +325,7 @@ const CampaignForm = ({
               </button>
             </div>
             <div className="p-6">
-              <CampaignEmail
+              <CampaignEmailPreview
                 subject={watch("subject") || ""}
                 title={watch("title") || ""}
                 content={watch("content") || ""}
