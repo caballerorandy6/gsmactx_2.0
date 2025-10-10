@@ -26,201 +26,198 @@ const CampaignEmail = ({
     <Html>
       <Tailwind>
         <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <style>
             {`
               body {
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
               }
 
-              .cta-button {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white !important;
-                padding: 14px 32px;
-                border-radius: 8px;
-                text-decoration: none;
-                font-weight: 600;
-                display: inline-block;
-                transition: all 0.3s ease;
-                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-              }
-
-              .cta-button:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-                color: white !important;
-              }
-
-              .secondary-button {
-                background: white;
-                color: #667eea !important;
-                border: 2px solid #667eea;
-                padding: 12px 30px;
-                border-radius: 8px;
-                text-decoration: none;
-                font-weight: 600;
-                display: inline-block;
-                transition: all 0.3s ease;
-              }
-
-              .secondary-button:hover {
-                background: #667eea;
-                color: white !important;
-              }
-
-              @media (max-width: 600px) {
-                .stack-column-mobile {
+              @media only screen and (max-width: 600px) {
+                .mobile-padding {
+                  padding-left: 20px !important;
+                  padding-right: 20px !important;
+                }
+                .mobile-text-center {
+                  text-align: center !important;
+                }
+                .mobile-button {
                   display: block !important;
                   width: 100% !important;
-                  padding: 0 !important;
-                  max-width: 100% !important;
-                }
-                .header-logo {
+                  max-width: 280px !important;
+                  margin: 12px auto !important;
                   text-align: center !important;
-                  margin-bottom: 20px !important;
+                  box-sizing: border-box !important;
                 }
-                .header-title {
-                  text-align: center !important;
+                .mobile-title {
+                  font-size: 26px !important;
+                  line-height: 1.3 !important;
                 }
-                .content-image {
-                  margin-bottom: 20px !important;
-                }
-                .cta-button, .secondary-button {
+                .mobile-image {
+                  width: 100% !important;
+                  max-width: 320px !important;
+                  margin: 0 auto 24px !important;
                   display: block !important;
-                  width: 90% !important;
-                  margin: 10px auto !important;
-                  text-align: center;
+                }
+                .mobile-logo {
+                  width: 220px !important;
+                }
+                .mobile-header-padding {
+                  padding: 35px 20px !important;
                 }
               }
             `}
           </style>
         </Head>
         <Preview>{subject}</Preview>
-        <Body style={{ backgroundColor: "#f3f4f6" }}>
+        <Body style={{ backgroundColor: "#f9fafb", padding: "20px 0" }}>
           <Container style={{
-            backgroundColor: "white",
-            margin: "40px auto",
+            backgroundColor: "#ffffff",
+            margin: "0 auto",
             padding: "0",
-            borderRadius: "16px",
+            borderRadius: "12px",
             maxWidth: "600px",
-            boxShadow: "0 10px 40px rgba(0,0,0,0.1)",
-            overflow: "hidden"
+            boxShadow: "0 4px 24px rgba(0, 0, 0, 0.08)",
+            overflow: "hidden",
+            border: "1px solid #e5e7eb"
           }}>
-            {/* Header with gradient background */}
-            <Section style={{
-              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-              padding: "50px 32px",
+            {/* Header with professional gradient */}
+            <Section className="mobile-header-padding" style={{
+              background: "linear-gradient(135deg, #1e40af 0%, #7c3aed 100%)",
+              padding: "45px 40px",
               textAlign: "center"
             }}>
               <Img
+                className="mobile-logo"
                 src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
-                width="240"
+                width="280"
                 alt="GSMACTX Logo"
                 style={{ margin: "0 auto", display: "block" }}
               />
             </Section>
 
             {/* Title Section */}
-            <Section style={{ padding: "48px 32px 24px" }}>
-              <Heading style={{
-                color: "#1f2937",
-                fontSize: "32px",
+            <Section className="mobile-padding" style={{ padding: "44px 40px 28px" }}>
+              <Heading className="mobile-title" style={{
+                color: "#111827",
+                fontSize: "34px",
                 fontWeight: "700",
-                margin: "0 0 20px",
-                lineHeight: "1.2",
+                margin: "0 0 16px",
+                lineHeight: "1.25",
                 textAlign: "center",
-                letterSpacing: "-0.5px"
+                letterSpacing: "-0.02em"
               }}>
                 {title}
               </Heading>
             </Section>
 
             {/* Content Section */}
-            <Section style={{ padding: "0 32px 40px" }}>
+            <Section className="mobile-padding" style={{ padding: "0 40px 36px" }}>
               {imageUrl && (
                 <Img
+                  className="mobile-image"
                   src={imageUrl}
                   alt="Campaign Image"
                   style={{
                     width: "100%",
-                    borderRadius: "16px",
-                    marginBottom: "32px",
+                    maxWidth: "400px",
+                    borderRadius: "12px",
+                    marginBottom: "28px",
                     display: "block",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
+                    border: "1px solid #e5e7eb"
                   }}
                 />
               )}
-              <Text style={{
-                color: "#374151",
-                fontSize: "17px",
-                lineHeight: "1.7",
-                margin: "0",
-                whiteSpace: "pre-wrap",
-                textAlign: "left"
-              }}>
-                {content}
-              </Text>
+              <Container style={{ maxWidth: "520px", margin: "0 auto", padding: "0 20px" }}>
+                <Text style={{
+                  color: "#4b5563",
+                  fontSize: "16px",
+                  lineHeight: "1.75",
+                  margin: "0",
+                  whiteSpace: "pre-wrap",
+                  textAlign: "left"
+                }}>
+                  {content}
+                </Text>
+              </Container>
             </Section>
 
             {/* CTA Buttons Section */}
-            <Section style={{ padding: "32px 32px 48px", textAlign: "center" }}>
+            <Section className="mobile-padding" style={{ padding: "28px 40px 44px", textAlign: "center" }}>
               <Link
-                className="cta-button"
+                className="mobile-button"
                 href="tel:+12812354684"
                 style={{
-                  backgroundColor: "#667eea",
-                  color: "white",
-                  padding: "16px 40px",
-                  borderRadius: "10px",
+                  background: "linear-gradient(135deg, #1e40af 0%, #7c3aed 100%)",
+                  color: "#ffffff",
+                  padding: "16px 36px",
+                  borderRadius: "8px",
                   textDecoration: "none",
                   fontWeight: "600",
-                  fontSize: "16px",
+                  fontSize: "15px",
                   display: "inline-block",
-                  margin: "0 8px 12px"
+                  margin: "0 6px 14px",
+                  boxShadow: "0 4px 12px rgba(30, 64, 175, 0.25)",
+                  border: "none"
                 }}
               >
-                📞 Call Now
+                📞 Call Now: (281) 235-4684
               </Link>
               <Link
-                className="secondary-button"
+                className="mobile-button"
                 href="https://gsmactx.com"
                 style={{
-                  backgroundColor: "white",
-                  color: "#667eea",
-                  border: "2px solid #667eea",
-                  padding: "14px 38px",
-                  borderRadius: "10px",
+                  backgroundColor: "#ffffff",
+                  color: "#1e40af",
+                  border: "2px solid #1e40af",
+                  padding: "14px 34px",
+                  borderRadius: "8px",
                   textDecoration: "none",
                   fontWeight: "600",
-                  fontSize: "16px",
+                  fontSize: "15px",
                   display: "inline-block",
-                  margin: "0 8px 12px"
+                  margin: "0 6px 14px",
+                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.05)"
                 }}
               >
-                🌐 Visit Website
+                🌐 Visit Our Website
               </Link>
             </Section>
 
             <Hr style={{ borderColor: "#e5e7eb", margin: "0" }} />
 
             {/* Footer Section */}
-            <Section style={{
-              padding: "40px 32px",
+            <Section className="mobile-padding" style={{
+              padding: "36px 40px",
               textAlign: "center",
               backgroundColor: "#f9fafb"
             }}>
               <Text style={{
                 color: "#6b7280",
-                fontSize: "15px",
-                margin: "0 0 16px",
+                fontSize: "14px",
+                margin: "0 0 18px",
                 lineHeight: "1.6",
                 fontWeight: "500"
+              }}>
+                GSMACTX - Your Trusted HVAC Partner
+              </Text>
+              <Text style={{
+                color: "#6b7280",
+                fontSize: "13px",
+                margin: "0 0 14px",
+                lineHeight: "1.5"
               }}>
                 📍 Cypress, TX | ☎️ (281) 235-4684 | 🌐 gsmactx.com
               </Text>
               <Text style={{
                 color: "#9ca3af",
-                fontSize: "13px",
-                margin: "0 0 12px"
+                fontSize: "12px",
+                margin: "0 0 10px"
               }}>
                 <Link
                   href={unsubscribeUrl}
@@ -229,12 +226,12 @@ const CampaignEmail = ({
                     textDecoration: "underline"
                   }}
                 >
-                  Unsubscribe from emails
+                  Unsubscribe
                 </Link>
               </Text>
               <Text style={{
                 color: "#9ca3af",
-                fontSize: "12px",
+                fontSize: "11px",
                 margin: "0"
               }}>
                 © {new Date().getFullYear()} GSMACTX, Inc. All rights reserved.
