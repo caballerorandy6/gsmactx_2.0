@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { allServices } from "@/libs/data";
+import { allServices, businessInfo } from "@/libs/data";
 
 // Importing all service components
 import AirConditioningInstallation from "@/components/AirConditioningInstallation";
@@ -12,7 +12,7 @@ import HeatingRepair from "@/components/HeatingRepair";
 import { JsonLdForArticle } from "@/components/JsonLdForArticle";
 import { JsonLdForBreadcrumb } from "@/components/JsonLdForBreadcrumb";
 import { JsonLdForFaq } from "@/components/JsonLdForFaq";
-import { JsonLdForProduct } from "@/components/JsonLdForProduct";
+import { JsonLdForService } from "@/components/JsonLdForService";
 import Footer from "@/components/Footer";
 import FAQ from "@/components/FAQ";
 
@@ -51,8 +51,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${name} - GSM A/C General & Contractor Inc`,
       description: `Learn more about our ${name} services at GSM A/C General & Contractor Inc.`,
       images: [
-        `/service1.avif, /service2.avif, /service2.avif, /service4.avif, /service5.avif, /service6.avif`,
-      ], // Assuming you have images for each service
+        {
+          url: `/service1.avif`,
+          width: 1200,
+          height: 630,
+          alt: `${name} - Professional HVAC Service`,
+        },
+      ],
     },
   };
 }
@@ -95,8 +100,8 @@ export default async function ServicePage({ params }: Props) {
         headline={`About Our ${service.name} Services`}
         description={`Learn more about our ${service.name} services at GSM A/C General & Contractor Inc.`}
         image={`/logo.avif`}
-        datePublished="2025-05-16"
-        dateModified="2025-05-16"
+        datePublished={new Date("2024-01-01").toISOString()}
+        dateModified={new Date().toISOString()}
         author={{
           name: "GSM A/C General & Contractor Inc",
           url: "https://www.gsmactx.com",
@@ -139,19 +144,15 @@ export default async function ServicePage({ params }: Props) {
         ]}
       />
 
-      <JsonLdForProduct
-        name="GSM A/C General & Contractor Inc"
-        description={`Professional HVAC solutions including ${service.name} in Texas.`}
-        image="/logo.avif`}"
-        // brand="GSM A/C General & Contractor Inc"
-        // sku={service.id}
-        // offers={{
-        //   url: `https://www.gsmactx.com/services/${service.id}`,
-        //   priceCurrency: "USD",
-        //   price: "0.00", // Adjust as necessary
-        //   itemCondition: "https://schema.org/NewCondition",
-        //   availability: "https://schema.org/InStock",
-        // }}
+      <JsonLdForService
+        serviceName={service.name}
+        serviceType="HVAC Service"
+        description={`Professional ${service.name} services in Texas. Licensed and insured HVAC contractors providing quality service.`}
+        providerName={businessInfo.name}
+        providerUrl={businessInfo.website}
+        telephone={businessInfo.phone}
+        areaServed={businessInfo.serviceAreas}
+        url={`https://www.gsmactx.com/services/${service.id}`}
       />
     </main>
   );
