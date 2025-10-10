@@ -16,56 +16,60 @@ const CampaignEmailPreview = ({
   imageUrl,
 }: CampaignEmailPreviewProps) => {
   return (
-    <div className="bg-[#f9fafb] p-4 sm:p-8">
-      <div className="max-w-[600px] mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-        {/* Header with professional gradient */}
+    <div className="bg-[#f3f4f6] p-4 sm:p-8">
+      <div className="max-w-[600px] mx-auto bg-white shadow-lg overflow-hidden">
+        {/* Modern Hero Header */}
         <div
           style={{
-            background: "linear-gradient(135deg, #1e40af 0%, #7c3aed 100%)",
-            padding: "45px 40px",
+            background: "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)",
+            padding: "50px 40px 40px",
             textAlign: "center",
           }}
+          className="px-5 sm:px-10"
         >
           <Image
             src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
             width={280}
             height={93}
             alt="GSMACTX Logo"
-            className="mx-auto"
+            className="mx-auto mb-5 w-[220px] sm:w-[280px]"
           />
+          <p className="text-white text-sm font-semibold uppercase tracking-widest opacity-95 m-0">
+            Your Trusted HVAC Partner
+          </p>
         </div>
 
-        {/* Subject Line Preview */}
-        <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 sm:px-8 py-3 border-b border-gray-200">
-          <p className="text-xs text-gray-600 mb-1 font-medium">Subject:</p>
-          <p className="text-sm font-semibold text-gray-800">{subject}</p>
-        </div>
+        {/* Orange accent bar */}
+        <div style={{ height: "6px", background: "#f59e0b" }}></div>
 
-        {/* Title Section */}
-        <div className="px-6 sm:px-10 py-10 sm:py-11">
+        {/* Title Section with modern style */}
+        <div className="px-6 sm:px-10 py-10 bg-white">
           <h1
-            className="text-gray-900 text-3xl sm:text-[34px] font-bold text-center"
-            style={{ lineHeight: "1.25", letterSpacing: "-0.02em" }}
+            className="text-[#1e3a8a] text-[26px] sm:text-4xl font-extrabold text-center mb-3"
+            style={{ lineHeight: "1.2", letterSpacing: "-0.03em" }}
           >
             {title}
           </h1>
+          <div className="w-[60px] h-1 bg-[#f59e0b] mx-auto rounded-sm"></div>
         </div>
 
-        {/* Content Section */}
-        <div className="px-6 sm:px-10 pb-9">
+        {/* Content Section with Card */}
+        <div className="px-[30px] pb-[30px] bg-white">
           {imageUrl && (
-            <Image
-              src={imageUrl}
-              alt="Campaign Image"
-              width={400}
-              height={200}
-              className="w-full max-w-[400px] mx-auto rounded-xl mb-7 shadow-sm border border-gray-200"
-            />
+            <div className="bg-[#f9fafb] rounded-2xl p-5 mb-7">
+              <Image
+                src={imageUrl}
+                alt="Campaign Image"
+                width={600}
+                height={300}
+                className="w-full max-w-full rounded-xl shadow-md"
+              />
+            </div>
           )}
-          <div className="max-w-[520px] mx-auto px-5">
+          <div className="bg-[#f8fafc] border-l-4 border-[#3b82f6] rounded-lg p-6 sm:px-7">
             <p
-              className="text-gray-600 text-base whitespace-pre-wrap"
-              style={{ lineHeight: "1.75" }}
+              className="text-gray-700 text-base whitespace-pre-wrap m-0"
+              style={{ lineHeight: "1.8" }}
             >
               {content}
             </p>
@@ -73,40 +77,98 @@ const CampaignEmailPreview = ({
         </div>
 
         {/* CTA Buttons Section */}
-        <div className="px-6 sm:px-10 py-10 sm:py-11 text-center">
+        <div className="px-[30px] py-9 text-center bg-white">
+          <p className="text-[#1e3a8a] text-lg font-bold mb-6">
+            Ready to Get Started?
+          </p>
           <a
             href="tel:+12812354684"
             style={{
-              background: "linear-gradient(135deg, #1e40af 0%, #7c3aed 100%)",
+              background: "linear-gradient(135deg, #f59e0b 0%, #f97316 100%)",
+              boxShadow: "0 6px 24px rgba(245, 158, 11, 0.35)",
             }}
-            className="inline-block text-white px-8 sm:px-9 py-3.5 sm:py-4 rounded-lg font-semibold text-sm sm:text-[15px] mr-0 sm:mr-2 mb-3.5 shadow-md hover:shadow-lg transition-all"
+            className="inline-block text-white px-10 py-[18px] rounded-xl font-bold text-base mx-[6px] mb-4 hover:shadow-2xl transition-all w-full sm:w-auto max-w-[280px] sm:max-w-none"
           >
             📞 Call Now: (281) 235-4684
           </a>
           <a
             href="https://gsmactx.com"
-            className="inline-block bg-white text-blue-700 border-2 border-blue-700 px-8 sm:px-9 py-3 sm:py-3.5 rounded-lg font-semibold text-sm sm:text-[15px] mb-3.5 hover:bg-blue-50 transition-colors shadow-sm"
+            style={{
+              background: "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
+              boxShadow: "0 6px 24px rgba(59, 130, 246, 0.3)",
+            }}
+            className="inline-block text-white px-10 py-[18px] rounded-xl font-bold text-base mx-[6px] mb-4 hover:shadow-2xl transition-all w-full sm:w-auto max-w-[280px] sm:max-w-none"
           >
             🌐 Visit Our Website
           </a>
         </div>
 
-        <hr className="border-gray-200" />
+        {/* Feature Highlights */}
+        <div className="px-10 py-[30px] bg-[#f8fafc]">
+          <div className="grid grid-cols-3 gap-4 text-center">
+            <div className="p-[10px]">
+              <div className="text-[28px] mb-2">⚡</div>
+              <p className="text-[13px] font-semibold text-[#1e3a8a] mb-1 m-0">
+                Fast Service
+              </p>
+              <p className="text-[11px] text-gray-600 m-0">Same Day</p>
+            </div>
+            <div className="p-[10px]">
+              <div className="text-[28px] mb-2">✓</div>
+              <p className="text-[13px] font-semibold text-[#1e3a8a] mb-1 m-0">
+                Licensed
+              </p>
+              <p className="text-[11px] text-gray-600 m-0">& Insured</p>
+            </div>
+            <div className="p-[10px]">
+              <div className="text-[28px] mb-2">⭐</div>
+              <p className="text-[13px] font-semibold text-[#1e3a8a] mb-1 m-0">
+                5-Star Rated
+              </p>
+              <p className="text-[11px] text-gray-600 m-0">By Customers</p>
+            </div>
+          </div>
+        </div>
 
-        {/* Footer Section */}
-        <div className="px-6 sm:px-10 py-9 bg-gray-50 text-center">
-          <p className="text-gray-600 text-sm mb-4 font-medium">
-            GSMACTX - Your Trusted HVAC Partner
+        <hr className="border-gray-200 m-0" />
+
+        {/* Rich Footer Section */}
+        <div className="px-10 py-10 text-center bg-[#1e3a8a]">
+          <p className="text-white text-base font-bold mb-2 m-0">GSMACTX</p>
+          <p className="text-[#93c5fd] text-[13px] font-medium mb-6 m-0">
+            Your Trusted HVAC Partner in Texas
           </p>
-          <p className="text-gray-600 text-[13px] mb-3.5">
-            📍 Cypress, TX | ☎️ (281) 235-4684 | 🌐 gsmactx.com
-          </p>
-          <p className="text-gray-400 text-xs mb-2.5">
-            <a href="#" className="text-gray-600 underline">
-              Unsubscribe
+
+          <div className="mb-6">
+            <div className="py-2">
+              <p className="text-white text-xs font-semibold m-0">📍 Cypress, TX</p>
+            </div>
+            <div className="py-2">
+              <a
+                href="tel:+12812354684"
+                className="text-[#f59e0b] text-sm font-bold no-underline"
+              >
+                ☎️ (281) 235-4684
+              </a>
+            </div>
+            <div className="py-2">
+              <a
+                href="https://gsmactx.com"
+                className="text-[#93c5fd] text-xs no-underline"
+              >
+                🌐 www.gsmactx.com
+              </a>
+            </div>
+          </div>
+
+          <hr className="border-white/10 my-5" />
+
+          <p className="text-[#93c5fd] text-[11px] mb-2 m-0">
+            <a href="#" className="text-[#93c5fd] underline">
+              Unsubscribe from emails
             </a>
           </p>
-          <p className="text-gray-400 text-[11px]">
+          <p className="text-[#6b7fd1] text-[10px] m-0">
             © {new Date().getFullYear()} GSMACTX, Inc. All rights reserved.
           </p>
         </div>
