@@ -11,8 +11,8 @@ import { genPageMetadata } from "@/seo/genPageMetadata";
 import { JsonLdForArticle } from "@/components/JsonLdForArticle";
 import { JsonLdForBreadcrumb } from "@/components/JsonLdForBreadcrumb";
 import { JsonLdForFaq } from "@/components/JsonLdForFaq";
-import { JsonLdForProduct } from "@/components/JsonLdForProduct";
-import { faqs } from "@/libs/data";
+import { JsonLdForLocalBusiness } from "@/components/JsonLdForLocalBusiness";
+import { faqs, businessInfo } from "@/libs/data";
 import { servicesIntro } from "@/libs/data";
 
 // Function to generate metadata for the page
@@ -79,8 +79,8 @@ const AllServicesPage = () => {
         headline="Home Heating Repair and Installation Available to You!"
         description="Professional HVAC solutions including air conditioning installation and repair, heating services, attic insulation, and air duct sanitizing in Texas."
         image="/worker6.avif"
-        datePublished="2025-05-16"
-        dateModified="2025-05-16"
+        datePublished={new Date("2024-01-01").toISOString()}
+        dateModified={new Date().toISOString()}
         author={{
           name: "GSM A/C General & Contractor Inc",
           url: "https://www.gsmactx.com",
@@ -117,22 +117,20 @@ const AllServicesPage = () => {
           },
         ]}
       />
-      <JsonLdForProduct
-        name="GSM A/C General & Contractor Inc"
-        description="Professional HVAC solutions including air conditioning installation and repair, heating services, attic insulation, and air duct sanitizing in Texas."
+      <JsonLdForLocalBusiness
+        name={businessInfo.name}
+        description={businessInfo.description}
+        telephone={businessInfo.phone}
+        streetAddress={businessInfo.address.street}
+        addressLocality={businessInfo.address.city}
+        addressRegion={businessInfo.address.state}
+        postalCode={businessInfo.address.zip}
+        latitude={businessInfo.geo.latitude}
+        longitude={businessInfo.geo.longitude}
+        url={businessInfo.website}
         image="/logo.avif"
-        // brand="GSM A/C General & Contractor Inc"
-        // sku="GSM-AC-001"
-        // offers={{
-        //   price: "0.00",
-        //   priceCurrency: "USD",
-        //   itemCondition: "https://schema.org/NewCondition",
-        //   availability: "https://schema.org/InStock",
-        //   seller: {
-        //     name: "GSM A/C General & Contractor Inc",
-        //     url: "https://www.gsmactx.com",
-        //   },
-        // }}
+        priceRange={businessInfo.priceRange}
+        areaServed={businessInfo.serviceAreas}
       />
     </>
   );

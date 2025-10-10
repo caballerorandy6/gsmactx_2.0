@@ -49,6 +49,11 @@ export const genPageMetadata = ({
   pageRoute,
   ogImg,
 }: PageMetadata): Metadata => {
+  const fullUrl = `${siteConfig.baseUrl}${pageRoute}`;
+  const fullImageUrl = ogImg.startsWith("http")
+    ? ogImg
+    : `${siteConfig.baseUrl}${ogImg}`;
+
   return {
     title,
     description,
@@ -59,19 +64,38 @@ export const genPageMetadata = ({
     openGraph: {
       title,
       description,
-      url: pageRoute,
+      url: fullUrl,
       siteName: siteConfig.siteName,
+      locale: "en_US",
+      type: "website",
       images: [
         {
-          url: ogImg,
+          url: fullImageUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+          type: "image/avif",
         },
       ],
-      type: "website",
     },
     twitter: {
+      card: "summary_large_image",
       title,
       description,
-      images: [ogImg],
+      images: [fullImageUrl],
+      creator: "@gsmactx",
+      site: "@gsmactx",
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
   };
 };

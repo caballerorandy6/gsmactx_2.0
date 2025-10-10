@@ -1,5 +1,70 @@
 import { getCampaignsListAction } from "@/app/actions/campaignAction";
 
+/**
+ * Real Business Information from Google Business Profile
+ * Source: Google Maps - G S M A/C & General Contractor INC.
+ * Last verified: October 2025
+ */
+export const businessInfo = {
+  name: "G S M A/C & General Contractor INC.",
+  legalName: "GSM A/C General & Contractor Inc",
+  phone: "+1-281-235-4684",
+  website: "https://www.gsmactx.com",
+
+  // Real address from Google Business Profile
+  address: {
+    street: "19410 FM 529 A4",
+    city: "Cypress",
+    state: "TX",
+    zip: "77433",
+    country: "US",
+    fullAddress: "19410 FM 529 A4, Cypress, TX 77433",
+  },
+
+  // Real coordinates from Google Maps
+  geo: {
+    latitude: "29.8801145",
+    longitude: "-95.7088761",
+  },
+
+  // Real business hours from Google (Updated 2 weeks ago)
+  openingHours: [
+    { dayOfWeek: "Monday", opens: "08:00", closes: "20:00" },
+    { dayOfWeek: "Tuesday", opens: "08:00", closes: "20:00" },
+    { dayOfWeek: "Wednesday", opens: "08:00", closes: "20:00" },
+    { dayOfWeek: "Thursday", opens: "08:00", closes: "20:00" },
+    { dayOfWeek: "Friday", opens: "08:00", closes: "20:00" },
+    { dayOfWeek: "Saturday", opens: "08:00", closes: "20:00" },
+    // Sunday: Closed
+  ],
+
+  // Real review data from Google (5.0 rating, 199 reviews)
+  reviews: {
+    aggregateRating: "5.0",
+    reviewCount: "199",
+  },
+
+  // Business description from Google
+  description:
+    "Repair service offering same-day service and new units, plus efficient staff and reasonable pricing.",
+
+  // Service areas
+  serviceAreas: [
+    "Cypress",
+    "Houston",
+    "Katy",
+    "Spring",
+    "Tomball",
+    "The Woodlands",
+  ],
+
+  // Year established
+  established: "2005",
+
+  // Price range
+  priceRange: "$$",
+};
+
 export const navigation = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
