@@ -110,17 +110,17 @@ const Testimonials = () => {
             Itself
           </h2>
           <p className="mt-6 text-base/7 text-gray-300">
-            At G S M A/C & General Contractor INC., we don't just specialize in
+            At G S M A/C & General Contractor INC., we don&apos;t just specialize in
             HVAC installation and repair — we build long-lasting relationships
             based on trust, transparency, and quality workmanship. Since day
             one, our mission has been to deliver exceptional service that goes
             beyond the technical: we listen, advise, and ensure each client
             receives exactly what they need. Thanks to our dedication to detail
-            and excellence, we've earned the loyalty of hundreds of families and
+            and excellence, we&apos;ve earned the loyalty of hundreds of families and
             businesses who rely on us as their trusted HVAC service provider.
             Every project is an opportunity to exceed expectations, and we prove
             it through consistent results and customer care that truly stands
-            out. Our clients' satisfaction isn't just a promise — it's our
+            out. Our clients&apos; satisfaction isn&apos;t just a promise — it&apos;s our
             reputation. Positive reviews, referrals, and returning customers
             reflect the real impact of our work. At G S M A/C, your comfort and
             peace of mind are our top priorities, and we work every day to live
