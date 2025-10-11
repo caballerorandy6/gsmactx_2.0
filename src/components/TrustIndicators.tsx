@@ -12,7 +12,7 @@ interface TrustIndicatorsProps {
     visible: {
       opacity: number;
       y: number;
-      transition: { duration: number; ease: readonly number[] };
+      transition: { duration: number; ease: [number, number, number, number] };
     };
   };
 }
