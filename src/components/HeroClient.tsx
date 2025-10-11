@@ -73,7 +73,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
       <Header />
       <div className="relative isolate overflow-hidden flex-1 flex items-center pt-24 lg:pt-32">
         <Image
-          src="/main.webp"
+          src="/main.avif"
           alt="GSM AC Background"
           priority
           quality={90}

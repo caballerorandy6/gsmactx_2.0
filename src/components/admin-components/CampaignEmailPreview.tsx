@@ -105,7 +105,7 @@ const CampaignEmailPreview = ({
             📞 +1 (281) 235-4684
           </Link>
           <Link
-            href="https://gsmactx.com"
+            href="https://www.gsmactx.com"
             className="inline-block text-white text-[15px] font-semibold px-8 py-3 rounded-lg mx-2 mb-3 transition-all hover:opacity-90"
             style={{
               background: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
@@ -154,7 +154,7 @@ const CampaignEmailPreview = ({
             </Link>
             <br />
             <Link
-              href="https://gsmactx.com"
+              href="https://www.gsmactx.com"
               className="text-[#93c5fd] text-xs no-underline"
             >
               🌐 www.gsmactx.com
@@ -165,7 +165,7 @@ const CampaignEmailPreview = ({
 
           <p className="text-[#93c5fd] text-[11px] mb-2">
             <Link
-              href="https://gsmactx.com/unsubscribe"
+              href="https://www.gsmactx.com/unsubscribe"
               className="underline text-[#bfdbfe]"
             >
               Unsubscribe from emails
