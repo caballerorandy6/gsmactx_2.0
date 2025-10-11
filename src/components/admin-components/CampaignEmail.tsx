@@ -252,7 +252,7 @@ const CampaignEmail = ({
                 📞 +1 (281) 235-4684
               </Link>
               <Link
-                href="https://gsmactx.com"
+                href="https://www.gsmactx.com"
                 style={{
                   background: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
                   color: "#ffffff",
@@ -435,7 +435,7 @@ const CampaignEmail = ({
                   ☎️ +1 (281) 235-4684
                 </Link>
                 <Link
-                  href="https://gsmactx.com"
+                  href="https://www.gsmactx.com"
                   style={{
                     color: "#93c5fd",
                     fontSize: "12px",
