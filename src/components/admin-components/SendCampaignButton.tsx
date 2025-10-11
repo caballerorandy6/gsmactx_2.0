@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import { MenuItem } from "@headlessui/react";
-import { sendCampaignEmailAction } from "@/app/actions/sendCampaignEmailAction";
+import { initializeCampaignEmailLogsAction } from "@/app/actions/sendCampaignEmailAction";
 import { toast } from "sonner";
 import { Link } from "node_modules/@react-email/components/dist";
 
@@ -12,8 +12,8 @@ const SendCampaignButton = ({ id }: { id: string }) => {
   const handleSend = async () => {
     try {
       startTransition(async () => {
-        toast.loading("Sending campaign...");
-        const result = await sendCampaignEmailAction({ id });
+        toast.loading("Initializing campaign...");
+        const result = await initializeCampaignEmailLogsAction(id);
         if (result.success) {
           toast.dismiss();
           toast.success(result.message);
@@ -22,8 +22,8 @@ const SendCampaignButton = ({ id }: { id: string }) => {
         }
       });
     } catch (error) {
-      console.error("Error sending campaign:", error);
-      toast.error("Failed to send campaign.");
+      console.error("Error initializing campaign:", error);
+      toast.error("Failed to initialize campaign.");
     }
   };
 
