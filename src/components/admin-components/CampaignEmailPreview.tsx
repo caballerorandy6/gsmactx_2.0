@@ -23,17 +23,17 @@ const CampaignEmailPreview = ({
         <div
           style={{
             background: "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)",
-            padding: "50px 40px 40px",
+            padding: "25px 40px 20px",
             textAlign: "center",
           }}
           className="px-5 sm:px-10"
         >
           <Image
             src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
-            width={280}
-            height={93}
+            width={420}
+            height={140}
             alt="GSMACTX Logo"
-            className="mx-auto mb-5 w-[220px] sm:w-[280px]"
+            className="mx-auto mb-5 w-[330px] sm:w-[420px]"
           />
           <p className="text-white text-sm font-semibold uppercase tracking-widest opacity-95 m-0">
             Your Trusted HVAC Partner
@@ -61,8 +61,8 @@ const CampaignEmailPreview = ({
               <Image
                 src={imageUrl}
                 alt="Campaign Image"
-                width={600}
-                height={300}
+                width={300}
+                height={150}
                 className="w-full max-w-full rounded-xl shadow-md"
               />
             </div>
