@@ -54,6 +54,7 @@ export default function CampaignSender({
 
   useEffect(() => {
     loadStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [campaignId]);
 
   const handleInitialize = async () => {
@@ -131,7 +132,7 @@ export default function CampaignSender({
           Campaign: {campaignTitle}
         </h3>
         <p className="text-sm text-gray-400">
-          Send emails in batches to respect Resend's daily limit
+          Send emails in batches to respect Resend&apos;s daily limit
         </p>
       </div>
 
@@ -192,7 +193,7 @@ export default function CampaignSender({
       {stats && (
         <div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
           <h4 className="text-sm font-semibold text-white mb-2">
-            Today's Quota
+            Today&apos;s Quota
           </h4>
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-400">
@@ -268,7 +269,7 @@ export default function CampaignSender({
       {!isInitialized && (
         <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
           <p className="text-sm text-blue-300">
-            💡 <strong>First time?</strong> Click "Initialize Campaign" to
+            💡 <strong>First time?</strong> Click &quot;Initialize Campaign&quot; to
             prepare the email list for this campaign.
           </p>
         </div>
@@ -277,7 +278,7 @@ export default function CampaignSender({
       {stats && stats.remainingQuota === 0 && stats.pending > 0 && (
         <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
           <p className="text-sm text-yellow-300">
-            ⚠️ <strong>Daily limit reached.</strong> You've sent 100 emails
+            ⚠️ <strong>Daily limit reached.</strong> You&apos;ve sent 100 emails
             today. Come back tomorrow to send the next batch of {stats.pending}{" "}
             emails.
           </p>
