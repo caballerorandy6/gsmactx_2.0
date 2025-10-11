@@ -40,163 +40,172 @@ const CampaignEmail = ({
 
               @media only screen and (max-width: 600px) {
                 .mobile-padding {
-                  padding-left: 20px !important;
-                  padding-right: 20px !important;
-                }
-                .mobile-text-center {
-                  text-align: center !important;
-                }
-                .mobile-button {
-                  display: block !important;
-                  width: 100% !important;
-                  max-width: 280px !important;
-                  margin: 12px auto !important;
-                  text-align: center !important;
-                  box-sizing: border-box !important;
-                }
-                .mobile-title {
-                  font-size: 26px !important;
-                  line-height: 1.3 !important;
-                }
-                .mobile-image {
-                  width: 100% !important;
-                  max-width: 320px !important;
-                  margin: 0 auto 24px !important;
-                  display: block !important;
+                  padding-left: 24px !important;
+                  padding-right: 24px !important;
                 }
                 .mobile-logo {
-                  width: 220px !important;
+                  width: 280px !important;
                 }
-                .mobile-header-padding {
-                  padding: 35px 20px !important;
+                .mobile-header {
+                  height: 180px !important;
                 }
               }
             `}
           </style>
         </Head>
         <Preview>{subject}</Preview>
-        <Body style={{ backgroundColor: "#f3f4f6", padding: "0" }}>
+        <Body style={{ backgroundColor: "#f5f7fa", padding: "16px 0" }}>
           <Container
             style={{
               backgroundColor: "#ffffff",
               margin: "0 auto",
               padding: "0",
               maxWidth: "600px",
+              borderRadius: "12px",
+              overflow: "hidden",
+              boxShadow: "0 10px 25px rgba(0, 0, 0, 0.15)",
             }}
           >
-            {/* Modern Hero Header */}
+            {/* HEADER — reduced height, logo same size */}
             <Section
-              className="mobile-header-padding"
+              className="mobile-header"
               style={{
-                background: "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)",
-                padding: "50px 40px 40px",
-                textAlign: "center",
+                background: "linear-gradient(135deg, #1e40af 0%, #2563eb 100%)",
+                height: "180px",
                 position: "relative",
+                textAlign: "center",
               }}
             >
-              <Img
-                className="mobile-logo"
-                src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
-                width="280"
-                alt="GSMACTX Logo"
-                style={{ margin: "0 auto 20px", display: "block" }}
-              />
+              <div
+                style={{
+                  position: "absolute",
+                  top: "40%",
+                  left: "50%",
+                  transform: "translate(-50%, -25%)",
+                  width: "100%",
+                  textAlign: "center",
+                }}
+              >
+                <Img
+                  className="mobile-logo"
+                  src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
+                  width="360"
+                  alt="GSMACTX Logo"
+                  style={{
+                    margin: "0 auto",
+                    display: "block",
+                    maxHeight: "120px",
+                    height: "auto",
+                  }}
+                />
+              </div>
+
               <Text
                 style={{
                   color: "#ffffff",
-                  fontSize: "14px",
+                  fontSize: "12px",
                   fontWeight: "600",
                   margin: "0",
                   textTransform: "uppercase",
-                  letterSpacing: "1.5px",
-                  opacity: "0.95",
+                  letterSpacing: "2px",
+                  opacity: "0.9",
+                  position: "absolute",
+                  bottom: "8px",
+                  width: "100%",
+                  textAlign: "center",
                 }}
               >
                 Your Trusted HVAC Partner
               </Text>
             </Section>
 
-            {/* Orange accent bar */}
+            {/* Accent bar */}
             <Section style={{ padding: "0", margin: "0" }}>
-              <div style={{ height: "6px", background: "#f59e0b" }}></div>
+              <div style={{ height: "5px", background: "#f59e0b" }}></div>
             </Section>
 
-            {/* Title Section with Card Style */}
+            {/* Title Section */}
             <Section
               className="mobile-padding"
-              style={{ padding: "40px 40px 24px", backgroundColor: "#ffffff" }}
+              style={{
+                padding: "32px 40px",
+                backgroundColor: "#ffffff",
+                textAlign: "center",
+              }}
             >
               <Heading
-                className="mobile-title"
                 style={{
                   color: "#1e3a8a",
-                  fontSize: "36px",
+                  fontSize: "30px",
                   fontWeight: "800",
                   margin: "0 0 12px",
                   lineHeight: "1.2",
                   textAlign: "center",
-                  letterSpacing: "-0.03em",
                 }}
               >
                 {title}
               </Heading>
               <div
                 style={{
-                  width: "60px",
-                  height: "4px",
+                  width: "70px",
+                  height: "3px",
                   background: "#f59e0b",
                   margin: "0 auto",
-                  borderRadius: "2px",
+                  borderRadius: "3px",
                 }}
               ></div>
             </Section>
 
-            {/* Content Section with Card */}
+            {/* Content Section */}
             <Section
               className="mobile-padding"
-              style={{ padding: "0 30px 30px", backgroundColor: "#ffffff" }}
+              style={{
+                padding: "0 40px 32px",
+                backgroundColor: "#ffffff",
+              }}
             >
               {imageUrl && (
                 <div
                   style={{
-                    backgroundColor: "#f9fafb",
-                    borderRadius: "16px",
-                    padding: "20px",
-                    marginBottom: "28px",
+                    textAlign: "center",
+                    marginBottom: "24px",
                   }}
                 >
                   <Img
-                    className="mobile-image"
                     src={imageUrl}
                     alt="Campaign Image"
                     style={{
                       width: "100%",
-                      maxWidth: "100%",
-                      borderRadius: "12px",
+                      maxWidth: "460px",
+                      height: "208px",
+                      borderRadius: "8px",
                       display: "block",
-                      boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
+                      margin: "0 auto",
+                      objectFit: "cover",
+                      boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
                     }}
                   />
                 </div>
               )}
+
               <Container
                 style={{
-                  backgroundColor: "#f8fafc",
+                  backgroundColor: "#f9fafb",
                   borderLeft: "4px solid #3b82f6",
-                  borderRadius: "8px",
-                  padding: "24px 28px",
-                  margin: "0 auto",
+                  borderRadius: "6px",
+                  padding: "20px 24px",
+                  margin: "0",
                   maxWidth: "100%",
                 }}
               >
                 <Text
                   style={{
-                    color: "#374151",
-                    fontSize: "16px",
-                    lineHeight: "1.8",
+                    color: "#334155",
+                    fontSize: "15px",
+                    lineHeight: "1.75",
                     margin: "0",
                     whiteSpace: "pre-wrap",
-                    textAlign: "left",
+                    fontFamily: "Arial, sans-serif",
                   }}
                 >
                   {content}
@@ -204,11 +213,11 @@ const CampaignEmail = ({
               </Container>
             </Section>
 
-            {/* CTA Buttons Section with Modern Cards */}
+            {/* CTA Buttons Section */}
             <Section
               className="mobile-padding"
               style={{
-                padding: "36px 30px 40px",
+                padding: "32px 40px",
                 textAlign: "center",
                 backgroundColor: "#ffffff",
               }}
@@ -218,46 +227,42 @@ const CampaignEmail = ({
                   color: "#1e3a8a",
                   fontSize: "18px",
                   fontWeight: "700",
-                  margin: "0 0 24px",
+                  margin: "0 0 20px",
                   textAlign: "center",
                 }}
               >
                 Ready to Get Started?
               </Text>
               <Link
-                className="mobile-button"
                 href="tel:+12812354684"
                 style={{
                   background: "linear-gradient(135deg, #f59e0b 0%, #f97316 100%)",
                   color: "#ffffff",
-                  padding: "18px 40px",
-                  borderRadius: "12px",
+                  padding: "12px 32px",
+                  borderRadius: "8px",
                   textDecoration: "none",
-                  fontWeight: "700",
-                  fontSize: "16px",
+                  fontWeight: "600",
+                  fontSize: "15px",
                   display: "inline-block",
-                  margin: "0 6px 16px",
-                  boxShadow: "0 6px 24px rgba(245, 158, 11, 0.35)",
-                  border: "none",
+                  margin: "0 8px 12px",
+                  boxShadow: "0 4px 14px rgba(245, 158, 11, 0.3)",
                 }}
               >
-                📞 Call Now: (281) 235-4684
+                📞 +1 (281) 235-4684
               </Link>
               <Link
-                className="mobile-button"
                 href="https://gsmactx.com"
                 style={{
-                  background: "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
+                  background: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
                   color: "#ffffff",
-                  border: "none",
-                  padding: "18px 40px",
-                  borderRadius: "12px",
+                  padding: "12px 32px",
+                  borderRadius: "8px",
                   textDecoration: "none",
-                  fontWeight: "700",
-                  fontSize: "16px",
+                  fontWeight: "600",
+                  fontSize: "15px",
                   display: "inline-block",
-                  margin: "0 6px 16px",
-                  boxShadow: "0 6px 24px rgba(59, 130, 246, 0.3)",
+                  margin: "0 8px 12px",
+                  boxShadow: "0 4px 14px rgba(37, 99, 235, 0.25)",
                 }}
               >
                 🌐 Visit Our Website
@@ -267,8 +272,8 @@ const CampaignEmail = ({
             {/* Feature Highlights */}
             <Section
               style={{
-                padding: "30px 40px",
-                backgroundColor: "#f8fafc",
+                padding: "32px 32px",
+                backgroundColor: "#f9fafb",
               }}
             >
               <table
@@ -282,7 +287,8 @@ const CampaignEmail = ({
                     <div
                       style={{
                         fontSize: "28px",
-                        marginBottom: "8px",
+                        marginBottom: "4px",
+                        color: "#fbbf24",
                       }}
                     >
                       ⚡
@@ -311,7 +317,8 @@ const CampaignEmail = ({
                     <div
                       style={{
                         fontSize: "28px",
-                        marginBottom: "8px",
+                        marginBottom: "4px",
+                        color: "#fbbf24",
                       }}
                     >
                       ✓
@@ -340,7 +347,8 @@ const CampaignEmail = ({
                     <div
                       style={{
                         fontSize: "28px",
-                        marginBottom: "8px",
+                        marginBottom: "4px",
+                        color: "#fbbf24",
                       }}
                     >
                       ⭐
@@ -371,11 +379,11 @@ const CampaignEmail = ({
 
             <Hr style={{ borderColor: "#e5e7eb", margin: "0" }} />
 
-            {/* Rich Footer Section */}
+            {/* Footer Section */}
             <Section
               className="mobile-padding"
               style={{
-                padding: "40px 40px 30px",
+                padding: "32px 32px",
                 textAlign: "center",
                 backgroundColor: "#1e3a8a",
               }}
@@ -383,9 +391,8 @@ const CampaignEmail = ({
               <Text
                 style={{
                   color: "#ffffff",
-                  fontSize: "16px",
-                  margin: "0 0 8px",
-                  lineHeight: "1.5",
+                  fontSize: "15px",
+                  margin: "0 0 4px",
                   fontWeight: "700",
                 }}
               >
@@ -393,72 +400,57 @@ const CampaignEmail = ({
               </Text>
               <Text
                 style={{
-                  color: "#93c5fd",
+                  color: "#bfdbfe",
                   fontSize: "13px",
-                  margin: "0 0 24px",
-                  lineHeight: "1.5",
+                  margin: "0 0 20px",
                   fontWeight: "500",
                 }}
               >
                 Your Trusted HVAC Partner in Texas
               </Text>
 
-              {/* Contact Info Grid */}
-              <table
-                width="100%"
-                cellPadding="0"
-                cellSpacing="0"
-                style={{ marginBottom: "24px" }}
-              >
-                <tr>
-                  <td style={{ textAlign: "center", padding: "8px 0" }}>
-                    <Text
-                      style={{
-                        color: "#ffffff",
-                        fontSize: "12px",
-                        margin: "0",
-                        fontWeight: "600",
-                      }}
-                    >
-                      📍 Cypress, TX
-                    </Text>
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ textAlign: "center", padding: "8px 0" }}>
-                    <Link
-                      href="tel:+12812354684"
-                      style={{
-                        color: "#f59e0b",
-                        fontSize: "14px",
-                        fontWeight: "700",
-                        textDecoration: "none",
-                      }}
-                    >
-                      ☎️ (281) 235-4684
-                    </Link>
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ textAlign: "center", padding: "8px 0" }}>
-                    <Link
-                      href="https://gsmactx.com"
-                      style={{
-                        color: "#93c5fd",
-                        fontSize: "12px",
-                        textDecoration: "none",
-                      }}
-                    >
-                      🌐 www.gsmactx.com
-                    </Link>
-                  </td>
-                </tr>
-              </table>
+              <div style={{ marginBottom: "24px" }}>
+                <Text
+                  style={{
+                    color: "#ffffff",
+                    fontSize: "12px",
+                    margin: "4px 0",
+                    fontWeight: "600",
+                  }}
+                >
+                  📍 Cypress, TX
+                </Text>
+                <Link
+                  href="tel:+12812354684"
+                  style={{
+                    color: "#fbbf24",
+                    fontSize: "14px",
+                    fontWeight: "700",
+                    textDecoration: "none",
+                    display: "block",
+                    margin: "4px 0",
+                  }}
+                >
+                  ☎️ +1 (281) 235-4684
+                </Link>
+                <Link
+                  href="https://gsmactx.com"
+                  style={{
+                    color: "#93c5fd",
+                    fontSize: "12px",
+                    textDecoration: "none",
+                    display: "block",
+                    margin: "4px 0",
+                  }}
+                >
+                  🌐 www.gsmactx.com
+                </Link>
+              </div>
 
               <Hr
                 style={{
                   borderColor: "rgba(255, 255, 255, 0.1)",
-                  margin: "20px 0",
+                  margin: "16px 0",
                 }}
               />
 
@@ -472,7 +464,7 @@ const CampaignEmail = ({
                 <Link
                   href={unsubscribeUrl}
                   style={{
-                    color: "#93c5fd",
+                    color: "#bfdbfe",
                     textDecoration: "underline",
                   }}
                 >
