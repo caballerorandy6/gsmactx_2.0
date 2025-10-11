@@ -38,7 +38,7 @@ const CampaignEmailPreview = ({
               width={360}
               height={120}
               alt="GSMACTX Logo"
-              className="mx-auto w-[280px] sm:w-[360px] object-cover"
+              className="mx-auto w-[280px] sm:w-[360px] object-contain"
               style={{
                 maxHeight: "120px",
                 height: "auto",

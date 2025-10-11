@@ -96,6 +96,7 @@ const CampaignEmail = ({
                     display: "block",
                     maxHeight: "120px",
                     height: "auto",
+                    objectFit: "contain",
                   }}
                 />
               </div>
