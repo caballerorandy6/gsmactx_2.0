@@ -17,6 +17,7 @@ const TEST_EMAILS = [
   "caballerorandy7@gmail.com",
   "caballerorandy6@gmail.com",
   "yani.cruz4997@gmail.com",
+  "gsmactx@gmail.com",
 ];
 
 export async function sendTestCampaignAction(data: {
@@ -49,16 +50,19 @@ export async function sendTestCampaignAction(data: {
     if (subscribers.length === 0) {
       return {
         success: false,
-        message: "No test subscribers found. Please ensure test emails are in the database.",
+        message:
+          "No test subscribers found. Please ensure test emails are in the database.",
       };
     }
 
     // Pre-generate unsubscribe tokens for subscribers without one
-    const subscribersToUpdate = subscribers.filter(sub => !sub.unsubscribeToken);
+    const subscribersToUpdate = subscribers.filter(
+      (sub) => !sub.unsubscribeToken
+    );
 
     if (subscribersToUpdate.length > 0) {
       await Promise.all(
-        subscribersToUpdate.map(sub =>
+        subscribersToUpdate.map((sub) =>
           prisma.subscriber.update({
             where: { id: sub.id },
             data: { unsubscribeToken: randomUUID() },
@@ -69,13 +73,13 @@ export async function sendTestCampaignAction(data: {
       // Refresh subscribers data with new tokens
       const updatedSubs = await prisma.subscriber.findMany({
         where: {
-          id: { in: subscribersToUpdate.map(s => s.id) }
+          id: { in: subscribersToUpdate.map((s) => s.id) },
         },
       });
 
       // Update the subscribers array with new tokens
-      subscribersToUpdate.forEach(sub => {
-        const updated = updatedSubs.find(u => u.id === sub.id);
+      subscribersToUpdate.forEach((sub) => {
+        const updated = updatedSubs.find((u) => u.id === sub.id);
         if (updated) {
           sub.unsubscribeToken = updated.unsubscribeToken;
         }
@@ -109,7 +113,7 @@ export async function sendTestCampaignAction(data: {
 
     // Create test email logs
     await prisma.campaignEmailLog.createMany({
-      data: emailBatch.map(email => ({
+      data: emailBatch.map((email) => ({
         campaignId: id,
         subscriberId: email.subscriberId,
         status: "pending",
@@ -129,7 +133,7 @@ export async function sendTestCampaignAction(data: {
       await prisma.campaignEmailLog.updateMany({
         where: {
           campaignId: id,
-          subscriberId: { in: emailBatch.map(e => e.subscriberId) },
+          subscriberId: { in: emailBatch.map((e) => e.subscriberId) },
           status: "pending",
         },
         data: {
@@ -146,7 +150,7 @@ export async function sendTestCampaignAction(data: {
       await prisma.campaignEmailLog.updateMany({
         where: {
           campaignId: id,
-          subscriberId: { in: emailBatch.map(e => e.subscriberId) },
+          subscriberId: { in: emailBatch.map((e) => e.subscriberId) },
           status: "pending",
         },
         data: {
