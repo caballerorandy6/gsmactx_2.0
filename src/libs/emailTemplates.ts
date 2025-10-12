@@ -24,9 +24,28 @@ export const emailTemplates: EmailTemplate[] = [
     category: "Sales",
     icon: "🔥",
     thumbnail: "/templates/promotional.png",
-    defaultTitle: "Special Limited Time Offer!",
-    defaultSubject: "🔥 Limited Time: 20% OFF All HVAC Services!",
-    defaultContent: "Don't miss out on our exclusive promotion. Save big on all HVAC services this month!\n\nLimited time only - Book now and get 20% OFF on AC installation or heating repair.",
+    defaultTitle: "Wishing You a Safe & Cozy Halloween!",
+    defaultSubject: "🎃 Happy Halloween from G S M A/C & General Contractor INC! Special HVAC Offers Inside",
+    defaultContent: `Happy Halloween from your friends at G S M A/C & General Contractor INC!
+
+As the cooler weather settles in and spooky season arrives, we want to make sure your home stays comfortable and energy-efficient. There's nothing scarier than a broken heating system on a cold October night!
+
+This Halloween season, we're offering our valued customers:
+
+🔧 $69.99 A/C Check-Up Special
+Complete system inspection to prepare for winter (Regularly $99.99)
+
+🏠 FREE Filter & Surge Protection
+With any new system installation
+
+Whether you need heating repairs, air duct cleaning, or attic insulation before the holidays, our licensed and insured technicians are ready to help. With over 20 years of experience and same-day service available, we're here to keep your family comfortable all season long.
+
+Don't let HVAC issues haunt your home this fall! Give us a call today at +1 (281) 235-4684 or visit our website to schedule your service.
+
+Stay warm, stay safe, and have a wonderful Halloween!
+
+The G S M A/C & General Contractor INC Team
+Your Trusted HVAC Partner in Cypress, TX`,
     colors: {
       primary: "#ef4444",
       secondary: "#dc2626",
