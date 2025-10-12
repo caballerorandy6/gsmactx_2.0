@@ -17,7 +17,7 @@ const TEST_EMAILS = [
   "caballerorandy7@gmail.com",
   "caballerorandy6@gmail.com",
   "yani.cruz4997@gmail.com",
-  "gsmactx@gmail.com",
+  "gsmactx@outlook.com",
 ];
 
 export async function sendTestCampaignAction(data: {
