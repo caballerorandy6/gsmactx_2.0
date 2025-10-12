@@ -35,12 +35,12 @@ const CampaignEmailPreview = ({
           >
             <Image
               src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
-              width={360}
-              height={120}
+              width={728}
+              height={243}
               alt="GSMACTX Logo"
-              className="mx-auto w-[280px] sm:w-[360px] object-contain"
+              className="mx-auto w-[546px] sm:w-[728px] object-contain"
               style={{
-                maxHeight: "120px",
+                maxHeight: "243px",
                 height: "auto",
               }}
             />

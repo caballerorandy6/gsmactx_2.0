@@ -89,12 +89,12 @@ const CampaignEmail = ({
                 <Img
                   className="mobile-logo"
                   src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
-                  width="360"
+                  width="728"
                   alt="GSMACTX Logo"
                   style={{
                     margin: "0 auto",
                     display: "block",
-                    maxHeight: "120px",
+                    maxHeight: "243px",
                     height: "auto",
                     objectFit: "contain",
                   }}
