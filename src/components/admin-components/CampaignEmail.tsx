@@ -237,7 +237,8 @@ const CampaignEmail = ({
               <Link
                 href="tel:+12812354684"
                 style={{
-                  background: "linear-gradient(135deg, #f59e0b 0%, #f97316 100%)",
+                  background:
+                    "linear-gradient(135deg, #f59e0b 0%, #f97316 100%)",
                   color: "#ffffff",
                   padding: "12px 32px",
                   borderRadius: "8px",
@@ -254,7 +255,8 @@ const CampaignEmail = ({
               <Link
                 href="https://www.gsmactx.com"
                 style={{
-                  background: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
+                  background:
+                    "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
                   color: "#ffffff",
                   padding: "12px 32px",
                   borderRadius: "8px",
@@ -477,6 +479,9 @@ const CampaignEmail = ({
                   color: "#6b7fd1",
                   fontSize: "10px",
                   margin: "0",
+                  textAlign: "center",
+                  marginLeft: "auto",
+                  marginRight: "auto",
                 }}
               >
                 © {new Date().getFullYear()} GSMACTX, Inc. All rights reserved.

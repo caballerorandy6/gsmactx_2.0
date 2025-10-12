@@ -171,7 +171,7 @@ const CampaignEmailPreview = ({
               Unsubscribe from emails
             </Link>
           </p>
-          <p className="text-[#6b7fd1] text-[10px] m-0">
+          <p className="text-[#6b7fd1] text-[10px] m-0 mx-auto ">
             © {new Date().getFullYear()} GSMACTX, Inc. All rights reserved.
           </p>
         </div>

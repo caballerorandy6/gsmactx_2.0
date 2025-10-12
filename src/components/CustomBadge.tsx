@@ -10,7 +10,7 @@ const CustomBadge = ({ children }: CustomBadgeProps) => {
     <Link
       href="https://apply.optimusfinancing.com/EG-51065"
       target="_blank"
-      className="flex items-center justify-center mt-10 hover:scale-105 transition-transform duration-200 ease-in-out"
+      className="flex items-center justify-center hover:scale-105 transition-transform duration-200 ease-in-out"
     >
       <span className="relative inline-flex overflow-hidden rounded-full p-[1px] transition-transform duration-200 ease-in-out hover:scale-105">
         <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#CBB26A_0%,#8B7945_50%,#CBB26A_100%)]"></span>

@@ -17,6 +17,9 @@ const TEST_EMAILS = [
   "caballerorandy7@gmail.com",
   "caballerorandy6@gmail.com",
   "yani.cruz4997@gmail.com",
+  "contactus@rcweb.dev",
+  "gsmactx@outlook.com",
+  "michel@gsmactx.com",
 ];
 
 export async function createAndSendTestCampaignAction(
@@ -63,16 +66,19 @@ export async function createAndSendTestCampaignAction(
     if (subscribers.length === 0) {
       return {
         success: false,
-        message: "No test subscribers found. Please ensure test emails are in the database.",
+        message:
+          "No test subscribers found. Please ensure test emails are in the database.",
       };
     }
 
     // Pre-generate unsubscribe tokens for subscribers without one
-    const subscribersToUpdate = subscribers.filter(sub => !sub.unsubscribeToken);
+    const subscribersToUpdate = subscribers.filter(
+      (sub) => !sub.unsubscribeToken
+    );
 
     if (subscribersToUpdate.length > 0) {
       await Promise.all(
-        subscribersToUpdate.map(sub =>
+        subscribersToUpdate.map((sub) =>
           prisma.subscriber.update({
             where: { id: sub.id },
             data: { unsubscribeToken: randomUUID() },
@@ -83,13 +89,13 @@ export async function createAndSendTestCampaignAction(
       // Refresh subscribers data with new tokens
       const updatedSubs = await prisma.subscriber.findMany({
         where: {
-          id: { in: subscribersToUpdate.map(s => s.id) }
+          id: { in: subscribersToUpdate.map((s) => s.id) },
         },
       });
 
       // Update the subscribers array with new tokens
-      subscribersToUpdate.forEach(sub => {
-        const updated = updatedSubs.find(u => u.id === sub.id);
+      subscribersToUpdate.forEach((sub) => {
+        const updated = updatedSubs.find((u) => u.id === sub.id);
         if (updated) {
           sub.unsubscribeToken = updated.unsubscribeToken;
         }
@@ -131,7 +137,8 @@ export async function createAndSendTestCampaignAction(
     console.error("Error creating and sending test campaign:", error);
     return {
       success: false,
-      message: error instanceof Error ? error.message : "Failed to send test campaign",
+      message:
+        error instanceof Error ? error.message : "Failed to send test campaign",
     };
   }
 }
