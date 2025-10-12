@@ -30,7 +30,7 @@ export const emailTemplates: EmailTemplate[] = [
 
 As the cooler weather settles in and spooky season arrives, we want to make sure your home stays comfortable and energy-efficient. There's nothing scarier than a broken heating system on a cold October night!
 
-This Halloween season, we're offering our valued customers:
+This Winter season, we're offering our valued customers:
 
 🔧 $69.99 A/C Check-Up Special
 Complete system inspection to prepare for winter (Regularly $99.99)

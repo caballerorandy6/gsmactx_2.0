@@ -71,7 +71,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
       className="bg-gray-900 min-h-screen flex flex-col"
     >
       <Header />
-      <div className="relative isolate overflow-hidden flex-1 flex items-center pt-24 lg:pt-32">
+      <div className="relative isolate overflow-hidden flex-1 flex items-center pt-20 lg:pt-24">
         <Image
           src="/main.avif"
           alt="GSM AC Background"
@@ -99,7 +99,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
           />
         </div>
 
-        <div className="w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+        <div className="w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
           <motion.div
             className="mx-auto max-w-4xl"
             variants={containerVariants}
@@ -107,10 +107,12 @@ export default function HeroClient({ googleData }: HeroClientProps) {
             animate="visible"
           >
             {/* Trust Indicators at top */}
-            <TrustIndicators
-              googleData={googleData}
-              itemVariants={itemVariants}
-            />
+            <div className="mb-6 sm:mb-8">
+              <TrustIndicators
+                googleData={googleData}
+                itemVariants={itemVariants}
+              />
+            </div>
 
             {/* Main content wrapper */}
             <div className="text-center space-y-4 sm:space-y-6">
@@ -158,14 +160,14 @@ export default function HeroClient({ googleData }: HeroClientProps) {
                     </h2>
                     <div className="flex items-center justify-center gap-3">
                       <span className="text-3xl sm:text-4xl md:text-5xl font-black text-emerald-400">
-                        $59.99
+                        $69.99
                       </span>
                       <div className="text-left">
                         <p className="text-gray-400 line-through text-xs sm:text-sm">
                           Was $99.99
                         </p>
                         <p className="text-emerald-300 text-[10px] sm:text-xs font-semibold">
-                          Save $40!
+                          Save $30!
                         </p>
                       </div>
                     </div>
@@ -179,7 +181,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
               {/* CTA Buttons */}
               <motion.div
                 variants={itemVariants}
-                className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-1"
+                className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-4 sm:pt-6"
               >
                 {/* Primary CTA - Call Now */}
                 <motion.div
@@ -204,7 +206,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
                     >
                       <PhoneIcon className="h-5 w-5 text-white" />
                     </motion.div>
-                    <span>(281) 235-4684</span>
+                    <span>+1 (281) 235-4684</span>
                   </Link>
                 </motion.div>
 
@@ -222,61 +224,6 @@ export default function HeroClient({ googleData }: HeroClientProps) {
                     Get Free Estimate
                   </Link>
                 </motion.div>
-              </motion.div>
-
-              {/* Bottom Features */}
-              <motion.div
-                variants={itemVariants}
-                className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm"
-              >
-                <div className="flex items-center gap-2 text-gray-300">
-                  <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                    <svg
-                      className="w-3 h-3 text-emerald-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <span>Same-Day Service</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-300">
-                  <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                    <svg
-                      className="w-3 h-3 text-emerald-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <span>Licensed & Insured</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-300">
-                  <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                    <svg
-                      className="w-3 h-3 text-emerald-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <span>20+ Years Experience</span>
-                </div>
               </motion.div>
             </div>
           </motion.div>
