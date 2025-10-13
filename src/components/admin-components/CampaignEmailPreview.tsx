@@ -16,34 +16,40 @@ const CampaignEmailPreview = ({
   imageUrl,
 }: CampaignEmailPreviewProps) => {
   return (
-    <div className="bg-[#f5f7fa] p-4 sm:p-8">
+    <div className="bg-white p-4 sm:p-8">
       <div className="max-w-[600px] mx-auto bg-white shadow-xl overflow-hidden rounded-xl">
-        {/* HEADER — reduced height, logo same size */}
+        {/* HEADER — logo with company name */}
         <div
-          className="relative flex flex-col items-center justify-center text-center overflow-visible"
+          className="relative flex items-center justify-center text-center overflow-visible"
           style={{
             background: "linear-gradient(135deg, #1e40af 0%, #2563eb 100%)",
-            height: "180px", // half height of previous header
+            height: "180px",
           }}
         >
           <div
-            className="absolute inset-0 flex justify-center items-center"
+            className="absolute flex flex-wrap items-center justify-center gap-5 px-5"
             style={{
-              top: "40%",
-              transform: "translateY(-25%)", // lifts logo upward slightly
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "100%",
             }}
           >
             <Image
-              src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
-              width={728}
-              height={243}
+              src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo.avif"
+              width={946}
+              height={316}
               alt="GSMACTX Logo"
-              className="mx-auto w-[546px] sm:w-[728px] object-contain"
+              className="object-contain"
               style={{
-                maxHeight: "243px",
+                maxWidth: "200px",
+                maxHeight: "316px",
                 height: "auto",
               }}
             />
+            <h2 className="text-white text-2xl sm:text-[28px] font-bold m-0 leading-tight">
+              A/C & General Contractor INC
+            </h2>
           </div>
 
           <p className="text-white text-[12px] font-semibold uppercase tracking-widest opacity-90 absolute bottom-2">

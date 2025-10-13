@@ -54,7 +54,7 @@ const CampaignEmail = ({
           </style>
         </Head>
         <Preview>{subject}</Preview>
-        <Body style={{ backgroundColor: "#f5f7fa", padding: "16px 0" }}>
+        <Body style={{ backgroundColor: "#ffffff", padding: "16px 0" }}>
           <Container
             style={{
               backgroundColor: "#ffffff",
@@ -66,7 +66,7 @@ const CampaignEmail = ({
               boxShadow: "0 10px 25px rgba(0, 0, 0, 0.15)",
             }}
           >
-            {/* HEADER — reduced height, logo same size */}
+            {/* HEADER — logo with company name */}
             <Section
               className="mobile-header"
               style={{
@@ -79,26 +79,40 @@ const CampaignEmail = ({
               <div
                 style={{
                   position: "absolute",
-                  top: "40%",
+                  top: "50%",
                   left: "50%",
-                  transform: "translate(-50%, -25%)",
+                  transform: "translate(-50%, -50%)",
                   width: "100%",
-                  textAlign: "center",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexWrap: "wrap",
+                  padding: "0 20px",
                 }}
               >
                 <Img
                   className="mobile-logo"
-                  src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo2.avif"
-                  width="728"
+                  src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo.avif"
+                  width="946"
                   alt="GSMACTX Logo"
                   style={{
-                    margin: "0 auto",
-                    display: "block",
-                    maxHeight: "243px",
+                    maxHeight: "316px",
                     height: "auto",
                     objectFit: "contain",
+                    maxWidth: "200px",
                   }}
                 />
+                <Text
+                  style={{
+                    color: "#ffffff",
+                    fontSize: "28px",
+                    fontWeight: "700",
+                    margin: "0 0 0 20px",
+                    lineHeight: "1.2",
+                  }}
+                >
+                  A/C & General Contractor INC
+                </Text>
               </div>
 
               <Text
