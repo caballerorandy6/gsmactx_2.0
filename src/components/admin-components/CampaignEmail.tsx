@@ -38,16 +38,94 @@ const CampaignEmail = ({
                 -moz-osx-font-smoothing: grayscale;
               }
 
+              .header-content {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+                padding: 0 20px;
+                gap: 20px;
+              }
+
+              .company-name {
+                text-align: left;
+              }
+
+              .company-text-line1 {
+                color: #dc2626;
+                font-size: 28px;
+                font-weight: 800;
+                margin: 0;
+                line-height: 1.1;
+              }
+
+              .company-text-line2 {
+                color: #2563eb;
+                font-size: 26px;
+                font-weight: 800;
+                margin: 0;
+                line-height: 1.1;
+              }
+
+              /* Tablet styles */
+              @media only screen and (max-width: 768px) {
+                .mobile-logo {
+                  max-width: 120px !important;
+                }
+                .company-text-line1 {
+                  font-size: 24px !important;
+                }
+                .company-text-line2 {
+                  font-size: 22px !important;
+                }
+                .header-content {
+                  gap: 15px !important;
+                  padding: 0 15px !important;
+                }
+              }
+
+              /* Mobile styles */
               @media only screen and (max-width: 600px) {
                 .mobile-padding {
                   padding-left: 24px !important;
                   padding-right: 24px !important;
                 }
                 .mobile-logo {
-                  width: 280px !important;
+                  max-width: 100px !important;
                 }
                 .mobile-header {
-                  height: 180px !important;
+                  height: auto !important;
+                  min-height: 160px !important;
+                  padding: 20px 10px 40px !important;
+                }
+                .company-text-line1 {
+                  font-size: 20px !important;
+                }
+                .company-text-line2 {
+                  font-size: 18px !important;
+                }
+                .header-content {
+                  gap: 10px !important;
+                  padding: 0 10px !important;
+                }
+                .company-name {
+                  text-align: center !important;
+                }
+              }
+
+              /* Small mobile styles */
+              @media only screen and (max-width: 400px) {
+                .mobile-logo {
+                  max-width: 80px !important;
+                }
+                .company-text-line1 {
+                  font-size: 18px !important;
+                }
+                .company-text-line2 {
+                  font-size: 16px !important;
+                }
+                .mobile-header {
+                  min-height: 140px !important;
                 }
               }
             `}
@@ -78,16 +156,7 @@ const CampaignEmail = ({
                 justifyContent: "center",
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexWrap: "wrap",
-                  padding: "0 20px",
-                  gap: "20px",
-                }}
-              >
+              <div className="header-content">
                 <Img
                   className="mobile-logo"
                   src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo.avif"
@@ -100,29 +169,11 @@ const CampaignEmail = ({
                     maxWidth: "150px",
                   }}
                 />
-                <div>
-                  <Text
-                    style={{
-                      color: "#dc2626",
-                      fontSize: "28px",
-                      fontWeight: "800",
-                      margin: "0",
-                      lineHeight: "1.1",
-                      textAlign: "left",
-                    }}
-                  >
+                <div className="company-name">
+                  <Text className="company-text-line1">
                     A/C & General
                   </Text>
-                  <Text
-                    style={{
-                      color: "#2563eb",
-                      fontSize: "26px",
-                      fontWeight: "800",
-                      margin: "0",
-                      lineHeight: "1.1",
-                      textAlign: "left",
-                    }}
-                  >
+                  <Text className="company-text-line2">
                     Contractor INC
                   </Text>
                 </div>
