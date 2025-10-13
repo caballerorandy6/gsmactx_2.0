@@ -15,13 +15,10 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // Test emails for campaign testing
 const TEST_EMAILS = [
   "caballerorandy7@gmail.com",
-  "caballerorandy6@gmail.com",
-  "yani.cruz4997@gmail.com",
-  "contactus@rcweb.dev",
   "gsmactx@outlook.com",
   "michel@gsmactx.com",
   "***REMOVED***",
-  "***REMOVED***"
+  "***REMOVED***",
 ];
 
 export async function sendTestCampaignAction(data: {
@@ -131,7 +128,11 @@ export async function sendTestCampaignAction(data: {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         ({ subscriberId, ...email }) => email
       );
-      await resend.batch.send(emailsForResend);
+
+      console.log(`📧 Attempting to send ${emailsForResend.length} test emails to:`, emailsForResend.map(e => e.to));
+
+      const result = await resend.batch.send(emailsForResend);
+      console.log(`✅ Resend batch result:`, result);
 
       // Update status to sent
       await prisma.campaignEmailLog.updateMany({
