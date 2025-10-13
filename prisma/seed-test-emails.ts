@@ -6,6 +6,11 @@ const testEmails = [
   "caballerorandy7@gmail.com",
   "caballerorandy6@gmail.com",
   "yani.cruz4997@gmail.com",
+  "contactus@rcweb.dev",
+  "gsmactx@outlook.com",
+  "michel@gsmactx.com",
+  "mchapelli305@gmail.com",
+  "mchapelli305@yahoo.com",
 ];
 
 async function main() {

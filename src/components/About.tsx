@@ -62,7 +62,7 @@ const About = () => {
             className="mt-6 text-base/7 text-gray-300"
           >
             We established our HVAC repair & installation company in 2005 and
-            since then, G S M A/C & General Contractor INC. has become a
+            since then, GSM A/C & General Contractor INC. has become a
             reference for quality, professionalism, and competence. Over the
             years, we have handled countless projects for many homeowners and
             businesses in Cypress, TX and we would be honored to assist you as
@@ -110,7 +110,7 @@ const About = () => {
               Our HVAC repair & installation company is based on honesty,
               teamwork, integrity, and accountability. Our core values have
               allowed us to earn the repeat business of countless customers and
-              we believe they will win us yours as well. At G S M A/C & General
+              we believe they will win us yours as well. At GSM A/C & General
               Contractor INC., we are licensed, certified, and insured. Call now
               to ask about our attractive discounts. Reach us at (281) 235-4684
               now to schedule an appointment and book our heating repair
