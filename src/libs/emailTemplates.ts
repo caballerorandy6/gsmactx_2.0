@@ -35,8 +35,7 @@ This Winter season, we're offering our valued customers:
 🔧 $69.99 A/C Check-Up Special
 Complete system inspection to prepare for winter (Regularly $99.99)
 
-🏠 FREE Filter & Surge Protection
-With any new system installation
+🏠 Free media air filter & UV light with new complete HVAC system installation 
 
 Whether you need heating repairs, air duct cleaning, or attic insulation before the holidays, our licensed and insured technicians are ready to help. With over 20 years of experience and same-day service available, we're here to keep your family comfortable all season long.
 
