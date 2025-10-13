@@ -20,6 +20,8 @@ const TEST_EMAILS = [
   "contactus@rcweb.dev",
   "gsmactx@outlook.com",
   "michel@gsmactx.com",
+  "mchapelli305@gmail.com",
+  "mchapelli305@yahoo.com"
 ];
 
 export async function sendTestCampaignAction(data: {

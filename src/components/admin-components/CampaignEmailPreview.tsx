@@ -23,20 +23,20 @@ const CampaignEmailPreview = ({
           className="relative flex items-center justify-center text-center overflow-visible bg-gradient-to-br from-white via-blue-50/50 to-blue-100/30 backdrop-blur-md min-h-[180px] py-5 px-5"
         >
           <div
-            className="flex flex-wrap items-center justify-center gap-5 max-sm:gap-3"
+            className="flex flex-wrap items-center justify-center gap-5 max-sm:gap-3 max-sm:flex-col w-full"
           >
             <Image
               src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo.avif"
               width={757}
               height={253}
               alt="GSMACTX Logo"
-              className="object-contain w-[150px] max-md:w-[120px] max-sm:w-[100px] max-[400px]:w-[80px]"
+              className="object-contain w-[150px] max-md:w-[120px] max-sm:w-[100px] max-[400px]:w-[80px] max-sm:mx-auto"
               style={{
                 maxHeight: "253px",
                 height: "auto",
               }}
             />
-            <div className="text-left max-sm:text-center">
+            <div className="text-left max-sm:text-center max-sm:w-full">
               <p className="text-[#dc2626] text-[28px] max-md:text-[24px] max-sm:text-[20px] max-[400px]:text-[18px] font-extrabold m-0 leading-tight">
                 A/C & General
               </p>
@@ -46,7 +46,7 @@ const CampaignEmailPreview = ({
             </div>
           </div>
 
-          <p className="text-[#64748b] text-[12px] font-semibold uppercase tracking-widest opacity-90 absolute bottom-2">
+          <p className="text-[#64748b] text-[12px] font-semibold uppercase tracking-widest opacity-90 absolute bottom-2 w-full text-center">
             Your Trusted HVAC Partner
           </p>
         </div>
