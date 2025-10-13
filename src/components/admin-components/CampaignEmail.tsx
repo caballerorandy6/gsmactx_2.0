@@ -39,32 +39,38 @@ const CampaignEmail = ({
               }
 
               .header-content {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-wrap: wrap;
-                padding: 0 20px;
-                gap: 20px;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                flex-wrap: wrap !important;
+                padding: 0 20px !important;
+                gap: 20px !important;
+                text-align: center !important;
+                width: 100% !important;
+                margin: 0 auto !important;
               }
 
               .company-name {
-                text-align: left;
+                text-align: left !important;
+                display: inline-block !important;
               }
 
               .company-text-line1 {
-                color: #dc2626;
-                font-size: 28px;
-                font-weight: 800;
-                margin: 0;
-                line-height: 1.1;
+                color: #dc2626 !important;
+                font-size: 28px !important;
+                font-weight: 800 !important;
+                margin: 0 !important;
+                line-height: 1.1 !important;
+                text-align: left !important;
               }
 
               .company-text-line2 {
-                color: #2563eb;
-                font-size: 26px;
-                font-weight: 800;
-                margin: 0;
-                line-height: 1.1;
+                color: #2563eb !important;
+                font-size: 26px !important;
+                font-weight: 800 !important;
+                margin: 0 !important;
+                line-height: 1.1 !important;
+                text-align: left !important;
               }
 
               /* Tablet styles */
@@ -92,24 +98,35 @@ const CampaignEmail = ({
                 }
                 .mobile-logo {
                   max-width: 100px !important;
+                  margin: 0 auto !important;
+                  display: block !important;
                 }
                 .mobile-header {
                   height: auto !important;
                   min-height: 160px !important;
                   padding: 20px 10px 40px !important;
+                  display: flex !important;
+                  align-items: center !important;
+                  justify-content: center !important;
                 }
                 .company-text-line1 {
                   font-size: 20px !important;
+                  text-align: center !important;
                 }
                 .company-text-line2 {
                   font-size: 18px !important;
+                  text-align: center !important;
                 }
                 .header-content {
                   gap: 10px !important;
                   padding: 0 10px !important;
+                  flex-direction: column !important;
+                  align-items: center !important;
+                  justify-content: center !important;
                 }
                 .company-name {
                   text-align: center !important;
+                  width: 100% !important;
                 }
               }
 
@@ -117,15 +134,21 @@ const CampaignEmail = ({
               @media only screen and (max-width: 400px) {
                 .mobile-logo {
                   max-width: 80px !important;
+                  margin: 0 auto !important;
                 }
                 .company-text-line1 {
                   font-size: 18px !important;
+                  text-align: center !important;
                 }
                 .company-text-line2 {
                   font-size: 16px !important;
+                  text-align: center !important;
                 }
                 .mobile-header {
                   min-height: 140px !important;
+                }
+                .header-content {
+                  flex-direction: column !important;
                 }
               }
             `}
