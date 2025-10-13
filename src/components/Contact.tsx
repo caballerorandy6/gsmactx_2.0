@@ -150,7 +150,7 @@ export default function Contact() {
               variants={fadeInUp}
               className="mt-6 text-base/7 text-gray-300"
             >
-              Call now to schedule an appointment. At G S M A/C & General
+              Call now to schedule an appointment. At GSM A/C & General
               Contractor INC., we take pride in offering quality HVAC services
               suitable for residential and commercial projects. We can install
               and repair a wide variety of AC, HVAC, and heating units. We can
@@ -167,7 +167,7 @@ export default function Contact() {
                   <BuildingOffice2Icon className="h-7 w-6 text-gray-400" />
                 </div>
                 <div>
-                  G S M A/C & General Contractor INC.
+                  GSM A/C & General Contractor INC.
                   <br />
                   Cypress, TX 77433
                 </div>
