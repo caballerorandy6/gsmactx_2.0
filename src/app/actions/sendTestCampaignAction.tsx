@@ -17,7 +17,9 @@ const TEST_EMAILS = [
   "caballerorandy7@gmail.com",
   "caballerorandy6@gmail.com",
   "yani.cruz4997@gmail.com",
+  "contactus@rcweb.dev",
   "gsmactx@outlook.com",
+  "michel@gsmactx.com",
 ];
 
 export async function sendTestCampaignAction(data: {
@@ -121,12 +123,12 @@ export async function sendTestCampaignAction(data: {
       skipDuplicates: true,
     });
 
-    // Send test emails
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const emailsForResend = emailBatch.map(({ subscriberId, ...email }) => email);
-
     try {
-      // Send test emails
+      // Send test emails (remove subscriberId as it's not needed by Resend)
+      const emailsForResend = emailBatch.map(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        ({ subscriberId, ...email }) => email
+      );
       await resend.batch.send(emailsForResend);
 
       // Update status to sent
