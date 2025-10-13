@@ -20,33 +20,29 @@ const CampaignEmailPreview = ({
       <div className="max-w-[600px] mx-auto bg-white shadow-xl overflow-hidden rounded-xl">
         {/* HEADER — logo with company name */}
         <div
-          className="relative flex items-center justify-center text-center overflow-visible bg-gradient-to-br from-white via-blue-50/50 to-blue-100/30 backdrop-blur-md min-h-[180px] py-5 px-5"
+          className="relative bg-gradient-to-br from-white via-blue-50/50 to-blue-100/30 backdrop-blur-md min-h-[180px]"
         >
-          <div
-            className="flex flex-wrap items-center justify-center gap-5 max-sm:gap-3 max-sm:flex-col w-full"
-          >
-            <Image
-              src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo.avif"
-              width={757}
-              height={253}
-              alt="GSMACTX Logo"
-              className="object-contain w-[150px] max-md:w-[120px] max-sm:w-[100px] max-[400px]:w-[80px] max-sm:mx-auto"
-              style={{
-                maxHeight: "253px",
-                height: "auto",
-              }}
-            />
-            <div className="text-left max-sm:text-center max-sm:w-full">
-              <p className="text-[#dc2626] text-[28px] max-md:text-[24px] max-sm:text-[20px] max-[400px]:text-[18px] font-extrabold m-0 leading-tight">
+          <div className="flex items-center justify-center py-[30px] px-5 md:flex-row flex-col text-center">
+            <div className="inline-block mr-4 md:mr-4 mb-0 md:mb-0 max-md:mb-4">
+              <Image
+                src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo.avif"
+                width={150}
+                height={150}
+                alt="GSMACTX Logo"
+                className="object-contain w-[150px] h-auto md:w-[120px] sm:w-[100px] max-[480px]:w-[90px] max-[380px]:w-[80px] mx-auto"
+              />
+            </div>
+            <div className="inline-block text-left md:text-left sm:text-center max-sm:text-center">
+              <p className="text-[#dc2626] text-[28px] md:text-[24px] sm:text-[22px] max-[480px]:text-[20px] max-[380px]:text-[18px] font-extrabold m-0 mb-1 leading-tight">
                 A/C & General
               </p>
-              <p className="text-[#2563eb] text-[26px] max-md:text-[22px] max-sm:text-[18px] max-[400px]:text-[16px] font-extrabold m-0 leading-tight">
+              <p className="text-[#2563eb] text-[26px] md:text-[22px] sm:text-[20px] max-[480px]:text-[18px] max-[380px]:text-[16px] font-extrabold m-0 leading-tight">
                 Contractor INC
               </p>
             </div>
           </div>
 
-          <p className="text-[#64748b] text-[12px] font-semibold uppercase tracking-widest opacity-90 absolute bottom-2 w-full text-center">
+          <p className="text-[#64748b] text-[12px] max-sm:text-[11px] max-[380px]:text-[10px] font-semibold uppercase tracking-widest opacity-90 absolute bottom-[10px] max-sm:bottom-2 left-0 right-0 w-full text-center m-0">
             Your Trusted HVAC Partner
           </p>
         </div>

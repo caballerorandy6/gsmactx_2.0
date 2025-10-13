@@ -38,117 +38,194 @@ const CampaignEmail = ({
                 -moz-osx-font-smoothing: grayscale;
               }
 
-              .header-content {
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                flex-wrap: wrap !important;
-                padding: 0 20px !important;
-                gap: 20px !important;
-                text-align: center !important;
+              /* Header base styles */
+              .email-header {
                 width: 100% !important;
+                max-width: 600px !important;
+                margin: 0 auto !important;
+                text-align: center !important;
+                display: table !important;
+              }
+
+              .header-content {
+                display: table-cell !important;
+                vertical-align: middle !important;
+                text-align: center !important;
+                padding: 30px 20px !important;
+              }
+
+              .logo-container {
+                display: inline-block !important;
+                vertical-align: middle !important;
+                margin: 0 15px 0 0 !important;
+              }
+
+              .mobile-logo {
+                display: block !important;
+                width: 150px !important;
+                max-width: 150px !important;
+                height: auto !important;
                 margin: 0 auto !important;
               }
 
-              .company-name {
-                text-align: left !important;
+              .company-name-container {
                 display: inline-block !important;
+                vertical-align: middle !important;
+                text-align: left !important;
+                margin: 0 !important;
+              }
+
+              .company-text-line1,
+              .company-text-line2 {
+                margin: 0 !important;
+                padding: 0 !important;
+                line-height: 1.2 !important;
+                display: block !important;
               }
 
               .company-text-line1 {
                 color: #dc2626 !important;
                 font-size: 28px !important;
                 font-weight: 800 !important;
-                margin: 0 !important;
-                line-height: 1.1 !important;
-                text-align: left !important;
+                margin-bottom: 4px !important;
               }
 
               .company-text-line2 {
                 color: #2563eb !important;
                 font-size: 26px !important;
                 font-weight: 800 !important;
-                margin: 0 !important;
-                line-height: 1.1 !important;
-                text-align: left !important;
               }
 
-              /* Tablet styles */
+              .header-tagline {
+                position: absolute !important;
+                bottom: 10px !important;
+                left: 0 !important;
+                right: 0 !important;
+                text-align: center !important;
+                width: 100% !important;
+                margin: 0 !important;
+              }
+
+              /* Desktop styles (default - already set above) */
+
+              /* Tablet styles - 768px and below */
               @media only screen and (max-width: 768px) {
+                .header-content {
+                  padding: 25px 15px !important;
+                }
+
                 .mobile-logo {
+                  width: 120px !important;
                   max-width: 120px !important;
                 }
+
+                .logo-container {
+                  margin: 0 12px 0 0 !important;
+                }
+
                 .company-text-line1 {
                   font-size: 24px !important;
                 }
+
                 .company-text-line2 {
                   font-size: 22px !important;
                 }
-                .header-content {
-                  gap: 15px !important;
-                  padding: 0 15px !important;
-                }
               }
 
-              /* Mobile styles */
+              /* Mobile styles - 600px and below */
               @media only screen and (max-width: 600px) {
                 .mobile-padding {
-                  padding-left: 24px !important;
-                  padding-right: 24px !important;
+                  padding-left: 20px !important;
+                  padding-right: 20px !important;
                 }
+
+                .header-content {
+                  padding: 20px 15px 45px !important;
+                }
+
+                .logo-container {
+                  display: block !important;
+                  margin: 0 auto 15px auto !important;
+                }
+
                 .mobile-logo {
+                  width: 100px !important;
                   max-width: 100px !important;
                   margin: 0 auto !important;
+                }
+
+                .company-name-container {
                   display: block !important;
+                  text-align: center !important;
+                  margin: 0 auto !important;
                 }
-                .mobile-header {
-                  height: auto !important;
-                  min-height: 160px !important;
-                  padding: 20px 10px 40px !important;
-                  display: flex !important;
-                  align-items: center !important;
-                  justify-content: center !important;
-                }
+
                 .company-text-line1 {
+                  font-size: 22px !important;
+                  text-align: center !important;
+                  margin-bottom: 4px !important;
+                }
+
+                .company-text-line2 {
                   font-size: 20px !important;
                   text-align: center !important;
                 }
-                .company-text-line2 {
-                  font-size: 18px !important;
-                  text-align: center !important;
-                }
-                .header-content {
-                  gap: 10px !important;
-                  padding: 0 10px !important;
-                  flex-direction: column !important;
-                  align-items: center !important;
-                  justify-content: center !important;
-                }
-                .company-name {
-                  text-align: center !important;
-                  width: 100% !important;
+
+                .header-tagline {
+                  bottom: 8px !important;
+                  font-size: 11px !important;
                 }
               }
 
-              /* Small mobile styles */
-              @media only screen and (max-width: 400px) {
-                .mobile-logo {
-                  max-width: 80px !important;
-                  margin: 0 auto !important;
+              /* Small mobile styles - 480px and below */
+              @media only screen and (max-width: 480px) {
+                .header-content {
+                  padding: 18px 10px 40px !important;
                 }
+
+                .mobile-logo {
+                  width: 90px !important;
+                  max-width: 90px !important;
+                }
+
+                .company-text-line1 {
+                  font-size: 20px !important;
+                }
+
+                .company-text-line2 {
+                  font-size: 18px !important;
+                }
+
+                .logo-container {
+                  margin-bottom: 12px !important;
+                }
+              }
+
+              /* Extra small mobile - 380px and below */
+              @media only screen and (max-width: 380px) {
+                .header-content {
+                  padding: 15px 8px 38px !important;
+                }
+
+                .mobile-logo {
+                  width: 80px !important;
+                  max-width: 80px !important;
+                }
+
                 .company-text-line1 {
                   font-size: 18px !important;
-                  text-align: center !important;
                 }
+
                 .company-text-line2 {
                   font-size: 16px !important;
-                  text-align: center !important;
                 }
-                .mobile-header {
-                  min-height: 140px !important;
+
+                .logo-container {
+                  margin-bottom: 10px !important;
                 }
-                .header-content {
-                  flex-direction: column !important;
+
+                .header-tagline {
+                  font-size: 10px !important;
                 }
               }
             `}
@@ -169,40 +246,76 @@ const CampaignEmail = ({
           >
             {/* HEADER — logo with company name */}
             <Section
-              className="mobile-header"
               style={{
                 background: "linear-gradient(to bottom right, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%)",
-                height: "180px",
+                minHeight: "180px",
                 position: "relative",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                width: "100%",
               }}
             >
-              <div className="header-content">
-                <Img
-                  className="mobile-logo"
-                  src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo.avif"
-                  width="757"
-                  alt="GSMACTX Logo"
-                  style={{
-                    maxHeight: "253px",
-                    height: "auto",
-                    objectFit: "contain",
-                    maxWidth: "150px",
-                  }}
-                />
-                <div className="company-name">
-                  <Text className="company-text-line1">
-                    A/C & General
-                  </Text>
-                  <Text className="company-text-line2">
-                    Contractor INC
-                  </Text>
-                </div>
-              </div>
+              <table
+                className="email-header"
+                width="100%"
+                cellPadding="0"
+                cellSpacing="0"
+                border={0}
+                style={{
+                  width: "100%",
+                  maxWidth: "600px",
+                  margin: "0 auto",
+                }}
+              >
+                <tr>
+                  <td className="header-content">
+                    <div className="logo-container">
+                      <Img
+                        className="mobile-logo"
+                        src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo.avif"
+                        width="150"
+                        alt="GSMACTX Logo"
+                        style={{
+                          display: "block",
+                          width: "150px",
+                          maxWidth: "150px",
+                          height: "auto",
+                          margin: "0 auto",
+                        }}
+                      />
+                    </div>
+                    <div className="company-name-container">
+                      <Text
+                        className="company-text-line1"
+                        style={{
+                          color: "#dc2626",
+                          fontSize: "28px",
+                          fontWeight: "800",
+                          margin: "0 0 4px 0",
+                          lineHeight: "1.2",
+                          textAlign: "left",
+                        }}
+                      >
+                        A/C & General
+                      </Text>
+                      <Text
+                        className="company-text-line2"
+                        style={{
+                          color: "#2563eb",
+                          fontSize: "26px",
+                          fontWeight: "800",
+                          margin: "0",
+                          lineHeight: "1.2",
+                          textAlign: "left",
+                        }}
+                      >
+                        Contractor INC
+                      </Text>
+                    </div>
+                  </td>
+                </tr>
+              </table>
 
               <Text
+                className="header-tagline"
                 style={{
                   color: "#64748b",
                   fontSize: "12px",
@@ -212,7 +325,9 @@ const CampaignEmail = ({
                   letterSpacing: "2px",
                   opacity: "0.9",
                   position: "absolute",
-                  bottom: "8px",
+                  bottom: "10px",
+                  left: "0",
+                  right: "0",
                   width: "100%",
                   textAlign: "center",
                 }}
