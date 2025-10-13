@@ -1,7 +1,7 @@
 "use client";
 
 import { MenuItem } from "@headlessui/react";
-import { sendTestCampaignAction } from "@/app/actions/sendTestCampaignAction";
+import { createAndSendTestCampaignAction } from "@/app/actions/createAndSendTestCampaignAction";
 import { toast } from "sonner";
 
 interface AdminSendTestCampaignButtonProps {
@@ -12,15 +12,42 @@ const AdminSendTestCampaignButton = ({
   id,
 }: AdminSendTestCampaignButtonProps) => {
   const handleSendTestCampaign = async () => {
-  const confirmed = confirm(
-    "Send test campaign to test emails?\n\nThis will send to:\n• caballerorandy7@gmail.com\n• gsmactx@outlook.com\n• michel@gsmactx.com\n• mchapelli305@gmail.com\n• mchapelli305@yahoo.com"
-  );
+    const confirmed = confirm(
+      "Send test campaign to test emails?\n\nThis will send to:\n• caballerorandy7@gmail.com\n• gsmactx@outlook.com\n• michel@gsmactx.com\n• mchapelli305@gmail.com\n• mchapelli305@yahoo.com"
+    );
 
     if (!confirmed) return;
 
     try {
+      toast.loading("Fetching campaign data...");
+
+      // Fetch campaign data
+      const response = await fetch(`/api/campaigns/${id}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch campaign");
+      }
+
+      const campaign = await response.json();
+
+      // Create FormData from campaign
+      const formData = new FormData();
+      formData.append("title", campaign.title);
+      formData.append("subject", campaign.subject);
+      formData.append("content", campaign.content);
+
+      // If there's an image URL, we need to fetch it and convert to File
+      if (campaign.imageUrl) {
+        const imageResponse = await fetch(campaign.imageUrl);
+        const imageBlob = await imageResponse.blob();
+        const imageName = campaign.imageUrl.split('/').pop() || 'image.jpg';
+        const imageFile = new File([imageBlob], imageName, { type: imageBlob.type });
+        formData.append("image", imageFile);
+      }
+
+      toast.dismiss();
       toast.loading("Sending test campaign...");
-      const result = await sendTestCampaignAction({ id });
+
+      const result = await createAndSendTestCampaignAction(formData);
       toast.dismiss();
 
       if (result.success) {

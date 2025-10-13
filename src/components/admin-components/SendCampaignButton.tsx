@@ -4,7 +4,6 @@ import { useTransition } from "react";
 import { MenuItem } from "@headlessui/react";
 import { initializeCampaignEmailLogsAction } from "@/app/actions/sendCampaignEmailAction";
 import { toast } from "sonner";
-import { Link } from "node_modules/@react-email/components/dist";
 
 const SendCampaignButton = ({ id }: { id: string }) => {
   const [isPending, startTransition] = useTransition();
@@ -28,12 +27,14 @@ const SendCampaignButton = ({ id }: { id: string }) => {
   };
 
   return (
-    <MenuItem as={Link} onClick={handleSend} disabled={isPending}>
-      <span
+    <MenuItem>
+      <button
+        onClick={handleSend}
+        disabled={isPending}
         className={`flex w-full px-3 py-1 text-sm/6 data-[focus]:bg-white/10 transition-colors cursor-pointer text-green-500 hover:bg-green-500/10 ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
       >
         Send
-      </span>
+      </button>
     </MenuItem>
   );
 };

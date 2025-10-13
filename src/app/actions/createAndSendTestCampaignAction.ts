@@ -5,21 +5,18 @@ import { randomUUID } from "crypto";
 import { getCurrentUser } from "@/libs/getCurrentUser";
 import { prisma } from "@/libs/prisma";
 import { cookies } from "next/headers";
-import CampaignEmail from "@/components/admin-components/CampaignEmail";
-import { render } from "@react-email/render";
-import { CampaignEmailProps } from "@/libs/interfaces";
 import { put } from "@vercel/blob";
+import { renderCampaignEmail } from "@/libs/emailRenderer";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Test emails for campaign testing
 const TEST_EMAILS = [
   "caballerorandy7@gmail.com",
-  "caballerorandy6@gmail.com",
-  "yani.cruz4997@gmail.com",
-  "contactus@rcweb.dev",
   "gsmactx@outlook.com",
   "michel@gsmactx.com",
+  "mchapelli305@gmail.com",
+  "mchapelli305@yahoo.com",
 ];
 
 export async function createAndSendTestCampaignAction(
@@ -105,16 +102,14 @@ export async function createAndSendTestCampaignAction(
     // Prepare emails for test subscribers
     const emailBatch = await Promise.all(
       subscribers.map(async (sub) => {
-        const emailProps: CampaignEmailProps = {
+        const html = await renderCampaignEmail({
           subject: `[TEST] ${subject}`,
           title,
           content,
           imageUrl,
           recipientEmail: sub.email,
           unsubscribeUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/unsubscribe?token=${sub.unsubscribeToken}`,
-        };
-
-        const html = await render(<CampaignEmail {...emailProps} />);
+        });
 
         return {
           from: "GSMACTX <no-reply@gsmactx.com>",

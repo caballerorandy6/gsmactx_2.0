@@ -1,10 +1,9 @@
-import { render } from "@react-email/render";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import CampaignEmail from "@/components/admin-components/CampaignEmail";
 import CampaignSender from "@/components/admin-components/CampaignSender";
 import { getCurrentUser } from "@/libs/getCurrentUser";
 import { prisma } from "@/libs/prisma";
+import { renderCampaignEmail } from "@/libs/emailRenderer";
 
 type Params = Promise<{ id: string }>;
 
@@ -25,14 +24,15 @@ const CampaignPage = async ({ params }: { params: Params }) => {
     return <div className="text-center text-red-500">Campaign not found.</div>;
   }
 
-  const emailProps = {
+  // Generate preview email HTML
+  const emailHtmlString = await renderCampaignEmail({
     subject: campaign.subject,
     title: campaign.title,
     content: campaign.content,
     imageUrl: campaign.imageUrl || undefined,
-  };
-
-  const emailHtmlString = await render(<CampaignEmail {...emailProps} />);
+    recipientEmail: "preview@example.com",
+    unsubscribeUrl: "#",
+  });
 
   return (
     <div className="py-10 px-5 flex flex-col items-center min-h-screen font-sans">
@@ -41,9 +41,24 @@ const CampaignPage = async ({ params }: { params: Params }) => {
       </h1>
 
       {/* Campaign Sender Component */}
-      <div className="w-full max-w-5xl mb-10">
-        <CampaignSender campaignId={campaign.id} campaignTitle={campaign.title} />
-      </div>
+      {!campaign.sent && (
+        <div className="w-full max-w-5xl mb-10">
+          <CampaignSender campaignId={campaign.id} campaignTitle={campaign.title} />
+        </div>
+      )}
+
+      {campaign.sent && (
+        <div className="w-full max-w-5xl mb-10 bg-green-600 rounded-lg p-6 text-center">
+          <p className="text-2xl font-bold text-white">
+            ✓ Campaign Already Sent!
+          </p>
+          <p className="text-sm text-green-100 mt-2">
+            This campaign was sent on {campaign.sentAt?.toLocaleDateString("en-US", {
+              dateStyle: "full",
+            })}
+          </p>
+        </div>
+      )}
 
       {/* Email Preview */}
       <div className="w-full max-w-5xl">
