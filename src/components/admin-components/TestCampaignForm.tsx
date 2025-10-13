@@ -58,7 +58,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
 
   const onSubmit = async (data: CampaignFormData) => {
     const confirmed = confirm(
-      "Send test campaign immediately?\n\nThis will send to:\n• caballerorandy7@gmail.com\n• caballerorandy6@gmail.com\n• yani.cruz4997@gmail.com"
+      "Send test campaign to test emails?\n\nThis will send to:\n• caballerorandy7@gmail.com\n• gsmactx@outlook.com\n• michel@gsmactx.com\n• ***REMOVED***\n• ***REMOVED***"
     );
 
     if (!confirmed) return;
@@ -104,7 +104,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
         </h1>
         <div className="min-h-screen flex justify-center pt-20">
           <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md">
-            <div className="bg-purple-900/20 border border-purple-500/30 rounded-lg p-4 mb-6">
+            <div className="bg-purple-900/20 border border-purple-500/30 rounded-lg p-4 mb-6 flex flex-col items-center justify-center">
               <h2 className="text-center text-3xl font-bold tracking-tight text-white mb-2">
                 Test Campaign
               </h2>
@@ -113,8 +113,10 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
               </p>
               <ul className="text-xs text-purple-200 mt-2 space-y-1">
                 <li>• caballerorandy7@gmail.com</li>
-                <li>• caballerorandy6@gmail.com</li>
-                <li>• yani.cruz4997@gmail.com</li>
+                <li>• gsmactx@outlook.com</li>
+                <li>• michel@gsmactx.com</li>
+                <li>• ***REMOVED***</li>
+                <li>• ***REMOVED***</li>
               </ul>
             </div>
 
@@ -302,9 +304,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center">
-              <h3 className="text-xl font-bold text-gray-900">
-                Email Preview
-              </h3>
+              <h3 className="text-xl font-bold text-gray-900">Email Preview</h3>
               <button
                 onClick={() => setShowPreview(false)}
                 className="text-gray-500 hover:text-gray-700 text-2xl font-bold"

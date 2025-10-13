@@ -54,10 +54,25 @@ export default function CampaignSender({
 
   useEffect(() => {
     loadStats();
+
+    // Auto-refresh stats every 15 seconds if campaign is not complete
+    const interval = setInterval(() => {
+      if (stats && stats.pending > 0) {
+        loadStats();
+      }
+    }, 15000); // 15 seconds
+
+    return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [campaignId]);
+  }, [campaignId, stats?.pending]);
 
   const handleInitialize = async () => {
+    const confirmed = confirm(
+      `Initialize campaign "${campaignTitle}"?\n\nThis will prepare ${stats?.total || "all"} email(s) for sending. This action cannot be undone.`
+    );
+
+    if (!confirmed) return;
+
     setIsInitializing(true);
     try {
       const result = await initializeCampaignEmailLogsAction(campaignId);
@@ -122,7 +137,7 @@ export default function CampaignSender({
 
   const isInitialized = stats && stats.total > 0;
   const isComplete = stats && stats.pending === 0 && stats.total > 0;
-  const progress = stats ? (stats.sent / stats.total) * 100 : 0;
+  const progress = stats && stats.total > 0 ? (stats.sent / stats.total) * 100 : 0;
 
   return (
     <div className="bg-gray-800 rounded-lg p-6 space-y-6">
