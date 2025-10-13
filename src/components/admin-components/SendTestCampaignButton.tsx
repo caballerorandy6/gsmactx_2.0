@@ -13,7 +13,7 @@ const AdminSendTestCampaignButton = ({
 }: AdminSendTestCampaignButtonProps) => {
   const handleSendTestCampaign = async () => {
   const confirmed = confirm(
-    "Send test campaign to test emails?\n\nThis will send to:\n• caballerorandy7@gmail.com\n• caballerorandy6@gmail.com\n• yani.cruz4997@gmail.com\n• contactus@rcweb.dev\n• gsmactx@outlook.com\n• michel@gsmactx.com\n• mchapelli305@gmail.com\n• mchapelli305@yahoo.com"
+    "Send test campaign to test emails?\n\nThis will send to:\n• caballerorandy7@gmail.com\n• gsmactx@outlook.com\n• michel@gsmactx.com\n• mchapelli305@gmail.com\n• mchapelli305@yahoo.com"
   );
 
     if (!confirmed) return;
