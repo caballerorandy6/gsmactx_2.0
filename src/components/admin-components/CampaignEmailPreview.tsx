@@ -20,31 +20,27 @@ const CampaignEmailPreview = ({
       <div className="max-w-[600px] mx-auto bg-white shadow-xl overflow-hidden rounded-xl">
         {/* HEADER — logo with company name */}
         <div
-          className="relative flex items-center justify-center text-center overflow-visible bg-gradient-to-br from-white via-blue-50/50 to-blue-100/30 backdrop-blur-md"
-          style={{
-            height: "180px",
-          }}
+          className="relative flex items-center justify-center text-center overflow-visible bg-gradient-to-br from-white via-blue-50/50 to-blue-100/30 backdrop-blur-md min-h-[180px] py-5 px-5"
         >
           <div
-            className="flex flex-wrap items-center justify-center gap-5 px-5"
+            className="flex flex-wrap items-center justify-center gap-5 max-sm:gap-3"
           >
             <Image
               src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo.avif"
               width={757}
               height={253}
               alt="GSMACTX Logo"
-              className="object-contain"
+              className="object-contain w-[150px] max-md:w-[120px] max-sm:w-[100px] max-[400px]:w-[80px]"
               style={{
-                maxWidth: "150px",
                 maxHeight: "253px",
                 height: "auto",
               }}
             />
-            <div className="text-left">
-              <p className="text-[#dc2626] text-[28px] font-extrabold m-0 leading-tight">
+            <div className="text-left max-sm:text-center">
+              <p className="text-[#dc2626] text-[28px] max-md:text-[24px] max-sm:text-[20px] max-[400px]:text-[18px] font-extrabold m-0 leading-tight">
                 A/C & General
               </p>
-              <p className="text-[#2563eb] text-[26px] font-extrabold m-0 leading-tight">
+              <p className="text-[#2563eb] text-[26px] max-md:text-[22px] max-sm:text-[18px] max-[400px]:text-[16px] font-extrabold m-0 leading-tight">
                 Contractor INC
               </p>
             </div>
