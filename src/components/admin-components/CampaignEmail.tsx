@@ -70,54 +70,67 @@ const CampaignEmail = ({
             <Section
               className="mobile-header"
               style={{
-                background: "linear-gradient(135deg, #1e40af 0%, #2563eb 100%)",
+                background: "linear-gradient(to bottom right, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%)",
                 height: "180px",
                 position: "relative",
-                textAlign: "center",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
               <div
                 style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  width: "100%",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   flexWrap: "wrap",
                   padding: "0 20px",
+                  gap: "20px",
                 }}
               >
                 <Img
                   className="mobile-logo"
                   src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo.avif"
-                  width="946"
+                  width="757"
                   alt="GSMACTX Logo"
                   style={{
-                    maxHeight: "316px",
+                    maxHeight: "253px",
                     height: "auto",
                     objectFit: "contain",
-                    maxWidth: "200px",
+                    maxWidth: "150px",
                   }}
                 />
-                <Text
-                  style={{
-                    color: "#ffffff",
-                    fontSize: "28px",
-                    fontWeight: "700",
-                    margin: "0 0 0 20px",
-                    lineHeight: "1.2",
-                  }}
-                >
-                  A/C & General Contractor INC
-                </Text>
+                <div>
+                  <Text
+                    style={{
+                      color: "#dc2626",
+                      fontSize: "28px",
+                      fontWeight: "800",
+                      margin: "0",
+                      lineHeight: "1.1",
+                      textAlign: "left",
+                    }}
+                  >
+                    A/C & General
+                  </Text>
+                  <Text
+                    style={{
+                      color: "#2563eb",
+                      fontSize: "26px",
+                      fontWeight: "800",
+                      margin: "0",
+                      lineHeight: "1.1",
+                      textAlign: "left",
+                    }}
+                  >
+                    Contractor INC
+                  </Text>
+                </div>
               </div>
 
               <Text
                 style={{
-                  color: "#ffffff",
+                  color: "#64748b",
                   fontSize: "12px",
                   fontWeight: "600",
                   margin: "0",

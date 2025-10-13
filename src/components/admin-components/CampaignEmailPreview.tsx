@@ -20,39 +20,37 @@ const CampaignEmailPreview = ({
       <div className="max-w-[600px] mx-auto bg-white shadow-xl overflow-hidden rounded-xl">
         {/* HEADER — logo with company name */}
         <div
-          className="relative flex items-center justify-center text-center overflow-visible"
+          className="relative flex items-center justify-center text-center overflow-visible bg-gradient-to-br from-white via-blue-50/50 to-blue-100/30 backdrop-blur-md"
           style={{
-            background: "linear-gradient(135deg, #1e40af 0%, #2563eb 100%)",
             height: "180px",
           }}
         >
           <div
-            className="absolute flex flex-wrap items-center justify-center gap-5 px-5"
-            style={{
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "100%",
-            }}
+            className="flex flex-wrap items-center justify-center gap-5 px-5"
           >
             <Image
               src="https://rqp1nide3wltznco.public.blob.vercel-storage.com/logo.avif"
-              width={946}
-              height={316}
+              width={757}
+              height={253}
               alt="GSMACTX Logo"
               className="object-contain"
               style={{
-                maxWidth: "200px",
-                maxHeight: "316px",
+                maxWidth: "150px",
+                maxHeight: "253px",
                 height: "auto",
               }}
             />
-            <h2 className="text-white text-2xl sm:text-[28px] font-bold m-0 leading-tight">
-              A/C & General Contractor INC
-            </h2>
+            <div className="text-left">
+              <p className="text-[#dc2626] text-[28px] font-extrabold m-0 leading-tight">
+                A/C & General
+              </p>
+              <p className="text-[#2563eb] text-[26px] font-extrabold m-0 leading-tight">
+                Contractor INC
+              </p>
+            </div>
           </div>
 
-          <p className="text-white text-[12px] font-semibold uppercase tracking-widest opacity-90 absolute bottom-2">
+          <p className="text-[#64748b] text-[12px] font-semibold uppercase tracking-widest opacity-90 absolute bottom-2">
             Your Trusted HVAC Partner
           </p>
         </div>
