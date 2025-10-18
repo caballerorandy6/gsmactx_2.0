@@ -32,7 +32,8 @@ async function getEmailsSentToday(): Promise<number> {
  */
 async function notifyAdminsOfCompletion(
   campaignTitle: string,
-  totalSent: number
+  totalSent: number,
+  totalFailed: number = 0
 ) {
   try {
     // Get all admin emails
@@ -40,54 +41,68 @@ async function notifyAdminsOfCompletion(
       select: { email: true, name: true },
     });
 
-    // Send notification to each admin
-    for (const admin of admins) {
-      await resend.emails.send({
-        from: FROM_EMAIL,
-        to: admin.email,
-        subject: `✅ Campaign Completed: ${campaignTitle}`,
-        html: `
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <meta charset="utf-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            </head>
-            <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-              <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
-                <h1 style="margin: 0; font-size: 28px;">✅ Campaign Completed!</h1>
-              </div>
-
-              <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; border: 1px solid #e0e0e0; border-top: none;">
-                <p style="font-size: 16px; margin-bottom: 20px;">Hello ${admin.name},</p>
-
-                <p style="font-size: 16px; margin-bottom: 20px;">Great news! Your email campaign has been successfully completed.</p>
-
-                <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
-                  <h2 style="margin-top: 0; color: #667eea; font-size: 20px;">Campaign Details</h2>
-                  <p style="margin: 10px 0;"><strong>Campaign:</strong> ${campaignTitle}</p>
-                  <p style="margin: 10px 0;"><strong>Total Emails Sent:</strong> ${totalSent}</p>
-                  <p style="margin: 10px 0;"><strong>Completed:</strong> ${new Date().toLocaleString("en-US", {
-                    dateStyle: "full",
-                    timeStyle: "short",
-                  })}</p>
-                </div>
-
-                <p style="font-size: 14px; color: #666; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
-                  This is an automated notification from your campaign management system.
-                </p>
-              </div>
-            </body>
-          </html>
-        `,
-      });
+    if (admins.length === 0) {
+      console.warn("No admins found to notify");
+      return;
     }
 
-    console.log(
-      `✅ Completion notification sent to ${admins.length} admin(s) for campaign: ${campaignTitle}`
-    );
+    // Send notification to each admin (with error handling per admin)
+    const notifications = admins.map(async (admin) => {
+      try {
+        await resend.emails.send({
+          from: FROM_EMAIL,
+          to: admin.email,
+          subject: `✅ Campaign Completed: ${campaignTitle}`,
+          html: `
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              </head>
+              <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
+                  <h1 style="margin: 0; font-size: 28px;">✅ Campaign Completed!</h1>
+                </div>
+
+                <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; border: 1px solid #e0e0e0; border-top: none;">
+                  <p style="font-size: 16px; margin-bottom: 20px;">Hello ${admin.name},</p>
+
+                  <p style="font-size: 16px; margin-bottom: 20px;">Great news! Your email campaign has been successfully completed.</p>
+
+                  <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
+                    <h2 style="margin-top: 0; color: #667eea; font-size: 20px;">Campaign Details</h2>
+                    <p style="margin: 10px 0;"><strong>Campaign:</strong> ${campaignTitle}</p>
+                    <p style="margin: 10px 0;"><strong>Total Emails Sent:</strong> ${totalSent}</p>
+                    ${
+                      totalFailed > 0
+                        ? `<p style="margin: 10px 0; color: #e53e3e;"><strong>Failed Emails:</strong> ${totalFailed} (invalid/unreachable addresses)</p>`
+                        : ""
+                    }
+                    <p style="margin: 10px 0;"><strong>Completed:</strong> ${new Date().toLocaleString("en-US", {
+                      dateStyle: "full",
+                      timeStyle: "short",
+                    })}</p>
+                  </div>
+
+                  <p style="font-size: 14px; color: #666; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+                    This is an automated notification from your campaign management system.
+                  </p>
+                </div>
+              </body>
+            </html>
+          `,
+        });
+        console.log(`✅ Notification sent to admin: ${admin.email}`);
+      } catch (error) {
+        console.error(`Failed to notify admin ${admin.email}:`, error);
+      }
+    });
+
+    await Promise.allSettled(notifications);
+    console.log(`✅ Completion notifications sent to ${admins.length} admin(s) for campaign: ${campaignTitle}`);
   } catch (error) {
-    console.error("Error sending admin notification:", error);
+    console.error("Error sending admin notifications:", error);
   }
 }
 
@@ -160,7 +175,7 @@ export async function GET(request: Request) {
 
     let totalSent = 0;
     let totalFailed = 0;
-    const completedCampaigns: Array<{ title: string; totalSent: number }> = [];
+    const completedCampaigns: Array<{ title: string; totalSent: number; totalFailed: number }> = [];
 
     // Process each campaign
     for (const campaign of campaignsWithPending) {
@@ -234,31 +249,33 @@ export async function GET(request: Request) {
       });
 
       if (remainingPending === 0) {
-        // Check if all emails were sent (no failed ones left)
+        // Campaign is complete when no pending emails remain
         const totalLogs = await prisma.campaignEmailLog.count({
           where: { campaignId: campaign.id },
         });
         const sentLogs = await prisma.campaignEmailLog.count({
           where: { campaignId: campaign.id, status: "sent" },
         });
+        const failedLogs = await prisma.campaignEmailLog.count({
+          where: { campaignId: campaign.id, status: "failed" },
+        });
 
-        if (sentLogs === totalLogs) {
-          // Mark campaign as complete
-          await prisma.campaign.update({
-            where: { id: campaign.id },
-            data: {
-              sent: true,
-              sentAt: new Date(),
-            },
-          });
+        // Mark campaign as complete
+        await prisma.campaign.update({
+          where: { id: campaign.id },
+          data: {
+            sent: true,
+            sentAt: new Date(),
+          },
+        });
 
-          completedCampaigns.push({
-            title: campaign.title,
-            totalSent: sentLogs,
-          });
+        completedCampaigns.push({
+          title: campaign.title,
+          totalSent: sentLogs,
+          totalFailed: failedLogs,
+        });
 
-          console.log(`✅ Campaign "${campaign.title}" completed!`);
-        }
+        console.log(`✅ Campaign "${campaign.title}" completed! Sent: ${sentLogs}, Failed: ${failedLogs}, Total: ${totalLogs}`);
       }
     }
 
@@ -266,7 +283,8 @@ export async function GET(request: Request) {
     for (const completedCampaign of completedCampaigns) {
       await notifyAdminsOfCompletion(
         completedCampaign.title,
-        completedCampaign.totalSent
+        completedCampaign.totalSent,
+        completedCampaign.totalFailed
       );
     }
 
