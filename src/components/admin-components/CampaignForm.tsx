@@ -143,7 +143,6 @@ const CampaignForm = ({
         }
       } catch (error) {
         toast.dismiss();
-        console.error("Campaign upsert error:", error);
         toast.error("An unexpected error occurred.");
       }
     });

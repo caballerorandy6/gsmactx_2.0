@@ -50,7 +50,6 @@ export async function loginAction(data: AdminFormData): Promise<ActionResult> {
       maxAge: 60 * 60 * 24, // 1 day
     });
   } catch (error) {
-    console.log("Login error:", error);
     return { success: false, message: "Internal server error" };
   }
   // Redirect to the admin dashboard, never use inside a try/catch block

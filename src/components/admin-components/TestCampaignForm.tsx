@@ -87,7 +87,6 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
         }
       } catch (error) {
         toast.dismiss();
-        console.error("Test campaign error:", error);
         toast.error("An unexpected error occurred.");
       }
     });

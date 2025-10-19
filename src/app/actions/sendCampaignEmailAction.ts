@@ -198,10 +198,6 @@ export async function initializeCampaignEmailLogsAction(
       );
 
       if (subscribersNeedingTokens.length > 0) {
-        console.log(
-          `Generating unsubscribe tokens for ${subscribersNeedingTokens.length} subscribers...`
-        );
-
         await Promise.all(
           subscribersNeedingTokens.map((sub) =>
             tx.subscriber.update({
@@ -380,9 +376,7 @@ export async function sendCampaignBatchAction(
       console.log(`📤 Sending batch via Resend...`);
 
       const emailsToSend = emailBatch.map((item) => item.email);
-      const batchResult = await resend.batch.send(emailsToSend);
-
-      console.log(`✅ Batch send result:`, batchResult);
+      await resend.batch.send(emailsToSend);
 
       // Mark all as sent (Resend batch doesn't provide per-email status in free tier)
       await prisma.campaignEmailLog.updateMany({
