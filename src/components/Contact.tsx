@@ -83,7 +83,6 @@ export default function Contact() {
         reset();
       } catch (error) {
         // Si alguna de las acciones falla, el catch lo capturará
-        console.error("Error sending message:", error);
         toast.error(
           "An unexpected error occurred. Please try again."
         );

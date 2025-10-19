@@ -24,7 +24,6 @@ const UnsubscribeButtonAction = ({ token }: { token: string }) => {
         }
       } catch (error) {
         toast.dismiss();
-        console.error("Error during unsubscribe action:", error);
         toast.error("An unexpected error occurred. Please try again.");
       }
     });

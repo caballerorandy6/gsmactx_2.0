@@ -46,7 +46,6 @@ export default function CampaignSender({
       const data = await getCampaignStatsAction(campaignId);
       setStats(data);
     } catch (error) {
-      console.error("Error loading stats:", error);
     } finally {
       setIsLoading(false);
     }
@@ -83,7 +82,6 @@ export default function CampaignSender({
         toast.error(result.message);
       }
     } catch (error) {
-      console.error("Error initializing:", error);
       toast.error("Failed to initialize campaign");
     } finally {
       setIsInitializing(false);
@@ -101,7 +99,6 @@ export default function CampaignSender({
         toast.error(result.message);
       }
     } catch (error) {
-      console.error("Error sending batch:", error);
       toast.error("Failed to send batch");
     } finally {
       setIsSending(false);
@@ -119,7 +116,6 @@ export default function CampaignSender({
         toast.error(result.message);
       }
     } catch (error) {
-      console.error("Error retrying:", error);
       toast.error("Failed to retry emails");
     } finally {
       setIsRetrying(false);

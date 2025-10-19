@@ -27,13 +27,10 @@ const Testimonials = () => {
 
       if (data && data.result && Array.isArray(data.result.reviews)) {
         setTestimonials(data.result.reviews);
-        console.log("Testimonials fetched successfully:", data.result.reviews);
       } else {
-        console.warn("No reviews found or unexpected data structure:", data);
         setTestimonials([]);
       }
     } catch (error) {
-      console.error("Error fetching testimonials:", error);
       setTestimonials([]);
       return [];
     }

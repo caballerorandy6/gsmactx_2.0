@@ -21,7 +21,6 @@ const SendCampaignButton = ({ id }: { id: string }) => {
         }
       });
     } catch (error) {
-      console.error("Error initializing campaign:", error);
       toast.error("Failed to initialize campaign.");
     }
   };

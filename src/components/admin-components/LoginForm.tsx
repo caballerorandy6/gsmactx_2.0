@@ -40,7 +40,6 @@ const LoginForm = () => {
         if (error instanceof Error && error.message === "NEXT_REDIRECT") {
           return;
         }
-        console.error("Login error:", error);
         toast.error("An unexpected error occurred. Please try again later.");
       }
     });
