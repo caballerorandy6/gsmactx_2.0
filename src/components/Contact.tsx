@@ -81,7 +81,7 @@ export default function Contact() {
         // Si todo va bien, muestra un mensaje de éxito y resetea el formulario
         toast.success("Message sent successfully!");
         reset();
-      } catch (error) {
+      } catch {
         // Si alguna de las acciones falla, el catch lo capturará
         toast.error(
           "An unexpected error occurred. Please try again."

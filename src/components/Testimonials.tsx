@@ -30,7 +30,7 @@ const Testimonials = () => {
       } else {
         setTestimonials([]);
       }
-    } catch (error) {
+    } catch {
       setTestimonials([]);
       return [];
     }

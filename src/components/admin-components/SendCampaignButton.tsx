@@ -20,7 +20,7 @@ const SendCampaignButton = ({ id }: { id: string }) => {
           toast.error(result.message);
         }
       });
-    } catch (error) {
+    } catch {
       toast.error("Failed to initialize campaign.");
     }
   };

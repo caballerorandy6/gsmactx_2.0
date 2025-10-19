@@ -20,7 +20,7 @@ const DeleteCampaignButton = ({ id }: { id: string }) => {
         } else {
           toast.error("Failed to delete campaign: " + result.message);
         }
-      } catch (error) {
+      } catch {
         toast.error(
           "An unexpected error occurred while deleting the campaign."
         );
