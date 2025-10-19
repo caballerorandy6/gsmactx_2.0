@@ -55,7 +55,7 @@ const AdminSendTestCampaignButton = ({
       } else {
         toast.error(result.message);
       }
-    } catch (error) {
+    } catch {
       toast.dismiss();
       toast.error("Failed to send test campaign");
     }
