@@ -5,21 +5,29 @@ import {
   UserGroupIcon,
   CheckCircleIcon,
   XCircleIcon,
+  ChatBubbleLeftRightIcon,
+  DevicePhoneMobileIcon,
 } from "@heroicons/react/24/outline";
 
 interface DashboardStatsProps {
   stats: {
+    // Email Campaign Stats
     totalSubscribers: number;
     activeSubscribers: number;
     totalCampaigns: number;
     sentCampaigns: number;
     emailsSent: number;
     emailsFailed: number;
+    // SMS Campaign Stats
+    totalSMSCampaigns: number;
+    sentSMSCampaigns: number;
+    smsSent: number;
+    smsFailed: number;
   };
 }
 
 const DashboardStats = ({ stats }: DashboardStatsProps) => {
-  const statCards = [
+  const emailStatCards = [
     {
       name: "Total Subscribers",
       value: stats.totalSubscribers,
@@ -35,7 +43,7 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
       iconBg: "bg-green-500/20",
     },
     {
-      name: "Total Campaigns",
+      name: "Email Campaigns",
       value: stats.totalCampaigns,
       icon: EnvelopeIcon,
       color: "bg-purple-500/10 text-purple-400 border-purple-500/20",
@@ -64,24 +72,98 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
     },
   ];
 
+  const smsStatCards = [
+    {
+      name: "SMS Campaigns",
+      value: stats.totalSMSCampaigns,
+      icon: ChatBubbleLeftRightIcon,
+      color: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
+      iconBg: "bg-cyan-500/20",
+    },
+    {
+      name: "Sent SMS Campaigns",
+      value: stats.sentSMSCampaigns,
+      icon: CheckCircleIcon,
+      color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+      iconBg: "bg-emerald-500/20",
+    },
+    {
+      name: "SMS Sent",
+      value: stats.smsSent,
+      icon: DevicePhoneMobileIcon,
+      color: "bg-sky-500/10 text-sky-400 border-sky-500/20",
+      iconBg: "bg-sky-500/20",
+    },
+    {
+      name: "SMS Failed",
+      value: stats.smsFailed,
+      icon: XCircleIcon,
+      color: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+      iconBg: "bg-orange-500/20",
+    },
+  ];
+
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-6 lg:mb-8">
-      {statCards.map((stat) => (
-        <div
-          key={stat.name}
-          className={`rounded-xl border p-3 sm:p-4 lg:p-6 backdrop-blur-sm transition-all hover:scale-105 ${stat.color}`}
-        >
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
-            <div className="w-full sm:w-auto">
-              <p className="text-xs sm:text-sm font-medium text-gray-400 line-clamp-1">{stat.name}</p>
-              <p className="mt-1 sm:mt-2 text-xl sm:text-2xl lg:text-3xl font-bold">{stat.value.toLocaleString()}</p>
-            </div>
-            <div className={`rounded-full p-2 sm:p-3 ${stat.iconBg} ml-auto sm:ml-0`}>
-              <stat.icon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
-            </div>
-          </div>
+    <div className="space-y-6 mb-6 lg:mb-8">
+      {/* Email Campaign Stats */}
+      <div>
+        <div className="flex items-center gap-2 mb-3">
+          <EnvelopeIcon className="h-5 w-5 text-blue-400" />
+          <h3 className="text-lg font-semibold text-white">Email Campaigns</h3>
         </div>
-      ))}
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+          {emailStatCards.map((stat) => (
+            <div
+              key={stat.name}
+              className={`rounded-xl border p-3 sm:p-4 lg:p-6 backdrop-blur-sm transition-all hover:scale-105 ${stat.color}`}
+            >
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                <div className="w-full sm:w-auto">
+                  <p className="text-xs sm:text-sm font-medium text-gray-400 line-clamp-1">
+                    {stat.name}
+                  </p>
+                  <p className="mt-1 sm:mt-2 text-xl sm:text-2xl lg:text-3xl font-bold">
+                    {stat.value.toLocaleString()}
+                  </p>
+                </div>
+                <div className={`rounded-full p-2 sm:p-3 ${stat.iconBg} ml-auto sm:ml-0`}>
+                  <stat.icon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* SMS Campaign Stats */}
+      <div>
+        <div className="flex items-center gap-2 mb-3">
+          <ChatBubbleLeftRightIcon className="h-5 w-5 text-cyan-400" />
+          <h3 className="text-lg font-semibold text-white">SMS Campaigns</h3>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+          {smsStatCards.map((stat) => (
+            <div
+              key={stat.name}
+              className={`rounded-xl border p-3 sm:p-4 lg:p-6 backdrop-blur-sm transition-all hover:scale-105 ${stat.color}`}
+            >
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                <div className="w-full sm:w-auto">
+                  <p className="text-xs sm:text-sm font-medium text-gray-400 line-clamp-1">
+                    {stat.name}
+                  </p>
+                  <p className="mt-1 sm:mt-2 text-xl sm:text-2xl lg:text-3xl font-bold">
+                    {stat.value.toLocaleString()}
+                  </p>
+                </div>
+                <div className={`rounded-full p-2 sm:p-3 ${stat.iconBg} ml-auto sm:ml-0`}>
+                  <stat.icon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

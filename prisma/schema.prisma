@@ -28,6 +28,12 @@ model Campaign {
   createdAt    DateTime  @default(now())
   sent         Boolean   @default(false)
   sentAt       DateTime?
+
+  // Campaign completion stats (saved when campaign completes)
+  totalEmails  Int?      // Total emails in campaign
+  sentCount    Int?      // Successfully sent emails
+  failedCount  Int?      // Failed emails
+
   createdBy    String
   admin        Admin     @relation(fields: [createdBy], references: [id])
 

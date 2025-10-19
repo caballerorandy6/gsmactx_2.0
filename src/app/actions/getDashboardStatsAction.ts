@@ -5,17 +5,30 @@ import { prisma } from "@/libs/prisma";
 export async function getDashboardStatsAction() {
   try {
     const [
+      // Email-related stats
       totalSubscribers,
       activeSubscribers,
       totalCampaigns,
       sentCampaigns,
       emailLogs,
+      // SMS-related stats
+      totalSMSCampaigns,
+      sentSMSCampaigns,
+      smsMessages,
     ] = await Promise.all([
+      // Email
       prisma.subscriber.count(),
       prisma.subscriber.count({ where: { isSubscribed: true } }),
       prisma.campaign.count(),
       prisma.campaign.count({ where: { sent: true } }),
       prisma.campaignEmailLog.groupBy({
+        by: ["status"],
+        _count: true,
+      }),
+      // SMS
+      prisma.sMSCampaign.count(),
+      prisma.sMSCampaign.count({ where: { sent: true } }),
+      prisma.sMSMessage.groupBy({
         by: ["status"],
         _count: true,
       }),
@@ -29,7 +42,15 @@ export async function getDashboardStatsAction() {
       {} as Record<string, number>
     );
 
-    // Get recent campaigns
+    const smsStats = smsMessages.reduce(
+      (acc, message) => {
+        acc[message.status] = message._count;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
+
+    // Get recent email campaigns
     const recentCampaigns = await prisma.campaign.findMany({
       take: 5,
       orderBy: { createdAt: "desc" },
@@ -50,6 +71,7 @@ export async function getDashboardStatsAction() {
     return {
       success: true,
       stats: {
+        // Email Campaign Stats
         totalSubscribers,
         activeSubscribers,
         inactiveSubscribers: totalSubscribers - activeSubscribers,
@@ -59,6 +81,14 @@ export async function getDashboardStatsAction() {
         emailsSent: emailStats.sent || 0,
         emailsFailed: emailStats.failed || 0,
         emailsPending: emailStats.pending || 0,
+
+        // SMS Campaign Stats
+        totalSMSCampaigns,
+        sentSMSCampaigns,
+        notSentSMSCampaigns: totalSMSCampaigns - sentSMSCampaigns,
+        smsSent: smsStats.sent || 0,
+        smsFailed: smsStats.failed || 0,
+        smsPending: smsStats.pending || 0,
       },
       recentCampaigns: recentCampaigns.map((campaign) => ({
         id: campaign.id,
