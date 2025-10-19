@@ -316,6 +316,9 @@ export async function sendCampaignBatchAction(
           data: {
             sent: true,
             sentAt: new Date(),
+            totalEmails: totalLogs,
+            sentCount: sentLogs,
+            failedCount: failedLogs,
           },
         });
 
@@ -419,6 +422,9 @@ export async function sendCampaignBatchAction(
           data: {
             sent: true,
             sentAt: new Date(),
+            totalEmails: totalLogs,
+            sentCount: sentLogs,
+            failedCount: failedLogs,
           },
         });
 

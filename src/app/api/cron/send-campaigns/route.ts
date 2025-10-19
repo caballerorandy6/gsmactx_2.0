@@ -260,12 +260,15 @@ export async function GET(request: Request) {
           where: { campaignId: campaign.id, status: "failed" },
         });
 
-        // Mark campaign as complete
+        // Mark campaign as complete and save final stats
         await prisma.campaign.update({
           where: { id: campaign.id },
           data: {
             sent: true,
             sentAt: new Date(),
+            totalEmails: totalLogs,
+            sentCount: sentLogs,
+            failedCount: failedLogs,
           },
         });
 

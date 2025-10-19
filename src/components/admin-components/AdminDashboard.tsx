@@ -19,6 +19,7 @@ interface AdminDashboardProps {
   dashboardStats?: {
     success: boolean;
     stats: {
+      // Email Campaign Stats
       totalSubscribers: number;
       activeSubscribers: number;
       inactiveSubscribers: number;
@@ -28,6 +29,13 @@ interface AdminDashboardProps {
       emailsSent: number;
       emailsFailed: number;
       emailsPending: number;
+      // SMS Campaign Stats
+      totalSMSCampaigns: number;
+      sentSMSCampaigns: number;
+      notSentSMSCampaigns: number;
+      smsSent: number;
+      smsFailed: number;
+      smsPending: number;
     } | null;
     recentCampaigns: unknown[];
   };
