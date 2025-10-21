@@ -156,7 +156,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
 
                   <div className="space-y-1">
                     <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white">
-                      A/C Check-Up Special
+                      Heating Check-Up Special
                     </h2>
                     <div className="flex items-center justify-center gap-3">
                       <span className="text-3xl sm:text-4xl md:text-5xl font-black text-emerald-400">
