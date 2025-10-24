@@ -16,8 +16,15 @@ export default function ReCaptchaProvider({
   }
 
   return (
-    <GoogleReCaptchaProvider reCaptchaKey={recaptchaSiteKey}>
-      {children}
-    </GoogleReCaptchaProvider>
+    <>
+      <GoogleReCaptchaProvider reCaptchaKey={recaptchaSiteKey}>
+        {children}
+      </GoogleReCaptchaProvider>
+      <style jsx global>{`
+        .grecaptcha-badge {
+          visibility: hidden;
+        }
+      `}</style>
+    </>
   );
 }

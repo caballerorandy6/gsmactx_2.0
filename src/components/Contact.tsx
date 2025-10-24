@@ -363,6 +363,29 @@ export default function Contact() {
                 Subscribe to our newsletter
               </label>
             </motion.div>
+            <motion.div variants={fadeInUp} className="mt-4">
+              <p className="text-xs text-gray-400">
+                This site is protected by reCAPTCHA and the Google{" "}
+                <Link
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-400 hover:text-indigo-300 underline"
+                >
+                  Privacy Policy
+                </Link>{" "}
+                and{" "}
+                <Link
+                  href="https://policies.google.com/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-400 hover:text-indigo-300 underline"
+                >
+                  Terms of Service
+                </Link>{" "}
+                apply.
+              </p>
+            </motion.div>
             <motion.div variants={fadeInUp} className="mt-8 flex justify-end">
               <button
                 type="submit"
