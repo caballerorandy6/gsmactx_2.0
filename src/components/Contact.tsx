@@ -16,10 +16,12 @@ import {
 import { toast } from "sonner";
 import { saveEmailAction } from "@/app/actions/saveEmailAction";
 import { sendEmailContactAction } from "@/app/actions/sendEmailContactAction";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 export default function Contact() {
   const ref = useSectionObserver({ sectionName: "Contact" });
   const [isPending, startTransition] = useTransition();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   // Animation variants
   const fadeInUp = {
@@ -72,11 +74,19 @@ export default function Contact() {
     // startTransition envuelve toda la lógica asíncrona
     startTransition(async () => {
       try {
+        // Generate reCAPTCHA token
+        if (!executeRecaptcha) {
+          toast.error("reCAPTCHA not loaded. Please try again.");
+          return;
+        }
+
+        const recaptchaToken = await executeRecaptcha("contact_form");
+
         // Llama a las acciones del servidor una por una
         if (data.subscribe) {
           await saveEmailAction(data);
         }
-        await sendEmailContactAction(data);
+        await sendEmailContactAction(data, recaptchaToken);
 
         // Si todo va bien, muestra un mensaje de éxito y resetea el formulario
         toast.success("Message sent successfully!");
