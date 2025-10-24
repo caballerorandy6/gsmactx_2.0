@@ -6,13 +6,66 @@ import { ActionResult } from "@/libs/types";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+interface RecaptchaResponse {
+  success: boolean;
+  score: number;
+  action: string;
+  challenge_ts: string;
+  hostname: string;
+  "error-codes"?: string[];
+}
+
 export async function sendEmailContactAction(
-  data: UserFormData
+  data: UserFormData,
+  recaptchaToken: string
 ): Promise<ActionResult> {
+  // Verify reCAPTCHA token
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+
+  if (!secretKey) {
+    console.error("RECAPTCHA_SECRET_KEY is not defined");
+    return {
+      success: false,
+      message: "Server configuration error. Please contact support.",
+    };
+  }
+
+  try {
+    const recaptchaResponse = await fetch(
+      "https://www.google.com/recaptcha/api/siteverify",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `secret=${secretKey}&response=${recaptchaToken}`,
+      }
+    );
+
+    const recaptchaData: RecaptchaResponse = await recaptchaResponse.json();
+
+    if (!recaptchaData.success || recaptchaData.score < 0.5) {
+      console.error("reCAPTCHA verification failed:", recaptchaData);
+      return {
+        success: false,
+        message: "reCAPTCHA verification failed. Please try again.",
+      };
+    }
+  } catch (error) {
+    console.error("Error verifying reCAPTCHA:", error);
+    return {
+      success: false,
+      message: "Failed to verify reCAPTCHA. Please try again.",
+    };
+  }
+
   const validateFields = UserSchema.safeParse(data);
 
   if (!validateFields.success) {
-    return { success: false, message: "Invalid Data. Please check your input and try again." };
+    return {
+      success: false,
+      message: "Invalid Data. Please check your input and try again.",
+    };
   }
 
   const { firstName, lastName, phone, email, message } = validateFields.data;
