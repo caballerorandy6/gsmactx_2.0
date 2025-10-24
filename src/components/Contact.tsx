@@ -66,7 +66,7 @@ export default function Contact() {
       email: "",
       phone: "",
       message: "",
-      subscribe: true,
+      subscribe: false,
     },
   });
 
