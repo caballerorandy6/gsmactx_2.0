@@ -5,6 +5,7 @@ import GSMSlider from "./GSMSlider";
 import { Review } from "@/libs/interfaces";
 import { useRef, useEffect, useState } from "react";
 import useSectionObserver from "@/hooks/useSectionObserver";
+import { getGoogleReviewsAction } from "@/app/actions/googlePlacesAction";
 
 const Testimonials = () => {
   const ref = useSectionObserver({ sectionName: "Testimonials" });
@@ -13,30 +14,15 @@ const Testimonials = () => {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.playbackRate = 1; // if you want to set a specific playback rate am just setting it to any value
+      videoRef.current.playbackRate = 1;
     }
   }, []);
 
-  const fetchTestimonials = async () => {
-    try {
-      const response = await fetch(`/api/reviews`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch testimonials");
-      }
-      const data = await response.json();
-
-      if (data && data.result && Array.isArray(data.result.reviews)) {
-        setTestimonials(data.result.reviews);
-      } else {
-        setTestimonials([]);
-      }
-    } catch {
-      setTestimonials([]);
-      return [];
-    }
-  };
-
   useEffect(() => {
+    const fetchTestimonials = async () => {
+      const reviews = await getGoogleReviewsAction();
+      setTestimonials(reviews);
+    };
     fetchTestimonials();
   }, []);
 
