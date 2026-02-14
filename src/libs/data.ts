@@ -66,11 +66,11 @@ export const businessInfo = {
 };
 
 export const navigation = [
-  { name: "About", href: "#about" },
-  { name: "Services", href: "#services" },
-  { name: "Testimonials", href: "#testimonials" },
-  { name: "Contact", href: "#contact" },
-  { name: "FAQ", href: "#faq" },
+  { name: "About", href: "/#about" },
+  { name: "Services", href: "/#services" },
+  { name: "Testimonials", href: "/#testimonials" },
+  { name: "Contact", href: "/#contact" },
+  { name: "FAQ", href: "/#faq" },
   { name: "Book Appointment", href: "/book-appointment" },
 ];
 
