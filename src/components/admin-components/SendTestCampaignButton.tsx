@@ -2,6 +2,7 @@
 
 import { MenuItem } from "@headlessui/react";
 import { createAndSendTestCampaignAction } from "@/app/actions/createAndSendTestCampaignAction";
+import { getCampaignByIdAction } from "@/app/actions/campaignAction";
 import { toast } from "sonner";
 
 interface AdminSendTestCampaignButtonProps {
@@ -21,13 +22,11 @@ const AdminSendTestCampaignButton = ({
     try {
       toast.loading("Fetching campaign data...");
 
-      // Fetch campaign data
-      const response = await fetch(`/api/campaigns/${id}`);
-      if (!response.ok) {
+      // Fetch campaign data using server action
+      const campaign = await getCampaignByIdAction(id);
+      if (!campaign) {
         throw new Error("Failed to fetch campaign");
       }
-
-      const campaign = await response.json();
 
       // Create FormData from campaign
       const formData = new FormData();

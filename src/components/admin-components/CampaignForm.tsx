@@ -151,7 +151,7 @@ const CampaignForm = ({
   return (
     <section
       id="admin-form"
-      className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 mt-10"
+      className="bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 mt-10"
     >
       {/* Main content */}
 

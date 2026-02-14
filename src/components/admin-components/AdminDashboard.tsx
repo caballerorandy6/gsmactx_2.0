@@ -75,7 +75,7 @@ const AdminDashboard = ({
   const notSentCount = campaigns.filter((c) => c.sent === false).length;
 
   return (
-    <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 mt-10 min-h-screen">
+    <section className="bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 mt-10 min-h-screen">
       <AdminHeader />
 
       <div className="flex flex-col lg:flex-row pt-20">

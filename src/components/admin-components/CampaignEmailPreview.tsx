@@ -20,7 +20,7 @@ const CampaignEmailPreview = ({
       <div className="max-w-[600px] mx-auto bg-white shadow-xl overflow-hidden rounded-xl">
         {/* HEADER — logo with company name */}
         <div
-          className="relative bg-gradient-to-br from-white via-blue-50/50 to-blue-100/30 backdrop-blur-md min-h-[180px]"
+          className="relative bg-linear-to-br from-white via-blue-50/50 to-blue-100/30 backdrop-blur-md min-h-[180px]"
         >
           <div className="flex items-center justify-center py-[30px] px-5 md:flex-row flex-col text-center">
             <div className="inline-block mr-4 md:mr-4 mb-0 md:mb-0 max-md:mb-4">

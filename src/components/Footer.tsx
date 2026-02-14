@@ -66,7 +66,7 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-12" />
+        <div className="h-px bg-linear-to-r from-transparent via-white/10 to-transparent mb-12" />
 
         {/* Navigation Links */}
         <nav
@@ -101,7 +101,7 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8" />
+        <div className="h-px bg-linear-to-r from-transparent via-white/10 to-transparent mb-8" />
 
         {/* Copyright & Credits */}
         <div className="text-center space-y-2 flex flex-col justify-center items-center">
