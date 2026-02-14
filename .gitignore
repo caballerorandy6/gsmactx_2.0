@@ -40,9 +40,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# prisma
 /src/generated/prisma
 
-/src/generated/prisma
-
-/src/generated/prisma
+# local env
 .env*.local
+
+# claude code
+.claude/
+.agents/
