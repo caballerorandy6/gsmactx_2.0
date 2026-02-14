@@ -4,6 +4,7 @@ import type {
   GooglePlaceDetailsResponse,
   PlaceRatingData,
 } from "@/types/google-places";
+import { Review } from "@/libs/interfaces";
 
 /**
  * Fetches place details from Google Places API
@@ -50,5 +51,54 @@ export async function getGooglePlaceDetails(): Promise<PlaceRatingData | null> {
   } catch (error) {
     console.error("Error fetching Google Place details:", error);
     return null;
+  }
+}
+
+/**
+ * Fetches Google reviews with photos for testimonials
+ */
+export async function getGoogleReviewsAction(): Promise<Review[]> {
+  try {
+    const apiKey = process.env.API_KEY;
+    const placeId = process.env.PLACE_ID;
+
+    if (!apiKey || !placeId) {
+      console.error("Missing API_KEY or PLACE_ID in environment variables");
+      return [];
+    }
+
+    const fields = "name,rating,reviews,photos";
+    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=${fields}&key=${apiKey}`;
+
+    const response = await fetch(url, {
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      console.error("Error fetching google reviews");
+      return [];
+    }
+
+    const data = await response.json();
+
+    if (!data.result?.reviews) {
+      return [];
+    }
+
+    const reviewsWithPhotoUrl = data.result.reviews.map((review: Review) => {
+      let photoUrl = null;
+      if (review.photos && review.photos.length > 0) {
+        photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=${review.photos[0].photo_reference}&key=${apiKey}`;
+      }
+      return {
+        ...review,
+        photoUrl,
+      };
+    });
+
+    return reviewsWithPhotoUrl;
+  } catch (error) {
+    console.error("Error fetching Google reviews:", error);
+    return [];
   }
 }

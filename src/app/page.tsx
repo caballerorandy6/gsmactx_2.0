@@ -4,6 +4,7 @@ import Services from "@/components/Services";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import ScrollSpyHandler from "@/components/ScrollSpyHandler";
+import ScrollToTop from "@/components/ScrollToTop";
 import { genPageMetadata } from "@/seo/genPageMetadata";
 import { JsonLdForArticle } from "@/components/JsonLdForArticle";
 import { JsonLdForBreadcrumb } from "@/components/JsonLdForBreadcrumb";
@@ -25,6 +26,7 @@ export default function Home() {
   return (
     <main>
       <ScrollSpyHandler />
+      <ScrollToTop />
       <Hero />
       <About />
       <Services />

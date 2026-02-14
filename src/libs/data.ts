@@ -66,16 +66,18 @@ export const businessInfo = {
 };
 
 export const navigation = [
-  { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Services", href: "#services" },
   { name: "Testimonials", href: "#testimonials" },
   { name: "Contact", href: "#contact" },
   { name: "FAQ", href: "#faq" },
+  { name: "Book Appointment", href: "/book-appointment" },
 ];
 
 export const adminNavigation = [
   { name: "Admin Dashboard", href: "/admin-dashboard" },
+  { name: "Appointments", href: "/appointments" },
+  { name: "Create Appointment", href: "/create-appointment" },
   { name: "Create Campaign", href: "/create-campaign" },
   { name: "Test Campaign", href: "/test-campaign" },
   { name: "View Campaigns", href: "/view-campaigns" },

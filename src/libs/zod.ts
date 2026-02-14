@@ -78,6 +78,50 @@ export const CampaignSchema = z.object({
     }, "Unsupported file type. Accepted types are: jpg, jpeg, png, gif, webp, avif."),
 });
 
+// Zod schema for appointments
+export const SERVICE_TYPES = [
+  "AC_MAINTENANCE",
+  "HEATING_MAINTENANCE",
+  "AC_REPAIR",
+  "HEATING_REPAIR",
+  "AC_INSTALLATION",
+  "HEATING_INSTALLATION",
+  "FULL_HVAC_INSTALLATION",
+  "DUCT_CLEANING",
+  "FREE_ESTIMATE",
+] as const;
+
+export const APPOINTMENT_STATUSES = [
+  "PENDING",
+  "CONFIRMED",
+  "IN_PROGRESS",
+  "COMPLETED",
+  "CANCELLED",
+] as const;
+
+export const AppointmentSchema = z.object({
+  id: z.string().optional(),
+  clientName: z.string().min(2, "Client name is required"),
+  clientEmail: z.string().email("Invalid email address"),
+  clientPhone: z.string().min(10, "Phone number is required"),
+  serviceType: z.enum(SERVICE_TYPES, {
+    errorMap: () => ({ message: "Please select a service type" }),
+  }),
+  scheduledDate: z.string().min(1, "Date is required"),
+  scheduledTime: z.string().min(1, "Time is required"),
+  address: z.string().min(5, "Address is required"),
+  notes: z.string().optional(),
+  status: z.enum(APPOINTMENT_STATUSES).optional().default("PENDING"),
+});
+
+// Schema for public booking (without status)
+export const PublicAppointmentSchema = AppointmentSchema.omit({
+  id: true,
+  status: true,
+});
+
 export type UserFormData = z.infer<typeof UserSchema>;
 export type AdminFormData = z.infer<typeof AdminSchema>;
 export type CampaignFormData = z.infer<typeof CampaignSchema>;
+export type AppointmentFormData = z.infer<typeof AppointmentSchema>;
+export type PublicAppointmentFormData = z.infer<typeof PublicAppointmentSchema>;
