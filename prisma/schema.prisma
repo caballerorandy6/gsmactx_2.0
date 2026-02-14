@@ -4,8 +4,27 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+}
+
+// Enums for Appointments
+enum ServiceType {
+  AC_MAINTENANCE
+  HEATING_MAINTENANCE
+  AC_REPAIR
+  HEATING_REPAIR
+  AC_INSTALLATION
+  HEATING_INSTALLATION
+  FULL_HVAC_INSTALLATION
+  DUCT_CLEANING
+  FREE_ESTIMATE
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
 }
 
 model Admin {
@@ -14,8 +33,30 @@ model Admin {
   password String  // Hash de contraseña
   name     String
 
-  campaigns Campaign[]
+  campaigns    Campaign[]
   smsCampaigns SMSCampaign[]
+  appointments Appointment[]
+}
+
+model Appointment {
+  id            String            @id @default(uuid())
+  clientName    String
+  clientEmail   String
+  clientPhone   String
+  serviceType   ServiceType
+  scheduledDate DateTime
+  scheduledTime String
+  address       String
+  notes         String?
+  status        AppointmentStatus @default(PENDING)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  createdBy     String?
+  admin         Admin?            @relation(fields: [createdBy], references: [id])
+
+  @@index([status])
+  @@index([scheduledDate])
+  @@index([createdBy])
 }
 
 model Campaign {

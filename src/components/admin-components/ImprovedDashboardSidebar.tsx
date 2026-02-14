@@ -8,6 +8,8 @@ import {
   PaperAirplaneIcon,
   BeakerIcon,
   Squares2X2Icon,
+  CalendarDaysIcon,
+  PlusCircleIcon,
 } from "@heroicons/react/24/outline";
 
 type FilterType = "all" | "sent" | "not-sent";
@@ -65,6 +67,18 @@ const ImprovedDashboardSidebar = ({
       color: "bg-gray-600 hover:bg-gray-500",
     },
     {
+      href: "/appointments",
+      label: "Appointments",
+      icon: CalendarDaysIcon,
+      color: "bg-emerald-600 hover:bg-emerald-500",
+    },
+    {
+      href: "/create-appointment",
+      label: "New Appointment",
+      icon: PlusCircleIcon,
+      color: "bg-teal-600 hover:bg-teal-500",
+    },
+    {
       href: "/create-campaign",
       label: "New Campaign",
       icon: EnvelopeIcon,
@@ -79,11 +93,11 @@ const ImprovedDashboardSidebar = ({
   ];
 
   return (
-    <aside className="w-full lg:w-72 lg:min-h-screen bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 backdrop-blur-sm lg:border-r border-b lg:border-b-0 border-white/10 p-4 sm:p-6 shadow-2xl">
+    <aside className="w-full lg:w-72 lg:min-h-screen bg-linear-to-b from-gray-900 via-gray-900 to-gray-800 backdrop-blur-sm lg:border-r border-b lg:border-b-0 border-white/10 p-4 sm:p-6 shadow-2xl">
       {/* User Welcome Section */}
       <div className="mb-6 lg:mb-8 pb-4 lg:pb-6 border-b border-white/10">
         <div className="flex items-center gap-3 mb-2">
-          <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-lg">
+          <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-lg">
             {userName.charAt(0).toUpperCase()}
           </div>
           <div>
@@ -106,7 +120,7 @@ const ImprovedDashboardSidebar = ({
               className={clsx(
                 "w-full text-left px-3 sm:px-4 py-2 sm:py-3 rounded-lg transition-all flex flex-col lg:flex-row items-center lg:items-center justify-center lg:justify-between group",
                 selectedFilter === item.id
-                  ? "bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-white border border-indigo-500/30 shadow-lg shadow-indigo-500/10"
+                  ? "bg-linear-to-r from-indigo-500/20 to-purple-500/20 text-white border border-indigo-500/30 shadow-lg shadow-indigo-500/10"
                   : "text-gray-300 hover:bg-white/5 hover:text-white hover:border hover:border-white/10"
               )}
             >
@@ -160,7 +174,7 @@ const ImprovedDashboardSidebar = ({
       </div>
 
       {/* Stats Summary */}
-      <div className="rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 p-3 sm:p-4">
+      <div className="rounded-xl bg-linear-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 p-3 sm:p-4">
         <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
           Overview
         </h3>

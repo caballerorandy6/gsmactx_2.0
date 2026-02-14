@@ -3,6 +3,7 @@ import Image from "next/image";
 import { navigation } from "@/libs/data";
 import Facebook from "./icons/Facebook";
 import Google from "./icons/Google";
+import { LockClosedIcon } from "@heroicons/react/24/outline";
 
 interface Social {
   name: string;
@@ -108,10 +109,20 @@ export default function Footer() {
             {`© ${new Date().getFullYear()} GSM A/C & General Contractor INC.`}
           </p>
           <p className="text-xs text-gray-500">All rights reserved.</p>
-          <p className="text-xs text-gray-500 mt-4">
-            Developed by{" "}
-            <span className="text-gray-400 font-semibold">RC WEB</span>
-          </p>
+          <div className="flex items-center gap-4 mt-4">
+            <p className="text-xs text-gray-500">
+              Developed by{" "}
+              <span className="text-gray-400 font-semibold">RC WEB</span>
+            </p>
+            <span className="text-gray-700">•</span>
+            <Link
+              href="/admin-dashboard"
+              className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-400 transition-colors"
+            >
+              <LockClosedIcon className="h-3 w-3" />
+              Admin
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
