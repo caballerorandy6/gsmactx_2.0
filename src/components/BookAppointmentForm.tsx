@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -21,6 +21,45 @@ import {
   CheckCircleIcon,
 } from "@heroicons/react/24/outline";
 
+const ALL_TIME_SLOTS = [
+  "8:00 AM",
+  "8:30 AM",
+  "9:00 AM",
+  "9:30 AM",
+  "10:00 AM",
+  "10:30 AM",
+  "11:00 AM",
+  "11:30 AM",
+  "12:00 PM",
+  "12:30 PM",
+  "1:00 PM",
+  "1:30 PM",
+  "2:00 PM",
+  "2:30 PM",
+  "3:00 PM",
+  "3:30 PM",
+  "4:00 PM",
+  "4:30 PM",
+  "5:00 PM",
+  "5:30 PM",
+];
+
+// Convert time string like "2:30 PM" to minutes since midnight
+const timeToMinutes = (timeStr: string): number => {
+  const [time, period] = timeStr.split(" ");
+  const [hoursStr, minutesStr] = time.split(":");
+  let hours = parseInt(hoursStr, 10);
+  const minutes = parseInt(minutesStr, 10);
+
+  if (period === "PM" && hours !== 12) {
+    hours += 12;
+  } else if (period === "AM" && hours === 12) {
+    hours = 0;
+  }
+
+  return hours * 60 + minutes;
+};
+
 const BookAppointmentForm = () => {
   const [isPending, startTransition] = useTransition();
   const [isSuccess, setIsSuccess] = useState(false);
@@ -30,6 +69,7 @@ const BookAppointmentForm = () => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<PublicAppointmentFormData>({
     resolver: zodResolver(PublicAppointmentSchema),
@@ -45,28 +85,23 @@ const BookAppointmentForm = () => {
     },
   });
 
-  const timeSlots = [
-    "8:00 AM",
-    "8:30 AM",
-    "9:00 AM",
-    "9:30 AM",
-    "10:00 AM",
-    "10:30 AM",
-    "11:00 AM",
-    "11:30 AM",
-    "12:00 PM",
-    "12:30 PM",
-    "1:00 PM",
-    "1:30 PM",
-    "2:00 PM",
-    "2:30 PM",
-    "3:00 PM",
-    "3:30 PM",
-    "4:00 PM",
-    "4:30 PM",
-    "5:00 PM",
-    "5:30 PM",
-  ];
+  const selectedDate = watch("scheduledDate");
+
+  // Filter time slots based on selected date
+  const availableTimeSlots = useMemo(() => {
+    if (!selectedDate) return ALL_TIME_SLOTS;
+
+    const today = new Date();
+    const todayStr = today.toISOString().split("T")[0];
+
+    // If selected date is not today, show all slots
+    if (selectedDate !== todayStr) return ALL_TIME_SLOTS;
+
+    // If today, filter out past times (with 30 min buffer)
+    const currentMinutes = today.getHours() * 60 + today.getMinutes() + 30;
+
+    return ALL_TIME_SLOTS.filter((slot) => timeToMinutes(slot) > currentMinutes);
+  }, [selectedDate]);
 
   const onSubmit = async (data: PublicAppointmentFormData) => {
     startTransition(async () => {
@@ -96,11 +131,9 @@ const BookAppointmentForm = () => {
     });
   };
 
-  // Get minimum date (tomorrow)
+  // Get minimum date (today)
   const getMinDate = () => {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    return tomorrow.toISOString().split("T")[0];
+    return new Date().toISOString().split("T")[0];
   };
 
   if (isSuccess) {
@@ -221,14 +254,24 @@ const BookAppointmentForm = () => {
                 {...register("scheduledTime")}
                 id="scheduledTime"
                 className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                disabled={selectedDate && availableTimeSlots.length === 0}
               >
-                <option value="">Select a time...</option>
-                {timeSlots.map((time) => (
+                <option value="">
+                  {selectedDate && availableTimeSlots.length === 0
+                    ? "No times available today"
+                    : "Select a time..."}
+                </option>
+                {availableTimeSlots.map((time) => (
                   <option key={time} value={time}>
                     {time}
                   </option>
                 ))}
               </select>
+              {selectedDate && availableTimeSlots.length === 0 && (
+                <p className="text-yellow-400 text-xs mt-1">
+                  All time slots for today have passed. Please select a future date.
+                </p>
+              )}
               <ErrorMessage
                 errors={errors}
                 name="scheduledTime"
