@@ -4,7 +4,7 @@ import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { AppointmentSchema, AppointmentFormData, SERVICE_TYPES, APPOINTMENT_STATUSES } from "@/lib/validations/zod";
+import { AppointmentBaseSchema, AppointmentFormData, SERVICE_TYPES, APPOINTMENT_STATUSES } from "@/lib/validations/zod";
 import { upsertAppointmentAction } from "@/app/actions/appointmentAction";
 import { ErrorMessage } from "@hookform/error-message";
 import { SafeAdmin } from "@/lib/types";
@@ -28,7 +28,7 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
     reset,
     formState: { errors },
   } = useForm<AppointmentFormData>({
-    resolver: zodResolver(AppointmentSchema),
+    resolver: zodResolver(AppointmentBaseSchema),
     defaultValues: {
       id: appointment?.id || undefined,
       clientName: appointment?.clientName || "",

@@ -290,3 +290,8 @@ npm run db:studio    # Open Prisma Studio
 Types: feat, fix, docs, style, refactor, perf, test, chore
 Example: feat(appointments): add booking form component
 ```
+
+### Commit Rules:
+- **NEVER mention AI, Claude, Copilot, or any AI assistant in commits**
+- No "Co-Authored-By" AI references
+- Keep commits professional and human-authored in appearance
