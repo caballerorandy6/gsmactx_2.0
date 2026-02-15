@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import GSMSlider from "./GSMSlider";
+import TestimonialsCarousel from "./TestimonialsCarousel";
 import { Review } from "@/lib/interfaces";
 import { useRef, useEffect, useState } from "react";
 import useSectionObserver from "@/hooks/useSectionObserver";
@@ -77,7 +77,7 @@ const Testimonials = () => {
         viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
       >
-        <GSMSlider reviews={testimonials} />
+        <TestimonialsCarousel reviews={testimonials} />
       </motion.div>
 
       <motion.div
