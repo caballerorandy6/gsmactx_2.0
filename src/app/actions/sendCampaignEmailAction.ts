@@ -1,13 +1,13 @@
 "use server";
 
-import { prisma } from "@/libs/prisma";
+import { prisma } from "@/lib/db/prisma";
 import { Resend } from "resend";
-import { ActionResult } from "@/libs/types";
-import { getCurrentUser } from "@/libs/getCurrentUser";
+import { ActionResult } from "@/lib/types";
+import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { randomUUID } from "crypto";
-import { renderCampaignEmail } from "@/libs/emailRenderer";
+import { renderCampaignEmail } from "@/lib/email/emailRenderer";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const DAILY_LIMIT = 100; // Resend free tier limit

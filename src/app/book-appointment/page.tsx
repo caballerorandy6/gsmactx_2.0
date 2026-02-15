@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import BookAppointmentForm from "@/components/BookAppointmentForm";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import ScrollToTop from "@/components/ScrollToTop";
+import BookAppointmentForm from "@/components/forms/BookAppointmentForm";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 import {
   PhoneIcon,
   ClockIcon,

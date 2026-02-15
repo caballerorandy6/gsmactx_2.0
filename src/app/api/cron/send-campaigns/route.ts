@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/libs/prisma";
+import { prisma } from "@/lib/db/prisma";
 import { Resend } from "resend";
 import { render } from "@react-email/components";
-import CampaignEmailTemplate from "@/components/admin-components/CampaignEmailPreview";
+import CampaignEmailTemplate from "@/components/admin/campaigns/CampaignEmailPreview";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const DAILY_LIMIT = 100;

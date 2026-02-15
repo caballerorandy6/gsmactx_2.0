@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
-import { prisma } from "@/libs/prisma";
-import { emailsToSeed } from "@/libs/data";
+import { prisma } from "@/lib/db/prisma";
+import { emailsToSeed } from "@/lib/data";
 
 async function main() {
   console.log("Iniciando seed...");

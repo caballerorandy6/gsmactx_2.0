@@ -1,18 +1,18 @@
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Services from "@/components/Services";
-import Testimonials from "@/components/Testimonials";
-import Contact from "@/components/Contact";
-import ScrollSpyHandler from "@/components/ScrollSpyHandler";
-import ScrollToTop from "@/components/ScrollToTop";
+import Hero from "@/components/landing/Hero";
+import About from "@/components/landing/About";
+import Services from "@/components/landing/Services";
+import Testimonials from "@/components/landing/Testimonials";
+import Contact from "@/components/landing/Contact";
+import ScrollSpyHandler from "@/components/layout/ScrollSpyHandler";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 import { genPageMetadata } from "@/seo/genPageMetadata";
-import { JsonLdForArticle } from "@/components/JsonLdForArticle";
-import { JsonLdForBreadcrumb } from "@/components/JsonLdForBreadcrumb";
-import { JsonLdForFaq } from "@/components/JsonLdForFaq";
-import { JsonLdForLocalBusiness } from "@/components/JsonLdForLocalBusiness";
-import FAQ from "@/components/FAQ";
-import { faqs, businessInfo } from "@/libs/data";
-import Footer from "@/components/Footer";
+import { JsonLdForArticle } from "@/components/seo/JsonLdForArticle";
+import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
+import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
+import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
+import FAQ from "@/components/landing/FAQ";
+import { faqs, businessInfo } from "@/lib/data";
+import Footer from "@/components/layout/Footer";
 
 export const metadata = genPageMetadata({
   title: "GSM A/C General & Contractor Inc, the best HVAC company in Texas",

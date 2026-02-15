@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import CampaignSender from "@/components/admin-components/CampaignSender";
-import { getCurrentUser } from "@/libs/getCurrentUser";
-import { prisma } from "@/libs/prisma";
-import { renderCampaignEmail } from "@/libs/emailRenderer";
+import CampaignSender from "@/components/admin/campaigns/CampaignSender";
+import { getCurrentUser } from "@/lib/auth/getCurrentUser";
+import { prisma } from "@/lib/db/prisma";
+import { renderCampaignEmail } from "@/lib/email/emailRenderer";
 
 type Params = Promise<{ id: string }>;
 

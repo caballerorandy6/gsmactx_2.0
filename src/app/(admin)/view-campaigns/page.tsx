@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import AdminCampaignList from "@/components/admin-components/CampaignList";
-import { getCurrentUser } from "@/libs/getCurrentUser";
+import AdminCampaignList from "@/components/admin/campaigns/CampaignList";
+import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 

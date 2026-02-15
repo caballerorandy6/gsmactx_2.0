@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/libs/prisma";
+import { prisma } from "@/lib/db/prisma";
 
 export async function getDashboardStatsAction() {
   try {

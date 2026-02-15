@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { RCWebState } from "@/libs/interfaces";
+import { RCWebState } from "@/lib/interfaces";
 
 export const useGSMStore = create<RCWebState>()(
   persist(

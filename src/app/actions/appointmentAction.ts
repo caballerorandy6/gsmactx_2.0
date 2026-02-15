@@ -1,11 +1,11 @@
 "use server";
 
-import { AppointmentSchema, APPOINTMENT_STATUSES } from "@/libs/zod";
-import { ActionResult } from "@/libs/types";
-import { Appointment, AppointmentStatus } from "@/libs/interfaces";
+import { AppointmentSchema, APPOINTMENT_STATUSES } from "@/lib/validations/zod";
+import { ActionResult } from "@/lib/types";
+import { Appointment, AppointmentStatus } from "@/lib/interfaces";
 import { revalidatePath } from "next/cache";
-import { getCurrentUser } from "@/libs/getCurrentUser";
-import { prisma } from "@/libs/prisma";
+import { getCurrentUser } from "@/lib/auth/getCurrentUser";
+import { prisma } from "@/lib/db/prisma";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 

@@ -1,19 +1,19 @@
-import AirConditioningInstallation from "@/components/AirConditioningInstallation";
-import AirConditioningRepair from "@/components/AirConditioningRepair";
-import HeatingInstallation from "@/components/HeatingInstallation";
-import HeatingRepair from "@/components/HeatingRepair";
-import AirDuctSanitizing from "@/components/AirDuctSanitizing";
-import AtticInsullation from "@/components/AtticInsullation";
-import Footer from "@/components/Footer";
-import ServiceMenu from "@/components/ServiceMenu";
-import FAQ from "@/components/FAQ";
+import AirConditioningInstallation from "@/components/services/AirConditioningInstallation";
+import AirConditioningRepair from "@/components/services/AirConditioningRepair";
+import HeatingInstallation from "@/components/services/HeatingInstallation";
+import HeatingRepair from "@/components/services/HeatingRepair";
+import AirDuctSanitizing from "@/components/services/AirDuctSanitizing";
+import AtticInsullation from "@/components/services/AtticInsullation";
+import Footer from "@/components/layout/Footer";
+import ServiceMenu from "@/components/services/ServiceMenu";
+import FAQ from "@/components/landing/FAQ";
 import { genPageMetadata } from "@/seo/genPageMetadata";
-import { JsonLdForArticle } from "@/components/JsonLdForArticle";
-import { JsonLdForBreadcrumb } from "@/components/JsonLdForBreadcrumb";
-import { JsonLdForFaq } from "@/components/JsonLdForFaq";
-import { JsonLdForLocalBusiness } from "@/components/JsonLdForLocalBusiness";
-import { faqs, businessInfo } from "@/libs/data";
-import { servicesIntro } from "@/libs/data";
+import { JsonLdForArticle } from "@/components/seo/JsonLdForArticle";
+import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
+import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
+import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
+import { faqs, businessInfo } from "@/lib/data";
+import { servicesIntro } from "@/lib/data";
 
 // Function to generate metadata for the page
 export const metadata = genPageMetadata({

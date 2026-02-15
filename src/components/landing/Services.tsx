@@ -1,0 +1,99 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { services } from "@/lib/data";
+import ServiceCard from "@/components/services/ServiceCard";
+import useSectionObserver from "@/hooks/useSectionObserver";
+import { features } from "@/lib/data";
+
+export default function Services() {
+  const ref = useSectionObserver({ sectionName: "Services" });
+
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
+    },
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const cardVariant = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
+    },
+  };
+
+  return (
+    <section id="services" ref={ref} className="bg-gray-900 py-24 sm:py-32">
+      <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
+        <motion.p
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="mt-2 max-w-lg text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl"
+        >
+          What Are Our Services?
+        </motion.p>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {services.map((service) => (
+            <motion.div key={service.title} variants={cardVariant}>
+              <ServiceCard
+                title={service.title}
+                description={service.description}
+                imageUrl={service.src}
+                link={service.link}
+              />
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="mt-16 max-w-xl space-y-6 text-base/7 lg:max-w-none"
+        >
+          {features.map((feature) => (
+            <motion.div
+              key={feature.name}
+              variants={fadeInUp}
+              className="relative flex flex-col"
+            >
+              <h3 className="text-2xl font-semibold tracking-tight text-pretty text-white">
+                {feature.name}
+              </h3>
+              <p className="mt-4 text-base/7 text-gray-300">
+                {feature.description}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}

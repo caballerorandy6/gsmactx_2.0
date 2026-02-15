@@ -1,9 +1,9 @@
 // src/app/(admin)/admin-dashboard/page.tsx
-import { getCurrentUser } from "@/libs/getCurrentUser";
+import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { cookies } from "next/headers";
 import { getCampaignsListAction } from "@/app/actions/campaignAction";
 import { getDashboardStatsAction } from "@/app/actions/getDashboardStatsAction";
-import AdminDashboard from "@/components/admin-components/AdminDashboard";
+import AdminDashboard from "@/components/admin/dashboard/AdminDashboard";
 import { notFound } from "next/navigation";
 
 export default async function AdminDashboardPage() {

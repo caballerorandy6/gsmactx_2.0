@@ -1,8 +1,8 @@
 "use server";
 
 import { Resend } from "resend";
-import { UserFormData, UserSchema } from "@/libs/zod";
-import { ActionResult } from "@/libs/types";
+import { UserFormData, UserSchema } from "@/lib/validations/zod";
+import { ActionResult } from "@/lib/types";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 

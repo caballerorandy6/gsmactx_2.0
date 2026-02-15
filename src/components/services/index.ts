@@ -1,0 +1,9 @@
+export { default as ServiceCard } from "./ServiceCard";
+export { default as ServiceDetails } from "./ServiceDetails";
+export { default as ServiceMenu } from "./ServiceMenu";
+export { default as HeatingRepair } from "./HeatingRepair";
+export { default as HeatingInstallation } from "./HeatingInstallation";
+export { default as AirConditioningRepair } from "./AirConditioningRepair";
+export { default as AirConditioningInstallation } from "./AirConditioningInstallation";
+export { default as AtticInsullation } from "./AtticInsullation";
+export { default as AirDuctSanitizing } from "./AirDuctSanitizing";
