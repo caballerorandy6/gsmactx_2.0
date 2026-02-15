@@ -67,7 +67,7 @@ const TestimonialsCarousel = ({ reviews }: TestimonialsCarouselProps) => {
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-4 first:pl-0"
+              className="flex-[0_0_100%] min-w-0 md:flex-[0_0_50%] lg:flex-[0_0_33.333%] xl:flex-[0_0_25%] pl-4 first:pl-0"
             >
               <div className="group relative h-full bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-2xl border border-white/10 p-6 transition-all duration-300 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10">
                 {/* Quote Icon */}
