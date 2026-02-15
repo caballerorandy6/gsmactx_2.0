@@ -2,11 +2,11 @@
 
 import { Resend } from "resend";
 import { randomUUID } from "crypto";
-import { getCurrentUser } from "@/libs/getCurrentUser";
-import { prisma } from "@/libs/prisma";
+import { getCurrentUser } from "@/lib/auth/getCurrentUser";
+import { prisma } from "@/lib/db/prisma";
 import { cookies } from "next/headers";
 import { put } from "@vercel/blob";
-import { renderCampaignEmail } from "@/libs/emailRenderer";
+import { renderCampaignEmail } from "@/lib/email/emailRenderer";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 

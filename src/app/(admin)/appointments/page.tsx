@@ -1,9 +1,9 @@
 import { Metadata } from "next";
-import { getCurrentUser } from "@/libs/getCurrentUser";
+import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { getAppointmentsListAction } from "@/app/actions/appointmentAction";
-import AppointmentsList from "@/components/admin-components/AppointmentsList";
+import AppointmentsList from "@/components/admin/appointments/AppointmentsList";
 
 export const metadata: Metadata = {
   title: "Appointments - GSM A/C Admin",

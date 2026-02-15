@@ -4,7 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import Script from "next/script";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import ReCaptchaProvider from "@/components/ReCaptchaProvider";
+import ReCaptchaProvider from "@/components/forms/ReCaptchaProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

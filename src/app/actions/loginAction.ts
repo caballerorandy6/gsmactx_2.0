@@ -1,12 +1,12 @@
 "use server";
 
-import { prisma } from "@/libs/prisma";
-import { AdminSchema, AdminFormData } from "@/libs/zod";
+import { prisma } from "@/lib/db/prisma";
+import { AdminSchema, AdminFormData } from "@/lib/validations/zod";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { ActionResult } from "@/libs/types";
+import { ActionResult } from "@/lib/types";
 
 export async function loginAction(data: AdminFormData): Promise<ActionResult> {
   // Validate the input data using Zod schema

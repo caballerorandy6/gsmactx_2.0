@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Toaster } from "sonner";
-import AdminHeader from "@/components/admin-components/AdminHeader";
+import AdminHeader from "@/components/admin/layout/AdminHeader";
 
 export const metadata: Metadata = {
   title: {

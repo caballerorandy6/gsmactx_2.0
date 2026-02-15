@@ -1,10 +1,11 @@
 "use server";
 
-import { PublicAppointmentSchema, PublicAppointmentFormData } from "@/libs/zod";
-import { ActionResult } from "@/libs/types";
-import { prisma } from "@/libs/prisma";
+import { PublicAppointmentSchema, PublicAppointmentFormData } from "@/lib/validations/zod";
+import { ActionResult } from "@/lib/types";
+import { prisma } from "@/lib/db/prisma";
 import { Resend } from "resend";
-import { SERVICE_TYPE_LABELS } from "@/libs/interfaces";
+import { SERVICE_TYPE_LABELS } from "@/lib/interfaces";
+import { formatPhone } from "@/lib/utils/phone";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -164,7 +165,7 @@ export async function createPublicAppointmentAction(
               <h3 style="margin-top: 0; color: #059669;">Client Information</h3>
               <p style="margin: 10px 0;"><strong>Name:</strong> ${clientName}</p>
               <p style="margin: 10px 0;"><strong>Email:</strong> ${clientEmail}</p>
-              <p style="margin: 10px 0;"><strong>Phone:</strong> ${clientPhone}</p>
+              <p style="margin: 10px 0;"><strong>Phone:</strong> ${formatPhone(clientPhone)}</p>
 
               <h3 style="margin-top: 20px; color: #059669;">Appointment Details</h3>
               <p style="margin: 10px 0;"><strong>Service:</strong> ${serviceLabel}</p>

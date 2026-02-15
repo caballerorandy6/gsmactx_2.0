@@ -1,12 +1,12 @@
 "use server";
 
-import { CampaignSchema } from "@/libs/zod";
-import { ActionResult } from "@/libs/types";
+import { CampaignSchema } from "@/lib/validations/zod";
+import { ActionResult } from "@/lib/types";
 import { revalidatePath } from "next/cache";
-import { getCurrentUser } from "@/libs/getCurrentUser";
-import { prisma } from "@/libs/prisma";
+import { getCurrentUser } from "@/lib/auth/getCurrentUser";
+import { prisma } from "@/lib/db/prisma";
 import { put } from "@vercel/blob";
-import { Campaign } from "@/libs/interfaces";
+import { Campaign } from "@/lib/interfaces";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 

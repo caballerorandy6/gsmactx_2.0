@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import CampaignForm from "@/components/admin-components/CampaignForm";
-import { getCurrentUser } from "@/libs/getCurrentUser";
+import CampaignForm from "@/components/admin/campaigns/CampaignForm";
+import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 

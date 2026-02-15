@@ -1,20 +1,20 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { allServices, businessInfo } from "@/libs/data";
+import { allServices, businessInfo } from "@/lib/data";
 
 // Importing all service components
-import AirConditioningInstallation from "@/components/AirConditioningInstallation";
-import AirConditioningRepair from "@/components/AirConditioningRepair";
-import AirDuctSanitizing from "@/components/AirDuctSanitizing";
-import AtticInsullation from "@/components/AtticInsullation";
-import HeatingInstallation from "@/components/HeatingInstallation";
-import HeatingRepair from "@/components/HeatingRepair";
-import { JsonLdForArticle } from "@/components/JsonLdForArticle";
-import { JsonLdForBreadcrumb } from "@/components/JsonLdForBreadcrumb";
-import { JsonLdForFaq } from "@/components/JsonLdForFaq";
-import { JsonLdForService } from "@/components/JsonLdForService";
-import Footer from "@/components/Footer";
-import FAQ from "@/components/FAQ";
+import AirConditioningInstallation from "@/components/services/AirConditioningInstallation";
+import AirConditioningRepair from "@/components/services/AirConditioningRepair";
+import AirDuctSanitizing from "@/components/services/AirDuctSanitizing";
+import AtticInsullation from "@/components/services/AtticInsullation";
+import HeatingInstallation from "@/components/services/HeatingInstallation";
+import HeatingRepair from "@/components/services/HeatingRepair";
+import { JsonLdForArticle } from "@/components/seo/JsonLdForArticle";
+import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
+import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
+import { JsonLdForService } from "@/components/seo/JsonLdForService";
+import Footer from "@/components/layout/Footer";
+import FAQ from "@/components/landing/FAQ";
 
 // Mapping service IDs to their respective components
 const componentMap: Record<string, React.ComponentType> = {

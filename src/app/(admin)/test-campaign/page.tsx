@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
-import { getCurrentUser } from "@/libs/getCurrentUser";
+import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { redirect } from "next/navigation";
-import AdminHeader from "@/components/admin-components/AdminHeader";
-import TestCampaignForm from "@/components/admin-components/TestCampaignForm";
+import AdminHeader from "@/components/admin/layout/AdminHeader";
+import TestCampaignForm from "@/components/admin/campaigns/TestCampaignForm";
 
 const TestCampaignPage = async () => {
   const cookieStore = await cookies();

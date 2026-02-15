@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import SideBar from "@/components/SideBar";
+import SideBar from "@/components/ui/SideBar";
 
 export const metadata: Metadata = {
   title: "GSM A/C General & Contractor Inc, Services Page",

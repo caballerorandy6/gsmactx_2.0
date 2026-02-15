@@ -4,7 +4,7 @@ import type {
   GooglePlaceDetailsResponse,
   PlaceRatingData,
 } from "@/types/google-places";
-import { Review } from "@/libs/interfaces";
+import { Review } from "@/lib/interfaces";
 
 /**
  * Fetches place details from Google Places API

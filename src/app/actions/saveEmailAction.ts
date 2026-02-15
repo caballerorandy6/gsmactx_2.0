@@ -1,8 +1,8 @@
 "use server";
 
-import { prisma } from "@/libs/prisma";
-import { UserFormData, UserSchema } from "@/libs/zod";
-import { ActionResult } from "@/libs/types";
+import { prisma } from "@/lib/db/prisma";
+import { UserFormData, UserSchema } from "@/lib/validations/zod";
+import { ActionResult } from "@/lib/types";
 
 export async function saveEmailAction(
   data: UserFormData

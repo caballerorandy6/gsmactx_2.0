@@ -1,5 +1,5 @@
 import Image from "next/image";
-import UnsubscribeButtonAction from "@/components/admin-components/UnsubscribeButtonAction";
+import UnsubscribeButtonAction from "@/components/admin/common/UnsubscribeButtonAction";
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 const UnsubscribePage = async (props: { searchParams: SearchParams }) => {
