@@ -9,6 +9,8 @@ import { AdminFormData, AdminSchema } from "@/lib/validations/zod";
 import { loginAction } from "@/app/actions/loginAction";
 
 import ButtonSpinner from "@/components/ui/ButtonSpinner";
+import Link from "next/link";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -49,6 +51,13 @@ const LoginForm = () => {
     // 1. Contenedor principal para centrar todo en la pantalla
     <div className="min-h-screen flex items-center justify-center px-4">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors mb-6"
+        >
+          <ArrowLeftIcon className="h-4 w-4" />
+          Back to Home
+        </Link>
         <h2 className="text-center text-3xl font-bold tracking-tight text-white mb-8">
           Admin Login
         </h2>
