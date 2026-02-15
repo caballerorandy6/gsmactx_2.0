@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import AdminCampaignList from "@/components/admin/campaigns/CampaignList";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ const CampaignListPage = async () => {
   const user = await getCurrentUser(cookieStore.get("token")?.value);
 
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   return <AdminCampaignList user={user} />;

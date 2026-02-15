@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import AppointmentForm from "@/components/admin/appointments/AppointmentForm";
 
@@ -14,7 +14,7 @@ const CreateAppointmentPage = async () => {
   const user = await getCurrentUser(cookieStore.get("token")?.value);
 
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   return <AppointmentForm user={user} />;

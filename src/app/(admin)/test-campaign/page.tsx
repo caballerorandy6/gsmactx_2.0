@@ -9,7 +9,7 @@ const TestCampaignPage = async () => {
   const user = await getCurrentUser(cookieStore.get("token")?.value);
 
   if (!user) {
-    redirect("/admin-login");
+    redirect("/login");
   }
 
   return (
