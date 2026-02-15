@@ -34,7 +34,7 @@ export async function upsertAppointmentAction(
 
   const validateFields = AppointmentSchema.safeParse(rawData);
   if (!validateFields.success) {
-    const errors = validateFields.error.errors
+    const errors = validateFields.error.issues
       .map((e) => e.message)
       .join(", ");
     return {

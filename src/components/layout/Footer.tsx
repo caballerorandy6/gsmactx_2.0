@@ -112,7 +112,14 @@ export default function Footer() {
           <div className="flex items-center gap-4 mt-4">
             <p className="text-xs text-gray-500">
               Developed by{" "}
-              <span className="text-gray-400 font-semibold">RC WEB</span>
+              <Link
+                href="https://rcweb.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 font-semibold hover:text-white transition-colors"
+              >
+                RC Web Solutions LLC
+              </Link>
             </p>
             <span className="text-gray-700">•</span>
             <Link

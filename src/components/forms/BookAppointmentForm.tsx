@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useMemo } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -88,7 +88,8 @@ const BookAppointmentForm = () => {
   const selectedDate = watch("scheduledDate");
 
   // Filter time slots based on selected date
-  const availableTimeSlots = useMemo(() => {
+  // React 19 Compiler auto-memoizes this computation
+  const getAvailableTimeSlots = () => {
     if (!selectedDate) return ALL_TIME_SLOTS;
 
     const today = new Date();
@@ -101,7 +102,9 @@ const BookAppointmentForm = () => {
     const currentMinutes = today.getHours() * 60 + today.getMinutes() + 30;
 
     return ALL_TIME_SLOTS.filter((slot) => timeToMinutes(slot) > currentMinutes);
-  }, [selectedDate]);
+  };
+
+  const availableTimeSlots = getAvailableTimeSlots();
 
   const onSubmit = async (data: PublicAppointmentFormData) => {
     startTransition(async () => {

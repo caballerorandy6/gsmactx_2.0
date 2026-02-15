@@ -1,21 +1,27 @@
 import { z } from "zod";
 import { isValidUSPhone, normalizePhone } from "@/lib/utils/phone";
 
-// Phone validation schema with normalization
-const phoneSchema = z
+// Phone validation schema with normalization (for server-side)
+const phoneSchemaWithTransform = z
   .string()
   .min(10, "Phone number is required")
   .transform(normalizePhone)
   .refine(isValidUSPhone, "Please enter a valid US phone number");
 
-// Zod schema for user
+// Phone validation schema (for forms - no transform)
+const phoneSchema = z
+  .string()
+  .min(10, "Phone number is required")
+  .refine((val) => isValidUSPhone(normalizePhone(val)), "Please enter a valid US phone number");
+
+// Zod schema for user (contact form)
 export const UserSchema = z.object({
   firstName: z.string().min(2, "Name is required"),
   lastName: z.string().min(2, "Last name is required"),
   email: z.string().email("Invalid email address"),
-  phone: phoneSchema,
+  phone: z.string().min(10, "Phone number is required"),
   message: z.string().optional(),
-  subscribe: z.boolean().default(false),
+  subscribe: z.boolean(),
 });
 
 // Zod schema for admin
@@ -102,29 +108,35 @@ export const APPOINTMENT_STATUSES = [
   "CANCELLED",
 ] as const;
 
-export const AppointmentSchema = z.object({
+// Appointment schema
+export const AppointmentBaseSchema = z.object({
   id: z.string().optional(),
   clientName: z.string().min(2, "Client name is required"),
   clientEmail: z.string().email("Invalid email address"),
   clientPhone: phoneSchema,
   serviceType: z.enum(SERVICE_TYPES, {
-    errorMap: () => ({ message: "Please select a service type" }),
+    message: "Please select a service type",
   }),
   scheduledDate: z.string().min(1, "Date is required"),
   scheduledTime: z.string().min(1, "Time is required"),
   address: z.string().min(5, "Address is required"),
   notes: z.string().optional(),
-  status: z.enum(APPOINTMENT_STATUSES).optional().default("PENDING"),
+  status: z.enum(APPOINTMENT_STATUSES).optional(),
 });
 
-// Schema for public booking (without status)
-export const PublicAppointmentSchema = AppointmentSchema.omit({
+// Alias for backward compatibility
+export const AppointmentSchema = AppointmentBaseSchema;
+
+// Schema for public booking (without status and id)
+export const PublicAppointmentSchema = AppointmentBaseSchema.omit({
   id: true,
   status: true,
 });
 
+// Types
+export type AppointmentFormData = z.infer<typeof AppointmentBaseSchema>;
+
 export type UserFormData = z.infer<typeof UserSchema>;
 export type AdminFormData = z.infer<typeof AdminSchema>;
 export type CampaignFormData = z.infer<typeof CampaignSchema>;
-export type AppointmentFormData = z.infer<typeof AppointmentSchema>;
 export type PublicAppointmentFormData = z.infer<typeof PublicAppointmentSchema>;

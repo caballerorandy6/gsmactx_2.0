@@ -66,7 +66,7 @@ export async function createPublicAppointmentAction(
   const validateFields = PublicAppointmentSchema.safeParse(data);
 
   if (!validateFields.success) {
-    const errors = validateFields.error.errors
+    const errors = validateFields.error.issues
       .map((e) => e.message)
       .join(", ");
     return {
