@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import clsx from "clsx";
@@ -9,8 +10,18 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon, PhoneIcon } from "@heroicons/react/24/outline";
 
 const Header = () => {
-  const { activeSection, scrolled, mobileMenuOpen, setMobileMenuOpen } =
+  const { activeSection, scrolled, setScrolled, mobileMenuOpen, setMobileMenuOpen } =
     useGSMStore();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [setScrolled]);
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
