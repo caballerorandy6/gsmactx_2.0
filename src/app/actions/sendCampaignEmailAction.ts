@@ -5,7 +5,7 @@ import { Resend } from "resend";
 import { ActionResult } from "@/lib/types";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { randomUUID } from "crypto";
 import { renderCampaignEmail } from "@/lib/email/emailRenderer";
 
@@ -152,7 +152,7 @@ export async function initializeCampaignEmailLogsAction(
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   try {
@@ -263,7 +263,7 @@ export async function sendCampaignBatchAction(
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   try {
@@ -487,7 +487,7 @@ export async function getCampaignStatsAction(
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   try {
@@ -528,7 +528,7 @@ export async function retryFailedEmailsAction(
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   try {

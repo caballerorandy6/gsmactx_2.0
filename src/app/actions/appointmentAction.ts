@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { prisma } from "@/lib/db/prisma";
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
 // Create or Update appointment (Admin)
 export async function upsertAppointmentAction(
@@ -16,7 +16,7 @@ export async function upsertAppointmentAction(
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   const rawData = {
@@ -107,7 +107,7 @@ export async function deleteAppointmentAction(
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   try {
@@ -132,7 +132,7 @@ export async function getAppointmentsListAction(filters?: {
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   try {
@@ -180,7 +180,7 @@ export async function getAppointmentByIdAction(
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   try {
@@ -208,7 +208,7 @@ export async function updateAppointmentStatusAction(
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   if (
@@ -246,7 +246,7 @@ export async function getAppointmentStatsAction(): Promise<{
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   try {
