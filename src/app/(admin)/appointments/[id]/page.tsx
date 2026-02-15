@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { getAppointmentByIdAction } from "@/app/actions/appointmentAction";
 import AppointmentDetail from "@/components/admin/appointments/AppointmentDetail";
@@ -20,7 +20,7 @@ const AppointmentDetailPage = async ({ params }: AppointmentDetailPageProps) => 
   const user = await getCurrentUser(cookieStore.get("token")?.value);
 
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   const appointment = await getAppointmentByIdAction(id);

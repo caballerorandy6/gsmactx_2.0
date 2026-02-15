@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import CampaignForm from "@/components/admin/campaigns/CampaignForm";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ const CampaignCreatePage = async () => {
   const user = await getCurrentUser(cookieStore.get("token")?.value);
 
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   return <CampaignForm user={user} />;

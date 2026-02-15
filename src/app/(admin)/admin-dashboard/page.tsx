@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { getCampaignsListAction } from "@/app/actions/campaignAction";
 import { getDashboardStatsAction } from "@/app/actions/getDashboardStatsAction";
 import AdminDashboard from "@/components/admin/dashboard/AdminDashboard";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
 export default async function AdminDashboardPage() {
   const campaigns = await getCampaignsListAction();
@@ -13,7 +13,7 @@ export default async function AdminDashboardPage() {
   const dashboardStats = await getDashboardStatsAction();
 
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   return (
