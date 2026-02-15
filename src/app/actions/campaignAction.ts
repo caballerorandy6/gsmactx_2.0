@@ -8,7 +8,7 @@ import { prisma } from "@/lib/db/prisma";
 import { put } from "@vercel/blob";
 import { Campaign } from "@/lib/interfaces";
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
 // Action to send or update campaign email
 export async function upsertCampaignAction(
@@ -18,7 +18,7 @@ export async function upsertCampaignAction(
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   // Extract FormData fields
@@ -96,7 +96,7 @@ export const deleteCampaignAction = async (
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   try {
@@ -116,7 +116,7 @@ export async function getCampaignsListAction(): Promise<Campaign[]> {
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   try {
@@ -207,7 +207,7 @@ export async function getCampaignByIdAction(
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   try {
@@ -234,7 +234,7 @@ export async function duplicateCampaignAction(
   const cookieStore = await cookies();
   const user = await getCurrentUser(cookieStore.get("token")?.value);
   if (!user) {
-    notFound();
+    redirect("/login");
   }
 
   try {
