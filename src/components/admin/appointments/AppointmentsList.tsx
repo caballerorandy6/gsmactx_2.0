@@ -10,8 +10,11 @@ import {
 } from "@/lib/interfaces";
 import { APPOINTMENT_STATUSES, SERVICE_TYPES } from "@/lib/validations/zod";
 import AppointmentListItem from "./AppointmentListItem";
+import AppointmentsCalendar from "./AppointmentsCalendar";
 import {
   CalendarIcon,
+  CalendarDaysIcon,
+  ListBulletIcon,
   FunnelIcon,
   PlusIcon,
   XMarkIcon,
@@ -23,11 +26,13 @@ interface AppointmentsListProps {
 }
 
 type FilterStatus = AppointmentStatus | "ALL";
+type ViewMode = "list" | "calendar";
 
 const AppointmentsList = ({
   appointments,
   userName,
 }: AppointmentsListProps) => {
+  const [viewMode, setViewMode] = useState<ViewMode>("calendar");
   const [selectedStatus, setSelectedStatus] = useState<FilterStatus>("ALL");
   const [selectedService, setSelectedService] = useState<string>("ALL");
   const [filteredAppointments, setFilteredAppointments] =
@@ -75,41 +80,73 @@ const AppointmentsList = ({
               Welcome, {userName}. Manage your scheduled appointments.
             </p>
           </div>
-          <Link
-            href="/create-appointment"
-            className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition-colors"
-          >
-            <PlusIcon className="h-5 w-5" />
-            New Appointment
-          </Link>
-        </div>
-
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
-          {APPOINTMENT_STATUSES.map((status) => (
-            <button
-              key={status}
-              onClick={() =>
-                setSelectedStatus(selectedStatus === status ? "ALL" : status)
-              }
-              className={clsx(
-                "rounded-lg p-3 text-center transition-all border",
-                selectedStatus === status
-                  ? "bg-indigo-600/20 border-indigo-500/50 ring-1 ring-indigo-500/30"
-                  : "bg-gray-800/50 border-white/10 hover:bg-gray-700/50"
-              )}
+          <div className="flex items-center gap-3">
+            {/* View Mode Toggle */}
+            <div className="flex items-center bg-gray-800/50 rounded-lg p-1 border border-white/10">
+              <button
+                onClick={() => setViewMode("calendar")}
+                className={clsx(
+                  "flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
+                  viewMode === "calendar"
+                    ? "bg-indigo-600 text-white"
+                    : "text-gray-400 hover:text-white"
+                )}
+              >
+                <CalendarDaysIcon className="h-4 w-4" />
+                Calendar
+              </button>
+              <button
+                onClick={() => setViewMode("list")}
+                className={clsx(
+                  "flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
+                  viewMode === "list"
+                    ? "bg-indigo-600 text-white"
+                    : "text-gray-400 hover:text-white"
+                )}
+              >
+                <ListBulletIcon className="h-4 w-4" />
+                List
+              </button>
+            </div>
+            <Link
+              href="/create-appointment"
+              className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition-colors"
             >
-              <p className="text-2xl font-bold text-white">
-                {statusCounts[status]}
-              </p>
-              <p className="text-xs text-gray-400 capitalize">
-                {status.replace("_", " ").toLowerCase()}
-              </p>
-            </button>
-          ))}
+              <PlusIcon className="h-5 w-5" />
+              New Appointment
+            </Link>
+          </div>
         </div>
 
-        {/* Filter Controls */}
+        {/* Quick Stats - Only show in list view */}
+        {viewMode === "list" && (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
+            {APPOINTMENT_STATUSES.map((status) => (
+              <button
+                key={status}
+                onClick={() =>
+                  setSelectedStatus(selectedStatus === status ? "ALL" : status)
+                }
+                className={clsx(
+                  "rounded-lg p-3 text-center transition-all border",
+                  selectedStatus === status
+                    ? "bg-indigo-600/20 border-indigo-500/50 ring-1 ring-indigo-500/30"
+                    : "bg-gray-800/50 border-white/10 hover:bg-gray-700/50"
+                )}
+              >
+                <p className="text-2xl font-bold text-white">
+                  {statusCounts[status]}
+                </p>
+                <p className="text-xs text-gray-400 capitalize">
+                  {status.replace("_", " ").toLowerCase()}
+                </p>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Filter Controls - Only show in list view */}
+        {viewMode === "list" && (
         <div className="bg-gray-800/50 rounded-lg border border-white/10 p-4 mb-6">
           <div className="flex flex-wrap items-center gap-4">
             <button
@@ -193,47 +230,55 @@ const AppointmentsList = ({
             </div>
           )}
         </div>
+        )}
 
-        {/* Appointments List */}
-        <div className="bg-gray-900/50 backdrop-blur-sm rounded-lg border border-white/10">
-          {filteredAppointments.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 px-4">
-              <CalendarIcon className="h-16 w-16 text-gray-600 mb-4" />
-              <h3 className="text-lg font-medium text-white mb-2">
-                No appointments found
-              </h3>
-              <p className="text-gray-400 text-center mb-6">
-                {hasActiveFilters
-                  ? "Try adjusting your filters to see more results."
-                  : "Start by creating your first appointment."}
-              </p>
-              {hasActiveFilters ? (
-                <button
-                  onClick={clearFilters}
-                  className="rounded-md bg-gray-700 px-4 py-2 text-sm font-medium text-white hover:bg-gray-600 transition-colors"
-                >
-                  Clear Filters
-                </button>
-              ) : (
-                <Link
-                  href="/create-appointment"
-                  className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 transition-colors"
-                >
-                  Create Appointment
-                </Link>
-              )}
-            </div>
-          ) : (
-            <ul role="list" className="divide-y divide-white/10">
-              {filteredAppointments.map((appointment) => (
-                <AppointmentListItem
-                  key={appointment.id}
-                  appointment={appointment}
-                />
-              ))}
-            </ul>
-          )}
-        </div>
+        {/* Calendar View */}
+        {viewMode === "calendar" && (
+          <AppointmentsCalendar appointments={appointments} />
+        )}
+
+        {/* List View */}
+        {viewMode === "list" && (
+          <div className="bg-gray-900/50 backdrop-blur-sm rounded-lg border border-white/10">
+            {filteredAppointments.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-16 px-4">
+                <CalendarIcon className="h-16 w-16 text-gray-600 mb-4" />
+                <h3 className="text-lg font-medium text-white mb-2">
+                  No appointments found
+                </h3>
+                <p className="text-gray-400 text-center mb-6">
+                  {hasActiveFilters
+                    ? "Try adjusting your filters to see more results."
+                    : "Start by creating your first appointment."}
+                </p>
+                {hasActiveFilters ? (
+                  <button
+                    onClick={clearFilters}
+                    className="rounded-md bg-gray-700 px-4 py-2 text-sm font-medium text-white hover:bg-gray-600 transition-colors"
+                  >
+                    Clear Filters
+                  </button>
+                ) : (
+                  <Link
+                    href="/create-appointment"
+                    className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 transition-colors"
+                  >
+                    Create Appointment
+                  </Link>
+                )}
+              </div>
+            ) : (
+              <ul role="list" className="divide-y divide-white/10">
+                {filteredAppointments.map((appointment) => (
+                  <AppointmentListItem
+                    key={appointment.id}
+                    appointment={appointment}
+                  />
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
         </div>
       </main>
     </section>
