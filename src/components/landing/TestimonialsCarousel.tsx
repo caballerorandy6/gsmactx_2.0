@@ -17,7 +17,7 @@ const TestimonialsCarousel = ({ reviews }: TestimonialsCarouselProps) => {
       loop: true,
       align: "start",
       slidesToScroll: 1,
-      containScroll: "trimSnaps",
+      containScroll: false,
     },
     [
       Autoplay({
@@ -63,11 +63,11 @@ const TestimonialsCarousel = ({ reviews }: TestimonialsCarouselProps) => {
     <div className="py-12">
       {/* Carousel Container */}
       <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex gap-6">
+        <div className="flex -ml-4">
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="flex-[0_0_100%] min-w-0 md:flex-[0_0_50%] lg:flex-[0_0_33.333%] xl:flex-[0_0_25%] pl-4 first:pl-0"
+              className="flex-[0_0_100%] min-w-0 pl-4 md:flex-[0_0_50%] lg:flex-[0_0_33.333%] xl:flex-[0_0_25%]"
             >
               <div className="group relative h-full bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-2xl border border-white/10 p-6 transition-all duration-300 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10">
                 {/* Quote Icon */}
