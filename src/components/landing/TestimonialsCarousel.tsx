@@ -69,10 +69,10 @@ const TestimonialsCarousel = ({ reviews }: TestimonialsCarouselProps) => {
               key={index}
               className="flex-[0_0_100%] min-w-0 pl-4 md:flex-[0_0_50%] lg:flex-[0_0_33.333%] xl:flex-[0_0_25%]"
             >
-              <div className="group relative h-full bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-2xl border border-white/10 p-6 transition-all duration-300 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10">
+              <div className="group relative h-full bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-2xl border border-white/10 p-6 transition-all duration-300 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10">
                 {/* Quote Icon */}
                 <div className="absolute -top-3 -left-1 text-6xl text-indigo-500/20 font-serif">
-                  "
+                  &ldquo;
                 </div>
 
                 {/* Header: Author & Rating */}
@@ -86,7 +86,7 @@ const TestimonialsCarousel = ({ reviews }: TestimonialsCarouselProps) => {
                       className="rounded-full ring-2 ring-indigo-500/30"
                     />
                   ) : (
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+                    <div className="w-12 h-12 rounded-full bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
                       {review.author_name.charAt(0).toUpperCase()}
                     </div>
                   )}
