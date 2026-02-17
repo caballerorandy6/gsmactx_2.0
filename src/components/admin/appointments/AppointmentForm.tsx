@@ -1,11 +1,11 @@
 "use client";
 
-import { useTransition } from "react";
+import { useTransition, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { AppointmentBaseSchema, AppointmentFormData, SERVICE_TYPES, APPOINTMENT_STATUSES } from "@/lib/validations/zod";
-import { upsertAppointmentAction } from "@/app/actions/appointmentAction";
+import { upsertAppointmentAction, getBookedTimeSlotsAction } from "@/app/actions/appointmentAction";
 import { ErrorMessage } from "@hookform/error-message";
 import { SafeAdmin } from "@/lib/types";
 import { Appointment, SERVICE_TYPE_LABELS } from "@/lib/interfaces";
@@ -19,6 +19,8 @@ interface AppointmentFormProps {
 const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [bookedTimeSlots, setBookedTimeSlots] = useState<string[]>([]);
+  const [isLoadingSlots, setIsLoadingSlots] = useState(false);
 
   const isEditing = !!appointment?.id;
 
@@ -26,6 +28,7 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<AppointmentFormData>({
     resolver: zodResolver(AppointmentBaseSchema),
@@ -44,6 +47,64 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
       status: appointment?.status || "PENDING",
     },
   });
+
+  const timeSlots = [
+    "8:00 AM",
+    "8:30 AM",
+    "9:00 AM",
+    "9:30 AM",
+    "10:00 AM",
+    "10:30 AM",
+    "11:00 AM",
+    "11:30 AM",
+    "12:00 PM",
+    "12:30 PM",
+    "1:00 PM",
+    "1:30 PM",
+    "2:00 PM",
+    "2:30 PM",
+    "3:00 PM",
+    "3:30 PM",
+    "4:00 PM",
+    "4:30 PM",
+    "5:00 PM",
+    "5:30 PM",
+  ];
+
+  // Watch the date field to fetch booked time slots
+  const selectedDate = watch("scheduledDate");
+
+  // Fetch booked time slots when date changes
+  useEffect(() => {
+    const fetchBookedSlots = async () => {
+      if (!selectedDate) {
+        setBookedTimeSlots([]);
+        return;
+      }
+
+      setIsLoadingSlots(true);
+      try {
+        // Exclude current appointment when editing
+        const slots = await getBookedTimeSlotsAction(
+          selectedDate,
+          isEditing ? appointment?.id : undefined
+        );
+        setBookedTimeSlots(slots);
+      } catch (error) {
+        console.error("Error fetching booked slots:", error);
+        setBookedTimeSlots([]);
+      } finally {
+        setIsLoadingSlots(false);
+      }
+    };
+
+    fetchBookedSlots();
+  }, [selectedDate, isEditing, appointment?.id]);
+
+  // Filter available time slots (exclude booked ones)
+  const availableTimeSlots = timeSlots.filter(
+    (slot) => !bookedTimeSlots.includes(slot)
+  );
 
   const onSubmit = async (data: AppointmentFormData) => {
     const formData = new FormData();
@@ -86,29 +147,6 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
       }
     });
   };
-
-  const timeSlots = [
-    "8:00 AM",
-    "8:30 AM",
-    "9:00 AM",
-    "9:30 AM",
-    "10:00 AM",
-    "10:30 AM",
-    "11:00 AM",
-    "11:30 AM",
-    "12:00 PM",
-    "12:30 PM",
-    "1:00 PM",
-    "1:30 PM",
-    "2:00 PM",
-    "2:30 PM",
-    "3:00 PM",
-    "3:30 PM",
-    "4:00 PM",
-    "4:30 PM",
-    "5:00 PM",
-    "5:30 PM",
-  ];
 
   // Get minimum date (today) - prevents selecting past dates
   const getMinDate = () => {
@@ -278,15 +316,31 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
                   <select
                     {...register("scheduledTime")}
                     id="scheduledTime"
-                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    disabled={!selectedDate || isLoadingSlots}
+                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <option value="">Select a time...</option>
-                    {timeSlots.map((time) => (
-                      <option key={time} value={time}>
-                        {time}
-                      </option>
-                    ))}
+                    {!selectedDate ? (
+                      <option value="">Select a date first...</option>
+                    ) : isLoadingSlots ? (
+                      <option value="">Loading available times...</option>
+                    ) : availableTimeSlots.length === 0 ? (
+                      <option value="">No available times for this date</option>
+                    ) : (
+                      <>
+                        <option value="">Select a time...</option>
+                        {availableTimeSlots.map((time) => (
+                          <option key={time} value={time}>
+                            {time}
+                          </option>
+                        ))}
+                      </>
+                    )}
                   </select>
+                  {bookedTimeSlots.length > 0 && (
+                    <p className="text-yellow-400 text-xs mt-1">
+                      {bookedTimeSlots.length} time slot(s) already booked for this date
+                    </p>
+                  )}
                   <ErrorMessage
                     errors={errors}
                     name="scheduledTime"
