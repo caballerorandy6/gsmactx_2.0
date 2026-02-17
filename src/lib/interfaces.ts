@@ -133,7 +133,7 @@ export const SERVICE_TYPE_LABELS: Record<ServiceType, string> = {
   HEATING_INSTALLATION: "Heating Installation",
   FULL_HVAC_INSTALLATION: "Full HVAC Installation",
   DUCT_CLEANING: "Duct Cleaning",
-  FREE_ESTIMATE: "Free Estimate",
+  FREE_ESTIMATE: "Free Estimate for Complete System Replacement",
 };
 
 // Status labels and colors for display
