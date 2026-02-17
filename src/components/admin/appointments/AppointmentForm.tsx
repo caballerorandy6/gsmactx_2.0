@@ -251,7 +251,7 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
                     {...register("scheduledDate")}
                     id="scheduledDate"
                     type="date"
-                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-70 [&::-webkit-calendar-picker-indicator]:hover:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
                   />
                   <ErrorMessage
                     errors={errors}
