@@ -86,6 +86,11 @@ export async function createPublicAppointmentAction(
     notes,
   } = validateFields.data;
 
+  // Parse the date string "YYYY-MM-DD" and create date at noon local time
+  // This prevents timezone issues where UTC midnight becomes previous day in CST
+  const [year, month, day] = scheduledDate.split("-").map(Number);
+  const parsedDate = new Date(year, month - 1, day, 12, 0, 0);
+
   try {
     // Create appointment in database
     const appointment = await prisma.appointment.create({
@@ -94,7 +99,7 @@ export async function createPublicAppointmentAction(
         clientEmail,
         clientPhone,
         serviceType,
-        scheduledDate: new Date(scheduledDate),
+        scheduledDate: parsedDate,
         scheduledTime,
         address,
         notes: notes || null,
@@ -103,7 +108,7 @@ export async function createPublicAppointmentAction(
     });
 
     // Format date for emails
-    const formattedDate = new Date(scheduledDate).toLocaleDateString("en-US", {
+    const formattedDate = parsedDate.toLocaleDateString("en-US", {
       weekday: "long",
       year: "numeric",
       month: "long",
