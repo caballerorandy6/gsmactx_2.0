@@ -110,6 +110,11 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
     "5:30 PM",
   ];
 
+  // Get minimum date (today) - prevents selecting past dates
+  const getMinDate = () => {
+    return new Date().toISOString().split("T")[0];
+  };
+
   return (
     <section className="bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 mt-10 min-h-screen">
       <main className="pt-20 px-4 sm:px-6 lg:px-8">
@@ -251,6 +256,7 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
                     {...register("scheduledDate")}
                     id="scheduledDate"
                     type="date"
+                    min={getMinDate()}
                     className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-70 [&::-webkit-calendar-picker-indicator]:hover:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
                   />
                   <ErrorMessage
