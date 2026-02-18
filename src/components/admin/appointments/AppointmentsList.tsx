@@ -82,29 +82,33 @@ const AppointmentsList = ({
           </div>
           <div className="flex items-center gap-3">
             {/* View Mode Toggle */}
-            <div className="flex items-center bg-gray-800/50 rounded-lg p-1 border border-white/10">
+            <div className="flex items-center bg-gray-800/50 rounded-lg p-1 border border-white/10" role="group" aria-label="View mode">
               <button
                 onClick={() => setViewMode("calendar")}
+                aria-label="Switch to calendar view"
+                aria-pressed={viewMode === "calendar"}
                 className={clsx(
-                  "flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
+                  "flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors motion-reduce:transition-none",
                   viewMode === "calendar"
                     ? "bg-indigo-600 text-white"
                     : "text-gray-400 hover:text-white"
                 )}
               >
-                <CalendarDaysIcon className="h-4 w-4" />
+                <CalendarDaysIcon aria-hidden="true" className="h-4 w-4" />
                 Calendar
               </button>
               <button
                 onClick={() => setViewMode("list")}
+                aria-label="Switch to list view"
+                aria-pressed={viewMode === "list"}
                 className={clsx(
-                  "flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
+                  "flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors motion-reduce:transition-none",
                   viewMode === "list"
                     ? "bg-indigo-600 text-white"
                     : "text-gray-400 hover:text-white"
                 )}
               >
-                <ListBulletIcon className="h-4 w-4" />
+                <ListBulletIcon aria-hidden="true" className="h-4 w-4" />
                 List
               </button>
             </div>
@@ -120,21 +124,23 @@ const AppointmentsList = ({
 
         {/* Quick Stats - Only show in list view */}
         {viewMode === "list" && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6" role="group" aria-label="Filter by status">
             {APPOINTMENT_STATUSES.map((status) => (
               <button
                 key={status}
                 onClick={() =>
                   setSelectedStatus(selectedStatus === status ? "ALL" : status)
                 }
+                aria-label={`Filter by ${status.replace("_", " ").toLowerCase()}: ${statusCounts[status]} appointments`}
+                aria-pressed={selectedStatus === status}
                 className={clsx(
-                  "rounded-lg p-3 text-center transition-all border",
+                  "rounded-lg p-3 text-center transition-all motion-reduce:transition-none border",
                   selectedStatus === status
                     ? "bg-indigo-600/20 border-indigo-500/50 ring-1 ring-indigo-500/30"
                     : "bg-gray-800/50 border-white/10 hover:bg-gray-700/50"
                 )}
               >
-                <p className="text-2xl font-bold text-white">
+                <p className="text-2xl font-bold text-white tabular-nums">
                   {statusCounts[status]}
                 </p>
                 <p className="text-xs text-gray-400 capitalize">
