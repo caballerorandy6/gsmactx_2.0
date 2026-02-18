@@ -23,11 +23,11 @@ export default function AdminLayout({
     <div className="min-h-screen bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       <AdminHeader />
 
-      <div className="flex pt-16">
+      <div className="flex pt-20 sm:pt-24">
         <AdminSidebar />
 
         <main className="flex-1 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto py-6">{children}</div>
+          <div className="max-w-7xl mx-auto py-4 sm:py-6 lg:py-8">{children}</div>
         </main>
       </div>
 
