@@ -1,11 +1,12 @@
 # GSM A/C & General Contractor INC - Project Guide
 
 ## Project Overview
+
 **Business:** GSM A/C & General Contractor INC
 **Website:** https://www.gsmactx.com
 **Location:** Cypress, TX 77433
 **Phone:** (281) 235-4684
-**Type:** HVAC Services Landing Page + Admin Dashboard + Email Campaign System
+**Type:** Full-stack HVAC Services Platform with Admin Dashboard
 
 ---
 
@@ -14,23 +15,17 @@
 | Technology | Version | Purpose |
 |------------|---------|---------|
 | Next.js | 15.3.6 | Framework (App Router) |
-| React | 19.2.4 | UI Library |
+| React | 19.2.4 | UI Library (with React Compiler) |
 | TypeScript | 5+ | Type safety |
 | TailwindCSS | 4.1.18 | Styling |
-| Prisma | 7.4.0 | ORM (PrismaPg adapter) |
-| PostgreSQL | - | Database (Supabase) |
-| Resend | 4.8.0 | Email service |
-| Zod | 3.25.76 | Validation |
+| Prisma | 7.4.0 | ORM (PostgreSQL via Supabase) |
+| Resend | 6.9.2 | Email service |
+| Zod | 4.3.6 | Schema validation |
 | Zustand | 5.0.11 | State management |
 | Framer Motion | 12.34.0 | Animations |
-
----
-
-## Installed Skills
-
-| Skill | Purpose |
-|-------|---------|
-| `vercel-react-best-practices` | React and Next.js performance optimization guidelines |
+| React Hook Form | 7.71.1 | Form handling |
+| bcrypt | 6.0.0 | Password hashing |
+| jsonwebtoken | 9.0.2 | JWT authentication |
 
 ---
 
@@ -39,103 +34,124 @@
 ```
 src/
 ├── app/
-│   ├── (admin)/              # Protected admin routes
-│   │   ├── admin-dashboard/  # Main dashboard
-│   │   ├── appointments/     # List appointments
-│   │   ├── appointments/[id] # Appointment detail
-│   │   ├── create-appointment/ # Create appointment
-│   │   ├── edit-appointment/[id]/ # Edit appointment
-│   │   ├── create-campaign/  # Create email campaigns
-│   │   ├── edit-campaign/    # Edit campaigns
-│   │   ├── view-campaigns/   # List & send campaigns
-│   │   └── layout.tsx
-│   ├── (auth)/login/         # Admin login
-│   ├── book-appointment/     # Public booking page
-│   ├── api/cron/             # Cron jobs only
-│   ├── actions/              # Server actions
-│   ├── services/[id]/        # Dynamic service pages
-│   └── unsubscribe/          # Email unsubscribe
+│   ├── (admin)/                  # Protected admin routes
+│   │   ├── admin-dashboard/      # Main dashboard with stats
+│   │   ├── appointments/         # Appointment list view
+│   │   ├── appointments/[id]/    # Appointment detail
+│   │   ├── create-appointment/   # Create new appointment
+│   │   ├── edit-appointment/[id]/ # Edit existing appointment
+│   │   ├── create-campaign/      # Create email campaign
+│   │   ├── edit-campaign/[id]/   # Edit campaign
+│   │   ├── view-campaigns/[id]/  # Campaign details & sending
+│   │   ├── test-campaign/        # Test email functionality
+│   │   └── layout.tsx            # Admin layout with sidebar
+│   ├── (auth)/login/             # Admin login page
+│   ├── api/cron/                 # Cron jobs ONLY
+│   │   ├── keepalive/            # Health check (every 5 hours)
+│   │   └── send-campaigns/       # Daily sender (8 AM CST)
+│   ├── actions/                  # Server Actions (15+ actions)
+│   ├── services/[id]/            # Dynamic service detail pages
+│   ├── book-appointment/         # Public booking form
+│   ├── unsubscribe/              # Email unsubscribe handler
+│   ├── layout.tsx                # Root layout
+│   ├── page.tsx                  # Homepage
+│   ├── sitemap.ts                # Dynamic sitemap
+│   ├── robots.ts                 # SEO robots.txt
+│   ├── opengraph-image.tsx       # OG image generation
+│   └── twitter-image.tsx         # Twitter card image
 ├── components/
-│   ├── admin-components/     # Admin UI components
-│   ├── icons/                # SVG icons
-│   └── [Section].tsx         # Page sections
-├── hooks/                    # Custom React hooks
-├── libs/                     # Utilities & data
-├── store/                    # Zustand store
-└── types/                    # TypeScript types
+│   ├── admin/                    # Admin UI (23 components)
+│   │   ├── appointments/         # Appointment CRUD UI
+│   │   ├── campaigns/            # Campaign management
+│   │   ├── dashboard/            # Dashboard widgets
+│   │   └── layout/               # Admin navigation
+│   ├── landing/                  # Landing page (12 components)
+│   ├── layout/                   # Header, Footer
+│   ├── forms/                    # Form components
+│   ├── ui/                       # Shared UI components
+│   ├── seo/                      # JSON-LD components
+│   └── providers/                # Context providers
+├── lib/
+│   ├── auth/                     # JWT auth utilities
+│   ├── db/prisma.ts              # Prisma singleton
+│   ├── email/                    # Email templates
+│   ├── utils/                    # Phone, general utilities
+│   ├── validations/zod.ts        # All Zod schemas
+│   ├── data.ts                   # Static data (services, nav)
+│   └── interfaces.ts             # TypeScript interfaces
+├── hooks/                        # Custom React hooks
+├── store/gsmactx-store.ts        # Zustand global state
+├── types/                        # Type definitions
+├── seo/                          # SEO utilities
+└── __tests__/                    # Vitest tests
 ```
 
 ---
 
-## HVAC Services
+## Database Models (8 total)
 
-1. **Air Conditioning Installation** - `/services/air-conditioning-installation`
-2. **Air Conditioning Repair** - `/services/air-conditioning-repair`
-3. **Heating Installation** - `/services/heating-installation`
-4. **Heating Repair** - `/services/heating-repair`
-5. **Air Duct Sanitizing** - `/services/air-duct-sanitizing`
-6. **Attic Insulation** - `/services/attic-insullation`
+### Core Models
 
----
-
-## Database Models (Prisma)
-
-### Current Models
-- **Admin** - Admin users with JWT auth
-- **Subscriber** - Newsletter subscribers
-- **Campaign** - Email campaigns
-- **CampaignEmailLog** - Email sending logs
-- **SMSCampaign** - SMS campaigns (future)
-- **SMSMessage** - SMS logs (future)
-
-### New Models (Appointments Feature)
 ```prisma
-model Appointment {
-  id            String   @id @default(uuid())
-  clientName    String
-  clientEmail   String
-  clientPhone   String
-  serviceType   ServiceType
-  scheduledDate DateTime
-  scheduledTime String
-  address       String?
-  notes         String?
-  status        AppointmentStatus @default(PENDING)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  createdBy     String?
-  admin         Admin?   @relation(fields: [createdBy])
-}
+Admin           # Admin users with JWT auth
+Appointment     # Service appointments (9 types, 5 statuses)
+Campaign        # Email campaigns with stats
+Subscriber      # Newsletter subscribers
+CampaignEmailLog # Email delivery tracking
+SMSCampaign     # SMS campaigns (future)
+SMSMessage      # SMS logs (future)
+```
 
-enum ServiceType {
-  AC_MAINTENANCE
-  HEATING_MAINTENANCE
-  AC_REPAIR
-  HEATING_REPAIR
-  AC_INSTALLATION
-  HEATING_INSTALLATION
-  FULL_HVAC_INSTALLATION
-  DUCT_CLEANING
-  FREE_ESTIMATE
-}
+### Service Types (Enum)
+```
+AC_MAINTENANCE, HEATING_MAINTENANCE, AC_REPAIR, HEATING_REPAIR,
+AC_INSTALLATION, HEATING_INSTALLATION, FULL_HVAC_INSTALLATION,
+DUCT_CLEANING, FREE_ESTIMATE
+```
 
-enum AppointmentStatus {
-  PENDING
-  CONFIRMED
-  IN_PROGRESS
-  COMPLETED
-  CANCELLED
-}
+### Appointment Statuses (Enum)
+```
+PENDING, CONFIRMED, IN_PROGRESS, COMPLETED, CANCELLED
 ```
 
 ---
 
 ## Authentication
 
-- **Method:** JWT stored in HttpOnly cookies
+- **Method:** JWT in HttpOnly cookies
 - **Expiry:** 24 hours
-- **Password:** bcrypt hashed (8+ chars, uppercase, number, symbol)
-- **Protected routes:** All `/admin-*` routes
+- **Password:** bcrypt (8+ chars, uppercase, number, symbol)
+- **Protected:** All `/admin-*` routes
+
+---
+
+## Server Actions vs API Routes
+
+### Use Server Actions for:
+- All CRUD operations
+- Form submissions
+- Data mutations
+- Authentication
+- Email sending
+
+### Use API Routes ONLY for:
+- Cron jobs (Vercel requirement)
+
+### Current API Routes:
+| Route | Schedule | Purpose |
+|-------|----------|---------|
+| `/api/cron/keepalive` | Every 5 hours | Prevent cold starts |
+| `/api/cron/send-campaigns` | Daily 8 AM CST | Batch email sending |
+
+---
+
+## Email Campaign System
+
+- **Daily limit:** 100 emails (Resend free tier)
+- **Batch processing:** Automatic via cron
+- **Templates:** Promotional, Newsletter, Announcement
+- **Tracking:** Sent/Failed/Pending per subscriber
+- **Features:** Image upload, retry failed emails
 
 ---
 
@@ -146,7 +162,7 @@ enum AppointmentStatus {
 DATABASE_URL=postgresql://...
 DIRECT_URL=postgresql://...
 
-# Auth
+# Authentication
 JWT_SECRET=your-secret
 
 # Email (Resend)
@@ -159,12 +175,14 @@ RECAPTCHA_SECRET_KEY=xxx
 
 # Google Places
 NEXT_PUBLIC_GOOGLE_PLACES_API_KEY=xxx
+PLACE_ID=xxx
 
-# Cron
+# Cron Security
 CRON_SECRET=xxx
 
-# App
+# Deployment
 NEXT_PUBLIC_BASE_URL=https://www.gsmactx.com
+BLOB_READ_WRITE_TOKEN=xxx
 ```
 
 ---
@@ -172,12 +190,13 @@ NEXT_PUBLIC_BASE_URL=https://www.gsmactx.com
 ## Development Commands
 
 ```bash
-npm run dev          # Start dev server with Turbopack
-npm run build        # Build for production
-npm run lint         # Run ESLint
+npm run dev          # Start with Turbopack
+npm run build        # Production build
+npm run lint         # ESLint
+npm run test         # Vitest tests
 npm run seed         # Seed database
-npm run db:push      # Push schema to DB
-npm run db:studio    # Open Prisma Studio
+npm run db:push      # Push schema
+npm run db:studio    # Prisma Studio
 ```
 
 ---
@@ -186,112 +205,71 @@ npm run db:studio    # Open Prisma Studio
 
 ### ALWAYS:
 - Use Server Components by default
-- **Use Server Actions instead of API routes** (except for cron jobs)
+- Use Server Actions for CRUD (not API routes)
 - Validate with Zod before DB operations
-- Use `next/image` for images with proper alt text
+- Use `next/image` with alt text
 - Mobile-first responsive design
-- Parallel data fetching with `Promise.all()`
+- Parallel fetching with `Promise.all()`
 
 ### NEVER:
 - Use `'use client'` without necessity
-- **Create API routes for CRUD operations** (use server actions)
-- Import entire libraries (use tree-shaking)
-- Hardcode colors (use Tailwind classes)
-- Skip loading states or error boundaries
-- Create data fetching waterfalls
+- Create API routes for CRUD
+- Import entire libraries
+- Hardcode colors (use Tailwind)
+- Skip loading/error states
+- Use `useCallback`/`useMemo` (React 19 compiler handles this)
 
 ---
 
-## Server Actions vs API Routes
+## File Naming
 
-### Use Server Actions for:
-- All CRUD operations (create, read, update, delete)
-- Form submissions
-- Data mutations
-- Authentication actions
-- Email sending
-
-### Use API Routes ONLY for:
-- Cron jobs (Vercel requires HTTP endpoints)
-- Webhooks from external services
-- Public APIs consumed by third parties
-
-### Current API Routes to Remove:
-| Route | Replacement |
-|-------|-------------|
-| `/api/send-email` | `sendEmailContactAction` (already exists) |
-| `/api/campaigns/[id]` | `getCampaignByIdAction` |
-
-### API Routes to KEEP:
-| Route | Reason |
-|-------|--------|
-| `/api/cron/keepalive` | Vercel cron job |
-| `/api/cron/send-campaigns` | Vercel cron job |
-
-### File Naming:
-- Components: `PascalCase.tsx`
-- Actions: `camelCaseAction.ts`
-- Utilities: `camelCase.ts`
-- Routes: `kebab-case/`
+- **Components:** `PascalCase.tsx`
+- **Actions:** `camelCaseAction.ts`
+- **Utilities:** `camelCase.ts`
+- **Routes:** `kebab-case/`
 
 ---
 
-## SEO Keywords
-
-- "HVAC services Houston TX"
-- "Air conditioning repair Cypress TX"
-- "Heating installation Texas"
-- "AC maintenance Houston"
-- "Duct cleaning services"
-
----
-
-## Email Campaign System
-
-- **Daily limit:** 100 emails (Resend free tier)
-- **Batch sending:** Automatic via cron job at 8 AM CST
-- **Templates:** Promotional, Newsletter, Announcement
-- **Tracking:** Sent/Failed/Pending status per subscriber
-
----
-
-## Appointment System (NEW FEATURE)
-
-### Service Types for Appointments:
-1. A/C Maintenance (AC_MAINTENANCE)
-2. Heating Maintenance (HEATING_MAINTENANCE)
-3. A/C Repair (AC_REPAIR)
-4. Heating Repair (HEATING_REPAIR)
-5. A/C Installation (AC_INSTALLATION)
-6. Heating Installation (HEATING_INSTALLATION)
-7. Full HVAC Installation (FULL_HVAC_INSTALLATION)
-8. Duct Cleaning (DUCT_CLEANING)
-9. Free Estimate (FREE_ESTIMATE)
-
-### Admin Features:
-- Create/Read/Update/Delete appointments
-- View daily/weekly/monthly calendar
-- Filter by service type and status
-- Client contact information management
-
-### Public Features:
-- Online appointment booking form
-- Service type selection
-- Date/time picker
-- Confirmation email
-
----
-
-## Git Commit Format
+## Git Commits
 
 ```
 <type>(<scope>): <description>
 
 Types: feat, fix, docs, style, refactor, perf, test, chore
-Example: feat(appointments): add booking form component
 ```
 
-### Commit Rules:
-- **NEVER mention AI, Claude, Copilot, or any AI assistant in commits**
+### Rules:
+- NEVER mention AI in commits
 - No "Co-Authored-By" AI references
-- Keep commits professional and human-authored in appearance
+- Professional, human-authored appearance
+
+---
+
+## Performance Optimizations
+
+- Preconnect hints for Google services
+- Lazy load reCAPTCHA only on form pages
+- Lazy load video in Testimonials
+- Security headers (HSTS, X-Frame-Options, etc.)
+- AVIF images, WebM video
+- Code splitting via Next.js
+
+---
+
+## SEO Implementation
+
+- Dynamic sitemap generation
+- robots.txt with admin routes blocked
+- JSON-LD (LocalBusiness, Service, FAQ, Breadcrumb)
+- Open Graph and Twitter cards
+- Meta tags per page
+- Canonical URLs
+
+---
+
+## Documentation
+
+- `/docs/CAMPAIGN_SYSTEM.md` - Email workflow
+- `/docs/CRON_SETUP.md` - Cron job configuration
+- `/docs/INTEGRATION_GUIDE.md` - System integration
+- `/llms.txt` - LLM-friendly project summary
