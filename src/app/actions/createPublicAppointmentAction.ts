@@ -6,6 +6,7 @@ import { prisma } from "@/lib/db/prisma";
 import { Resend } from "resend";
 import { SERVICE_TYPE_LABELS } from "@/lib/interfaces";
 import { formatPhone } from "@/lib/utils/phone";
+import { after } from "next/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -119,81 +120,91 @@ export async function createPublicAppointmentAction(
       SERVICE_TYPE_LABELS[serviceType as keyof typeof SERVICE_TYPE_LABELS] ||
       serviceType;
 
-    // Send confirmation email to client
-    await resend.emails.send({
-      from: "GSM A/C <no-reply@gsmactx.com>",
-      to: [clientEmail],
-      subject: "Appointment Confirmation - GSM A/C & General Contractor",
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); padding: 30px; text-align: center;">
-            <h1 style="color: white; margin: 0;">Appointment Confirmed</h1>
-          </div>
-          <div style="padding: 30px; background: #f9f9f9;">
-            <p style="font-size: 16px;">Dear <strong>${clientName}</strong>,</p>
-            <p style="font-size: 16px;">Thank you for scheduling an appointment with GSM A/C & General Contractor. Here are your appointment details:</p>
+    // Send emails in background using after() - non-blocking for faster response
+    after(async () => {
+      try {
+        // Send both emails in parallel
+        await Promise.all([
+          // Confirmation email to client
+          resend.emails.send({
+            from: "GSM A/C <no-reply@gsmactx.com>",
+            to: [clientEmail],
+            subject: "Appointment Confirmation - GSM A/C & General Contractor",
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); padding: 30px; text-align: center;">
+                  <h1 style="color: white; margin: 0;">Appointment Confirmed</h1>
+                </div>
+                <div style="padding: 30px; background: #f9f9f9;">
+                  <p style="font-size: 16px;">Dear <strong>${clientName}</strong>,</p>
+                  <p style="font-size: 16px;">Thank you for scheduling an appointment with GSM A/C & General Contractor. Here are your appointment details:</p>
 
-            <div style="background: white; border-radius: 8px; padding: 20px; margin: 20px 0; border-left: 4px solid #2d5a87;">
-              <p style="margin: 10px 0;"><strong>Service:</strong> ${serviceLabel}</p>
-              <p style="margin: 10px 0;"><strong>Date:</strong> ${formattedDate}</p>
-              <p style="margin: 10px 0;"><strong>Time:</strong> ${scheduledTime}</p>
-              <p style="margin: 10px 0;"><strong>Address:</strong> ${address}</p>
-              ${notes ? `<p style="margin: 10px 0;"><strong>Notes:</strong> ${notes}</p>` : ""}
-            </div>
+                  <div style="background: white; border-radius: 8px; padding: 20px; margin: 20px 0; border-left: 4px solid #2d5a87;">
+                    <p style="margin: 10px 0;"><strong>Service:</strong> ${serviceLabel}</p>
+                    <p style="margin: 10px 0;"><strong>Date:</strong> ${formattedDate}</p>
+                    <p style="margin: 10px 0;"><strong>Time:</strong> ${scheduledTime}</p>
+                    <p style="margin: 10px 0;"><strong>Address:</strong> ${address}</p>
+                    ${notes ? `<p style="margin: 10px 0;"><strong>Notes:</strong> ${notes}</p>` : ""}
+                  </div>
 
-            <p style="font-size: 14px; color: #666;">We will contact you shortly to confirm this appointment. If you need to make any changes, please call us at <strong>(281) 235-4684</strong>.</p>
+                  <p style="font-size: 14px; color: #666;">We will contact you shortly to confirm this appointment. If you need to make any changes, please call us at <strong>(281) 235-4684</strong>.</p>
 
-            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
-              <p style="font-size: 14px; color: #666; margin: 0;">GSM A/C & General Contractor INC</p>
-              <p style="font-size: 14px; color: #666; margin: 5px 0;">Cypress, TX 77433</p>
-              <p style="font-size: 14px; color: #666; margin: 5px 0;">(281) 235-4684</p>
-            </div>
-          </div>
-        </div>
-      `,
-    });
+                  <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+                    <p style="font-size: 14px; color: #666; margin: 0;">GSM A/C & General Contractor INC</p>
+                    <p style="font-size: 14px; color: #666; margin: 5px 0;">Cypress, TX 77433</p>
+                    <p style="font-size: 14px; color: #666; margin: 5px 0;">(281) 235-4684</p>
+                  </div>
+                </div>
+              </div>
+            `,
+          }),
+          // Notification email to admin
+          resend.emails.send({
+            from: "GSM A/C <no-reply@gsmactx.com>",
+            to: ["contactus@gsmactx.com"],
+            subject: `New Appointment Request: ${serviceLabel}`,
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); padding: 30px; text-align: center;">
+                  <h1 style="color: white; margin: 0;">New Appointment Request</h1>
+                </div>
+                <div style="padding: 30px; background: #f9f9f9;">
+                  <p style="font-size: 16px;">A new appointment has been requested through the website.</p>
 
-    // Send notification email to admin
-    await resend.emails.send({
-      from: "GSM A/C <no-reply@gsmactx.com>",
-      to: ["contactus@gsmactx.com"],
-      subject: `New Appointment Request: ${serviceLabel}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); padding: 30px; text-align: center;">
-            <h1 style="color: white; margin: 0;">New Appointment Request</h1>
-          </div>
-          <div style="padding: 30px; background: #f9f9f9;">
-            <p style="font-size: 16px;">A new appointment has been requested through the website.</p>
+                  <div style="background: white; border-radius: 8px; padding: 20px; margin: 20px 0; border-left: 4px solid #059669;">
+                    <h3 style="margin-top: 0; color: #059669;">Client Information</h3>
+                    <p style="margin: 10px 0;"><strong>Name:</strong> ${clientName}</p>
+                    <p style="margin: 10px 0;"><strong>Email:</strong> ${clientEmail}</p>
+                    <p style="margin: 10px 0;"><strong>Phone:</strong> ${formatPhone(clientPhone)}</p>
 
-            <div style="background: white; border-radius: 8px; padding: 20px; margin: 20px 0; border-left: 4px solid #059669;">
-              <h3 style="margin-top: 0; color: #059669;">Client Information</h3>
-              <p style="margin: 10px 0;"><strong>Name:</strong> ${clientName}</p>
-              <p style="margin: 10px 0;"><strong>Email:</strong> ${clientEmail}</p>
-              <p style="margin: 10px 0;"><strong>Phone:</strong> ${formatPhone(clientPhone)}</p>
+                    <h3 style="margin-top: 20px; color: #059669;">Appointment Details</h3>
+                    <p style="margin: 10px 0;"><strong>Service:</strong> ${serviceLabel}</p>
+                    <p style="margin: 10px 0;"><strong>Date:</strong> ${formattedDate}</p>
+                    <p style="margin: 10px 0;"><strong>Time:</strong> ${scheduledTime}</p>
+                    <p style="margin: 10px 0;"><strong>Address:</strong> ${address}</p>
+                    ${notes ? `<p style="margin: 10px 0;"><strong>Notes:</strong> ${notes}</p>` : ""}
+                  </div>
 
-              <h3 style="margin-top: 20px; color: #059669;">Appointment Details</h3>
-              <p style="margin: 10px 0;"><strong>Service:</strong> ${serviceLabel}</p>
-              <p style="margin: 10px 0;"><strong>Date:</strong> ${formattedDate}</p>
-              <p style="margin: 10px 0;"><strong>Time:</strong> ${scheduledTime}</p>
-              <p style="margin: 10px 0;"><strong>Address:</strong> ${address}</p>
-              ${notes ? `<p style="margin: 10px 0;"><strong>Notes:</strong> ${notes}</p>` : ""}
-            </div>
+                  <p style="font-size: 14px; color: #666;">Please review and confirm this appointment in the admin dashboard.</p>
 
-            <p style="font-size: 14px; color: #666;">Please review and confirm this appointment in the admin dashboard.</p>
-
-            <a href="${process.env.NEXT_PUBLIC_BASE_URL}/appointments/${appointment.id}"
-               style="display: inline-block; background: #059669; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin-top: 20px;">
-              View Appointment
-            </a>
-          </div>
-        </div>
-      `,
+                  <a href="${process.env.NEXT_PUBLIC_BASE_URL}/appointments/${appointment.id}"
+                     style="display: inline-block; background: #059669; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin-top: 20px;">
+                    View Appointment
+                  </a>
+                </div>
+              </div>
+            `,
+          }),
+        ]);
+        console.log("✅ Appointment confirmation emails sent successfully");
+      } catch (error) {
+        console.error("Failed to send appointment emails:", error);
+      }
     });
 
     return {
       success: true,
-      message: "Appointment scheduled successfully! Check your email for confirmation.",
+      message: "Appointment scheduled successfully! You will receive a confirmation email shortly.",
       appointmentId: appointment.id,
     };
   } catch (error) {

@@ -12,7 +12,7 @@ const AdminDuplicateCampaignButton = ({ id }: { id: string }) => {
 
   const handleDuplicate = () => {
     startTransition(async () => {
-      toast.loading("Duplicating campaign...");
+      toast.loading("Duplicating campaign…");
       const result = await duplicateCampaignAction(id);
       toast.dismiss();
 
@@ -32,7 +32,7 @@ const AdminDuplicateCampaignButton = ({ id }: { id: string }) => {
         disabled={isPending}
         className="block px-3 py-1 text-sm/6 text-white hover:bg-gray-700 w-full text-left disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {isPending ? "Duplicating..." : "Duplicate"}
+        {isPending ? "Duplicating…" : "Duplicate"}
       </button>
     </MenuItem>
   );

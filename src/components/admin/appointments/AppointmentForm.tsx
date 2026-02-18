@@ -10,6 +10,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { SafeAdmin } from "@/lib/types";
 import { Appointment, SERVICE_TYPE_LABELS } from "@/lib/interfaces";
 import { useRouter } from "next/navigation";
+import { LockClosedIcon } from "@heroicons/react/24/outline";
 
 interface AppointmentFormProps {
   appointment?: Appointment;
@@ -48,27 +49,19 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
     },
   });
 
+  // 1-hour time slots (8 AM - 6 PM)
   const timeSlots = [
     "8:00 AM",
-    "8:30 AM",
     "9:00 AM",
-    "9:30 AM",
     "10:00 AM",
-    "10:30 AM",
     "11:00 AM",
-    "11:30 AM",
     "12:00 PM",
-    "12:30 PM",
     "1:00 PM",
-    "1:30 PM",
     "2:00 PM",
-    "2:30 PM",
     "3:00 PM",
-    "3:30 PM",
     "4:00 PM",
-    "4:30 PM",
     "5:00 PM",
-    "5:30 PM",
+    "6:00 PM",
   ];
 
   // Watch the date field to fetch booked time slots
@@ -101,9 +94,17 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
     fetchBookedSlots();
   }, [selectedDate, isEditing, appointment?.id]);
 
-  // Filter available time slots (exclude booked ones)
-  const availableTimeSlots = timeSlots.filter(
-    (slot) => !bookedTimeSlots.includes(slot)
+  // Watch selected time
+  const selectedTime = watch("scheduledTime");
+
+  // Check if a slot is booked
+  const isSlotBooked = (slot: string): boolean => {
+    return bookedTimeSlots.includes(slot);
+  };
+
+  // Check if there are any available slots
+  const hasAvailableSlots = timeSlots.some(
+    (slot) => !isSlotBooked(slot)
   );
 
   const onSubmit = async (data: AppointmentFormData) => {
@@ -126,7 +127,7 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
     startTransition(async () => {
       try {
         toast.loading(
-          isEditing ? "Updating appointment..." : "Creating appointment..."
+          isEditing ? "Updating appointment…" : "Creating appointment…"
         );
         const result = await upsertAppointmentAction(formData);
 
@@ -211,6 +212,7 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
                     id="clientEmail"
                     type="email"
                     autoComplete="email"
+                    spellCheck="false"
                     placeholder="john@example.com"
                     className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
                   />
@@ -306,46 +308,67 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
                   />
                 </div>
 
-                <div>
-                  <label
-                    htmlFor="scheduledTime"
-                    className="block text-sm font-medium text-gray-300 mb-1"
-                  >
+                <div className="sm:col-span-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Time *
                   </label>
-                  <select
-                    {...register("scheduledTime")}
-                    id="scheduledTime"
-                    disabled={!selectedDate || isLoadingSlots}
-                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {!selectedDate ? (
-                      <option value="">Select a date first...</option>
-                    ) : isLoadingSlots ? (
-                      <option value="">Loading available times...</option>
-                    ) : availableTimeSlots.length === 0 ? (
-                      <option value="">No available times for this date</option>
-                    ) : (
-                      <>
-                        <option value="">Select a time...</option>
-                        {availableTimeSlots.map((time) => (
-                          <option key={time} value={time}>
-                            {time}
-                          </option>
-                        ))}
-                      </>
-                    )}
-                  </select>
-                  {bookedTimeSlots.length > 0 && (
-                    <p className="text-yellow-400 text-xs mt-1">
-                      {bookedTimeSlots.length} time slot(s) already booked for this date
+                  {!selectedDate ? (
+                    <p className="text-gray-500 text-sm py-3 text-center border border-dashed border-white/10 rounded-lg">
+                      Select a date first to see available times
                     </p>
+                  ) : isLoadingSlots ? (
+                    <div className="flex items-center justify-center py-3 border border-dashed border-white/10 rounded-lg">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-indigo-500"></div>
+                      <span className="ml-2 text-gray-400 text-sm">Loading…</span>
+                    </div>
+                  ) : !hasAvailableSlots ? (
+                    <p className="text-yellow-400 text-sm py-3 text-center border border-dashed border-yellow-500/30 rounded-lg bg-yellow-500/5">
+                      All time slots are booked for this date
+                    </p>
+                  ) : (
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                      {timeSlots.map((time) => {
+                        const isBooked = isSlotBooked(time);
+                        const isSelected = selectedTime === time;
+
+                        return (
+                          <label
+                            key={time}
+                            className={`
+                              relative flex items-center justify-center p-2.5 rounded-lg border text-xs font-medium transition-all
+                              ${isBooked
+                                ? "bg-red-500/10 border-red-500/30 text-red-400 cursor-not-allowed"
+                                : isSelected
+                                  ? "bg-indigo-500/20 border-indigo-500 text-white ring-2 ring-indigo-500"
+                                  : "bg-gray-900/50 border-white/10 text-white hover:bg-gray-800 hover:border-white/20 cursor-pointer"
+                              }
+                            `}
+                          >
+                            <input
+                              {...register("scheduledTime")}
+                              type="radio"
+                              value={time}
+                              disabled={isBooked}
+                              className="sr-only"
+                            />
+                            {isBooked ? (
+                              <span className="flex items-center gap-1">
+                                <LockClosedIcon className="h-3 w-3" />
+                                Reserved
+                              </span>
+                            ) : (
+                              time
+                            )}
+                          </label>
+                        );
+                      })}
+                    </div>
                   )}
                   <ErrorMessage
                     errors={errors}
                     name="scheduledTime"
                     render={({ message }) => (
-                      <p className="text-red-400 text-xs mt-1">{message}</p>
+                      <p className="text-red-400 text-xs mt-2">{message}</p>
                     )}
                   />
                 </div>
@@ -432,8 +455,8 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
             >
               {isPending
                 ? isEditing
-                  ? "Updating..."
-                  : "Creating..."
+                  ? "Updating…"
+                  : "Creating…"
                 : isEditing
                   ? "Update Appointment"
                   : "Create Appointment"}

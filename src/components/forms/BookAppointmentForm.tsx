@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -8,6 +8,7 @@ import Link from "next/link";
 import { PublicAppointmentSchema, PublicAppointmentFormData, SERVICE_TYPES } from "@/lib/validations/zod";
 import { SERVICE_TYPE_LABELS } from "@/lib/interfaces";
 import { createPublicAppointmentAction } from "@/app/actions/createPublicAppointmentAction";
+import { getBookedTimeSlotsPublicAction } from "@/app/actions/getBookedTimeSlotsPublicAction";
 import { ErrorMessage } from "@hookform/error-message";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import {
@@ -19,32 +20,25 @@ import {
   MapPinIcon,
   WrenchScrewdriverIcon,
   CheckCircleIcon,
+  LockClosedIcon,
 } from "@heroicons/react/24/outline";
 
+// 1-hour time slots (8 AM - 6 PM)
 const ALL_TIME_SLOTS = [
   "8:00 AM",
-  "8:30 AM",
   "9:00 AM",
-  "9:30 AM",
   "10:00 AM",
-  "10:30 AM",
   "11:00 AM",
-  "11:30 AM",
   "12:00 PM",
-  "12:30 PM",
   "1:00 PM",
-  "1:30 PM",
   "2:00 PM",
-  "2:30 PM",
   "3:00 PM",
-  "3:30 PM",
   "4:00 PM",
-  "4:30 PM",
   "5:00 PM",
-  "5:30 PM",
+  "6:00 PM",
 ];
 
-// Convert time string like "2:30 PM" to minutes since midnight
+// Convert time string like "2:00 PM" to minutes since midnight
 const timeToMinutes = (timeStr: string): number => {
   const [time, period] = timeStr.split(" ");
   const [hoursStr, minutesStr] = time.split(":");
@@ -63,6 +57,8 @@ const timeToMinutes = (timeStr: string): number => {
 const BookAppointmentForm = () => {
   const [isPending, startTransition] = useTransition();
   const [isSuccess, setIsSuccess] = useState(false);
+  const [bookedTimeSlots, setBookedTimeSlots] = useState<string[]>([]);
+  const [isLoadingSlots, setIsLoadingSlots] = useState(false);
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const {
@@ -86,25 +82,54 @@ const BookAppointmentForm = () => {
   });
 
   const selectedDate = watch("scheduledDate");
+  const selectedTime = watch("scheduledTime");
 
-  // Filter time slots based on selected date
-  // React 19 Compiler auto-memoizes this computation
-  const getAvailableTimeSlots = () => {
-    if (!selectedDate) return ALL_TIME_SLOTS;
+  // Fetch booked slots when date changes
+  useEffect(() => {
+    const fetchBookedSlots = async () => {
+      if (!selectedDate) {
+        setBookedTimeSlots([]);
+        return;
+      }
+
+      setIsLoadingSlots(true);
+      try {
+        const slots = await getBookedTimeSlotsPublicAction(selectedDate);
+        setBookedTimeSlots(slots);
+      } catch (error) {
+        console.error("Error fetching booked slots:", error);
+        setBookedTimeSlots([]);
+      } finally {
+        setIsLoadingSlots(false);
+      }
+    };
+
+    fetchBookedSlots();
+  }, [selectedDate]);
+
+  // Check if a slot is in the past (for today only)
+  const isSlotInPast = (slot: string): boolean => {
+    if (!selectedDate) return false;
 
     const today = new Date();
     const todayStr = today.toISOString().split("T")[0];
 
-    // If selected date is not today, show all slots
-    if (selectedDate !== todayStr) return ALL_TIME_SLOTS;
+    if (selectedDate !== todayStr) return false;
 
-    // If today, filter out past times (with 30 min buffer)
-    const currentMinutes = today.getHours() * 60 + today.getMinutes() + 30;
-
-    return ALL_TIME_SLOTS.filter((slot) => timeToMinutes(slot) > currentMinutes);
+    // Add 1 hour buffer for today's slots
+    const currentMinutes = today.getHours() * 60 + today.getMinutes() + 60;
+    return timeToMinutes(slot) <= currentMinutes;
   };
 
-  const availableTimeSlots = getAvailableTimeSlots();
+  // Check if a slot is booked
+  const isSlotBooked = (slot: string): boolean => {
+    return bookedTimeSlots.includes(slot);
+  };
+
+  // Check if there are any available slots
+  const hasAvailableSlots = ALL_TIME_SLOTS.some(
+    (slot) => !isSlotBooked(slot) && !isSlotInPast(slot)
+  );
 
   const onSubmit = async (data: PublicAppointmentFormData) => {
     startTransition(async () => {
@@ -116,7 +141,7 @@ const BookAppointmentForm = () => {
 
         const recaptchaToken = await executeRecaptcha("book_appointment");
 
-        toast.loading("Scheduling your appointment...");
+        toast.loading("Scheduling your appointment…");
         const result = await createPublicAppointmentAction(data, recaptchaToken);
         toast.dismiss();
 
@@ -245,41 +270,72 @@ const BookAppointmentForm = () => {
               />
             </div>
 
-            <div>
-              <label
-                htmlFor="scheduledTime"
-                className="block text-sm font-medium text-gray-300 mb-2"
-              >
+            <div className="sm:col-span-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 <ClockIcon className="h-4 w-4 inline mr-1" />
                 Preferred Time *
               </label>
-              <select
-                {...register("scheduledTime")}
-                id="scheduledTime"
-                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                disabled={selectedDate && availableTimeSlots.length === 0}
-              >
-                <option value="">
-                  {selectedDate && availableTimeSlots.length === 0
-                    ? "No times available today"
-                    : "Select a time..."}
-                </option>
-                {availableTimeSlots.map((time) => (
-                  <option key={time} value={time}>
-                    {time}
-                  </option>
-                ))}
-              </select>
-              {selectedDate && availableTimeSlots.length === 0 && (
-                <p className="text-yellow-400 text-xs mt-1">
-                  All time slots for today have passed. Please select a future date.
+              {!selectedDate ? (
+                <p className="text-gray-500 text-sm py-4 text-center border border-dashed border-white/10 rounded-lg">
+                  Select a date first to see available times
                 </p>
+              ) : isLoadingSlots ? (
+                <div className="flex items-center justify-center py-4 border border-dashed border-white/10 rounded-lg">
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-indigo-500"></div>
+                  <span className="ml-2 text-gray-400 text-sm">Loading available times…</span>
+                </div>
+              ) : !hasAvailableSlots ? (
+                <p className="text-yellow-400 text-sm py-4 text-center border border-dashed border-yellow-500/30 rounded-lg bg-yellow-500/5">
+                  No available time slots for this date. Please select a different date.
+                </p>
+              ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                  {ALL_TIME_SLOTS.map((time) => {
+                    const isBooked = isSlotBooked(time);
+                    const isPast = isSlotInPast(time);
+                    const isUnavailable = isBooked || isPast;
+                    const isSelected = selectedTime === time;
+
+                    return (
+                      <label
+                        key={time}
+                        className={`
+                          relative flex items-center justify-center p-3 rounded-lg border text-sm font-medium transition-all
+                          ${isUnavailable
+                            ? "bg-red-500/10 border-red-500/30 text-red-400 cursor-not-allowed"
+                            : isSelected
+                              ? "bg-indigo-500/20 border-indigo-500 text-white ring-2 ring-indigo-500"
+                              : "bg-gray-900/50 border-white/10 text-white hover:bg-gray-800 hover:border-white/20 cursor-pointer"
+                          }
+                        `}
+                      >
+                        <input
+                          {...register("scheduledTime")}
+                          type="radio"
+                          value={time}
+                          disabled={isUnavailable}
+                          className="sr-only"
+                        />
+                        {isBooked ? (
+                          <span className="flex items-center gap-1">
+                            <LockClosedIcon className="h-3.5 w-3.5" />
+                            Reserved
+                          </span>
+                        ) : isPast ? (
+                          <span className="text-gray-500">Passed</span>
+                        ) : (
+                          time
+                        )}
+                      </label>
+                    );
+                  })}
+                </div>
               )}
               <ErrorMessage
                 errors={errors}
                 name="scheduledTime"
                 render={({ message }) => (
-                  <p className="text-red-400 text-xs mt-1">{message}</p>
+                  <p className="text-red-400 text-xs mt-2">{message}</p>
                 )}
               />
             </div>
@@ -333,6 +389,7 @@ const BookAppointmentForm = () => {
                 id="clientEmail"
                 type="email"
                 autoComplete="email"
+                spellCheck="false"
                 placeholder="john@example.com"
                 className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
               />
@@ -453,7 +510,7 @@ const BookAppointmentForm = () => {
           disabled={isPending}
           className="w-full py-4 rounded-md text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-500 transition-colors disabled:bg-indigo-400 disabled:cursor-not-allowed"
         >
-          {isPending ? "Scheduling..." : "Schedule Appointment"}
+          {isPending ? "Scheduling…" : "Schedule Appointment"}
         </button>
         <p className="mt-3 text-center text-sm text-gray-400">
           We&apos;ll contact you to confirm your appointment within 24 hours.

@@ -124,7 +124,7 @@ const CampaignForm = ({
     startTransition(async () => {
       try {
         toast.loading(
-          isEditing ? "Updating campaign..." : "Creating campaign..."
+          isEditing ? "Updating campaign…" : "Creating campaign…"
         );
         const result = await upsertCampaignAction(formData);
 
@@ -336,8 +336,8 @@ const CampaignForm = ({
                 >
                   {isPending
                     ? isEditing
-                      ? "Updating..."
-                      : "Creating..."
+                      ? "Updating…"
+                      : "Creating…"
                     : isEditing
                       ? "Update Campaign"
                       : "Create Campaign"}
@@ -356,6 +356,7 @@ const CampaignForm = ({
               <h3 className="text-xl font-bold text-gray-900">Email Preview</h3>
               <button
                 onClick={() => setShowPreview(false)}
+                aria-label="Close preview"
                 className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
               >
                 ×

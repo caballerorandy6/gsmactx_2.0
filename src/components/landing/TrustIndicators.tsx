@@ -75,6 +75,7 @@ export default function TrustIndicators({
           title={`Last updated: ${new Date(googleData.lastFetched).toLocaleString()}`}
         >
           <svg
+            aria-hidden="true"
             className="h-3 w-3 sm:h-4 sm:w-4"
             viewBox="0 0 24 24"
             fill="none"

@@ -250,15 +250,18 @@ export async function GET(request: Request) {
 
       if (remainingPending === 0) {
         // Campaign is complete when no pending emails remain
-        const totalLogs = await prisma.campaignEmailLog.count({
-          where: { campaignId: campaign.id },
-        });
-        const sentLogs = await prisma.campaignEmailLog.count({
-          where: { campaignId: campaign.id, status: "sent" },
-        });
-        const failedLogs = await prisma.campaignEmailLog.count({
-          where: { campaignId: campaign.id, status: "failed" },
-        });
+        // Parallel fetch: all counts are independent
+        const [totalLogs, sentLogs, failedLogs] = await Promise.all([
+          prisma.campaignEmailLog.count({
+            where: { campaignId: campaign.id },
+          }),
+          prisma.campaignEmailLog.count({
+            where: { campaignId: campaign.id, status: "sent" },
+          }),
+          prisma.campaignEmailLog.count({
+            where: { campaignId: campaign.id, status: "failed" },
+          }),
+        ]);
 
         // Mark campaign as complete and save final stats
         await prisma.campaign.update({

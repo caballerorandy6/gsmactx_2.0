@@ -67,7 +67,7 @@ const CampaignList = async ({ user }) => {
                         day: "numeric",
                       })}
                     </p>
-                    <svg viewBox="0 0 2 2" className="size-0.5 fill-current">
+                    <svg viewBox="0 0 2 2" aria-hidden="true" className="size-0.5 fill-current">
                       <circle r={1} cx={1} cy={1} />
                     </svg>
                     <p className="truncate">By {campaign.admin.name}</p>
@@ -87,9 +87,11 @@ const CampaignList = async ({ user }) => {
                   ) : (
                     <Menu as="div" className="relative flex-none">
                       {/* Menu icon with dark theme colors */}
-                      <MenuButton className="relative block text-gray-400 hover:text-white cursor-pointer">
+                      <MenuButton
+                        aria-label="Open options"
+                        className="relative block text-gray-400 hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded"
+                      >
                         <span className="absolute -inset-2.5" />
-                        <span className="sr-only">Open options</span>
                         <EllipsisVerticalIcon
                           aria-hidden="true"
                           className="size-5"

@@ -4,6 +4,17 @@ import { prisma } from "@/lib/db/prisma";
 
 export async function getDashboardStatsAction() {
   try {
+    // Calculate date ranges for appointments
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const weekStart = new Date(today);
+    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekEnd.getDate() + 7);
+
     const [
       // Email-related stats
       totalSubscribers,
@@ -15,6 +26,15 @@ export async function getDashboardStatsAction() {
       totalSMSCampaigns,
       sentSMSCampaigns,
       smsMessages,
+      // Appointment stats
+      totalAppointments,
+      pendingAppointments,
+      confirmedAppointments,
+      inProgressAppointments,
+      completedAppointments,
+      cancelledAppointments,
+      todayAppointments,
+      weekAppointments,
     ] = await Promise.all([
       // Email
       prisma.subscriber.count(),
@@ -31,6 +51,19 @@ export async function getDashboardStatsAction() {
       prisma.sMSMessage.groupBy({
         by: ["status"],
         _count: true,
+      }),
+      // Appointments
+      prisma.appointment.count(),
+      prisma.appointment.count({ where: { status: "PENDING" } }),
+      prisma.appointment.count({ where: { status: "CONFIRMED" } }),
+      prisma.appointment.count({ where: { status: "IN_PROGRESS" } }),
+      prisma.appointment.count({ where: { status: "COMPLETED" } }),
+      prisma.appointment.count({ where: { status: "CANCELLED" } }),
+      prisma.appointment.count({
+        where: { scheduledDate: { gte: today, lt: tomorrow } },
+      }),
+      prisma.appointment.count({
+        where: { scheduledDate: { gte: weekStart, lt: weekEnd } },
       }),
     ]);
 
@@ -89,6 +122,16 @@ export async function getDashboardStatsAction() {
         smsSent: smsStats.sent || 0,
         smsFailed: smsStats.failed || 0,
         smsPending: smsStats.pending || 0,
+
+        // Appointment Stats
+        totalAppointments,
+        pendingAppointments,
+        confirmedAppointments,
+        inProgressAppointments,
+        completedAppointments,
+        cancelledAppointments,
+        todayAppointments,
+        weekAppointments,
       },
       recentCampaigns: recentCampaigns.map((campaign) => ({
         id: campaign.id,

@@ -11,7 +11,7 @@ const UnsubscribeButtonAction = ({ token }: { token: string }) => {
 
   const handleUnsubscribe = async () => {
     startTransition(async () => {
-      toast.loading("Unsubscribing...");
+      toast.loading("Unsubscribing…");
       try {
         const result = await unsubscribeFromCampaignAction(token);
         toast.dismiss();
@@ -54,7 +54,7 @@ const UnsubscribeButtonAction = ({ token }: { token: string }) => {
       disabled={isPending}
       className="bg-red-600 font-semibold text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors cursor-pointer disabled:bg-red-400 disabled:cursor-not-allowed"
     >
-      {isPending ? "Unsubscribing..." : "Unsubscribe"}
+      {isPending ? "Unsubscribing…" : "Unsubscribe"}
     </button>
   );
 };

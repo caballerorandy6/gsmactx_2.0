@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { notFound } from "next/navigation";
-import { ImprovedDashboardSidebar, AdminHeader } from "@/components/admin/layout";
-import { CampaignListDashboard } from "@/components/admin/campaigns";
-import { DashboardStats, EmptyDashboardState } from "@/components/admin/dashboard";
+// Direct imports instead of barrel imports for better tree-shaking
+import ImprovedDashboardSidebar from "@/components/admin/layout/ImprovedDashboardSidebar";
+import CampaignsListDashboard from "@/components/admin/campaigns/CampaignListDashboard";
+import DashboardStats from "@/components/admin/dashboard/DashboardStats";
+import EmptyDashboardState from "@/components/admin/dashboard/EmptyDashboardState";
 import { Campaign } from "@/lib/interfaces";
 import { SafeAdmin } from "@/lib/types";
 
@@ -33,6 +35,15 @@ interface AdminDashboardProps {
       smsSent: number;
       smsFailed: number;
       smsPending: number;
+      // Appointment Stats
+      totalAppointments: number;
+      pendingAppointments: number;
+      confirmedAppointments: number;
+      inProgressAppointments: number;
+      completedAppointments: number;
+      cancelledAppointments: number;
+      todayAppointments: number;
+      weekAppointments: number;
     } | null;
     recentCampaigns: unknown[];
   };
@@ -55,27 +66,30 @@ const AdminDashboard = ({
     return <EmptyDashboardState userName={user.name} />;
   }
 
-  // Filter campaigns based on selected filter
-  const filteredCampaigns = campaigns.filter((campaign) => {
-    switch (selectedFilter) {
-      case "sent":
-        return campaign.sent === true;
-      case "not-sent":
-        return campaign.sent === false;
-      default:
-        return true; // 'all'
+  // Memoize campaign counts to avoid recalculation on every render
+  const { sentCount, notSentCount } = useMemo(() => {
+    let sent = 0;
+    let notSent = 0;
+    for (const campaign of campaigns) {
+      if (campaign.sent) {
+        sent++;
+      } else {
+        notSent++;
+      }
     }
-  });
+    return { sentCount: sent, notSentCount: notSent };
+  }, [campaigns]);
 
-  // Calculate counts for sidebar
-  const sentCount = campaigns.filter((c) => c.sent === true).length;
-  const notSentCount = campaigns.filter((c) => c.sent === false).length;
+  // Memoize filtered campaigns based on selected filter
+  const filteredCampaigns = useMemo(() => {
+    if (selectedFilter === "all") return campaigns;
+    const isSent = selectedFilter === "sent";
+    return campaigns.filter((c) => c.sent === isSent);
+  }, [campaigns, selectedFilter]);
 
   return (
-    <section className="bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 mt-10 min-h-screen">
-      <AdminHeader />
-
-      <div className="flex flex-col lg:flex-row pt-20">
+    <section className="min-h-screen">
+      <div className="flex flex-col lg:flex-row">
         <ImprovedDashboardSidebar
           userName={user.name}
           totalCampaigns={campaigns.length}
@@ -92,7 +106,7 @@ const AdminDashboard = ({
           )}
 
           {/* Campaigns List */}
-          <CampaignListDashboard
+          <CampaignsListDashboard
             campaigns={filteredCampaigns}
             totalCount={campaigns.length}
           />

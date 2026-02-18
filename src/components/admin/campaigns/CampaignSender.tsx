@@ -245,7 +245,7 @@ export default function CampaignSender({
             disabled={isInitializing}
             className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isInitializing ? "Initializing..." : "Initialize Campaign"}
+            {isInitializing ? "Initializing…" : "Initialize Campaign"}
           </button>
         ) : isComplete ? (
           <div className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold text-center">
@@ -259,7 +259,7 @@ export default function CampaignSender({
               className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               <EnvelopeIcon className="h-5 w-5" />
-              {isSending ? "Sending..." : "Send Next Batch"}
+              {isSending ? "Sending…" : "Send Next Batch"}
             </button>
 
             {stats && stats.failed > 0 && (
@@ -269,7 +269,7 @@ export default function CampaignSender({
                 className="bg-yellow-600 hover:bg-yellow-500 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 <ArrowPathIcon className="h-5 w-5" />
-                {isRetrying ? "Retrying..." : `Retry ${stats.failed} Failed`}
+                {isRetrying ? "Retrying…" : `Retry ${stats.failed} Failed`}
               </button>
             )}
           </>

@@ -20,7 +20,7 @@ const AdminSendTestCampaignButton = ({
     if (!confirmed) return;
 
     try {
-      toast.loading("Fetching campaign data...");
+      toast.loading("Fetching campaign data…");
 
       // Fetch campaign data using server action
       const campaign = await getCampaignByIdAction(id);
@@ -44,7 +44,7 @@ const AdminSendTestCampaignButton = ({
       }
 
       toast.dismiss();
-      toast.loading("Sending test campaign...");
+      toast.loading("Sending test campaign…");
 
       const result = await createAndSendTestCampaignAction(formData);
       toast.dismiss();
