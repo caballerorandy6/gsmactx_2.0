@@ -5,14 +5,14 @@ import { isValidUSPhone, normalizePhone } from "@/lib/utils/phone";
 const phoneSchemaWithTransform = z
   .string()
   .min(10, "Phone number is required")
-  .transform(normalizePhone)
-  .refine(isValidUSPhone, "Please enter a valid US phone number");
+  .refine(isValidUSPhone, "Please enter a valid 10-digit US phone number")
+  .transform(normalizePhone);
 
-// Phone validation schema (for forms - no transform)
+// Phone validation schema (for forms - no transform, exactly 10 digits)
 const phoneSchema = z
   .string()
   .min(10, "Phone number is required")
-  .refine((val) => isValidUSPhone(normalizePhone(val)), "Please enter a valid US phone number");
+  .refine(isValidUSPhone, "Please enter a valid 10-digit US phone number");
 
 // Zod schema for user (contact form)
 export const UserSchema = z.object({
