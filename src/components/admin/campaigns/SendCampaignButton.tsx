@@ -30,7 +30,7 @@ const SendCampaignButton = ({ id }: { id: string }) => {
       <button
         onClick={handleSend}
         disabled={isPending}
-        className={`flex w-full px-3 py-1 text-sm/6 data-[focus]:bg-white/10 transition-colors cursor-pointer text-green-500 hover:bg-green-500/10 ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
+        className={`flex w-full px-3 py-1 text-sm/6 data-focus:bg-white/10 transition-colors cursor-pointer text-green-500 hover:bg-green-500/10 ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
       >
         Send
       </button>

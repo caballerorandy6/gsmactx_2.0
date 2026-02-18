@@ -405,7 +405,7 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
                     </div>
 
                     {/* Client Info - allow full name to wrap */}
-                    <h4 className="text-sm sm:text-base font-semibold text-white mb-1 group-hover:text-indigo-300 transition-colors motion-reduce:transition-none break-words hyphens-auto">
+                    <h4 className="text-sm sm:text-base font-semibold text-white mb-1 group-hover:text-indigo-300 transition-colors motion-reduce:transition-none wrap-break-word hyphens-auto">
                       {apt.clientName}
                     </h4>
                     <p className="text-xs sm:text-sm text-gray-400 mb-3">
@@ -420,7 +420,7 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
                       </div>
                       <div className="flex items-start gap-1.5">
                         <MapPinIcon aria-hidden="true" className="h-3.5 w-3.5 shrink-0 mt-0.5" />
-                        <span className="break-words line-clamp-2">{apt.address}</span>
+                        <span className="wrap-break-word line-clamp-2">{apt.address}</span>
                       </div>
                     </div>
                   </Link>

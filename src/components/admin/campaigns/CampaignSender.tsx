@@ -193,7 +193,7 @@ export default function CampaignSender({
           </div>
           <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
             <div
-              className="bg-gradient-to-r from-indigo-500 to-purple-500 h-full transition-all duration-500"
+              className="bg-linear-to-r from-indigo-500 to-purple-500 h-full transition-all duration-500"
               style={{ width: `${progress}%` }}
             />
           </div>
