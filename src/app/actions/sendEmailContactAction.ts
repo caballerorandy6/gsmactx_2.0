@@ -82,8 +82,10 @@ export async function sendEmailContactAction(
       subject: `New message from ${firstName} ${lastName}`,
       text: `You have received a new message from ${firstName} ${lastName}.\n\nCustomer request details:\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`,
     });
+
+    return { success: true, message: "Email sent successfully." };
   } catch (error) {
     console.error("Error sending email:", error);
-    throw new Error("Failed to send email");
+    return { success: false, message: "Failed to send email. Please try again." };
   }
 }
