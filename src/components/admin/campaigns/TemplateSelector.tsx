@@ -16,13 +16,15 @@ const TemplateSelector = ({
       <h3 className="text-xl font-semibold text-white mb-4 text-center">
         Choose Your Email Template
       </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6" role="group" aria-label="Email templates">
         {emailTemplates.map((template) => (
           <button
             key={template.id}
             type="button"
             onClick={() => onSelectTemplate(template.id)}
-            className={`relative p-4 sm:p-5 rounded-xl border-2 transition-all text-left min-h-[140px] ${
+            aria-label={`Select ${template.name} template`}
+            aria-pressed={selectedTemplate === template.id}
+            className={`relative p-4 sm:p-5 rounded-xl border-2 transition-all motion-reduce:transition-none text-left min-h-[140px] ${
               selectedTemplate === template.id
                 ? "border-indigo-500 bg-indigo-500/10 shadow-lg shadow-indigo-500/20"
                 : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
@@ -46,10 +48,12 @@ const TemplateSelector = ({
                 </p>
                 <div className="flex items-center gap-2">
                   <div
+                    aria-hidden="true"
                     className="w-3 h-3 sm:w-4 sm:h-4 rounded-full shrink-0"
                     style={{ backgroundColor: template.colors.primary }}
                   />
                   <div
+                    aria-hidden="true"
                     className="w-3 h-3 sm:w-4 sm:h-4 rounded-full shrink-0"
                     style={{ backgroundColor: template.colors.secondary }}
                   />
@@ -60,7 +64,7 @@ const TemplateSelector = ({
               </div>
             </div>
             {selectedTemplate === template.id && (
-              <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-indigo-500 text-white rounded-full p-1.5 sm:p-2">
+              <div aria-hidden="true" className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-indigo-500 text-white rounded-full p-1.5 sm:p-2">
                 <svg
                   className="w-4 h-4 sm:w-5 sm:h-5"
                   fill="currentColor"

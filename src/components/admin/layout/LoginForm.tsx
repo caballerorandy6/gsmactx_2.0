@@ -53,9 +53,9 @@ const LoginForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors mb-6"
+          className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors motion-reduce:transition-none mb-6"
         >
-          <ArrowLeftIcon className="h-4 w-4" />
+          <ArrowLeftIcon aria-hidden="true" className="h-4 w-4" />
           Back to Home
         </Link>
         <h2 className="text-center text-3xl font-bold tracking-tight text-white mb-8">
@@ -119,7 +119,7 @@ const LoginForm = () => {
           <button
             type="submit"
             disabled={isPending}
-            className="flex w-28 justify-center rounded-md cursor-pointer bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-colors disabled:bg-indigo-300 disabled:cursor-not-allowed"
+            className="flex w-28 justify-center rounded-md cursor-pointer bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-colors motion-reduce:transition-none disabled:bg-indigo-300 disabled:cursor-not-allowed"
           >
             {isPending ? <ButtonSpinner /> : "Log in"}
           </button>

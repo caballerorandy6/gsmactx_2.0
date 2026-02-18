@@ -2,13 +2,17 @@
 
 import { useState, useMemo } from "react";
 import { notFound } from "next/navigation";
-// Direct imports instead of barrel imports for better tree-shaking
-import ImprovedDashboardSidebar from "@/components/admin/layout/ImprovedDashboardSidebar";
 import CampaignsListDashboard from "@/components/admin/campaigns/CampaignListDashboard";
 import DashboardStats from "@/components/admin/dashboard/DashboardStats";
 import EmptyDashboardState from "@/components/admin/dashboard/EmptyDashboardState";
 import { Campaign } from "@/lib/interfaces";
 import { SafeAdmin } from "@/lib/types";
+import {
+  Squares2X2Icon,
+  PaperAirplaneIcon,
+  ClockIcon,
+} from "@heroicons/react/24/outline";
+import clsx from "clsx";
 
 type FilterType = "all" | "sent" | "not-sent";
 
@@ -62,7 +66,7 @@ const AdminDashboard = ({
   }
 
   // Show empty state if no campaigns exist
-  if (campaigns.length === 0) {
+  if (campaigns.length === 0 && !dashboardStats?.stats) {
     return <EmptyDashboardState userName={user.name} />;
   }
 
@@ -87,23 +91,78 @@ const AdminDashboard = ({
     return campaigns.filter((c) => c.sent === isSent);
   }, [campaigns, selectedFilter]);
 
-  return (
-    <section className="min-h-screen">
-      <div className="flex flex-col lg:flex-row">
-        <ImprovedDashboardSidebar
-          userName={user.name}
-          totalCampaigns={campaigns.length}
-          sentCampaigns={sentCount}
-          notSentCampaigns={notSentCount}
-          selectedFilter={selectedFilter}
-          onFilterChange={setSelectedFilter}
-        />
+  const filterButtons = [
+    {
+      id: "all" as FilterType,
+      label: "All",
+      count: campaigns.length,
+      icon: Squares2X2Icon,
+    },
+    {
+      id: "sent" as FilterType,
+      label: "Sent",
+      count: sentCount,
+      icon: PaperAirplaneIcon,
+    },
+    {
+      id: "not-sent" as FilterType,
+      label: "Pending",
+      count: notSentCount,
+      icon: ClockIcon,
+    },
+  ];
 
-        <div className="flex-1 p-4 sm:p-6 lg:p-8">
-          {/* Dashboard Stats */}
-          {dashboardStats?.success && dashboardStats.stats && (
-            <DashboardStats stats={dashboardStats.stats} />
-          )}
+  return (
+    <div className="space-y-6 pb-20 lg:pb-6">
+      {/* Welcome Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">
+            Dashboard
+          </h1>
+          <p className="text-gray-400 text-sm mt-1">
+            Welcome back, {user.name}
+          </p>
+        </div>
+      </div>
+
+      {/* Dashboard Stats */}
+      {dashboardStats?.success && dashboardStats.stats && (
+        <DashboardStats stats={dashboardStats.stats} />
+      )}
+
+      {/* Campaigns Section */}
+      {campaigns.length > 0 && (
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <h2 className="text-lg font-semibold text-white">
+              Email Campaigns
+            </h2>
+
+            {/* Inline Filter Buttons */}
+            <div className="flex gap-2">
+              {filterButtons.map((filter) => (
+                <button
+                  key={filter.id}
+                  onClick={() => setSelectedFilter(filter.id)}
+                  aria-label={`Filter by ${filter.label}: ${filter.count} campaigns`}
+                  aria-pressed={selectedFilter === filter.id}
+                  className={clsx(
+                    "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all motion-reduce:transition-none",
+                    selectedFilter === filter.id
+                      ? "bg-indigo-500/20 text-white border border-indigo-500/30"
+                      : "text-gray-400 hover:bg-white/5 hover:text-white border border-transparent"
+                  )}
+                >
+                  <filter.icon aria-hidden="true" className="h-4 w-4" />
+                  <span className="hidden sm:inline">{filter.label}</span>
+                  <span className="tabular-nums bg-white/10 px-1.5 py-0.5 rounded text-xs">
+                    {filter.count}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
 
           {/* Campaigns List */}
           <CampaignsListDashboard
@@ -111,10 +170,9 @@ const AdminDashboard = ({
             totalCount={campaigns.length}
           />
         </div>
-      </div>
-    </section>
+      )}
+    </div>
   );
 };
 
-// Add default export
 export default AdminDashboard;
