@@ -391,38 +391,36 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
                   <Link
                     key={apt.id}
                     href={`/appointments/${apt.id}`}
-                    className="block p-4 rounded-xl bg-gray-900/60 border border-white/5 hover:border-indigo-500/30 hover:bg-gray-900/80 transition-all duration-200 group"
+                    className="block p-3 sm:p-4 rounded-xl bg-gray-900/60 border border-white/5 hover:border-indigo-500/30 hover:bg-gray-900/80 transition-all motion-reduce:transition-none group"
                   >
-                    {/* Time & Status */}
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-2">
-                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-indigo-500/10 rounded-lg">
-                          <ClockIcon className="h-3.5 w-3.5 text-indigo-400" />
-                          <span className="text-sm font-bold text-indigo-400">
-                            {apt.scheduledTime}
-                          </span>
-                        </div>
+                    {/* Time & Status - stack on very small screens */}
+                    <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between gap-2 mb-3">
+                      <div className="flex items-center gap-1.5 px-2 py-1 bg-indigo-500/10 rounded-lg w-fit">
+                        <ClockIcon aria-hidden="true" className="h-3.5 w-3.5 text-indigo-400" />
+                        <span className="text-xs sm:text-sm font-bold text-indigo-400 tabular-nums">
+                          {apt.scheduledTime}
+                        </span>
                       </div>
                       <AppointmentStatusBadge status={apt.status} size="sm" />
                     </div>
 
-                    {/* Client Info */}
-                    <p className="font-semibold text-white mb-1 group-hover:text-indigo-300 transition-colors">
+                    {/* Client Info - allow full name to wrap */}
+                    <h4 className="text-sm sm:text-base font-semibold text-white mb-1 group-hover:text-indigo-300 transition-colors motion-reduce:transition-none break-words hyphens-auto">
                       {apt.clientName}
-                    </p>
-                    <p className="text-sm text-gray-400 mb-3">
+                    </h4>
+                    <p className="text-xs sm:text-sm text-gray-400 mb-3">
                       {SERVICE_TYPE_LABELS[apt.serviceType]}
                     </p>
 
                     {/* Contact & Location */}
                     <div className="flex flex-col gap-1.5 text-xs text-gray-500">
                       <div className="flex items-center gap-1.5">
-                        <PhoneIcon className="h-3.5 w-3.5" />
-                        <span>{apt.clientPhone}</span>
+                        <PhoneIcon aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
+                        <span className="tabular-nums">{apt.clientPhone}</span>
                       </div>
                       <div className="flex items-start gap-1.5">
-                        <MapPinIcon className="h-3.5 w-3.5 shrink-0 mt-0.5" aria-hidden="true" />
-                        <span className="line-clamp-1">{apt.address}</span>
+                        <MapPinIcon aria-hidden="true" className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                        <span className="break-words line-clamp-2">{apt.address}</span>
                       </div>
                     </div>
                   </Link>
