@@ -83,19 +83,21 @@ export async function getDashboardStatsAction() {
       {} as Record<string, number>
     );
 
-    // Get recent email campaigns
+    // Get recent email campaigns with aggregated email counts (optimized query)
     const recentCampaigns = await prisma.campaign.findMany({
       take: 5,
       orderBy: { createdAt: "desc" },
-      include: {
+      select: {
+        id: true,
+        title: true,
+        sent: true,
+        createdAt: true,
+        // Use pre-computed stats when available (much faster)
+        sentCount: true,
+        failedCount: true,
         admin: {
           select: {
             name: true,
-          },
-        },
-        emailLogs: {
-          select: {
-            status: true,
           },
         },
       },
@@ -139,10 +141,9 @@ export async function getDashboardStatsAction() {
         sent: campaign.sent,
         createdAt: campaign.createdAt,
         adminName: campaign.admin.name,
-        emailsSent: campaign.emailLogs.filter((log) => log.status === "sent")
-          .length,
-        emailsFailed: campaign.emailLogs.filter((log) => log.status === "failed")
-          .length,
+        // Use pre-computed stats (stored when campaign completes)
+        emailsSent: campaign.sentCount ?? 0,
+        emailsFailed: campaign.failedCount ?? 0,
       })),
     };
   } catch (error) {
