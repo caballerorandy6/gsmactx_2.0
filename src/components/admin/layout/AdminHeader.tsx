@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useGSMStore } from "@/store/gsmactx-store";
+import { useMobileMenuOpen, useSetMobileMenuOpen } from "@/store/gsmactx-store";
 import { adminNavigation } from "@/lib/data";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -13,7 +13,9 @@ import { useEffect, useState } from "react";
 
 const AdminHeader = () => {
   const pathname = usePathname();
-  const { mobileMenuOpen, setMobileMenuOpen } = useGSMStore();
+  // Using selectors for optimized re-renders
+  const mobileMenuOpen = useMobileMenuOpen();
+  const setMobileMenuOpen = useSetMobileMenuOpen();
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
