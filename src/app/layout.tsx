@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import Script from "next/script";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ReCaptchaProvider from "@/components/forms/ReCaptchaProvider";
+import StoreHydration from "@/components/providers/StoreHydration";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -118,6 +119,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased text-pretty custom-blue custom-scrollbar`}
       >
         <ReCaptchaProvider>
+          <StoreHydration />
           {children}
           <SpeedInsights />
           <Toaster richColors theme="dark" position="bottom-right" />

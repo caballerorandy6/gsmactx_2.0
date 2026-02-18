@@ -4,14 +4,24 @@ import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import clsx from "clsx";
-import { useGSMStore } from "@/store/gsmactx-store";
+import {
+  useScrolled,
+  useSetScrolled,
+  useMobileMenuOpen,
+  useSetMobileMenuOpen,
+  useActiveSection,
+} from "@/store/gsmactx-store";
 import { navigation } from "@/lib/data";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon, PhoneIcon } from "@heroicons/react/24/outline";
 
 const Header = () => {
-  const { activeSection, scrolled, setScrolled, mobileMenuOpen, setMobileMenuOpen } =
-    useGSMStore();
+  // Using selectors for optimized re-renders
+  const activeSection = useActiveSection();
+  const scrolled = useScrolled();
+  const setScrolled = useSetScrolled();
+  const mobileMenuOpen = useMobileMenuOpen();
+  const setMobileMenuOpen = useSetMobileMenuOpen();
 
   useEffect(() => {
     const handleScroll = () => {
