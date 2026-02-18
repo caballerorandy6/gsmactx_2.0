@@ -10,13 +10,34 @@ import { getGoogleReviewsAction } from "@/app/actions/googlePlacesAction";
 const Testimonials = () => {
   const ref = useSectionObserver({ sectionName: "Testimonials" });
   const [testimonials, setTestimonials] = useState<Review[]>([]);
+  const [isVideoVisible, setIsVideoVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
+
+  // Lazy load video when it comes into view
+  useEffect(() => {
+    const container = videoContainerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVideoVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px", threshold: 0 }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.playbackRate = 1;
     }
-  }, []);
+  }, [isVideoVisible]);
 
   useEffect(() => {
     const fetchTestimonials = async () => {
@@ -110,26 +131,37 @@ const Testimonials = () => {
             up to that commitment.
           </p>
         </motion.div>
-        <motion.video
+        <motion.div
+          ref={videoContainerRef}
           variants={fadeInUp}
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          src="/video_compressed.webm"
-          className="inset-0 size-fit object-cover mt-20 saturate-200 xl:w-1/2 rounded-lg shadow-2xl"
+          className="xl:w-1/2 mt-20"
         >
-          <track
-            kind="subtitles"
-            src="/captions.vtt"
-            srcLang="en"
-            label="English"
-            default
-          />
-          Your browser does not support the video tag.
-        </motion.video>
+          {isVideoVisible ? (
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              src="/video_compressed.webm"
+              className="inset-0 size-fit object-cover saturate-200 rounded-lg shadow-2xl"
+            >
+              <track
+                kind="captions"
+                src="/captions.vtt"
+                srcLang="en"
+                label="English"
+                default
+              />
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+            <div className="aspect-video bg-gray-800 rounded-lg shadow-2xl flex items-center justify-center">
+              <div className="animate-pulse text-gray-500">Loading video…</div>
+            </div>
+          )}
+        </motion.div>
       </motion.div>
     </section>
   );

@@ -4,7 +4,6 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import Script from "next/script";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import ReCaptchaProvider from "@/components/forms/ReCaptchaProvider";
 import StoreHydration from "@/components/providers/StoreHydration";
 
 const geistSans = Geist({
@@ -104,6 +103,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth!" suppressHydrationWarning>
       <head>
+        {/* Preconnect to critical third-party origins for faster resource loading */}
+        <link rel="preconnect" href="https://www.google.com" />
+        <link rel="preconnect" href="https://www.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-10810642932"
           strategy="lazyOnload"
@@ -120,12 +124,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased text-pretty custom-blue custom-scrollbar`}
       >
-        <ReCaptchaProvider>
-          <StoreHydration />
-          {children}
-          <SpeedInsights />
-          <Toaster richColors theme="dark" position="bottom-right" />
-        </ReCaptchaProvider>
+        <StoreHydration />
+        {children}
+        <SpeedInsights />
+        <Toaster richColors theme="dark" position="bottom-right" />
       </body>
     </html>
   );

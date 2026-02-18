@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import BookAppointmentForm from "@/components/forms/BookAppointmentForm";
+import ReCaptchaProvider from "@/components/forms/ReCaptchaProvider";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
@@ -76,7 +77,9 @@ const BookAppointmentPage = () => {
 
       {/* Form Section */}
       <section className="pb-24 px-4 sm:px-6 lg:px-8">
-        <BookAppointmentForm />
+        <ReCaptchaProvider>
+          <BookAppointmentForm />
+        </ReCaptchaProvider>
       </section>
 
       {/* Additional Info */}
