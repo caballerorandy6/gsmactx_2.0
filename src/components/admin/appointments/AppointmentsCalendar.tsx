@@ -176,11 +176,11 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
   };
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
       {/* Calendar */}
       <section
         aria-label="Appointments calendar"
-        className="xl:col-span-2 bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-2xl border border-white/10 p-5 sm:p-8 shadow-xl"
+        className="lg:col-span-2 bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-2xl border border-white/10 p-4 sm:p-6 lg:p-8 shadow-xl"
       >
         {/* Calendar Header */}
         <header className="flex items-center justify-between mb-8">

@@ -4,10 +4,10 @@ import { Campaign } from "@/lib/interfaces";
 
 const CampaignListItem = ({ campaign }: { campaign: Campaign }) => {
   return (
-    <li className="flex items-center justify-between gap-x-6 p-6 hover:bg-gray-800/50 transition-colors">
+    <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-x-6 p-4 sm:p-6 hover:bg-gray-800/50 transition-colors motion-reduce:transition-none">
       <div className="min-w-0 flex-1">
-        <div className="flex items-start gap-x-3">
-          <p className="text-lg font-semibold text-white">{campaign.title}</p>
+        <div className="flex flex-wrap items-start gap-2 sm:gap-x-3">
+          <p className="text-base sm:text-lg font-semibold text-white">{campaign.title}</p>
           <span
             className={clsx(
               "mt-1 rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset",
@@ -40,10 +40,10 @@ const CampaignListItem = ({ campaign }: { campaign: Campaign }) => {
         </div>
       </div>
 
-      <div className="flex flex-none items-center">
+      <div className="flex sm:flex-none items-center">
         <Link
           href={`/view-campaigns/${campaign.id}`}
-          className="rounded-md bg-white/10 px-4 py-2 text-sm font-semibold text-white shadow-xs ring-1 ring-inset ring-white/20 hover:bg-white/20 transition-colors"
+          className="w-full sm:w-auto text-center rounded-md bg-white/10 px-4 py-2 text-sm font-semibold text-white shadow-xs ring-1 ring-inset ring-white/20 hover:bg-white/20 transition-colors motion-reduce:transition-none"
         >
           View Details
           <span className="sr-only">, {campaign.title}</span>

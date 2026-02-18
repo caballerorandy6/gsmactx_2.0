@@ -168,7 +168,7 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
           <CalendarDaysIcon className="h-5 w-5 text-amber-400" />
           <h3 className="text-lg font-semibold text-white">Appointments</h3>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4 lg:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 md:gap-4 lg:gap-5">
           {appointmentStatCards.map((stat) => (
             <div
               key={stat.name}
@@ -179,7 +179,7 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
                   <p className="text-xs sm:text-sm font-medium text-gray-400 line-clamp-1">
                     {stat.name}
                   </p>
-                  <p className="mt-1 sm:mt-2 text-xl sm:text-2xl lg:text-3xl font-bold tabular-nums">
+                  <p className="mt-1 sm:mt-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold tabular-nums">
                     {stat.value.toLocaleString()}
                   </p>
                 </div>
@@ -198,7 +198,7 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
           <EnvelopeIcon className="h-5 w-5 text-blue-400" />
           <h3 className="text-lg font-semibold text-white">Email Campaigns</h3>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 md:gap-4 lg:gap-5">
           {emailStatCards.map((stat) => (
             <div
               key={stat.name}
@@ -209,7 +209,7 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
                   <p className="text-xs sm:text-sm font-medium text-gray-400 line-clamp-1">
                     {stat.name}
                   </p>
-                  <p className="mt-1 sm:mt-2 text-xl sm:text-2xl lg:text-3xl font-bold tabular-nums">
+                  <p className="mt-1 sm:mt-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold tabular-nums">
                     {stat.value.toLocaleString()}
                   </p>
                 </div>
@@ -228,7 +228,7 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
           <ChatBubbleLeftRightIcon className="h-5 w-5 text-cyan-400" />
           <h3 className="text-lg font-semibold text-white">SMS Campaigns</h3>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-5">
           {smsStatCards.map((stat) => (
             <div
               key={stat.name}
@@ -239,7 +239,7 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
                   <p className="text-xs sm:text-sm font-medium text-gray-400 line-clamp-1">
                     {stat.name}
                   </p>
-                  <p className="mt-1 sm:mt-2 text-xl sm:text-2xl lg:text-3xl font-bold tabular-nums">
+                  <p className="mt-1 sm:mt-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold tabular-nums">
                     {stat.value.toLocaleString()}
                   </p>
                 </div>
