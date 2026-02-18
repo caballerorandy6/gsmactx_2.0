@@ -168,14 +168,14 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
           <CalendarDaysIcon aria-hidden="true" className="h-5 w-5 text-amber-400" />
           <h3 className="text-lg font-semibold text-white">Appointments</h3>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
           {appointmentStatCards.map((stat) => (
             <div
               key={stat.name}
               className={`rounded-xl border p-3 sm:p-4 backdrop-blur-sm transition-transform motion-reduce:transition-none hover:scale-[1.02] ${stat.color}`}
             >
               <div className="flex items-center justify-between gap-2 mb-2">
-                <p className="text-xs sm:text-sm font-medium text-gray-400 truncate">
+                <p className="text-xs sm:text-sm font-medium text-gray-400 leading-tight">
                   {stat.name}
                 </p>
                 <div className={`rounded-full p-1.5 sm:p-2 shrink-0 ${stat.iconBg}`}>
@@ -196,14 +196,14 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
           <EnvelopeIcon aria-hidden="true" className="h-5 w-5 text-blue-400" />
           <h3 className="text-lg font-semibold text-white">Email Campaigns</h3>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
           {emailStatCards.map((stat) => (
             <div
               key={stat.name}
               className={`rounded-xl border p-3 sm:p-4 backdrop-blur-sm transition-transform motion-reduce:transition-none hover:scale-[1.02] ${stat.color}`}
             >
               <div className="flex items-center justify-between gap-2 mb-2">
-                <p className="text-xs sm:text-sm font-medium text-gray-400 truncate">
+                <p className="text-xs sm:text-sm font-medium text-gray-400 leading-tight">
                   {stat.name}
                 </p>
                 <div className={`rounded-full p-1.5 sm:p-2 shrink-0 ${stat.iconBg}`}>
@@ -231,7 +231,7 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
               className={`rounded-xl border p-3 sm:p-4 backdrop-blur-sm transition-transform motion-reduce:transition-none hover:scale-[1.02] ${stat.color}`}
             >
               <div className="flex items-center justify-between gap-2 mb-2">
-                <p className="text-xs sm:text-sm font-medium text-gray-400 truncate">
+                <p className="text-xs sm:text-sm font-medium text-gray-400 leading-tight">
                   {stat.name}
                 </p>
                 <div className={`rounded-full p-1.5 sm:p-2 shrink-0 ${stat.iconBg}`}>
