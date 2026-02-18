@@ -17,12 +17,12 @@ interface SitemapConfig {
 const sitemapConfig: SitemapConfig = {
   baseUrl: "https://www.gsmactx.com",
   dynamicRoutes: [
-    "/air-conditioning-installation",
-    "/air-conditioning-repair",
-    "/heating-installation",
-    "/heating-repair",
-    "/air-duct-sanitizing",
-    "/attic-insulation",
+    "/services/air-conditioning-installation",
+    "/services/air-conditioning-repair",
+    "/services/heating-installation",
+    "/services/heating-repair",
+    "/services/air-duct-sanitizing",
+    "/services/attic-insulation",
   ],
 };
 

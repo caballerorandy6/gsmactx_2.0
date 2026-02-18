@@ -9,6 +9,9 @@ import {
   ClockIcon,
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
+import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
+import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
+import { businessInfo } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Book an Appointment - GSM A/C & General Contractor",
@@ -137,6 +140,36 @@ const BookAppointmentPage = () => {
       </section>
       </main>
       <Footer />
+
+      {/* JSON-LD Structured Data */}
+      <JsonLdForBreadcrumb
+        itemList={[
+          { name: "Home", item: "https://www.gsmactx.com/" },
+          { name: "Book Appointment", item: "https://www.gsmactx.com/book-appointment" },
+        ]}
+      />
+
+      <JsonLdForLocalBusiness
+        name={businessInfo.name}
+        description="Schedule your HVAC service appointment with GSM A/C & General Contractor. Professional AC repair, heating services, and installations in Houston, TX."
+        telephone={businessInfo.phone}
+        streetAddress={businessInfo.address.street}
+        addressLocality={businessInfo.address.city}
+        addressRegion={businessInfo.address.state}
+        postalCode={businessInfo.address.zip}
+        addressCountry={businessInfo.address.country}
+        latitude={businessInfo.geo.latitude}
+        longitude={businessInfo.geo.longitude}
+        url={businessInfo.website}
+        image="/logo.avif"
+        priceRange={businessInfo.priceRange}
+        aggregateRating={{
+          ratingValue: businessInfo.reviews.aggregateRating,
+          reviewCount: businessInfo.reviews.reviewCount,
+        }}
+        areaServed={businessInfo.serviceAreas}
+        openingHours={businessInfo.openingHours}
+      />
     </>
   );
 };
