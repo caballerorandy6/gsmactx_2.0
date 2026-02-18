@@ -155,13 +155,13 @@ const CampaignForm = ({
     >
       {/* Main content */}
 
-      <main className="py-20">
-        <h1 className="text-4xl font-bold text-center">
+      <main className="py-10 sm:py-16 lg:py-20 px-4 sm:px-6">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center">
           Welcome, {user?.name}!
         </h1>
-        <div className="min-h-screen flex justify-center pt-20">
-          <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md">
-            <h2 className="text-center text-3xl font-bold tracking-tight text-white mb-8">
+        <div className="min-h-screen flex justify-center pt-10 sm:pt-16 lg:pt-20">
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md sm:max-w-lg lg:max-w-2xl">
+            <h2 className="text-center text-2xl sm:text-3xl font-bold tracking-tight text-white mb-6 sm:mb-8">
               {isEditing ? "Edit Campaign" : "Create Campaign"}
             </h2>
 

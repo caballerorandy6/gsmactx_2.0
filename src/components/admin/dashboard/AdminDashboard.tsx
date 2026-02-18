@@ -113,7 +113,7 @@ const AdminDashboard = ({
   ];
 
   return (
-    <div className="space-y-6 pb-20 lg:pb-6">
+    <div className="space-y-4 sm:space-y-6 pb-24 lg:pb-6">
       {/* Welcome Header */}
       <div className="flex items-center justify-between">
         <div>
