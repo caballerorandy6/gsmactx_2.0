@@ -77,6 +77,7 @@ const LoginForm = () => {
                 name="email"
                 type="email"
                 autoComplete="email"
+                spellCheck="false"
                 className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
               />
               <ErrorMessage

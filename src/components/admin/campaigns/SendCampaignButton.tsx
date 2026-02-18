@@ -11,7 +11,7 @@ const SendCampaignButton = ({ id }: { id: string }) => {
   const handleSend = async () => {
     try {
       startTransition(async () => {
-        toast.loading("Initializing campaign...");
+        toast.loading("Initializing campaign…");
         const result = await initializeCampaignEmailLogsAction(id);
         if (result.success) {
           toast.dismiss();

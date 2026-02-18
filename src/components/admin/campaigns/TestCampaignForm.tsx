@@ -74,7 +74,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
 
     startTransition(async () => {
       try {
-        toast.loading("Sending test campaign...");
+        toast.loading("Sending test campaign…");
         const result = await createAndSendTestCampaignAction(formData);
 
         toast.dismiss();
@@ -290,7 +290,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
                   disabled={isPending}
                   className="flex justify-center rounded-md cursor-pointer bg-purple-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-purple-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 transition-colors disabled:bg-purple-300 disabled:cursor-not-allowed"
                 >
-                  {isPending ? "Sending..." : "Send Test Campaign"}
+                  {isPending ? "Sending…" : "Send Test Campaign"}
                 </button>
               </div>
             </div>

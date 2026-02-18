@@ -116,7 +116,8 @@ const Testimonials = () => {
           autoPlay
           muted
           loop
-          controls
+          playsInline
+          preload="metadata"
           src="/video_compressed.webm"
           className="inset-0 size-fit object-cover mt-20 saturate-200 xl:w-1/2 rounded-lg shadow-2xl"
         >

@@ -7,10 +7,16 @@ import AdminDashboard from "@/components/admin/dashboard/AdminDashboard";
 import { redirect } from "next/navigation";
 
 export default async function AdminDashboardPage() {
-  const campaigns = await getCampaignsListAction();
+  // Get cookies first (needed for auth), then fetch data in parallel
   const cookieStore = await cookies();
-  const user = await getCurrentUser(cookieStore.get("token")?.value);
-  const dashboardStats = await getDashboardStatsAction();
+  const token = cookieStore.get("token")?.value;
+
+  // Parallel fetch: user, campaigns, and dashboardStats are independent
+  const [user, campaigns, dashboardStats] = await Promise.all([
+    getCurrentUser(token),
+    getCampaignsListAction(),
+    getDashboardStatsAction(),
+  ]);
 
   if (!user) {
     redirect("/login");

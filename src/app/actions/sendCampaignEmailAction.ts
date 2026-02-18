@@ -8,6 +8,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { randomUUID } from "crypto";
 import { renderCampaignEmail } from "@/lib/email/emailRenderer";
+import { after } from "next/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const DAILY_LIMIT = 100; // Resend free tier limit
@@ -318,15 +319,18 @@ export async function sendCampaignBatchAction(
           },
         });
 
+        // Send admin notifications in background - non-blocking
         if (campaign) {
-          await notifyAdminsOfCompletion(campaign.title, sentLogs, failedLogs);
+          after(async () => {
+            await notifyAdminsOfCompletion(campaign.title, sentLogs, failedLogs);
+          });
         }
 
         let message = `Campaign completed! ${sentLogs}/${totalLogs} emails sent successfully.`;
         if (failedLogs > 0) {
           message += ` ${failedLogs} email(s) failed - these may be invalid addresses.`;
         }
-        message += " Admins have been notified.";
+        message += " Admins will be notified shortly.";
 
         return {
           success: true,
@@ -422,15 +426,18 @@ export async function sendCampaignBatchAction(
           },
         });
 
+        // Send admin notifications in background - non-blocking
         if (campaign) {
-          await notifyAdminsOfCompletion(campaign.title, sentLogs, failedLogs);
+          after(async () => {
+            await notifyAdminsOfCompletion(campaign.title, sentLogs, failedLogs);
+          });
         }
 
         let message = `Campaign completed! All ${sentLogs}/${totalLogs} emails sent successfully.`;
         if (failedLogs > 0) {
           message += ` ${failedLogs} email(s) failed.`;
         }
-        message += " Admins have been notified.";
+        message += " Admins will be notified shortly.";
 
         return {
           success: true,
@@ -491,18 +498,21 @@ export async function getCampaignStatsAction(
   }
 
   try {
-    const stats = await prisma.campaignEmailLog.groupBy({
-      by: ["status"],
-      where: { campaignId },
-      _count: true,
-    });
+    // Parallel fetch: stats and emailsSentToday are independent
+    const [stats, emailsSentToday] = await Promise.all([
+      prisma.campaignEmailLog.groupBy({
+        by: ["status"],
+        where: { campaignId },
+        _count: true,
+      }),
+      getEmailsSentToday(),
+    ]);
 
     const total = stats.reduce((sum, stat) => sum + stat._count, 0);
     const sent = stats.find((s) => s.status === "sent")?._count || 0;
     const failed = stats.find((s) => s.status === "failed")?._count || 0;
     const pending = stats.find((s) => s.status === "pending")?._count || 0;
 
-    const emailsSentToday = await getEmailsSentToday();
     const remainingQuota = Math.max(0, DAILY_LIMIT - emailsSentToday);
 
     return {

@@ -82,11 +82,14 @@ export default function Contact() {
 
         const recaptchaToken = await executeRecaptcha("contact_form");
 
-        // Llama a las acciones del servidor una por una
+        // Execute actions in parallel for better performance
+        const promises: Promise<unknown>[] = [
+          sendEmailContactAction(data, recaptchaToken),
+        ];
         if (data.subscribe) {
-          await saveEmailAction(data);
+          promises.push(saveEmailAction(data));
         }
-        await sendEmailContactAction(data, recaptchaToken);
+        await Promise.all(promises);
 
         // Si todo va bien, muestra un mensaje de éxito y resetea el formulario
         toast.success("Message sent successfully!");
@@ -289,6 +292,7 @@ export default function Contact() {
                     name="email"
                     type="email"
                     autoComplete="email"
+                    spellCheck="false"
                     className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
                   />
                   <ErrorMessage
@@ -392,7 +396,7 @@ export default function Contact() {
                 disabled={isPending}
                 className="rounded-md cursor-pointer bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isPending ? "Sending..." : "Send Message"}
+                {isPending ? "Sending…" : "Send Message"}
               </button>
             </motion.div>
           </div>
