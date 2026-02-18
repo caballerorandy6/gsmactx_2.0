@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { Metadata } from "next";
 import CampaignSender from "@/components/admin/campaigns/CampaignSender";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { prisma } from "@/lib/db/prisma";
@@ -7,21 +8,27 @@ import { renderCampaignEmail } from "@/lib/email/emailRenderer";
 
 type Params = Promise<{ id: string }>;
 
+export const metadata: Metadata = {
+  title: "Campaign Details - GSM A/C Admin",
+  description: "View and send campaign for GSM A/C & General Contractor Inc",
+};
+
 const CampaignPage = async ({ params }: { params: Params }) => {
   const { id } = await params;
-
   const cookieStore = await cookies();
-  const user = await getCurrentUser(cookieStore.get("token")?.value);
+
+  // Parallel fetch: user auth + campaign data
+  const [user, campaign] = await Promise.all([
+    getCurrentUser(cookieStore.get("token")?.value),
+    prisma.campaign.findUnique({ where: { id } }),
+  ]);
+
   if (!user) {
     redirect("/login");
   }
 
-  const campaign = await prisma.campaign.findUnique({
-    where: { id },
-  });
-
   if (!campaign) {
-    return <div className="text-center text-red-500">Campaign not found.</div>;
+    notFound();
   }
 
   // Generate preview email HTML

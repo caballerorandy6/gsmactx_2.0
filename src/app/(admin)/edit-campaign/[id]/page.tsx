@@ -1,22 +1,36 @@
+import { Metadata } from "next";
+import { notFound, redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import CampaignForm from "@/components/admin/campaigns/CampaignForm";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { getCampaignByIdAction } from "@/app/actions/campaignAction";
+
+export const metadata: Metadata = {
+  title: "Edit Campaign - GSM A/C Admin",
+  description: "Edit email campaign for GSM A/C & General Contractor Inc",
+};
 
 type Params = Promise<{ id: string }>;
 
-const CampaignEditId = async ({ params }: { params: Params }) => {
+const CampaignEditPage = async ({ params }: { params: Params }) => {
   const { id } = await params;
-  const campaign = await getCampaignByIdAction(id);
-
   const cookieStore = await cookies();
-  const user = await getCurrentUser(cookieStore.get("token")?.value);
+
+  // Parallel fetch: campaign data + user auth
+  const [campaign, user] = await Promise.all([
+    getCampaignByIdAction(id),
+    getCurrentUser(cookieStore.get("token")?.value),
+  ]);
+
   if (!user) {
     redirect("/login");
+  }
+
+  if (!campaign) {
+    notFound();
   }
 
   return <CampaignForm campaign={campaign} user={user} />;
 };
 
-export default CampaignEditId;
+export default CampaignEditPage;

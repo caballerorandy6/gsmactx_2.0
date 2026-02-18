@@ -12,13 +12,16 @@ export const metadata: Metadata = {
 
 const AppointmentsPage = async () => {
   const cookieStore = await cookies();
-  const user = await getCurrentUser(cookieStore.get("token")?.value);
+
+  // Parallel fetch: user auth + appointments data
+  const [user, appointments] = await Promise.all([
+    getCurrentUser(cookieStore.get("token")?.value),
+    getAppointmentsListAction(),
+  ]);
 
   if (!user) {
     redirect("/login");
   }
-
-  const appointments = await getAppointmentsListAction();
 
   return (
     <AppointmentsList appointments={appointments} userName={user.name} />

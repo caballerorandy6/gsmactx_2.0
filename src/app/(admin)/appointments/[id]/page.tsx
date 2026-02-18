@@ -17,13 +17,16 @@ interface AppointmentDetailPageProps {
 const AppointmentDetailPage = async ({ params }: AppointmentDetailPageProps) => {
   const { id } = await params;
   const cookieStore = await cookies();
-  const user = await getCurrentUser(cookieStore.get("token")?.value);
+
+  // Parallel fetch: user auth + appointment data
+  const [user, appointment] = await Promise.all([
+    getCurrentUser(cookieStore.get("token")?.value),
+    getAppointmentByIdAction(id),
+  ]);
 
   if (!user) {
     redirect("/login");
   }
-
-  const appointment = await getAppointmentByIdAction(id);
 
   if (!appointment) {
     notFound();
