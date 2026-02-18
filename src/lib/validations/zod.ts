@@ -70,7 +70,7 @@ export const CampaignSchema = z.object({
       }
 
       return true;
-    }, `El tamaño máximo de la imagen es 5MB.`)
+    }, "Maximum image size is 5MB.")
     .refine((file) => {
       // Si no hay archivo, está bien
       if (!file) return true;

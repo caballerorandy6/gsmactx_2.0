@@ -53,6 +53,11 @@ const CampaignForm = ({
     },
   });
 
+  // Watch form values once to prevent multiple subscriptions
+  const watchedTitle = watch("title");
+  const watchedSubject = watch("subject");
+  const watchedContent = watch("content");
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -85,17 +90,18 @@ const CampaignForm = ({
     }
   };
 
-  // Auto-fill on initial load if not editing
+  // Auto-fill template on initial mount when creating new campaign
   useEffect(() => {
-    if (!isEditing && !watch("title")) {
-      const template = getTemplateById(selectedTemplate);
-      if (template) {
-        setValue("title", template.defaultTitle);
-        setValue("subject", template.defaultSubject);
-        setValue("content", template.defaultContent);
-      }
+    if (isEditing) return;
+
+    const template = getTemplateById(selectedTemplate);
+    if (template) {
+      setValue("title", template.defaultTitle);
+      setValue("subject", template.defaultSubject);
+      setValue("content", template.defaultContent);
     }
-  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+    // Only run once on mount for new campaigns
+  }, [isEditing, selectedTemplate, setValue]);
 
   const onSubmit = async (data: CampaignFormData) => {
     const formData = new FormData();
@@ -306,7 +312,7 @@ const CampaignForm = ({
                       )}
                     />
                     <p className="text-sm text-gray-400">
-                      {watch("content")?.length || 0}/2000 characters
+                      {watchedContent?.length || 0}/2000 characters
                     </p>
                   </div>
                 </div>
@@ -316,7 +322,7 @@ const CampaignForm = ({
               <button
                 type="button"
                 onClick={() => setShowPreview(true)}
-                disabled={!watch("title") || !watch("subject") || !watch("content")}
+                disabled={!watchedTitle || !watchedSubject || !watchedContent}
                 className="flex justify-center rounded-md cursor-pointer bg-purple-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-purple-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 transition-colors disabled:bg-purple-300 disabled:cursor-not-allowed"
               >
                 Preview Email
@@ -364,9 +370,9 @@ const CampaignForm = ({
             </div>
             <div className="p-6">
               <CampaignEmailPreview
-                subject={watch("subject") || ""}
-                title={watch("title") || ""}
-                content={watch("content") || ""}
+                subject={watchedSubject || ""}
+                title={watchedTitle || ""}
+                content={watchedContent || ""}
                 imageUrl={imagePreview || undefined}
                 recipientEmail="subscriber@example.com"
                 unsubscribeUrl="#"

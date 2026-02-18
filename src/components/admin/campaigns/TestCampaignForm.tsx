@@ -35,6 +35,11 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
     },
   });
 
+  // Watch form values once to prevent multiple subscriptions
+  const watchedTitle = watch("title");
+  const watchedSubject = watch("subject");
+  const watchedContent = watch("content");
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -259,7 +264,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
                       )}
                     />
                     <p className="text-sm text-gray-400">
-                      {watch("content")?.length || 0}/2000 characters
+                      {watchedContent?.length || 0}/2000 characters
                     </p>
                   </div>
                 </div>
@@ -270,9 +275,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
               <button
                 type="button"
                 onClick={() => setShowPreview(true)}
-                disabled={
-                  !watch("title") || !watch("subject") || !watch("content")
-                }
+                disabled={!watchedTitle || !watchedSubject || !watchedContent}
                 className="flex justify-center rounded-md cursor-pointer bg-gray-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 transition-colors disabled:bg-gray-700 disabled:cursor-not-allowed"
               >
                 Preview Email
@@ -313,9 +316,9 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
             </div>
             <div className="p-6">
               <CampaignEmailPreview
-                subject={watch("subject") || ""}
-                title={watch("title") || ""}
-                content={watch("content") || ""}
+                subject={watchedSubject || ""}
+                title={watchedTitle || ""}
+                content={watchedContent || ""}
                 imageUrl={imagePreview || undefined}
                 recipientEmail="test@example.com"
                 unsubscribeUrl="#"
