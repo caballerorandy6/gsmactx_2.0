@@ -23,7 +23,7 @@ const CampaignList = async ({ user }) => {
   return (
     <section
       id="admin-dashboard"
-      className="bg-transparent px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 mt-10 min-h-screen"
+      className="bg-transparent px-4 sm:px-6 lg:px-8 bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 mt-10 min-h-screen"
     >
       {/* Main content */}
       <main className="pt-20">
@@ -100,7 +100,7 @@ const CampaignList = async ({ user }) => {
                       {/* Dropdown menu with dark theme styles */}
                       <MenuItems
                         transition
-                        className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-gray-800 py-2 shadow-lg ring-1 ring-white/10 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in "
+                        className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-gray-800 py-2 shadow-lg ring-1 ring-white/10 transition focus:outline-none data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in "
                       >
                         <AdminSendTestCampaignButton id={campaign.id} />
                         <AdminSendCampaignButton id={campaign.id} />

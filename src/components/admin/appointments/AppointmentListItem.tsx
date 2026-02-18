@@ -30,7 +30,7 @@ const AppointmentListItem = ({ appointment }: AppointmentListItemProps) => {
       <div className="min-w-0 flex-1 space-y-2">
         {/* Client name and status */}
         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
-          <h3 className="text-base sm:text-lg font-semibold text-white break-words">
+          <h3 className="text-base sm:text-lg font-semibold text-white wrap-break-word">
             {appointment.clientName}
           </h3>
           <AppointmentStatusBadge status={appointment.status} />
@@ -60,7 +60,7 @@ const AppointmentListItem = ({ appointment }: AppointmentListItemProps) => {
         {/* Address */}
         <div className="flex items-start gap-1.5 text-xs sm:text-sm text-gray-400">
           <MapPinIcon aria-hidden="true" className="h-4 w-4 shrink-0 mt-0.5" />
-          <span className="break-words line-clamp-2">{appointment.address}</span>
+          <span className="wrap-break-word line-clamp-2">{appointment.address}</span>
         </div>
       </div>
 
