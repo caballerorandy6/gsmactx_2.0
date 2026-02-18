@@ -48,9 +48,9 @@ const Header = () => {
           <Link href="/#home" className="-m-1.5 p-1.5">
             <Image
               alt="GSM AC Logo"
-              width={500}
-              height={500}
-              src="/logo.avif"
+              width={160}
+              height={160}
+              src="/logo-small.avif"
               className="h-20 w-auto"
               priority
             />
@@ -106,9 +106,9 @@ const Header = () => {
             <Link href="/" className="-m-1.5 p-1.5">
               <Image
                 alt="GSM AC Logo"
-                width={1000}
-                height={1000}
-                src="/logo.avif"
+                width={160}
+                height={160}
+                src="/logo-small.avif"
                 className="h-20 w-auto"
                 priority
               />

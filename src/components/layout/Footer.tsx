@@ -108,23 +108,23 @@ export default function Footer() {
           <p className="text-sm text-gray-400">
             {`© ${new Date().getFullYear()} GSM A/C & General Contractor INC.`}
           </p>
-          <p className="text-xs text-gray-500">All rights reserved.</p>
+          <p className="text-xs text-gray-400">All rights reserved.</p>
           <div className="flex items-center gap-4 mt-4">
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-400">
               Developed by{" "}
               <Link
                 href="https://rcweb.dev"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 font-semibold hover:text-white transition-colors"
+                className="text-gray-300 font-semibold hover:text-white transition-colors"
               >
                 RC Web Solutions LLC
               </Link>
             </p>
-            <span className="text-gray-700">•</span>
+            <span className="text-gray-600">•</span>
             <Link
               href="/admin-dashboard"
-              className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-400 transition-colors"
+              className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-300 transition-colors"
             >
               <LockClosedIcon className="h-3 w-3" />
               Admin
