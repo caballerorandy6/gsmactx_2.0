@@ -7,7 +7,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
         port: "",
-        pathname: "/photo/**", // Más específico: solo fotos
+        pathname: "/photo/**",
       },
       {
         protocol: "https",
@@ -21,13 +21,50 @@ const nextConfig = {
         port: "",
         pathname: "/maps/api/place/photo/**",
       },
-      // ... otros dominios seguros
     ],
   },
   experimental: {
     serverActions: {
-      bodySizeLimit: "5mb", // Aumenta el límite a 4MB (puedes poner el valor que necesites)
+      bodySizeLimit: "5mb",
     },
+  },
+  // Security headers for better Best Practices score
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "X-DNS-Prefetch-Control",
+            value: "on",
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
+          },
+          {
+            key: "X-XSS-Protection",
+            value: "1; mode=block",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+    ];
   },
 };
 

@@ -2,7 +2,7 @@ import Hero from "@/components/landing/Hero";
 import About from "@/components/landing/About";
 import Services from "@/components/landing/Services";
 import Testimonials from "@/components/landing/Testimonials";
-import Contact from "@/components/landing/Contact";
+import ContactWithReCaptcha from "@/components/landing/ContactWithReCaptcha";
 import ScrollSpyHandler from "@/components/layout/ScrollSpyHandler";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import { genPageMetadata } from "@/seo/genPageMetadata";
@@ -31,7 +31,7 @@ export default function Home() {
       <About />
       <Services />
       <Testimonials />
-      <Contact />
+      <ContactWithReCaptcha />
       <FAQ faqs={faqs} />
       <Footer />
 
