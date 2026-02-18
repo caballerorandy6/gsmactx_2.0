@@ -56,12 +56,13 @@ export const formatPhoneForTel = (phone: string): string => {
 
 /**
  * Validate US phone number
- * Returns true if valid 10-digit US phone number
+ * Returns true if valid 10-digit US phone number (no country code allowed)
  */
 export const isValidUSPhone = (phone: string): boolean => {
-  const digits = normalizePhone(phone);
+  // Remove all non-digit characters
+  const digits = phone.replace(/\D/g, "");
 
-  // Must be exactly 10 digits
+  // Must be exactly 10 digits (no country code)
   if (digits.length !== 10) {
     return false;
   }
