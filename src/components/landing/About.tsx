@@ -1,39 +1,49 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import useSectionObserver from "@/hooks/useSectionObserver";
 
 const About = () => {
   const ref = useSectionObserver({ sectionName: "About" });
+  const shouldReduceMotion = useReducedMotion();
 
-  // Animation variants
+  // Spring-based animation for natural feel
+  // Using GPU-accelerated properties only (opacity, transform)
+  const springTransition = {
+    type: "spring" as const,
+    stiffness: 300,
+    damping: 24,
+  };
+
   const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
+      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
     },
   };
 
   const staggerContainer = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.1,
-      },
+      transition: shouldReduceMotion
+        ? { duration: 0 }
+        : {
+            staggerChildren: 0.15,
+            delayChildren: 0.1,
+          },
     },
   };
 
   const imageVariant = {
-    hidden: { opacity: 0, scale: 0.9 },
+    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.95 },
     visible: {
       opacity: 1,
       scale: 1,
-      transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
+      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
     },
   };
 
@@ -130,64 +140,60 @@ const About = () => {
                 variants={imageVariant}
                 className="aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10"
               >
-                <div className="relative h-80 transition-transform duration-300 hover:scale-110">
+                <div className={`relative h-80 transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
                   <Image
                     width={560}
                     height={560}
-                    alt="GSM AC Personal"
+                    alt="HVAC technician performing air conditioning maintenance in Cypress, TX"
                     src="/worker.avif"
                     className="block size-full object-cover"
-                    priority={false}
                   />
-                  <div className="absolute inset-0 bg-black/20" />
+                  <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
                 </div>
               </motion.div>
               <motion.div
                 variants={imageVariant}
                 className="-mt-8 aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10 lg:-mt-40"
               >
-                <div className="relative h-80 transition-transform duration-300 hover:scale-110">
+                <div className={`relative h-80 transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
                   <Image
                     width={560}
                     height={560}
-                    alt="GSM AC Personal"
+                    alt="Professional AC installation service by GSM team"
                     src="/worker2.avif"
                     className="block size-full object-cover"
-                    priority={false}
                   />
-                  <div className="absolute inset-0 bg-black/20" />
+                  <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
                 </div>
               </motion.div>
               <motion.div
                 variants={imageVariant}
                 className="aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10"
               >
-                <div className="relative h-80 transition-transform duration-300 hover:scale-110">
+                <div className={`relative h-80 transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
                   <Image
                     width={560}
                     height={560}
-                    alt="GSM AC Personal"
+                    alt="Heating system repair specialist working on HVAC unit"
                     src="/worker4.avif"
                     className="block size-full object-cover"
-                    priority={false}
                   />
-                  <div className="absolute inset-0 bg-black/10" />
+                  <div className="absolute inset-0 bg-black/10" aria-hidden="true" />
                 </div>
               </motion.div>
               <motion.div
                 variants={imageVariant}
                 className="-mt-8 aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10 lg:-mt-40"
               >
-                <div className="relative h-80 transition-transform duration-300 hover:scale-110">
+                <div className={`relative h-80 transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
                   <Image
                     width={560}
                     height={560}
-                    alt="GSM AC Personal"
+                    alt="Licensed HVAC contractor inspecting air duct system"
                     src="/worker6.avif"
                     className="block size-full object-cover rounded-2xl shadow-[0_8px_24px_rgba(10,15,26,0.6)]"
-                    priority={false}
                   />
-                  <div className="absolute inset-0 bg-black/20" />
+                  <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
                 </div>
               </motion.div>
             </div>
