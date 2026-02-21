@@ -33,11 +33,18 @@ export default function HeroClient({ googleData }: HeroClientProps) {
   const rating = googleData?.rating ?? parseFloat(businessInfo.reviews.aggregateRating);
   const reviewCount = googleData?.totalReviews ?? parseInt(businessInfo.reviews.reviewCount);
 
-  // Simple fade-in animation
+  // Spring-based fade-in animation for natural feel
+  // Using GPU-accelerated properties only (opacity, transform via y)
+  const springTransition = {
+    type: "spring" as const,
+    stiffness: 300,
+    damping: 24,
+  };
+
   const fadeIn = {
     initial: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: shouldReduceMotion ? 0 : 0.5 },
+    transition: shouldReduceMotion ? { duration: 0 } : springTransition,
   };
 
   return (
@@ -73,8 +80,8 @@ export default function HeroClient({ googleData }: HeroClientProps) {
                 {[...Array(5)].map((_, i) => (
                   <StarIcon
                     key={i}
-                    className={`h-3 w-3 sm:h-4 sm:w-4 ${
-                      i < Math.floor(rating) ? "text-yellow-400" : "text-gray-500"
+                    className={`h-4 w-4 sm:h-5 sm:w-5 ${
+                      i < Math.round(rating) ? "text-yellow-400" : "text-gray-500"
                     }`}
                     aria-hidden="true"
                   />
@@ -89,7 +96,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
           {/* Main Heading - SEO Optimized */}
           <motion.h1
             {...fadeIn}
-            transition={{ ...fadeIn.transition, delay: 0.1 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { ...springTransition, delay: 0.1 }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white text-balance leading-tight"
           >
             Expert HVAC Solutions
@@ -99,7 +106,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
           {/* Services Keywords - SEO */}
           <motion.p
             {...fadeIn}
-            transition={{ ...fadeIn.transition, delay: 0.2 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { ...springTransition, delay: 0.2 }}
             className="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl text-gray-300 font-light"
           >
             AC Installation · Heating Repair · Duct Cleaning · Attic Insulation
@@ -108,14 +115,15 @@ export default function HeroClient({ googleData }: HeroClientProps) {
           {/* Special Offer Card with CTAs */}
           <motion.div
             {...fadeIn}
-            transition={{ ...fadeIn.transition, delay: 0.3 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { ...springTransition, delay: 0.3 }}
             className="mt-6 sm:mt-8 max-w-sm sm:max-w-md mx-auto"
           >
             <div className="bg-white/10 backdrop-blur-md border border-emerald-500/30 rounded-2xl p-4 sm:p-5 md:p-6">
-              {/* Offer Badge */}
+              {/* Offer Badge - decorative pulse dot hidden from assistive tech */}
               <div className="flex items-center justify-center gap-1.5 mb-2 sm:mb-3">
                 <span
                   className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 animate-pulse"
+                  role="presentation"
                   aria-hidden="true"
                 />
                 <span className="text-[10px] sm:text-xs text-emerald-300 font-semibold uppercase tracking-wider">
@@ -130,7 +138,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
                 </span>
                 <div className="text-left">
                   <p className="text-gray-400 line-through text-xs sm:text-sm tabular-nums">$99.99</p>
-                  <p className="text-emerald-300 text-[10px] sm:text-xs font-semibold">Heating Check-Up</p>
+                  <p className="text-emerald-300 text-[10px] sm:text-xs font-semibold">AC Check-Up</p>
                 </div>
               </div>
 
@@ -161,7 +169,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
           {/* Years Badge */}
           <motion.p
             {...fadeIn}
-            transition={{ ...fadeIn.transition, delay: 0.4 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { ...springTransition, delay: 0.4 }}
             className="mt-4 sm:mt-6 text-xs sm:text-sm text-gray-400"
           >
             Serving the Houston area since {businessInfo.established} · Licensed & Insured
