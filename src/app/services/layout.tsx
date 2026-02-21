@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import SideBar from "@/components/ui/SideBar";
+import ScrollToTop from "@/components/ui/ScrollToTop";
+import FloatingCTAButtons from "@/components/ui/FloatingCTAButtons";
 
 export const metadata: Metadata = {
   title: "GSM A/C General & Contractor Inc, Services Page",
@@ -13,6 +15,8 @@ export default function ServicesLayout({
 }) {
   return (
     <section className="sm:flex">
+      <ScrollToTop />
+      <FloatingCTAButtons />
       <div className="hidden sm:block fixed left-0 h-screen w-64">
         <SideBar />
       </div>

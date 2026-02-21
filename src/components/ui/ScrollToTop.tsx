@@ -33,7 +33,7 @@ const ScrollToTop = () => {
       onClick={scrollToTop}
       aria-label="Scroll to top"
       className={clsx(
-        "fixed bottom-6 right-6 z-50 p-3 rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-500 transition-all duration-300 cursor-pointer",
+        "fixed bottom-6 left-6 z-50 p-3 rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-500 transition-all duration-300 cursor-pointer",
         isVisible
           ? "opacity-100 translate-y-0"
           : "opacity-0 translate-y-10 pointer-events-none"

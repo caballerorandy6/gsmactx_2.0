@@ -95,7 +95,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
               clipPath:
                 "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
             }}
-            className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+            className="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-288.75"
           />
         </div>
 
@@ -146,7 +146,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
 
               {/* Special Offer Card */}
               <motion.div variants={itemVariants} className="max-w-lg mx-auto">
-                <div className="bg-gradient-to-br from-emerald-500/10 via-emerald-600/5 to-transparent backdrop-blur-md border-2 border-emerald-500/30 rounded-2xl p-3 sm:p-4 shadow-2xl">
+                <div className="bg-linear-to-br from-emerald-500/10 via-emerald-600/5 to-transparent backdrop-blur-md border-2 border-emerald-500/30 rounded-2xl p-3 sm:p-4 shadow-2xl">
                   <div className="flex items-center justify-center gap-1.5 mb-2">
                     <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                     <p className="text-[10px] sm:text-xs text-emerald-300 font-semibold uppercase tracking-wider">
@@ -210,7 +210,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
                   </Link>
                 </motion.div>
 
-                {/* Secondary CTA - Free Estimate */}
+                {/* Secondary CTA - Book Appointment */}
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -218,10 +218,24 @@ export default function HeroClient({ googleData }: HeroClientProps) {
                   className="w-full sm:w-auto order-2"
                 >
                   <Link
-                    href="/#contact"
-                    className="flex items-center justify-center w-full sm:w-auto rounded-2xl bg-indigo-600 hover:bg-indigo-500 px-8 py-4 text-lg font-bold text-white shadow-xl hover:shadow-indigo-500/50 transition-all duration-300 border-2 border-indigo-400/30"
+                    href="/book-appointment"
+                    className="flex items-center justify-center gap-2 w-full sm:w-auto rounded-2xl bg-indigo-600 hover:bg-indigo-500 px-8 py-4 text-lg font-bold text-white shadow-xl hover:shadow-indigo-500/50 transition-all duration-300 border-2 border-indigo-400/30"
                   >
-                    Get Free Estimate
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
+                      />
+                    </svg>
+                    Book Appointment
                   </Link>
                 </motion.div>
               </motion.div>
@@ -235,7 +249,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
               clipPath:
                 "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
             }}
-            className="relative left-[calc(50%+3rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+            className="relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%+36rem)] sm:w-288.75"
           />
         </div>
       </div>

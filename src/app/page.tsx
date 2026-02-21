@@ -5,6 +5,7 @@ import Testimonials from "@/components/landing/Testimonials";
 import ContactWithReCaptcha from "@/components/landing/ContactWithReCaptcha";
 import ScrollSpyHandler from "@/components/layout/ScrollSpyHandler";
 import ScrollToTop from "@/components/ui/ScrollToTop";
+import FloatingCTAButtons from "@/components/ui/FloatingCTAButtons";
 import { genPageMetadata } from "@/seo/genPageMetadata";
 import { JsonLdForArticle } from "@/components/seo/JsonLdForArticle";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
@@ -27,6 +28,7 @@ export default function Home() {
     <main>
       <ScrollSpyHandler />
       <ScrollToTop />
+      <FloatingCTAButtons />
       <Hero />
       <About />
       <Services />
