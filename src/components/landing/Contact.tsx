@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,36 +20,46 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 export default function Contact() {
   const ref = useSectionObserver({ sectionName: "Contact" });
+  const shouldReduceMotion = useReducedMotion();
   const [isPending, startTransition] = useTransition();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
-  // Animation variants
+  // Spring-based animation for natural feel
+  // Using GPU-accelerated properties only (opacity, transform)
+  const springTransition = {
+    type: "spring" as const,
+    stiffness: 300,
+    damping: 24,
+  };
+
   const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
+      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
     },
   };
 
   const staggerContainer = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
+      transition: shouldReduceMotion
+        ? { duration: 0 }
+        : {
+            staggerChildren: 0.1,
+            delayChildren: 0.2,
+          },
     },
   };
 
   const itemVariant = {
-    hidden: { opacity: 0, x: -20 },
+    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -20 },
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
+      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
     },
   };
 
@@ -114,7 +124,7 @@ export default function Contact() {
           className="relative px-6 pt-24 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48"
         >
           <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
-            <div className="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden ring-1 ring-white/5 lg:w-1/2">
+            <div className="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden ring-1 ring-white/5 lg:w-1/2" aria-hidden="true">
               <svg className="absolute inset-0 size-full mask-[radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-gray-700">
                 <defs>
                   <pattern
