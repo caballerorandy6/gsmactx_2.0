@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   Disclosure,
   DisclosureButton,
@@ -20,34 +20,44 @@ interface FAQProps {
 
 export default function FAQ({ faqs }: FAQProps) {
   const ref = useSectionObserver({ sectionName: "FAQ" });
+  const shouldReduceMotion = useReducedMotion();
 
-  // Animation variants
+  // Spring-based animation for natural feel
+  // Using GPU-accelerated properties only (opacity, transform)
+  const springTransition = {
+    type: "spring" as const,
+    stiffness: 300,
+    damping: 24,
+  };
+
   const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
+      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
     },
   };
 
   const staggerContainer = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
+      transition: shouldReduceMotion
+        ? { duration: 0 }
+        : {
+            staggerChildren: 0.1,
+            delayChildren: 0.2,
+          },
     },
   };
 
   const itemVariant = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
+      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
     },
   };
 
@@ -80,8 +90,8 @@ export default function FAQ({ faqs }: FAQProps) {
                         {faq.question}
                       </span>
                       <span className="ml-6 flex h-7 items-center">
-                        <PlusIcon className="size-6 group-data-open:hidden transition-transform" />
-                        <MinusIcon className="size-6 group-not-data-open:hidden transition-transform" />
+                        <PlusIcon className="size-6 group-data-open:hidden transition-transform" aria-hidden="true" />
+                        <MinusIcon className="size-6 group-not-data-open:hidden transition-transform" aria-hidden="true" />
                       </span>
                     </DisclosureButton>
                   </div>

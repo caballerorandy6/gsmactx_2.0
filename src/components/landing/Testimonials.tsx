@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import TestimonialsCarousel from "./TestimonialsCarousel";
 import { Review } from "@/lib/interfaces";
 import { useRef, useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { getGoogleReviewsAction } from "@/app/actions/googlePlacesAction";
 
 const Testimonials = () => {
   const ref = useSectionObserver({ sectionName: "Testimonials" });
+  const shouldReduceMotion = useReducedMotion();
   const [testimonials, setTestimonials] = useState<Review[]>([]);
   const [isVideoVisible, setIsVideoVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -47,32 +48,41 @@ const Testimonials = () => {
     fetchTestimonials();
   }, []);
 
-  // Animation variants
+  // Spring-based animation for natural feel
+  // Using GPU-accelerated properties only (opacity, transform)
+  const springTransition = {
+    type: "spring" as const,
+    stiffness: 300,
+    damping: 24,
+  };
+
   const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
+      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
     },
   };
 
   const fadeIn = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
     visible: {
       opacity: 1,
-      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] as const },
+      transition: shouldReduceMotion ? { duration: 0 } : { duration: 0.5 },
     },
   };
 
   const staggerContainer = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
+      transition: shouldReduceMotion
+        ? { duration: 0 }
+        : {
+            staggerChildren: 0.2,
+            delayChildren: 0.1,
+          },
     },
   };
 
