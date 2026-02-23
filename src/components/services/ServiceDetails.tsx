@@ -81,7 +81,7 @@ const ServiceDetails = ({
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInScale}
-          className="relative w-full h-[18rem] sm:h-[22rem] md:h-[26rem] my-8 sm:my-10 rounded-2xl overflow-hidden shadow-2xl group"
+          className="relative w-full h-72 sm:h-88 md:h-104 my-8 sm:my-10 rounded-2xl overflow-hidden shadow-2xl group"
         >
           <Image
             width={800}
@@ -91,7 +91,7 @@ const ServiceDetails = ({
             className={`block size-full object-cover w-full transition-transform duration-500 ${shouldReduceMotion ? "" : "group-hover:scale-105"}`}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" aria-hidden="true" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" aria-hidden="true" />
         </motion.div>
 
         <motion.div

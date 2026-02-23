@@ -15,13 +15,13 @@ export default function SideBar() {
       {/* Logo */}
       <Link
         href="/#home"
-        className="transition-transform hover:scale-105 duration-300"
+        className="transition-transform hover:scale-105 duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-lg"
       >
-        <span className="sr-only">GSM AC - Home</span>
+        <span className="sr-only">GSM A/C - Go to homepage</span>
         <Image
-          alt="GSM AC Logo"
-          width={1000}
-          height={1000}
+          alt="GSM A/C General & Contractor Inc Logo"
+          width={64}
+          height={64}
           src="/logo.avif"
           className="h-16 w-auto"
           priority
@@ -55,6 +55,7 @@ export default function SideBar() {
                             ? "bg-white"
                             : "bg-gray-600 group-hover:bg-gray-400"
                         )}
+                        aria-hidden="true"
                       />
                       {item.name}
                     </span>
@@ -69,18 +70,18 @@ export default function SideBar() {
             {/* Phone Number */}
             <Link
               href="tel:+12812354684"
-              className="flex items-center gap-x-3 px-6 py-2.5 text-sm/6 font-semibold text-gray-400 hover:text-white transition-colors group"
+              className="flex items-center gap-x-3 px-6 py-2.5 text-sm/6 font-semibold text-gray-400 hover:text-white transition-colors group focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-lg"
             >
-              <PhoneIcon className="h-5 w-5 text-gray-500 group-hover:text-white transition-colors" />
+              <PhoneIcon className="h-5 w-5 text-gray-500 group-hover:text-white transition-colors" aria-hidden="true" />
               <span>+1 (281) 235-4684</span>
             </Link>
 
             {/* Back to Home Button */}
             <Link
               href="/#home"
-              className="flex items-center justify-center gap-x-2 mx-6 py-3 text-sm font-bold text-white transition-all duration-200 bg-indigo-600 hover:bg-indigo-500 focus-visible:outline-indigo-400 rounded-lg shadow-lg hover:shadow-indigo-600/50 hover:scale-105"
+              className="flex items-center justify-center gap-x-2 mx-6 py-3 text-sm font-bold text-white transition-all duration-200 bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-lg shadow-lg hover:shadow-indigo-600/50 hover:scale-105"
             >
-              <HomeIcon className="h-5 w-5" />
+              <HomeIcon className="h-5 w-5" aria-hidden="true" />
               Back to Home
             </Link>
           </li>
