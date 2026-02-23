@@ -52,15 +52,15 @@ export default function Services() {
   return (
     <section id="services" ref={ref} className="bg-gray-900 py-24 sm:py-32">
       <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
-        <motion.p
+        <motion.h2
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="mt-2 max-w-lg text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl"
+          className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-pretty text-white"
         >
           What Are Our Services?
-        </motion.p>
+        </motion.h2>
 
         <motion.div
           initial="hidden"

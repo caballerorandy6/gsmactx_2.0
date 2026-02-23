@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ServiceDetailsProps } from "@/lib/types";
 
 const ServiceDetails = ({
@@ -10,42 +10,53 @@ const ServiceDetails = ({
   imageSrc,
   array,
 }: ServiceDetailsProps) => {
-  // Animation variants
+  const shouldReduceMotion = useReducedMotion();
+
+  // Spring-based animation for natural feel
+  // Using GPU-accelerated properties only (opacity, transform)
+  const springTransition = {
+    type: "spring" as const,
+    stiffness: 300,
+    damping: 24,
+  };
+
   const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
+      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
     },
   };
 
   const fadeInScale = {
-    hidden: { opacity: 0, scale: 0.95 },
+    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.95 },
     visible: {
       opacity: 1,
       scale: 1,
-      transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as const },
+      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
     },
   };
 
   const staggerContainer = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-      },
+      transition: shouldReduceMotion
+        ? { duration: 0 }
+        : {
+            staggerChildren: 0.15,
+            delayChildren: 0.2,
+          },
     },
   };
 
   const itemVariant = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
+      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
     },
   };
 
@@ -70,17 +81,17 @@ const ServiceDetails = ({
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInScale}
-          className="relative w-full h-[20rem] sm:h-[24rem] my-10 rounded-2xl overflow-hidden shadow-2xl group"
+          className="relative w-full h-[18rem] sm:h-[22rem] md:h-[26rem] my-8 sm:my-10 rounded-2xl overflow-hidden shadow-2xl group"
         >
           <Image
-            width={560}
-            height={560}
-            alt="GSM AC Service"
+            width={800}
+            height={500}
+            alt={`${title} - Professional HVAC service by GSM A/C in Cypress, TX`}
             src={imageSrc}
-            className="block size-full object-cover w-full transition-transform duration-500 group-hover:scale-110"
-            priority={false}
+            className={`block size-full object-cover w-full transition-transform duration-500 ${shouldReduceMotion ? "" : "group-hover:scale-105"}`}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" aria-hidden="true" />
         </motion.div>
 
         <motion.div
