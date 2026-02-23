@@ -1,8 +1,8 @@
-import dynamic from "next/dynamic";
 import Hero from "@/components/landing/Hero";
 import About from "@/components/landing/About";
 import Services from "@/components/landing/Services";
 import Testimonials from "@/components/landing/Testimonials";
+import LazyContact from "@/components/landing/LazyContact";
 import ScrollSpyHandler from "@/components/layout/ScrollSpyHandler";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import FloatingCTAButtons from "@/components/ui/FloatingCTAButtons";
@@ -13,22 +13,6 @@ import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness"
 import FAQ from "@/components/landing/FAQ";
 import { faqs, businessInfo } from "@/lib/data";
 import Footer from "@/components/layout/Footer";
-
-// Lazy load ContactWithReCaptcha to defer 357KB reCAPTCHA script
-const ContactWithReCaptcha = dynamic(
-  () => import("@/components/landing/ContactWithReCaptcha"),
-  {
-    ssr: false,
-    loading: () => (
-      <section
-        id="contact"
-        className="relative isolate bg-gray-900 min-h-[600px] flex items-center justify-center"
-      >
-        <div className="animate-pulse text-gray-500">Loading contact form…</div>
-      </section>
-    ),
-  }
-);
 
 export const metadata = genPageMetadata({
   title: "GSM A/C General & Contractor Inc, the best HVAC company in Texas",
@@ -48,7 +32,7 @@ export default function Home() {
       <About />
       <Services />
       <Testimonials />
-      <ContactWithReCaptcha />
+      <LazyContact />
       <FAQ faqs={faqs} />
       <Footer />
 
