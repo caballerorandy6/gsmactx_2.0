@@ -103,6 +103,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth!" suppressHydrationWarning>
       <head>
+        {/* Preload critical hero image for better LCP */}
+        <link
+          rel="preload"
+          href="/main.avif"
+          as="image"
+          type="image/avif"
+          fetchPriority="high"
+        />
         {/* DNS prefetch for third-party origins - preconnects removed since reCAPTCHA is lazy loaded */}
         <link rel="dns-prefetch" href="https://www.google.com" />
         <link rel="dns-prefetch" href="https://www.gstatic.com" />
