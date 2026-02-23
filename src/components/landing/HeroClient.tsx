@@ -51,7 +51,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
     <section
       id="home"
       ref={ref}
-      className="relative min-h-screen flex flex-col bg-gray-900"
+      className="relative min-h-screen flex flex-col overflow-hidden"
     >
       <Header />
 
@@ -63,11 +63,14 @@ export default function HeroClient({ googleData }: HeroClientProps) {
         quality={85}
         fill
         sizes="100vw"
-        className="object-cover -z-10"
+        className="object-cover -z-20"
       />
 
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/60 -z-10" aria-hidden="true" />
+      {/* Gradient overlay for better text readability */}
+      <div
+        className="absolute inset-0 -z-10 bg-linear-to-b from-gray-900/80 via-gray-900/70 to-gray-900/90"
+        aria-hidden="true"
+      />
 
       {/* Main Content */}
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 pb-8 sm:pb-12">
