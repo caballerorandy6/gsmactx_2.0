@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { allServices, businessInfo } from "@/lib/data";
+import { allServices, businessInfo, services } from "@/lib/data";
 
 // Importing all service components
 import AirConditioningInstallation from "@/components/services/AirConditioningInstallation";
@@ -9,12 +9,21 @@ import AirDuctSanitizing from "@/components/services/AirDuctSanitizing";
 import AtticInsullation from "@/components/services/AtticInsullation";
 import HeatingInstallation from "@/components/services/HeatingInstallation";
 import HeatingRepair from "@/components/services/HeatingRepair";
-import { JsonLdForArticle } from "@/components/seo/JsonLdForArticle";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
 import { JsonLdForService } from "@/components/seo/JsonLdForService";
 import Footer from "@/components/layout/Footer";
 import FAQ from "@/components/landing/FAQ";
+
+// Map service IDs to their images
+const serviceImages: Record<string, string> = {
+  "air-conditioning-installation": "/service1.avif",
+  "air-conditioning-repair": "/service2.avif",
+  "heating-installation": "/service3.avif",
+  "heating-repair": "/service4.avif",
+  "air-duct-sanitizing": "/service5.avif",
+  "attic-insulation": "/service6.avif",
+};
 
 // Mapping service IDs to their respective components
 const componentMap: Record<string, React.ComponentType> = {
@@ -42,22 +51,59 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const service = allServices.find((s) => s.id === resolvedParams.id);
   if (!service) return {};
 
-  const { name } = service;
+  const { name, id } = service;
+  const serviceImage = serviceImages[id] || "/service1.avif";
+  const pageUrl = `https://www.gsmactx.com/services/${id}`;
+
+  // Find service description from services array
+  const serviceData = services.find((s) => s.href === `/services/${id}`);
+  const description = serviceData?.description
+    ? `${serviceData.description.slice(0, 150)}... Professional ${name} in Cypress, Houston TX. Call (281) 235-4684.`
+    : `Professional ${name} services in Cypress and Houston, TX. Licensed HVAC contractor with 5-star rating. Call (281) 235-4684 for same-day service.`;
 
   return {
-    title: `${name} - GSM A/C General & Contractor Inc`,
-    description: `Learn more about our ${name} services at GSM AC. We provide top-notch solutions for all your HVAC needs.`,
+    title: `${name} in Cypress & Houston TX | GSM A/C`,
+    description,
+    keywords: [
+      `${name.toLowerCase()} Cypress TX`,
+      `${name.toLowerCase()} Houston`,
+      "HVAC services Texas",
+      "licensed HVAC contractor",
+      "same-day HVAC service",
+    ],
+    alternates: {
+      canonical: `/services/${id}`,
+    },
     openGraph: {
-      title: `${name} - GSM A/C General & Contractor Inc`,
-      description: `Learn more about our ${name} services at GSM A/C General & Contractor Inc.`,
+      title: `${name} - Professional HVAC Service | GSM A/C`,
+      description,
+      url: pageUrl,
+      siteName: "GSM A/C General & Contractor Inc",
+      type: "website",
+      locale: "en_US",
       images: [
         {
-          url: `/service1.avif`,
+          url: `https://www.gsmactx.com${serviceImage}`,
           width: 1200,
           height: 630,
-          alt: `${name} - Professional HVAC Service`,
+          alt: `${name} - Professional HVAC Service in Cypress and Houston, TX`,
         },
       ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${name} | GSM A/C`,
+      description,
+      images: [`https://www.gsmactx.com${serviceImage}`],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+      },
     },
   };
 }
@@ -89,25 +135,16 @@ export default async function ServicePage({ params }: Props) {
   ];
 
   const ServiceComponent = componentMap[service.id];
+  const serviceImage = serviceImages[service.id] || "/service1.avif";
   if (!ServiceComponent) notFound();
+
   return (
     <main className="p-8">
       <ServiceComponent />
       <FAQ faqs={faqs} />
       <Footer />
-      <JsonLdForArticle
-        url={`https://www.gsmactx.com/services/${service.id}`}
-        headline={`About Our ${service.name} Services`}
-        description={`Learn more about our ${service.name} services at GSM A/C General & Contractor Inc.`}
-        image={`/logo.avif`}
-        datePublished={new Date("2024-01-01").toISOString()}
-        dateModified={new Date().toISOString()}
-        author={{
-          name: "GSM A/C General & Contractor Inc",
-          url: "https://www.gsmactx.com",
-        }}
-      />
 
+      {/* JSON-LD Structured Data */}
       <JsonLdForBreadcrumb
         itemList={[
           {
@@ -147,11 +184,12 @@ export default async function ServicePage({ params }: Props) {
       <JsonLdForService
         serviceName={service.name}
         serviceType="HVAC Service"
-        description={`Professional ${service.name} services in Texas. Licensed and insured HVAC contractors providing quality service.`}
+        description={`Professional ${service.name} services in Cypress and Houston, TX. Licensed and insured HVAC contractors with 5-star rating providing quality service since 2005.`}
         providerName={businessInfo.name}
         providerUrl={businessInfo.website}
         telephone={businessInfo.phone}
         areaServed={businessInfo.serviceAreas}
+        image={`https://www.gsmactx.com${serviceImage}`}
         url={`https://www.gsmactx.com/services/${service.id}`}
       />
     </main>

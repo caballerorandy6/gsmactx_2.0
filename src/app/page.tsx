@@ -7,7 +7,6 @@ import ScrollSpyHandler from "@/components/layout/ScrollSpyHandler";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import FloatingCTAButtons from "@/components/ui/FloatingCTAButtons";
 import { genPageMetadata } from "@/seo/genPageMetadata";
-import { JsonLdForArticle } from "@/components/seo/JsonLdForArticle";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
@@ -37,20 +36,7 @@ export default function Home() {
       <FAQ faqs={faqs} />
       <Footer />
 
-      {/* JSON-LD Markup */}
-      <JsonLdForArticle
-        url="https://www.gsmactx.com"
-        headline="About Our HVAC Repair & Installation Company"
-        description="Explaining the services we offer and our commitment to quality."
-        image="/worker.avif"
-        datePublished={new Date("2024-01-01").toISOString()}
-        dateModified={new Date().toISOString()}
-        author={{
-          name: "GSM A/C General & Contractor Inc",
-          url: "https://www.gsmactx.com",
-        }}
-      />
-
+      {/* JSON-LD Structured Data */}
       <JsonLdForBreadcrumb
         itemList={[
           {
@@ -100,6 +86,10 @@ export default function Home() {
         }}
         areaServed={businessInfo.serviceAreas}
         openingHours={businessInfo.openingHours}
+        sameAs={[
+          "https://www.facebook.com/gsmactx/",
+          "https://www.google.com/maps/place/G+S+M+A%2FC+%26+General+Contractor+INC./@29.8801535,-95.7088008,15z",
+        ]}
       />
     </main>
   );

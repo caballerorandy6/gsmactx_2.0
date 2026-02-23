@@ -193,6 +193,15 @@ export default function ServicesOverviewPage() {
         image="/logo.avif"
         priceRange={businessInfo.priceRange}
         areaServed={businessInfo.serviceAreas}
+        aggregateRating={{
+          ratingValue: businessInfo.reviews.aggregateRating,
+          reviewCount: businessInfo.reviews.reviewCount,
+        }}
+        openingHours={businessInfo.openingHours}
+        sameAs={[
+          "https://www.facebook.com/gsmactx/",
+          "https://www.google.com/maps/place/G+S+M+A%2FC+%26+General+Contractor+INC./@29.8801535,-95.7088008,15z",
+        ]}
       />
     </>
   );
