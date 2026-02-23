@@ -40,7 +40,8 @@ const ServiceCard = ({
             href={href}
             className="mt-3 inline-flex items-center text-xs sm:text-sm font-semibold text-blue-400 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800 rounded transition-colors"
           >
-            {link}
+            <span>{link}</span>
+            <span className="sr-only"> about {title}</span>
             <span className="ml-1 transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
           </Link>
         </div>

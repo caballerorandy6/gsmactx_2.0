@@ -77,7 +77,8 @@ export default function ServicesOverviewPage() {
                         {serviceData?.description}
                       </p>
                       <div className="mt-4 flex items-center text-sm font-medium text-indigo-400 group-hover:text-indigo-300">
-                        Learn more
+                        <span>Learn more</span>
+                        <span className="sr-only"> about {service.name}</span>
                         <span className="ml-2 transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
                       </div>
                     </div>
