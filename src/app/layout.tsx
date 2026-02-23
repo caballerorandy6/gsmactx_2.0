@@ -103,9 +103,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth!" suppressHydrationWarning>
       <head>
-        {/* Preconnect to critical third-party origins for faster resource loading */}
-        <link rel="preconnect" href="https://www.google.com" />
-        <link rel="preconnect" href="https://www.gstatic.com" crossOrigin="anonymous" />
+        {/* DNS prefetch for third-party origins - preconnects removed since reCAPTCHA is lazy loaded */}
+        <link rel="dns-prefetch" href="https://www.google.com" />
+        <link rel="dns-prefetch" href="https://www.gstatic.com" />
         <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <Script
