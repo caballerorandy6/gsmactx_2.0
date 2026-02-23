@@ -33,30 +33,34 @@ const AllServicesPage = () => {
     AirDuctSanitizing,
     AtticInsullation,
   ];
+
   return (
     <>
-      {" "}
-      <section id="all-services" className="min-h-screen py-24 sm:py-32">
+      <section
+        id="all-services"
+        className="min-h-screen py-16 sm:py-24 md:py-32"
+        aria-labelledby="services-title"
+      >
         <div className="w-full px-4 sm:px-6 lg:px-8">
-          <div className="pb-24 sm:pb-0">
+          <div className="pb-16 sm:pb-0">
             <ServiceMenu />
           </div>
 
-          <div className="mx-auto w-full px-6 lg:px-8 pb-24 sm:pb-32">
-            <h2
+          <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24 md:pb-32">
+            <h1
               id="services-title"
-              className="text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl text-center"
+              className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-pretty text-white text-center"
             >
               Home Heating Repair and Installation Available to You!
-            </h2>
+            </h1>
 
-            <div className="mt-10 space-y-8 text-base/7 flex flex-col ">
+            <div className="mt-8 sm:mt-10 space-y-6 sm:space-y-8">
               {servicesIntro.map((item, index) => (
-                <article key={index} className="flex flex-col w-full">
-                  <h3 className="text-2xl font-semibold tracking-tight text-pretty text-white mx-auto">
+                <article key={index} className="text-center">
+                  <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-pretty text-white">
                     {item.name}
-                  </h3>
-                  <p className="mt-6 text-base/7 text-gray-300 mx-auto">
+                  </h2>
+                  <p className="mt-4 sm:mt-6 text-sm sm:text-base/7 text-gray-300 max-w-3xl mx-auto">
                     {item.description}
                   </p>
                 </article>
