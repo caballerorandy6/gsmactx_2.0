@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import clsx from "clsx";
 import { useGSMStore } from "@/store/gsmactx-store";
+import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 
 const ServiceMenu = () => {
   const { scrolled } = useGSMStore();
@@ -13,34 +14,43 @@ const ServiceMenu = () => {
       <nav
         aria-label="Services navigation"
         className={clsx(
-          "flex items-center text-white justify-between p-2 fixed w-full transition-all duration-300",
+          "flex items-center text-white justify-between",
+          "px-3 py-2 fixed w-full",
+          "transition-all duration-300",
           scrolled
-            ? "bg-gray-900/80 backdrop-blur-md shadow-md"
-            : "bg-transparent"
+            ? "bg-gray-900/90 backdrop-blur-md shadow-md"
+            : "bg-gray-900/60 backdrop-blur-sm"
         )}
       >
-        <div className="flex">
-          <Link
-            href="/#home"
-            className="-m-1.5 p-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900 rounded-lg"
-          >
-            <span className="sr-only">Go to homepage</span>
-            <Image
-              alt="GSM A/C General & Contractor Inc Logo"
-              width={80}
-              height={80}
-              src="/logo.avif"
-              className="h-16 w-auto"
-              priority
-            />
-          </Link>
-        </div>
-
+        {/* Logo - goes to homepage */}
         <Link
           href="/#home"
-          className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-colors"
+          className="shrink-0 -m-1 p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded-lg transition-transform hover:scale-105"
         >
-          Back to Home
+          <span className="sr-only">GSM A/C - Go to homepage</span>
+          <Image
+            alt="GSM A/C General & Contractor Inc Logo"
+            width={56}
+            height={56}
+            src="/logo.avif"
+            className="h-12 w-auto"
+            priority
+          />
+        </Link>
+
+        {/* Book Appointment CTA */}
+        <Link
+          href="/book-appointment"
+          className={clsx(
+            "flex items-center gap-x-1.5",
+            "rounded-lg bg-indigo-600 px-3 py-2",
+            "text-xs font-semibold text-white shadow-sm",
+            "hover:bg-indigo-500 transition-colors",
+            "focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+          )}
+        >
+          <CalendarDaysIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+          <span>Book Now</span>
         </Link>
       </nav>
     </header>
