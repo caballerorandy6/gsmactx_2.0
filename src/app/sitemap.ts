@@ -17,13 +17,32 @@ interface SitemapConfig {
 const sitemapConfig: SitemapConfig = {
   baseUrl: "https://www.gsmactx.com",
   dynamicRoutes: [
+    "/services",
     "/services/air-conditioning-installation",
     "/services/air-conditioning-repair",
     "/services/heating-installation",
     "/services/heating-repair",
     "/services/air-duct-sanitizing",
     "/services/attic-insulation",
+    "/book-appointment",
   ],
+};
+
+// Priority configuration for different route types
+const getRoutePriority = (route: string): number => {
+  if (route === "/") return 1.0;
+  if (route === "/book-appointment") return 0.9;
+  if (route === "/services") return 0.8;
+  if (route.startsWith("/services/")) return 0.7;
+  return 0.5;
+};
+
+// Change frequency based on content type
+const getChangeFrequency = (route: string): "daily" | "weekly" | "monthly" => {
+  if (route === "/") return "weekly";
+  if (route === "/book-appointment") return "monthly";
+  if (route.startsWith("/services")) return "monthly";
+  return "monthly";
 };
 
 const getFiles = async (
@@ -89,5 +108,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .map((route) => ({
       url: `${baseUrl}${route}`,
       lastModified: new Date(),
+      changeFrequency: getChangeFrequency(route),
+      priority: getRoutePriority(route),
     }));
 }

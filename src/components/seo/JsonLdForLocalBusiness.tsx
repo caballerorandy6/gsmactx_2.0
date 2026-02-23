@@ -25,6 +25,7 @@ interface JsonLdForLocalBusinessProps {
     reviewCount: string;
   };
   areaServed?: string[];
+  sameAs?: string[];
 }
 
 /**
@@ -83,6 +84,7 @@ export const JsonLdForLocalBusiness = ({
   openingHours,
   aggregateRating,
   areaServed,
+  sameAs,
 }: JsonLdForLocalBusinessProps) => {
   const jsonLd: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -143,6 +145,11 @@ export const JsonLdForLocalBusiness = ({
       "@type": "City",
       name: area,
     }));
+  }
+
+  // Add social profiles if provided (Facebook, Google Business, etc.)
+  if (sameAs && sameAs.length > 0) {
+    jsonLd.sameAs = sameAs;
   }
 
   return (

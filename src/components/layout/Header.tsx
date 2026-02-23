@@ -45,9 +45,13 @@ const Header = () => {
         )}
       >
         <div className="flex lg:flex-1">
-          <Link href="/#home" className="-m-1.5 p-1.5">
+          <Link
+            href="/#home"
+            className="-m-1.5 p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded-lg"
+          >
+            <span className="sr-only">GSM A/C - Go to homepage</span>
             <Image
-              alt="GSM AC Logo"
+              alt="GSM A/C General & Contractor Inc - HVAC Services in Cypress, TX"
               width={160}
               height={160}
               src="/logo-small.avif"
@@ -103,9 +107,13 @@ const Header = () => {
         <div className="fixed inset-0 z-50" />
         <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10 overscroll-contain">
           <div className="flex items-center justify-between">
-            <Link href="/" className="-m-1.5 p-1.5">
+            <Link
+              href="/#home"
+              className="-m-1.5 p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-lg"
+            >
+              <span className="sr-only">GSM A/C - Go to homepage</span>
               <Image
-                alt="GSM AC Logo"
+                alt="GSM A/C General & Contractor Inc Logo"
                 width={160}
                 height={160}
                 src="/logo-small.avif"
