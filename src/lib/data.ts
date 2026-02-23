@@ -121,42 +121,48 @@ export const services = [
     title: "Air Conditioning Installation",
     description:
       "We have the know-how and resources to install AC and HVAC units of all generations. We keep drilling to a minimum and always clean up after ourselves because we respect the properties of our customers.",
-    link: "See More...",
+    link: "Learn More →",
+    href: "/services/air-conditioning-installation",
     src: "/service1.avif",
   },
   {
     title: "Air Conditioning Repair",
     description:
       "When it comes to AC or HVAC repair, we are the specialists that you should contact. Our technicians can quickly pinpoint and remedy or replace defective parts and components.",
-    link: "See More...",
+    link: "Learn More →",
+    href: "/services/air-conditioning-repair",
     src: "/service2.avif",
   },
   {
     title: "Heating Installation",
     description:
       "Apart from installing ACs and HVACs, we can also set up heating devices. We strive to choose locations that offer maximum coverage so our customers can heat their properties without using too much energy.",
-    link: "See More...",
+    link: "Learn More →",
+    href: "/services/heating-installation",
     src: "/service3.avif",
   },
   {
     title: "Heating Repair",
     description:
       "Use our office & home heating repair services services to remedy problematic heating units. We can repair or replace faulty parts to restore the original functionality of the devices. Our prices are pocket-friendly and you will get your money's worth.",
-    link: "See More...",
+    link: "Learn More →",
+    href: "/services/heating-repair",
     src: "/service4.avif",
   },
   {
     title: "Air Duct Sanitizing",
     description:
       "Customers can trust us with the cleaning and sanitizing of their air ducts. We have the products and tools to eliminate harmful particles such as dust, dirt, allergens, germs, etc. We can keep your vents pristine.",
-    link: "See More...",
+    link: "Learn More →",
+    href: "/services/air-duct-sanitizing",
     src: "/service5.avif",
   },
   {
     title: "Attic Insulation",
     description:
       "We provide expert attic insulation services to enhance your home's energy efficiency. Our work helps lower heating and cooling costs while keeping your living space comfortable all year.",
-    link: "See More...",
+    link: "Learn More →",
+    href: "/services/attic-insulation",
     src: "/service6.avif",
   },
 ];

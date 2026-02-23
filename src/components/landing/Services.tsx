@@ -76,6 +76,7 @@ export default function Services() {
                 description={service.description}
                 imageUrl={service.src}
                 link={service.link}
+                href={service.href}
               />
             </motion.div>
           ))}
