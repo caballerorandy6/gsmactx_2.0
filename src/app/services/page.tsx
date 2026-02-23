@@ -65,7 +65,7 @@ export default function ServicesOverviewPage() {
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/20 to-transparent" aria-hidden="true" />
+                      <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/20 to-transparent" aria-hidden="true" />
                     </div>
 
                     {/* Content */}
