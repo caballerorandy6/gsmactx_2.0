@@ -116,8 +116,9 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.gstatic.com" />
         <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        {/* Google Analytics 4 */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=AW-10810642932"
+          src="https://www.googletagmanager.com/gtag/js?id=G-P7RPB4BXTV"
           strategy="lazyOnload"
         />
         <Script id="google-analytics" strategy="lazyOnload">
@@ -125,6 +126,7 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+            gtag('config', 'G-P7RPB4BXTV');
             gtag('config', 'AW-10810642932');
           `}
         </Script>
