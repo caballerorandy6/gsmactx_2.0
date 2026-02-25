@@ -160,7 +160,7 @@ export default function HeroClient({ googleData }: HeroClientProps) {
                 </Link>
                 <Link
                   href={`tel:${businessInfo.phone}`}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-sm sm:text-base font-semibold transition-colors duration-200"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-sm sm:text-base font-semibold transition-colors duration-200"
                 >
                   <PhoneIcon className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
                   Call Now
