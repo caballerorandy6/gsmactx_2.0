@@ -231,6 +231,7 @@ export default function Contact() {
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
           onSubmit={handleSubmit(onSubmit)}
+          noValidate
           className="px-6 pt-20 pb-24 sm:pb-32 lg:px-8 lg:py-48"
         >
           <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
