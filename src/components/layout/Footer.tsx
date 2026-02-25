@@ -44,7 +44,7 @@ const images = [
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 border-t border-white/10">
+    <footer role="contentinfo" className="bg-gray-900 border-t border-white/10">
       <div className="mx-auto max-w-7xl overflow-hidden px-6 py-16 sm:py-20 lg:px-8">
         {/* Badges Section */}
         <div className="flex flex-wrap justify-center items-center gap-6 mb-12">

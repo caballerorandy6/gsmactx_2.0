@@ -61,12 +61,12 @@ const About = () => {
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
         >
-          <motion.h1
+          <motion.h2
             variants={fadeInUp}
             className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl"
           >
             About Our HVAC Repair & Installation Company
-          </motion.h1>
+          </motion.h2>
           <motion.p
             variants={fadeInUp}
             className="mt-6 text-base/7 text-gray-300"
