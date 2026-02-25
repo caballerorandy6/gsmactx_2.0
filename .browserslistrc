@@ -1,0 +1,16 @@
+# Browsers that support ES6+ features natively
+# This eliminates unnecessary polyfills for Array.at, Object.hasOwn, etc.
+
+# Production: Modern browsers only
+[production]
+chrome >= 90
+firefox >= 90
+safari >= 14
+edge >= 90
+
+# Development: Same as production for consistency
+[development]
+chrome >= 90
+firefox >= 90
+safari >= 14
+edge >= 90
