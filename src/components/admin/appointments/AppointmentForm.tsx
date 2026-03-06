@@ -155,10 +155,8 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
   };
 
   return (
-    <section className="bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 mt-10 min-h-screen">
-      <main className="pt-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold text-center text-white mb-2">
+    <div className="max-w-2xl mx-auto">
+      <h1 className="text-3xl font-bold text-center text-white mb-2">
           {isEditing ? "Edit Appointment" : "Create Appointment"}
         </h1>
         <p className="text-gray-400 text-center mb-8">
@@ -463,9 +461,7 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
             </button>
           </div>
         </form>
-        </div>
-      </main>
-    </section>
+    </div>
   );
 };
 

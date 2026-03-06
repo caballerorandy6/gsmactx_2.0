@@ -98,16 +98,11 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
   };
 
   return (
-    <section
-      id="test-campaign-form"
-      className="bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 mt-10"
-    >
-      <main className="py-20">
-        <h1 className="text-4xl font-bold text-center">
-          Welcome, {user?.name}!
-        </h1>
-        <div className="min-h-screen flex justify-center pt-20">
-          <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md">
+    <div className="max-w-md mx-auto">
+      <h1 className="text-2xl sm:text-3xl font-bold text-center text-white mb-6">
+        Welcome, {user?.name}!
+      </h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full">
             <div className="bg-purple-900/20 border border-purple-500/30 rounded-lg p-4 mb-6 flex flex-col items-center justify-center">
               <h2 className="text-center text-3xl font-bold tracking-tight text-white mb-2">
                 Test Campaign
@@ -297,9 +292,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
                 </button>
               </div>
             </div>
-          </form>
-        </div>
-      </main>
+      </form>
 
       {/* Email Preview Modal */}
       {showPreview && (
@@ -335,7 +328,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 };
 

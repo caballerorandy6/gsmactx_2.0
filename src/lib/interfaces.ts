@@ -178,3 +178,14 @@ export interface AppointmentEmailProps {
   address: string;
   notes?: string;
 }
+
+// Subscriber/Contact Types
+export interface Subscriber {
+  id: string;
+  name: string | null;
+  email: string | null;
+  phone: string | null;
+  isSubscribed: boolean;
+  createdAt: Date;
+  unsubscribeToken: string | null;
+}

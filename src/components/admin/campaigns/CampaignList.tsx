@@ -21,18 +21,13 @@ const CampaignList = async ({ user }) => {
   }
 
   return (
-    <section
-      id="admin-dashboard"
-      className="bg-transparent px-4 sm:px-6 lg:px-8 bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 mt-10 min-h-screen"
-    >
-      {/* Main content */}
-      <main className="pt-20">
-        <h1 className="text-4xl font-bold text-center text-white">
-          Welcome, {user?.name}!
-        </h1>
+    <div className="max-w-4xl mx-auto">
+      <h1 className="text-2xl sm:text-3xl font-bold text-center text-white mb-8">
+        Welcome, {user?.name}!
+      </h1>
 
-        {/* List container with a dark background and rounded borders */}
-        <div className="mt-12 max-w-4xl mx-auto bg-gray-900/50 backdrop-blur-sm rounded-lg border border-white/10">
+      {/* List container with a dark background and rounded borders */}
+      <div className="bg-gray-900/50 backdrop-blur-sm rounded-lg border border-white/10">
           <ul role="list" className="divide-y divide-white/10">
             {campaigns.map((campaign) => (
               <li
@@ -114,9 +109,8 @@ const CampaignList = async ({ user }) => {
               </li>
             ))}
           </ul>
-        </div>
-      </main>
-    </section>
+      </div>
+    </div>
   );
 };
 

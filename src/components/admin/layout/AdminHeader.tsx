@@ -3,17 +3,37 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useMobileMenuOpen, useSetMobileMenuOpen } from "@/store/gsmactx-store";
-import { adminNavigation } from "@/lib/data";
+import { adminNavigationSections } from "@/lib/data";
 import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  XMarkIcon,
+  HomeIcon,
+  CalendarDaysIcon,
+  PlusCircleIcon,
+  UsersIcon,
+  DocumentTextIcon,
+  EnvelopeIcon,
+  BeakerIcon,
+} from "@heroicons/react/24/outline";
 import LogoutButton from "./LogoutButton";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 
+// Map href to icon
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  "/admin-dashboard": HomeIcon,
+  "/appointments": CalendarDaysIcon,
+  "/create-appointment": PlusCircleIcon,
+  "/contacts": UsersIcon,
+  "/view-campaigns": DocumentTextIcon,
+  "/create-campaign": EnvelopeIcon,
+  "/test-campaign": BeakerIcon,
+};
+
 const AdminHeader = () => {
   const pathname = usePathname();
-  // Using selectors for optimized re-renders
   const mobileMenuOpen = useMobileMenuOpen();
   const setMobileMenuOpen = useSetMobileMenuOpen();
   const [hasMounted, setHasMounted] = useState(false);
@@ -21,6 +41,22 @@ const AdminHeader = () => {
   useEffect(() => {
     setHasMounted(true);
   }, []);
+
+  const isActive = (href: string) => {
+    if (href === "/admin-dashboard") {
+      return pathname === href;
+    }
+    if (href === "/appointments" && pathname.startsWith("/appointments")) {
+      return !pathname.includes("/create");
+    }
+    if (href === "/contacts" && pathname.startsWith("/contacts")) {
+      return true;
+    }
+    if (href === "/view-campaigns" && pathname.startsWith("/view-campaigns")) {
+      return true;
+    }
+    return pathname === href;
+  };
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
@@ -55,42 +91,47 @@ const AdminHeader = () => {
             <Bars3Icon aria-hidden="true" className="size-10 cursor-pointer" />
           </button>
         </div>
-        <div className="hidden lg:flex lg:gap-x-12">
-          {adminNavigation.map((item) => {
-            return (
+        <div className="hidden lg:flex lg:gap-x-8">
+          {adminNavigationSections.flatMap((section) =>
+            section.items.slice(0, 1).map((item) => (
               <Link
-                key={item.name}
+                key={item.href}
                 href={item.href}
-                // Solución alternativa sin pathname para el estilo activo
                 className={clsx(
                   "text-sm/6 font-semibold transition-colors hover:text-indigo-300",
-                  pathname === item.href ? "text-indigo-300" : "text-white"
+                  isActive(item.href) ? "text-indigo-300" : "text-white"
                 )}
               >
-                {item.name}
+                {section.title}
               </Link>
-            );
-          })}
+            ))
+          )}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-2 text-sm/6 font-semibold text-white">
           <LogoutButton />
         </div>
       </nav>
+
+      {/* Mobile Menu Dialog */}
       <Dialog
         open={mobileMenuOpen}
         onClose={setMobileMenuOpen}
         className="lg:hidden"
       >
-        <div className="fixed inset-0 z-50" />
+        <div className="fixed inset-0 z-50 bg-black/50" aria-hidden="true" />
         <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10 overscroll-contain">
           <div className="flex items-center justify-between">
-            <Link href="/admin-dashboard" className="-m-1.5 p-1.5">
+            <Link
+              href="/admin-dashboard"
+              className="-m-1.5 p-1.5"
+              onClick={() => setMobileMenuOpen(false)}
+            >
               <Image
                 alt="GSM AC Logo"
                 width={160}
                 height={160}
                 src="/logo-small.avif"
-                className="h-20 w-auto"
+                className="h-16 w-auto"
                 priority
               />
             </Link>
@@ -98,31 +139,52 @@ const AdminHeader = () => {
               type="button"
               onClick={() => setMobileMenuOpen(false)}
               aria-label="Close menu"
-              className="-m-2.5 rounded-md p-2.5 text-gray-400"
+              className="-m-2.5 rounded-md p-2.5 text-gray-400 hover:text-white transition-colors"
             >
-              <XMarkIcon aria-hidden="true" className="size-6 cursor-pointer" />
+              <XMarkIcon aria-hidden="true" className="size-8 cursor-pointer" />
             </button>
           </div>
-          <div className="mt-6 flow-root text-white">
-            <div className="-my-6 divide-y divide-gray-500/25">
-              <div className="flex flex-col space-y-6 py-6 text-sm/10 font-semibold">
-                {adminNavigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={clsx(
-                      "font-semibold transition-colors hover:text-indigo-300",
-                      pathname === item.href ? "text-indigo-300" : "text-white"
-                    )}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-              <div className="py-6">
-                <LogoutButton />
-              </div>
+
+          <div className="mt-8 flow-root">
+            <div className="space-y-6">
+              {adminNavigationSections.map((section) => (
+                <div key={section.title}>
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                    {section.title}
+                  </p>
+                  <nav className="space-y-1">
+                    {section.items.map((item) => {
+                      const Icon = iconMap[item.href] || DocumentTextIcon;
+                      const active = isActive(item.href);
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={clsx(
+                            "flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all",
+                            active
+                              ? "bg-indigo-500/20 text-white border border-indigo-500/30"
+                              : "text-gray-300 hover:bg-white/5 hover:text-white"
+                          )}
+                        >
+                          <Icon
+                            className={clsx(
+                              "h-5 w-5",
+                              active ? "text-indigo-400" : "text-gray-500"
+                            )}
+                          />
+                          {item.name}
+                        </Link>
+                      );
+                    })}
+                  </nav>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <LogoutButton />
             </div>
           </div>
         </DialogPanel>
