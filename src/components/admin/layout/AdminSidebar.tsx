@@ -97,7 +97,7 @@ const AdminSidebar = () => {
   return (
     <>
       {/* Tablet Sidebar (md-lg) - Collapsed with icons only */}
-      <aside className="hidden md:flex lg:hidden flex-col w-20 min-h-[calc(100vh-4rem)] bg-gray-900/80 backdrop-blur-sm border-r border-white/10 py-6">
+      <aside className="hidden md:flex lg:hidden flex-col w-20 min-h-[calc(100vh-4rem)] bg-gray-900/80 backdrop-blur-sm border-r border-white/10 py-6 relative z-30">
         {navSections.map((section) => (
           <div key={section.title} className="px-2 mb-4">
             <nav className="space-y-1">
@@ -110,12 +110,11 @@ const AdminSidebar = () => {
                     aria-label={item.label}
                     aria-current={active ? "page" : undefined}
                     className={clsx(
-                      "group flex items-center justify-center p-3 rounded-lg transition-all motion-reduce:transition-none",
+                      "group relative flex items-center justify-center p-3 rounded-lg transition-all motion-reduce:transition-none",
                       active
                         ? "bg-indigo-500/20 text-white border border-indigo-500/30"
                         : "text-gray-400 hover:bg-white/5 hover:text-white"
                     )}
-                    title={item.label}
                   >
                     <item.icon
                       aria-hidden="true"
@@ -124,6 +123,11 @@ const AdminSidebar = () => {
                         active ? "text-indigo-400" : "text-gray-500 group-hover:text-gray-300"
                       )}
                     />
+                    {/* Tooltip */}
+                    <span className="absolute left-full ml-3 px-2.5 py-1.5 rounded-md bg-gray-800 text-white text-sm font-medium whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 shadow-lg border border-white/10 z-50">
+                      {item.label}
+                      <span className="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-gray-800" />
+                    </span>
                   </Link>
                 );
               })}
