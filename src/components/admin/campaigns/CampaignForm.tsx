@@ -155,18 +155,11 @@ const CampaignForm = ({
   };
 
   return (
-    <section
-      id="admin-form"
-      className="bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 mt-10"
-    >
-      {/* Main content */}
-
-      <main className="py-10 sm:py-16 lg:py-20 px-4 sm:px-6">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center">
-          Welcome, {user?.name}!
-        </h1>
-        <div className="min-h-screen flex justify-center pt-10 sm:pt-16 lg:pt-20">
-          <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md sm:max-w-lg lg:max-w-2xl">
+    <div className="max-w-2xl mx-auto">
+      <h1 className="text-2xl sm:text-3xl font-bold text-center text-white mb-6">
+        Welcome, {user?.name}!
+      </h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full">
             <h2 className="text-center text-2xl sm:text-3xl font-bold tracking-tight text-white mb-6 sm:mb-8">
               {isEditing ? "Edit Campaign" : "Create Campaign"}
             </h2>
@@ -350,9 +343,7 @@ const CampaignForm = ({
                 </button>
               </div>
             </div>
-          </form>
-        </div>
-      </main>
+      </form>
 
       {/* Email Preview Modal */}
       {showPreview && (
@@ -389,7 +380,7 @@ const CampaignForm = ({
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 };
 

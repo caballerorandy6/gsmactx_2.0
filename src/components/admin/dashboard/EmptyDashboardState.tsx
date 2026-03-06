@@ -1,5 +1,4 @@
 import Link from "next/link";
-import DashboardHeader from "@/components/admin/dashboard/DashboardHeader";
 
 interface EmptyDashboardStateProps {
   userName: string;
@@ -7,11 +6,8 @@ interface EmptyDashboardStateProps {
 
 const EmptyDashboardState = ({ userName }: EmptyDashboardStateProps) => {
   return (
-    <section className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      <DashboardHeader />
-
-      <div className="flex items-center justify-center min-h-screen pt-20">
-        <div className="text-center text-gray-400 max-w-md mx-auto p-8">
+    <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="text-center text-gray-400 max-w-md mx-auto p-4 sm:p-8">
           <div className="mb-6">
             <svg
               className="mx-auto h-16 w-16 text-gray-500"
@@ -58,8 +54,7 @@ const EmptyDashboardState = ({ userName }: EmptyDashboardStateProps) => {
             Create Your First Campaign
           </Link>
         </div>
-      </div>
-    </section>
+    </div>
   );
 };
 

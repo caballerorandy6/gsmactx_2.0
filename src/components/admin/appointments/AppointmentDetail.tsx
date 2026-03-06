@@ -93,9 +93,7 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
   };
 
   return (
-    <section className="bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 mt-10 min-h-screen">
-      <main className="pt-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
           <div>
@@ -288,9 +286,7 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
             </div>
           </div>
         </div>
-        </div>
-      </main>
-    </section>
+    </div>
   );
 };
 

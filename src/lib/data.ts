@@ -78,9 +78,40 @@ export const adminNavigation = [
   { name: "Admin Dashboard", href: "/admin-dashboard" },
   { name: "Appointments", href: "/appointments" },
   { name: "Create Appointment", href: "/create-appointment" },
+  { name: "Contacts", href: "/contacts" },
+  { name: "View Campaigns", href: "/view-campaigns" },
   { name: "Create Campaign", href: "/create-campaign" },
   { name: "Test Campaign", href: "/test-campaign" },
-  { name: "View Campaigns", href: "/view-campaigns" },
+];
+
+export const adminNavigationSections = [
+  {
+    title: "Overview",
+    items: [
+      { name: "Dashboard", href: "/admin-dashboard" },
+    ],
+  },
+  {
+    title: "Appointments",
+    items: [
+      { name: "All Appointments", href: "/appointments" },
+      { name: "New Appointment", href: "/create-appointment" },
+    ],
+  },
+  {
+    title: "Contacts",
+    items: [
+      { name: "All Contacts", href: "/contacts" },
+    ],
+  },
+  {
+    title: "Campaigns",
+    items: [
+      { name: "All Campaigns", href: "/view-campaigns" },
+      { name: "New Campaign", href: "/create-campaign" },
+      { name: "Test Campaign", href: "/test-campaign" },
+    ],
+  },
 ];
 
 export const allServices = [
