@@ -17,6 +17,11 @@ next-env.d.ts
 # Testing
 /coverage
 *.lcov
+playwright-report/
+test-results/
+
+# Backups
+public/backup-originals/
 
 # Environment files (NEVER commit credentials)
 .env
