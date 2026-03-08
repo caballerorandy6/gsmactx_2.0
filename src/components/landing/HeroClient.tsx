@@ -1,21 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { PhoneIcon, CalendarDaysIcon, StarIcon } from "@heroicons/react/24/solid";
+import { PhoneIcon, CalendarDaysIcon } from "@heroicons/react/24/solid";
 import { useGSMStore } from "@/store/gsmactx-store";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import Header from "@/components/layout/Header";
 import { businessInfo } from "@/lib/data";
-import type { PlaceRatingData } from "@/types/google-places";
 
 interface HeroClientProps {
-  googleData: PlaceRatingData | null;
+  ratingSlot: ReactNode;
 }
 
-export default function HeroClient({ googleData }: HeroClientProps) {
+export default function HeroClient({ ratingSlot }: HeroClientProps) {
   const { setScrolled } = useGSMStore();
   const shouldReduceMotion = useReducedMotion();
 
@@ -28,10 +27,6 @@ export default function HeroClient({ googleData }: HeroClientProps) {
   }, [setScrolled]);
 
   const ref = useSectionObserver({ sectionName: "Home" });
-
-  // Use Google data if available, fallback to static
-  const rating = googleData?.rating ?? parseFloat(businessInfo.reviews.aggregateRating);
-  const reviewCount = googleData?.totalReviews ?? parseInt(businessInfo.reviews.reviewCount);
 
   // Spring-based fade-in animation for natural feel
   // Using GPU-accelerated properties only (opacity, transform via y)
@@ -76,28 +71,9 @@ export default function HeroClient({ googleData }: HeroClientProps) {
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 pb-8 sm:pb-12">
         <div className="max-w-3xl mx-auto text-center">
 
-          {/* Trust Badge - Compact */}
-          <motion.div {...fadeIn} className="mb-4 sm:mb-6">
-            <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 sm:px-4 sm:py-2 border border-white/20">
-              <div
-                className="flex"
-                role="img"
-                aria-label={`${rating} out of 5 stars`}
-              >
-                {[...Array(5)].map((_, i) => (
-                  <StarIcon
-                    key={i}
-                    className={`h-4 w-4 sm:h-5 sm:w-5 ${
-                      i < Math.round(rating) ? "text-yellow-400" : "text-gray-500"
-                    }`}
-                    aria-hidden="true"
-                  />
-                ))}
-              </div>
-              <span className="text-xs sm:text-sm font-medium text-white">
-                {rating.toFixed(1)} · {reviewCount.toLocaleString()} reviews
-              </span>
-            </div>
+          {/* Trust Badge - Streamed via Suspense */}
+          <motion.div {...fadeIn}>
+            {ratingSlot}
           </motion.div>
 
           {/* Main Heading - SEO Optimized */}
