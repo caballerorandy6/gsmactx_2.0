@@ -5,7 +5,7 @@ import { ActionResult } from "@/lib/types";
 import { Resend } from "resend";
 import { randomUUID } from "crypto";
 import bcrypt from "bcrypt";
-import { z } from "zod";
+import { ResetPasswordSchema } from "@/lib/validations/zod";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM_EMAIL = process.env.FROM_EMAIL || "GSM A/C <no-reply@gsmactx.com>";
@@ -13,21 +13,6 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://www.gsmactx.com";
 
 // Token expires in 1 hour
 const TOKEN_EXPIRY_HOURS = 1;
-
-const ResetPasswordSchema = z
-  .object({
-    password: z
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-      .regex(/[0-9]/, "Password must contain at least one number")
-      .regex(/[^A-Za-z0-9]/, "Password must contain at least one special character"),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
 
 /**
  * Request password reset - sends email with reset link
