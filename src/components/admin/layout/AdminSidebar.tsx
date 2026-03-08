@@ -12,6 +12,7 @@ import {
   DocumentTextIcon,
   ChevronRightIcon,
   UsersIcon,
+  Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
 
 const navSections = [
@@ -70,6 +71,16 @@ const navSections = [
       },
     ],
   },
+  {
+    title: "Account",
+    items: [
+      {
+        href: "/settings",
+        label: "Settings",
+        icon: Cog6ToothIcon,
+      },
+    ],
+  },
 ];
 
 const AdminSidebar = () => {
@@ -89,6 +100,9 @@ const AdminSidebar = () => {
       return true;
     }
     if (href === "/edit-campaign" && pathname.startsWith("/edit-campaign")) {
+      return true;
+    }
+    if (href === "/settings" && pathname.startsWith("/settings")) {
       return true;
     }
     return pathname === href;
@@ -187,6 +201,7 @@ const AdminSidebar = () => {
             { href: "/appointments", label: "Appts", icon: CalendarDaysIcon },
             { href: "/contacts", label: "Contacts", icon: UsersIcon },
             { href: "/view-campaigns", label: "Campaigns", icon: DocumentTextIcon },
+            { href: "/settings", label: "Settings", icon: Cog6ToothIcon },
           ].map((item) => {
             const active = isActive(item.href);
             return (

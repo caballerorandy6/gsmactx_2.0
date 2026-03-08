@@ -82,6 +82,7 @@ export const adminNavigation = [
   { name: "View Campaigns", href: "/view-campaigns" },
   { name: "Create Campaign", href: "/create-campaign" },
   { name: "Test Campaign", href: "/test-campaign" },
+  { name: "Settings", href: "/settings" },
 ];
 
 export const adminNavigationSections = [
@@ -110,6 +111,12 @@ export const adminNavigationSections = [
       { name: "All Campaigns", href: "/view-campaigns" },
       { name: "New Campaign", href: "/create-campaign" },
       { name: "Test Campaign", href: "/test-campaign" },
+    ],
+  },
+  {
+    title: "Account",
+    items: [
+      { name: "Settings", href: "/settings" },
     ],
   },
 ];

@@ -15,6 +15,7 @@ import {
   DocumentTextIcon,
   EnvelopeIcon,
   BeakerIcon,
+  Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
 import LogoutButton from "./LogoutButton";
 import { usePathname } from "next/navigation";
@@ -30,6 +31,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   "/view-campaigns": DocumentTextIcon,
   "/create-campaign": EnvelopeIcon,
   "/test-campaign": BeakerIcon,
+  "/settings": Cog6ToothIcon,
 };
 
 const AdminHeader = () => {
@@ -53,6 +55,9 @@ const AdminHeader = () => {
       return true;
     }
     if (href === "/view-campaigns" && pathname.startsWith("/view-campaigns")) {
+      return true;
+    }
+    if (href === "/settings" && pathname.startsWith("/settings")) {
       return true;
     }
     return pathname === href;

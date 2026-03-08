@@ -6,36 +6,16 @@ datasource db {
   provider = "postgresql"
 }
 
-// Enums for Appointments
-enum ServiceType {
-  AC_MAINTENANCE
-  HEATING_MAINTENANCE
-  AC_REPAIR
-  HEATING_REPAIR
-  AC_INSTALLATION
-  HEATING_INSTALLATION
-  FULL_HVAC_INSTALLATION
-  DUCT_CLEANING
-  FREE_ESTIMATE
-}
-
-enum AppointmentStatus {
-  PENDING
-  CONFIRMED
-  IN_PROGRESS
-  COMPLETED
-  CANCELLED
-}
-
 model Admin {
-  id       String  @id @default(uuid())
-  email    String  @unique
-  password String  // Hash de contraseña
-  name     String
-
-  campaigns    Campaign[]
-  smsCampaigns SMSCampaign[]
-  appointments Appointment[]
+  id                   String        @id @default(uuid())
+  email                String        @unique
+  password             String
+  name                 String
+  passwordResetToken   String?       @unique
+  passwordResetExpires DateTime?
+  appointments         Appointment[]
+  campaigns            Campaign[]
+  smsCampaigns         SMSCampaign[]
 }
 
 model Appointment {
@@ -54,59 +34,57 @@ model Appointment {
   createdBy     String?
   admin         Admin?            @relation(fields: [createdBy], references: [id])
 
-  @@index([status])
-  @@index([scheduledDate])
   @@index([createdBy])
+  @@index([scheduledDate])
+  @@index([status])
 }
 
 model Campaign {
-  id           String    @id @default(uuid())
-  title        String
-  subject      String
-  content      String    // HTML o texto plano
-  imageUrl     String?
-  templateType String?   @default("promotional") // promotional, newsletter, service-reminder, seasonal
-  createdAt    DateTime  @default(now())
-  sent         Boolean   @default(false)
-  sentAt       DateTime?
-
-  // Campaign completion stats (saved when campaign completes)
-  totalEmails  Int?      // Total emails in campaign
-  sentCount    Int?      // Successfully sent emails
-  failedCount  Int?      // Failed emails
-
-  createdBy    String
-  admin        Admin     @relation(fields: [createdBy], references: [id])
-
-  emailLogs    CampaignEmailLog[]
+  id               String             @id @default(uuid())
+  title            String
+  subject          String
+  content          String
+  createdAt        DateTime           @default(now())
+  sent             Boolean            @default(false)
+  sentAt           DateTime?
+  createdBy        String
+  imageUrl         String?
+  templateType     String?            @default("promotional")
+  failedCount      Int?
+  sentCount        Int?
+  totalEmails      Int?
+  admin            Admin              @relation(fields: [createdBy], references: [id])
+  emailLogs        CampaignEmailLog[]
 
   @@index([createdBy])
   @@index([sent])
 }
 
-model Subscriber {
-  id               String   @id @default(uuid())
-  name             String?
-  email            String?  @unique
-  phone            String?
-  isSubscribed     Boolean  @default(true)
-  createdAt        DateTime @default(now())
-  unsubscribeToken String?  @unique
+model CampaignEmailLog {
+  id           String     @id @default(uuid())
+  campaignId   String
+  subscriberId String
+  status       String     @default("pending")
+  error        String?
+  sentAt       DateTime?
+  createdAt    DateTime   @default(now())
+  campaign     Campaign   @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  subscriber   Subscriber @relation(fields: [subscriberId], references: [id], onDelete: Cascade)
 
-  emailLogs        CampaignEmailLog[]
+  @@index([campaignId, status])
+  @@index([subscriberId])
 }
 
 model SMSCampaign {
-  id        String    @id @default(uuid())
-  title     String
-  content   String    // Texto del mensaje
-  createdAt DateTime  @default(now())
-  sent      Boolean   @default(false)
-  sentAt    DateTime?
-  createdBy String
-  admin     Admin     @relation(fields: [createdBy], references: [id])
-
-  messages  SMSMessage[]
+  id         String       @id @default(uuid())
+  title      String
+  content    String
+  createdAt  DateTime     @default(now())
+  sent       Boolean      @default(false)
+  sentAt     DateTime?
+  createdBy  String
+  admin      Admin        @relation(fields: [createdBy], references: [id])
+  messages   SMSMessage[]
 
   @@index([createdBy])
   @@index([sent])
@@ -119,24 +97,38 @@ model SMSMessage {
   status        String      @default("pending")
   sentAt        DateTime?
   createdAt     DateTime    @default(now())
-  campaign      SMSCampaign @relation(fields: [smsCampaignId], references: [id])
+  smsCampaign   SMSCampaign @relation(fields: [smsCampaignId], references: [id])
 
   @@index([smsCampaignId, status])
 }
 
-model CampaignEmailLog {
-  id           String      @id @default(uuid())
-  campaignId   String
-  campaign     Campaign    @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+model Subscriber {
+  id               String             @id @default(uuid())
+  email            String?            @unique
+  isSubscribed     Boolean            @default(true)
+  createdAt        DateTime           @default(now())
+  unsubscribeToken String?            @unique
+  name             String?
+  phone            String?
+  emailLogs        CampaignEmailLog[]
+}
 
-  subscriberId String
-  subscriber   Subscriber  @relation(fields: [subscriberId], references: [id], onDelete: Cascade)
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
 
-  status       String      @default("pending") // pending, sent, failed, bounced
-  error        String?
-  sentAt       DateTime?
-  createdAt    DateTime    @default(now())
-
-  @@index([campaignId, status])
-  @@index([subscriberId])
+enum ServiceType {
+  AC_MAINTENANCE
+  HEATING_MAINTENANCE
+  AC_REPAIR
+  HEATING_REPAIR
+  AC_INSTALLATION
+  HEATING_INSTALLATION
+  FULL_HVAC_INSTALLATION
+  DUCT_CLEANING
+  FREE_ESTIMATE
 }

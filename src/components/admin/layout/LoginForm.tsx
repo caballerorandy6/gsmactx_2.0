@@ -115,7 +115,15 @@ const LoginForm = () => {
             </div>
           </div>
         </div>
-        <div className="mt-8 flex justify-end">
+        <div className="mt-4 text-right">
+          <Link
+            href="/forgot-password"
+            className="text-sm text-indigo-400 hover:text-indigo-300 transition-colors motion-reduce:transition-none"
+          >
+            Forgot Password?
+          </Link>
+        </div>
+        <div className="mt-6 flex justify-end">
           <button
             type="submit"
             disabled={isPending}
