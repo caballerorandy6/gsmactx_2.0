@@ -17,10 +17,10 @@ export default function ServicesLayout({
     <section className="sm:flex">
       <ScrollToTop />
       <FloatingCTAButtons />
-      <div className="hidden sm:block fixed left-0 h-screen w-64">
+      <div className="hidden sm:block fixed left-0 h-screen w-56 md:w-60 lg:w-64">
         <SideBar />
       </div>
-      <div className="flex-1 sm:ml-64 mx-auto">{children}</div>
+      <div className="flex-1 sm:ml-56 md:ml-60 lg:ml-64 mx-auto">{children}</div>
     </section>
   );
 }
