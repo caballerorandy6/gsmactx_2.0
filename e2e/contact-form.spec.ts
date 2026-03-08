@@ -13,10 +13,13 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Contact Form", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/");
-    // Wait for lazy-loaded contact section
-    const contactSection = page.locator("#contact");
-    await expect(contactSection).toBeVisible({ timeout: 15000 });
+    // Navigate directly to the contact section to trigger lazy loading
+    await page.goto("/#contact");
+    // Wait for the form to fully load (the submit button is a good indicator)
+    // The form is lazy loaded with dynamic() + ssr: false
+    await expect(
+      page.getByRole("button", { name: /send message/i })
+    ).toBeVisible({ timeout: 20000 });
   });
 
   test("should display all form fields", async ({ page }) => {
