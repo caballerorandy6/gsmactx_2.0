@@ -1,13 +1,19 @@
-import { getGooglePlaceDetails } from "@/app/actions/googlePlacesAction";
+import { Suspense } from "react";
 import HeroClient from "./HeroClient";
+import HeroRating, { RatingBadgeSkeleton } from "./HeroRating";
 
 /**
  * Hero Server Component
- * Fetches Google Places data and passes it to the client component
+ * Uses Suspense to stream the rating badge without blocking initial render
  */
-export default async function Hero() {
-  // Fetch Google Places data on the server
-  const googleData = await getGooglePlaceDetails();
-
-  return <HeroClient googleData={googleData} />;
+export default function Hero() {
+  return (
+    <HeroClient
+      ratingSlot={
+        <Suspense fallback={<RatingBadgeSkeleton />}>
+          <HeroRating />
+        </Suspense>
+      }
+    />
+  );
 }
