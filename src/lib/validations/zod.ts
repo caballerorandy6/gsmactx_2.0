@@ -2,14 +2,14 @@ import { z } from "zod";
 import { isValidUSPhone, normalizePhone } from "@/lib/utils/phone";
 
 // Phone validation schema with normalization (for server-side)
-const phoneSchemaWithTransform = z
+export const phoneSchemaWithTransform = z
   .string()
   .min(10, "Phone number is required")
   .refine(isValidUSPhone, "Please enter a valid 10-digit US phone number")
   .transform(normalizePhone);
 
 // Phone validation schema (for forms - no transform, exactly 10 digits)
-const phoneSchema = z
+export const phoneSchema = z
   .string()
   .min(10, "Phone number is required")
   .refine(isValidUSPhone, "Please enter a valid 10-digit US phone number");
@@ -133,6 +133,57 @@ export const PublicAppointmentSchema = AppointmentBaseSchema.omit({
   status: true,
 });
 
+// Schema for creating a new admin (includes name)
+export const CreateAdminSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(/[^A-Za-z0-9]/, "Password must contain at least one special character"),
+});
+
+// Schema for updating admin (no password)
+export const UpdateAdminSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+});
+
+// Schema for changing password
+export const ChangePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(1, "Current password is required"),
+    newPassword: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number")
+      .regex(/[^A-Za-z0-9]/, "Password must contain at least one special character"),
+    confirmPassword: z.string().min(1, "Please confirm your password"),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
+// Schema for resetting password (forgot password flow)
+export const ResetPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number")
+      .regex(/[^A-Za-z0-9]/, "Password must contain at least one special character"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
 // Types
 export type AppointmentFormData = z.infer<typeof AppointmentBaseSchema>;
 
@@ -140,3 +191,7 @@ export type UserFormData = z.infer<typeof UserSchema>;
 export type AdminFormData = z.infer<typeof AdminSchema>;
 export type CampaignFormData = z.infer<typeof CampaignSchema>;
 export type PublicAppointmentFormData = z.infer<typeof PublicAppointmentSchema>;
+export type CreateAdminFormData = z.infer<typeof CreateAdminSchema>;
+export type UpdateAdminFormData = z.infer<typeof UpdateAdminSchema>;
+export type ChangePasswordFormData = z.infer<typeof ChangePasswordSchema>;
+export type ResetPasswordFormData = z.infer<typeof ResetPasswordSchema>;
