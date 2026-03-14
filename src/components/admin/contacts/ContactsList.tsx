@@ -21,6 +21,7 @@ import {
   CalendarDaysIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import Tooltip from "@/components/ui/Tooltip";
 import clsx from "clsx";
 
 interface ContactsListProps {
@@ -416,27 +417,30 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center justify-end gap-2">
-                            <Link
-                              href={`/create-appointment?contactId=${contact.id}`}
-                              className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors"
-                              title="Schedule Appointment"
-                            >
-                              <CalendarDaysIcon className="h-4 w-4" />
-                            </Link>
-                            <button
-                              onClick={() => handleEdit(contact)}
-                              className="p-2 rounded-lg bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500/30 transition-colors"
-                              title="Edit"
-                            >
-                              <PencilIcon className="h-4 w-4" />
-                            </button>
-                            <button
-                              onClick={() => setDeletingId(contact.id)}
-                              className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
-                              title="Delete"
-                            >
-                              <TrashIcon className="h-4 w-4" />
-                            </button>
+                            <Tooltip text="Schedule">
+                              <Link
+                                href={`/create-appointment?contactId=${contact.id}`}
+                                className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors"
+                              >
+                                <CalendarDaysIcon className="h-4 w-4" />
+                              </Link>
+                            </Tooltip>
+                            <Tooltip text="Edit">
+                              <button
+                                onClick={() => handleEdit(contact)}
+                                className="p-2 rounded-lg bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500/30 transition-colors"
+                              >
+                                <PencilIcon className="h-4 w-4" />
+                              </button>
+                            </Tooltip>
+                            <Tooltip text="Delete">
+                              <button
+                                onClick={() => setDeletingId(contact.id)}
+                                className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
+                              >
+                                <TrashIcon className="h-4 w-4" />
+                              </button>
+                            </Tooltip>
                           </div>
                         </td>
                       </>
@@ -569,25 +573,30 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Link
-                        href={`/create-appointment?contactId=${contact.id}`}
-                        className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors"
-                        title="Schedule"
-                      >
-                        <CalendarDaysIcon className="h-4 w-4" />
-                      </Link>
-                      <button
-                        onClick={() => handleEdit(contact)}
-                        className="p-2 rounded-lg bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500/30 transition-colors"
-                      >
-                        <PencilIcon className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => setDeletingId(contact.id)}
-                        className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
-                      >
-                        <TrashIcon className="h-4 w-4" />
-                      </button>
+                      <Tooltip text="Schedule" position="bottom">
+                        <Link
+                          href={`/create-appointment?contactId=${contact.id}`}
+                          className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors"
+                        >
+                          <CalendarDaysIcon className="h-4 w-4" />
+                        </Link>
+                      </Tooltip>
+                      <Tooltip text="Edit" position="bottom">
+                        <button
+                          onClick={() => handleEdit(contact)}
+                          className="p-2 rounded-lg bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500/30 transition-colors"
+                        >
+                          <PencilIcon className="h-4 w-4" />
+                        </button>
+                      </Tooltip>
+                      <Tooltip text="Delete" position="bottom">
+                        <button
+                          onClick={() => setDeletingId(contact.id)}
+                          className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
+                        >
+                          <TrashIcon className="h-4 w-4" />
+                        </button>
+                      </Tooltip>
                     </div>
                   </div>
                 )}
