@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { PhoneIcon, CalendarDaysIcon } from "@heroicons/react/24/solid";
+import CustomBadge from "@/components/ui/CustomBadge";
 import { useGSMStore } from "@/store/gsmactx-store";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import Header from "@/components/layout/Header";
@@ -141,6 +142,11 @@ export default function HeroClient({ ratingSlot }: HeroClientProps) {
                   <PhoneIcon className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
                   Call Now
                 </Link>
+              </div>
+
+              {/* Financing CTA */}
+              <div className="mt-3 sm:mt-4">
+                <CustomBadge>Financing Available</CustomBadge>
               </div>
 
               <p className="mt-2 sm:mt-3 text-[10px] sm:text-xs text-gray-400">
