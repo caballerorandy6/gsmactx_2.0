@@ -20,6 +20,7 @@ export const UserSchema = z.object({
   lastName: z.string().min(2, "Last name is required"),
   email: z.string().email("Invalid email address"),
   phone: z.string().min(10, "Phone number is required"),
+  address: z.string().optional(),
   message: z.string().optional(),
   subscribe: z.boolean(),
 });
