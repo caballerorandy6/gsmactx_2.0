@@ -18,7 +18,9 @@ import {
   MagnifyingGlassIcon,
   FunnelIcon,
   MapPinIcon,
+  CalendarDaysIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
 import clsx from "clsx";
 
 interface ContactsListProps {
@@ -414,6 +416,13 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center justify-end gap-2">
+                            <Link
+                              href={`/create-appointment?contactId=${contact.id}`}
+                              className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors"
+                              title="Schedule Appointment"
+                            >
+                              <CalendarDaysIcon className="h-4 w-4" />
+                            </Link>
                             <button
                               onClick={() => handleEdit(contact)}
                               className="p-2 rounded-lg bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500/30 transition-colors"
@@ -560,6 +569,13 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
+                      <Link
+                        href={`/create-appointment?contactId=${contact.id}`}
+                        className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors"
+                        title="Schedule"
+                      >
+                        <CalendarDaysIcon className="h-4 w-4" />
+                      </Link>
                       <button
                         onClick={() => handleEdit(contact)}
                         className="p-2 rounded-lg bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500/30 transition-colors"

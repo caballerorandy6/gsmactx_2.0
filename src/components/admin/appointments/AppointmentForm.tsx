@@ -12,12 +12,20 @@ import { Appointment, SERVICE_TYPE_LABELS } from "@/lib/interfaces";
 import { useRouter } from "next/navigation";
 import { LockClosedIcon } from "@heroicons/react/24/outline";
 
+interface PrefillData {
+  clientName: string;
+  clientEmail: string;
+  clientPhone: string;
+  address: string;
+}
+
 interface AppointmentFormProps {
   appointment?: Appointment;
   user: SafeAdmin | null;
+  prefillData?: PrefillData;
 }
 
-const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
+const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [bookedTimeSlots, setBookedTimeSlots] = useState<string[]>([]);
@@ -35,15 +43,15 @@ const AppointmentForm = ({ appointment, user }: AppointmentFormProps) => {
     resolver: zodResolver(AppointmentBaseSchema),
     defaultValues: {
       id: appointment?.id || undefined,
-      clientName: appointment?.clientName || "",
-      clientEmail: appointment?.clientEmail || "",
-      clientPhone: appointment?.clientPhone || "",
+      clientName: appointment?.clientName || prefillData?.clientName || "",
+      clientEmail: appointment?.clientEmail || prefillData?.clientEmail || "",
+      clientPhone: appointment?.clientPhone || prefillData?.clientPhone || "",
       serviceType: appointment?.serviceType || undefined,
       scheduledDate: appointment?.scheduledDate
         ? new Date(appointment.scheduledDate).toISOString().split("T")[0]
         : "",
       scheduledTime: appointment?.scheduledTime || "",
-      address: appointment?.address || "",
+      address: appointment?.address || prefillData?.address || "",
       notes: appointment?.notes || "",
       status: appointment?.status || "PENDING",
     },
