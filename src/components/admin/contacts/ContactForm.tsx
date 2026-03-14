@@ -9,6 +9,7 @@ const ContactForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [isPending, startTransition] = useTransition();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -27,6 +28,7 @@ const ContactForm = () => {
         name: name.trim() || undefined,
         email: trimmedEmail || undefined,
         phone: trimmedPhone || undefined,
+        address: address.trim() || undefined,
       });
 
       if (result.success) {
@@ -34,6 +36,7 @@ const ContactForm = () => {
         setName("");
         setEmail("");
         setPhone("");
+        setAddress("");
       } else {
         toast.error(result.message);
       }
@@ -83,6 +86,20 @@ const ContactForm = () => {
             onChange={(e) => setPhone(e.target.value)}
             placeholder="(281) 555-0123"
             autoComplete="tel"
+            className="w-full rounded-lg bg-gray-900 border border-white/10 text-white px-3 sm:px-4 py-2 sm:py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+          />
+        </div>
+        <div className="sm:col-span-2 lg:col-span-3">
+          <label htmlFor="address" className="block text-xs sm:text-sm font-medium text-gray-300 mb-1">
+            Address <span className="text-gray-500">(optional)</span>
+          </label>
+          <input
+            id="address"
+            type="text"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="123 Main St, Cypress, TX 77433"
+            autoComplete="street-address"
             className="w-full rounded-lg bg-gray-900 border border-white/10 text-white px-3 sm:px-4 py-2 sm:py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
           />
         </div>

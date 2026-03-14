@@ -17,6 +17,7 @@ import {
   UserIcon,
   MagnifyingGlassIcon,
   FunnelIcon,
+  MapPinIcon,
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 
@@ -34,6 +35,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
   const [editName, setEditName] = useState("");
   const [editEmail, setEditEmail] = useState("");
   const [editPhone, setEditPhone] = useState("");
+  const [editAddress, setEditAddress] = useState("");
   const [editIsSubscribed, setEditIsSubscribed] = useState(true);
   const [isPending, startTransition] = useTransition();
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -61,6 +63,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
     setEditName(contact.name || "");
     setEditEmail(contact.email || "");
     setEditPhone(contact.phone || "");
+    setEditAddress(contact.address || "");
     setEditIsSubscribed(contact.isSubscribed);
   };
 
@@ -69,6 +72,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
     setEditName("");
     setEditEmail("");
     setEditPhone("");
+    setEditAddress("");
     setEditIsSubscribed(true);
   };
 
@@ -86,6 +90,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
         name: editName.trim() || undefined,
         email: trimmedEmail || undefined,
         phone: trimmedPhone || undefined,
+        address: editAddress.trim() || undefined,
         isSubscribed: editIsSubscribed,
       });
 
@@ -99,6 +104,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                   name: editName.trim() || null,
                   email: trimmedEmail || null,
                   phone: trimmedPhone || null,
+                  address: editAddress.trim() || null,
                   isSubscribed: editIsSubscribed,
                 }
               : c
@@ -233,6 +239,9 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                     Phone
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                    Address
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
                     Status
                   </th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
@@ -279,6 +288,15 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                           />
                         </td>
                         <td className="px-6 py-4">
+                          <input
+                            type="text"
+                            value={editAddress}
+                            onChange={(e) => setEditAddress(e.target.value)}
+                            placeholder="Address"
+                            className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-6 py-4">
                           <select
                             value={editIsSubscribed ? "active" : "inactive"}
                             onChange={(e) =>
@@ -315,7 +333,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                       </>
                     ) : deletingId === contact.id ? (
                       <>
-                        <td colSpan={5} className="px-6 py-4">
+                        <td colSpan={6} className="px-6 py-4">
                           <span className="text-gray-300">
                             Delete <strong>{getDisplayName(contact)}</strong>?
                           </span>
@@ -362,6 +380,18 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                             <span className="text-white flex items-center gap-2">
                               <PhoneIcon className="h-4 w-4 text-gray-500" />
                               {contact.phone}
+                            </span>
+                          ) : (
+                            <span className="text-gray-500">-</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4">
+                          {contact.address ? (
+                            <span className="text-white flex items-center gap-2">
+                              <MapPinIcon className="h-4 w-4 text-gray-500" />
+                              <span className="truncate max-w-[200px]" title={contact.address}>
+                                {contact.address}
+                              </span>
                             </span>
                           ) : (
                             <span className="text-gray-500">-</span>
@@ -435,6 +465,13 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                       className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500"
                       placeholder="Phone"
                     />
+                    <input
+                      type="text"
+                      value={editAddress}
+                      onChange={(e) => setEditAddress(e.target.value)}
+                      className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500"
+                      placeholder="Address"
+                    />
                     <select
                       value={editIsSubscribed ? "active" : "inactive"}
                       onChange={(e) =>
@@ -498,6 +535,12 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                         <p className="text-gray-300 text-sm flex items-center gap-2">
                           <PhoneIcon className="h-4 w-4 text-gray-500" />
                           {contact.phone}
+                        </p>
+                      )}
+                      {contact.address && (
+                        <p className="text-gray-300 text-sm flex items-center gap-2">
+                          <MapPinIcon className="h-4 w-4 text-gray-500" />
+                          <span className="truncate">{contact.address}</span>
                         </p>
                       )}
                       <div className="flex items-center gap-3 mt-2">

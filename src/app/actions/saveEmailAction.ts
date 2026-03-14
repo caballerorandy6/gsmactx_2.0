@@ -16,7 +16,7 @@ export async function saveEmailAction(
     };
   }
 
-  const { email, subscribe } = validateFields.data;
+  const { email, firstName, lastName, phone, address, subscribe } = validateFields.data;
 
   if (!subscribe || !email) {
     return {
@@ -24,12 +24,26 @@ export async function saveEmailAction(
       message: "All fields are required.",
     };
   }
+
+  const fullName = `${firstName} ${lastName}`.trim();
+
   try {
     // Save the email data to the database
     await prisma.subscriber.upsert({
       where: { email },
-      update: { isSubscribed: true },
-      create: { email, isSubscribed: true },
+      update: {
+        isSubscribed: true,
+        name: fullName || undefined,
+        phone: phone || undefined,
+        address: address || undefined,
+      },
+      create: {
+        email,
+        isSubscribed: true,
+        name: fullName || null,
+        phone: phone || null,
+        address: address || null,
+      },
     });
   } catch (error) {
     console.error("Error saving email:", error);

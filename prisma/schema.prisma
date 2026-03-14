@@ -110,6 +110,7 @@ model Subscriber {
   unsubscribeToken String?            @unique
   name             String?
   phone            String?
+  address          String?
   emailLogs        CampaignEmailLog[]
 }
 

@@ -1,90 +1,47 @@
-# GSM A/C & General Contractor INC - Project Guide
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
-**Business:** GSM A/C & General Contractor INC
-**Website:** https://www.gsmactx.com
-**Location:** Cypress, TX 77433
-**Phone:** (281) 235-4684
-**Type:** Full-stack HVAC Services Platform with Admin Dashboard
-
----
+Full-stack HVAC Services Platform for GSM A/C & General Contractor INC (Cypress, TX).
+- **Live:** https://www.gsmactx.com
+- **Type:** Next.js 16 App Router + Admin Dashboard + Email Campaigns
 
 ## Tech Stack
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Next.js | 15.3.6 | Framework (App Router) |
-| React | 19.2.4 | UI Library (with React Compiler) |
-| TypeScript | 5+ | Type safety |
-| TailwindCSS | 4.1.18 | Styling |
-| Prisma | 7.4.0 | ORM (PostgreSQL via Supabase) |
-| Resend | 6.9.2 | Email service |
-| Zod | 4.3.6 | Schema validation |
-| Zustand | 5.0.11 | State management |
-| Framer Motion | 12.34.0 | Animations |
-| React Hook Form | 7.71.1 | Form handling |
-| bcrypt | 6.0.0 | Password hashing |
-| jsonwebtoken | 9.0.2 | JWT authentication |
+| Technology | Purpose |
+|------------|---------|
+| Next.js 16 + React 19 | Framework with React Compiler (no manual memoization) |
+| TailwindCSS 4 | Styling (use `bg-linear-to-r` not `bg-gradient-to-r`) |
+| Prisma 7 + Supabase | PostgreSQL ORM |
+| Resend | Email (100/day limit on free tier) |
+| Zod 4 | Schema validation |
+| Zustand | Global state |
+| Framer Motion | Animations (avoid infinite animations for Lighthouse) |
+| React Hook Form | Forms |
+| JWT + bcrypt | Admin authentication |
 
 ---
 
-## Project Structure
+## Architecture
 
-```
-src/
-├── app/
-│   ├── (admin)/                  # Protected admin routes
-│   │   ├── admin-dashboard/      # Main dashboard with stats
-│   │   ├── appointments/         # Appointment list view
-│   │   ├── appointments/[id]/    # Appointment detail
-│   │   ├── create-appointment/   # Create new appointment
-│   │   ├── edit-appointment/[id]/ # Edit existing appointment
-│   │   ├── create-campaign/      # Create email campaign
-│   │   ├── edit-campaign/[id]/   # Edit campaign
-│   │   ├── view-campaigns/[id]/  # Campaign details & sending
-│   │   ├── test-campaign/        # Test email functionality
-│   │   └── layout.tsx            # Admin layout with sidebar
-│   ├── (auth)/login/             # Admin login page
-│   ├── api/cron/                 # Cron jobs ONLY
-│   │   ├── keepalive/            # Health check (every 5 hours)
-│   │   └── send-campaigns/       # Daily sender (8 AM CST)
-│   ├── actions/                  # Server Actions (15+ actions)
-│   ├── services/[id]/            # Dynamic service detail pages
-│   ├── book-appointment/         # Public booking form
-│   ├── unsubscribe/              # Email unsubscribe handler
-│   ├── layout.tsx                # Root layout
-│   ├── page.tsx                  # Homepage
-│   ├── sitemap.ts                # Dynamic sitemap
-│   ├── robots.ts                 # SEO robots.txt
-│   ├── opengraph-image.tsx       # OG image generation
-│   └── twitter-image.tsx         # Twitter card image
-├── components/
-│   ├── admin/                    # Admin UI (23 components)
-│   │   ├── appointments/         # Appointment CRUD UI
-│   │   ├── campaigns/            # Campaign management
-│   │   ├── dashboard/            # Dashboard widgets
-│   │   └── layout/               # Admin navigation
-│   ├── landing/                  # Landing page (12 components)
-│   ├── layout/                   # Header, Footer
-│   ├── forms/                    # Form components
-│   ├── ui/                       # Shared UI components
-│   ├── seo/                      # JSON-LD components
-│   └── providers/                # Context providers
-├── lib/
-│   ├── auth/                     # JWT auth utilities
-│   ├── db/prisma.ts              # Prisma singleton
-│   ├── email/                    # Email templates
-│   ├── utils/                    # Phone, general utilities
-│   ├── validations/zod.ts        # All Zod schemas
-│   ├── data.ts                   # Static data (services, nav)
-│   └── interfaces.ts             # TypeScript interfaces
-├── hooks/                        # Custom React hooks
-├── store/gsmactx-store.ts        # Zustand global state
-├── types/                        # Type definitions
-├── seo/                          # SEO utilities
-└── __tests__/                    # Vitest tests
-```
+### Route Groups
+- `(admin)/` - Protected routes with sidebar layout, JWT auth via middleware
+- `(auth)/` - Login page, separate layout
+- `api/cron/` - Cron jobs only (Vercel requirement), secured with CRON_SECRET
+
+### Key Patterns
+- **Server Actions** (`src/app/actions/`): All data mutations go through server actions, not API routes
+- **Prisma singleton** (`src/lib/db/prisma.ts`): Single client instance to prevent connection exhaustion
+- **Zod schemas** (`src/lib/validations/zod.ts`): Centralized validation, used both client and server side
+- **Zustand store** (`src/store/gsmactx-store.ts`): Global UI state (scroll position, active section)
+
+### Email Campaign Flow
+1. Admin creates campaign → stored in DB with `sent: false`
+2. Admin clicks "Send" → creates CampaignEmailLog entries for each subscriber (status: pending)
+3. Cron job runs daily 8 AM CST → sends up to 100 emails, updates log status
+4. Failed emails can be retried manually
 
 ---
 
@@ -123,35 +80,11 @@ PENDING, CONFIRMED, IN_PROGRESS, COMPLETED, CANCELLED
 - **Password:** bcrypt (8+ chars, uppercase, number, symbol)
 - **Protected:** All `/admin-*` routes
 
----
-
-## Server Actions vs API Routes
-
-### Use Server Actions for:
-- All CRUD operations
-- Form submissions
-- Data mutations
-- Authentication
-- Email sending
-
-### Use API Routes ONLY for:
-- Cron jobs (Vercel requirement)
-
-### Current API Routes:
+### Cron Jobs (API Routes)
 | Route | Schedule | Purpose |
 |-------|----------|---------|
 | `/api/cron/keepalive` | Every 5 hours | Prevent cold starts |
-| `/api/cron/send-campaigns` | Daily 8 AM CST | Batch email sending |
-
----
-
-## Email Campaign System
-
-- **Daily limit:** 100 emails (Resend free tier)
-- **Batch processing:** Automatic via cron
-- **Templates:** Promotional, Newsletter, Announcement
-- **Tracking:** Sent/Failed/Pending per subscriber
-- **Features:** Image upload, retry failed emails
+| `/api/cron/send-campaigns` | Daily 8 AM CST | Batch email sending (100/day limit) |
 
 ---
 
@@ -190,13 +123,26 @@ BLOB_READ_WRITE_TOKEN=xxx
 ## Development Commands
 
 ```bash
-npm run dev          # Start with Turbopack
-npm run build        # Production build
-npm run lint         # ESLint
-npm run test         # Vitest tests
-npm run seed         # Seed database
-npm run db:push      # Push schema
-npm run db:studio    # Prisma Studio
+# Development
+npm run dev              # Start with Turbopack (http://localhost:3000)
+npm run build            # Production build (runs prisma generate + migrate)
+npm run lint             # ESLint
+
+# Testing
+npm run test             # Vitest watch mode
+npm run test:run         # Vitest single run
+npm run test -- Hero     # Run specific test file
+npm run test:e2e         # Playwright E2E tests (starts dev server)
+npm run test:e2e:ui      # Playwright with UI
+
+# Database
+npm run db:push          # Push Prisma schema to DB
+npm run db:studio        # Open Prisma Studio GUI
+npm run seed             # Seed database with initial data
+
+# Performance
+npm run lighthouse       # Audit production site
+npm run lighthouse:local # Audit localhost
 ```
 
 ---
@@ -204,20 +150,19 @@ npm run db:studio    # Prisma Studio
 ## Code Conventions
 
 ### ALWAYS:
-- Use Server Components by default
-- Use Server Actions for CRUD (not API routes)
-- Validate with Zod before DB operations
-- Use `next/image` with alt text
-- Mobile-first responsive design
-- Parallel fetching with `Promise.all()`
+- Server Components by default, `'use client'` only when needed (hooks, events, browser APIs)
+- Server Actions for all CRUD operations (API routes only for cron jobs)
+- Validate with Zod before any DB operation
+- `next/image` with descriptive alt text
+- Mobile-first: `className="w-full md:w-[800px]"` not `"w-[800px] md:w-full"`
+- Parallel fetching: `Promise.all([getA(), getB()])` not sequential awaits
 
 ### NEVER:
-- Use `'use client'` without necessity
-- Create API routes for CRUD
-- Import entire libraries
-- Hardcode colors (use Tailwind)
-- Skip loading/error states
-- Use `useCallback`/`useMemo` (React 19 compiler handles this)
+- `useCallback`/`useMemo` - React 19 compiler handles memoization automatically
+- Infinite CSS animations (hurts Lighthouse performance)
+- Hardcode colors - use Tailwind theme tokens
+- Skip loading/error states on async operations
+- Create API routes for data mutations
 
 ---
 
@@ -245,31 +190,10 @@ Types: feat, fix, docs, style, refactor, perf, test, chore
 
 ---
 
-## Performance Optimizations
+## Performance & SEO
 
-- Preconnect hints for Google services
-- Lazy load reCAPTCHA only on form pages
-- Lazy load video in Testimonials
-- Security headers (HSTS, X-Frame-Options, etc.)
-- AVIF images, WebM video
-- Code splitting via Next.js
-
----
-
-## SEO Implementation
-
-- Dynamic sitemap generation
-- robots.txt with admin routes blocked
-- JSON-LD (LocalBusiness, Service, FAQ, Breadcrumb)
-- Open Graph and Twitter cards
-- Meta tags per page
-- Canonical URLs
-
----
-
-## Documentation
-
-- `/docs/CAMPAIGN_SYSTEM.md` - Email workflow
-- `/docs/CRON_SETUP.md` - Cron job configuration
-- `/docs/INTEGRATION_GUIDE.md` - System integration
-- `/llms.txt` - LLM-friendly project summary
+- Preconnect hints for Google services, lazy load reCAPTCHA on form pages only
+- AVIF images, WebM video, code splitting via Next.js
+- Security headers configured in `next.config.ts`
+- JSON-LD schemas: LocalBusiness, Service, FAQ, Breadcrumb
+- Dynamic sitemap (`sitemap.ts`), OG/Twitter images auto-generated

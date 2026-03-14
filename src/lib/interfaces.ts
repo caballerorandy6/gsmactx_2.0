@@ -185,6 +185,7 @@ export interface Subscriber {
   name: string | null;
   email: string | null;
   phone: string | null;
+  address: string | null;
   isSubscribed: boolean;
   createdAt: Date;
   unsubscribeToken: string | null;

@@ -17,6 +17,7 @@ const SubscriberSchema = z
     name: z.string().optional(),
     email: z.string().email("Invalid email address").optional().or(z.literal("")),
     phone: z.string().optional().or(z.literal("")),
+    address: z.string().optional().or(z.literal("")),
     isSubscribed: z.boolean().optional().default(true),
   })
   .refine(
@@ -41,6 +42,7 @@ type SubscriberInput = {
   name?: string;
   email?: string;
   phone?: string;
+  address?: string;
   isSubscribed?: boolean;
 };
 
@@ -81,10 +83,11 @@ export async function createSubscriberAction(
     };
   }
 
-  const { name, email, phone } = validated.data;
+  const { name, email, phone, address } = validated.data;
   const trimmedEmail = email?.trim() || null;
   const trimmedPhone = phone?.trim() || null;
   const trimmedName = name?.trim() || null;
+  const trimmedAddress = address?.trim() || null;
 
   try {
     // Check if email already exists (if provided)
@@ -105,6 +108,7 @@ export async function createSubscriberAction(
         name: trimmedName,
         email: trimmedEmail,
         phone: trimmedPhone,
+        address: trimmedAddress,
         isSubscribed: true,
         unsubscribeToken: trimmedEmail ? randomUUID() : null,
       },
@@ -142,6 +146,7 @@ export async function updateSubscriberAction(
     const updateEmail = data.email !== undefined ? (data.email.trim() || null) : existingSubscriber.email;
     const updatePhone = data.phone !== undefined ? (data.phone.trim() || null) : existingSubscriber.phone;
     const updateName = data.name !== undefined ? (data.name.trim() || null) : existingSubscriber.name;
+    const updateAddress = data.address !== undefined ? (data.address.trim() || null) : existingSubscriber.address;
 
     // Validate that at least email or phone exists after update
     if (!updateEmail && !updatePhone) {
@@ -181,6 +186,7 @@ export async function updateSubscriberAction(
         name: updateName,
         email: updateEmail,
         phone: updatePhone,
+        address: updateAddress,
         ...(typeof data.isSubscribed === "boolean" && {
           isSubscribed: data.isSubscribed,
         }),
