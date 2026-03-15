@@ -144,7 +144,7 @@ export default function HeroClient({ ratingSlot }: HeroClientProps) {
                 </Link>
                 <Link
                   href={`tel:${businessInfo.phone}`}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition-colors"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-semibold transition-colors"
                 >
                   <PhoneIcon className="w-5 h-5" aria-hidden="true" />
                   Call Now

@@ -103,10 +103,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth!" suppressHydrationWarning>
       <head>
-        {/* Preconnect for early-loaded services */}
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://www.google-analytics.com" />
-        {/* DNS prefetch for lazy-loaded services */}
+        {/* DNS prefetch for lazy-loaded GA (preconnect is wasted with lazyOnload) */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://www.google.com" />
         <link rel="dns-prefetch" href="https://www.gstatic.com" />
         {/* Google Analytics 4 */}
