@@ -420,7 +420,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                             <Tooltip text="Schedule">
                               <Link
                                 href={`/create-appointment?contactId=${contact.id}`}
-                                className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors"
+                                className="inline-flex p-2 rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors"
                               >
                                 <CalendarDaysIcon className="h-4 w-4" />
                               </Link>
@@ -576,7 +576,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                       <Tooltip text="Schedule" position="bottom">
                         <Link
                           href={`/create-appointment?contactId=${contact.id}`}
-                          className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors"
+                          className="inline-flex p-2 rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors"
                         >
                           <CalendarDaysIcon className="h-4 w-4" />
                         </Link>
