@@ -103,14 +103,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth!" suppressHydrationWarning>
       <head>
-        {/* Preload critical hero image for better LCP */}
-        <link
-          rel="preload"
-          href="/main.avif"
-          as="image"
-          type="image/avif"
-          fetchPriority="high"
-        />
         {/* Preconnect for early-loaded services */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
