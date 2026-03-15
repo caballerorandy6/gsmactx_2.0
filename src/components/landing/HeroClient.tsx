@@ -102,55 +102,63 @@ export default function HeroClient({ ratingSlot }: HeroClientProps) {
             transition={shouldReduceMotion ? { duration: 0 } : { ...springTransition, delay: 0.3 }}
             className="mt-6 sm:mt-8 max-w-sm sm:max-w-md mx-auto"
           >
-            <div className="bg-white/10 backdrop-blur-md border border-emerald-500/30 rounded-2xl p-4 sm:p-5 md:p-6">
-              {/* Offer Badge - decorative pulse dot hidden from assistive tech */}
-              <div className="flex items-center justify-center gap-1.5 mb-2 sm:mb-3">
+            <div className="bg-white/10 backdrop-blur-md border border-emerald-500/30 rounded-2xl p-5 sm:p-6">
+              {/* Offer Badge */}
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 mb-3">
                 <span
-                  className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 animate-pulse"
+                  className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"
                   role="presentation"
                   aria-hidden="true"
                 />
                 <span className="text-[10px] sm:text-xs text-emerald-300 font-semibold uppercase tracking-wider">
                   Limited Time Offer
                 </span>
-              </div>
+              </span>
 
-              {/* Price */}
-              <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                <span className="text-3xl sm:text-4xl md:text-5xl font-black text-emerald-400 tabular-nums">
+              {/* Service Title */}
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">
+                AC Check-Up
+              </h2>
+
+              {/* Price Row */}
+              <div className="flex items-baseline justify-center gap-3 mb-5">
+                <span className="text-4xl sm:text-5xl font-black text-emerald-400 tabular-nums">
                   $69.99
                 </span>
-                <div className="text-left">
-                  <p className="text-gray-400 line-through text-xs sm:text-sm tabular-nums">$99.99</p>
-                  <p className="text-emerald-300 text-[10px] sm:text-xs font-semibold">AC Check-Up</p>
-                </div>
+                <span className="text-base text-gray-400 line-through tabular-nums">
+                  $99.99
+                </span>
+                <span className="px-2 py-0.5 text-xs font-bold text-emerald-900 bg-emerald-400 rounded">
+                  30% OFF
+                </span>
               </div>
 
-              {/* CTAs - Single row on sm+ */}
-              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row gap-2.5">
                 <Link
                   href="/book-appointment"
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm sm:text-base font-semibold transition-colors duration-200"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-colors"
                 >
-                  <CalendarDaysIcon className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
+                  <CalendarDaysIcon className="w-5 h-5" aria-hidden="true" />
                   Book Now
                 </Link>
                 <Link
                   href={`tel:${businessInfo.phone}`}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-sm sm:text-base font-semibold transition-colors duration-200"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition-colors"
                 >
-                  <PhoneIcon className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
+                  <PhoneIcon className="w-5 h-5" aria-hidden="true" />
                   Call Now
                 </Link>
               </div>
 
-              {/* Financing CTA */}
-              <div className="mt-3 sm:mt-4">
-                <CustomBadge>Financing Available</CustomBadge>
-              </div>
+              {/* Divider */}
+              <div className="my-4 border-t border-white/10" />
 
-              <p className="mt-2 sm:mt-3 text-[10px] sm:text-xs text-gray-400">
-                + Free filter with any system replacement
+              {/* Financing */}
+              <CustomBadge>Financing Available</CustomBadge>
+
+              <p className="mt-3 text-xs sm:text-sm text-gray-300">
+                <span className="text-emerald-400">+</span> Free filter with any system replacement
               </p>
             </div>
           </motion.div>
