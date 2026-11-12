@@ -10,14 +10,11 @@ import { renderCampaignEmail } from "@/lib/email/emailRenderer";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Test emails for campaign testing
-const TEST_EMAILS = [
-  "caballerorandy7@gmail.com",
-  "gsmactx@outlook.com",
-  "michel@gsmactx.com",
-  "***REMOVED***",
-  "***REMOVED***",
-];
+// Test emails for campaign testing (comma-separated in TEST_CAMPAIGN_EMAILS)
+const TEST_EMAILS = (process.env.TEST_CAMPAIGN_EMAILS ?? "")
+  .split(",")
+  .map((email) => email.trim())
+  .filter(Boolean);
 
 export async function createAndSendTestCampaignAction(
   formData: FormData
@@ -34,6 +31,10 @@ export async function createAndSendTestCampaignAction(
   const subject = formData.get("subject") as string;
   const content = formData.get("content") as string;
   const imageFile = formData.get("image") as File | null;
+
+  if (TEST_EMAILS.length === 0) {
+    return { success: false, message: "TEST_CAMPAIGN_EMAILS is not configured" };
+  }
 
   if (!title || !subject || !content) {
     return { success: false, message: "Missing required fields" };

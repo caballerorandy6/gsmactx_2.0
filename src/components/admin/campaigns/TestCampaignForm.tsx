@@ -63,7 +63,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
 
   const onSubmit = async (data: CampaignFormData) => {
     const confirmed = confirm(
-      "Send test campaign to test emails?\n\nThis will send to:\n• caballerorandy7@gmail.com\n• gsmactx@outlook.com\n• michel@gsmactx.com\n• ***REMOVED***\n• ***REMOVED***"
+      "Send test campaign to the test email list?"
     );
 
     if (!confirmed) return;
@@ -108,15 +108,8 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
                 Test Campaign
               </h2>
               <p className="text-center text-sm text-purple-300">
-                This will be sent immediately to:
+                This will be sent immediately to the test email list.
               </p>
-              <ul className="text-xs text-purple-200 mt-2 space-y-1">
-                <li>• caballerorandy7@gmail.com</li>
-                <li>• gsmactx@outlook.com</li>
-                <li>• michel@gsmactx.com</li>
-                <li>• ***REMOVED***</li>
-                <li>• ***REMOVED***</li>
-              </ul>
             </div>
 
             {/* Title */}
