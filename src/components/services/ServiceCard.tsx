@@ -22,11 +22,12 @@ const ServiceCard = ({
         {/* Image container with responsive height */}
         <div className="relative h-36 sm:h-40 md:h-44 overflow-hidden">
           <Image
-            width={500}
-            height={300}
+            width={800}
+            height={533}
             alt={`${title} - Professional HVAC service in Cypress and Houston, TX`}
             src={imageUrl}
-            className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+            unoptimized
+            className="h-full w-full object-cover object-[center_25%] transition-transform duration-300 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-black/10" aria-hidden="true" />
         </div>

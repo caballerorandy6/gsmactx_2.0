@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { ServiceDetailsProps } from "@/lib/types";
 
@@ -83,13 +82,18 @@ const ServiceDetails = ({
           variants={fadeInScale}
           className="relative w-full h-72 sm:h-88 md:h-104 my-8 sm:my-10 rounded-2xl overflow-hidden shadow-2xl group"
         >
-          <Image
-            width={800}
-            height={500}
+          {/* Files are pre-exported at 800w and 1536w, so the browser picks via srcSet
+              instead of going through the image optimizer. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            width={1536}
+            height={1024}
             alt={`${title} - Professional HVAC service by GSM A/C in Cypress, TX`}
             src={imageSrc}
+            srcSet={`${imageSrc.replace(".avif", "-800.avif")} 800w, ${imageSrc} 1536w`}
+            sizes="(max-width: 1280px) 100vw, 1216px"
+            decoding="async"
             className={`block size-full object-cover w-full transition-transform duration-500 ${shouldReduceMotion ? "" : "group-hover:scale-105"}`}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" aria-hidden="true" />
         </motion.div>

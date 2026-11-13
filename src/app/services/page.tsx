@@ -68,14 +68,15 @@ export default async function ServicesOverviewPage() {
                     {/* Image */}
                     <div className="relative h-48 sm:h-52 overflow-hidden">
                       <Image
-                        src={serviceData?.src || "/service1.avif"}
+                        src={serviceData?.src || "/service1-800.avif"}
                         alt={`${service.name} service in Cypress and Houston, TX`}
                         fill
+                        unoptimized
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         preload={index === 0}
                         fetchPriority={index === 0 ? "high" : undefined}
                         loading={index < 3 ? "eager" : undefined}
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="object-cover object-[center_25%] transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/20 to-transparent" aria-hidden="true" />
                     </div>

@@ -162,7 +162,7 @@ export const services = [
       "We have the know-how and resources to install AC and HVAC units of all generations. We keep drilling to a minimum and always clean up after ourselves because we respect the properties of our customers.",
     link: "Learn More →",
     href: "/services/air-conditioning-installation",
-    src: "/service1.avif",
+    src: "/service1-800.avif",
   },
   {
     title: "Air Conditioning Repair",
@@ -170,7 +170,7 @@ export const services = [
       "When it comes to AC or HVAC repair, we are the specialists that you should contact. Our technicians can quickly pinpoint and remedy or replace defective parts and components.",
     link: "Learn More →",
     href: "/services/air-conditioning-repair",
-    src: "/service2.avif",
+    src: "/service2-800.avif",
   },
   {
     title: "Heating Installation",
@@ -178,7 +178,7 @@ export const services = [
       "Apart from installing ACs and HVACs, we can also set up heating devices. We strive to choose locations that offer maximum coverage so our customers can heat their properties without using too much energy.",
     link: "Learn More →",
     href: "/services/heating-installation",
-    src: "/service3.avif",
+    src: "/service3-800.avif",
   },
   {
     title: "Heating Repair",
@@ -186,7 +186,7 @@ export const services = [
       "Use our office & home heating repair services services to remedy problematic heating units. We can repair or replace faulty parts to restore the original functionality of the devices. Our prices are pocket-friendly and you will get your money's worth.",
     link: "Learn More →",
     href: "/services/heating-repair",
-    src: "/service4.avif",
+    src: "/service4-800.avif",
   },
   {
     title: "Air Duct Sanitizing",
@@ -194,7 +194,7 @@ export const services = [
       "Customers can trust us with the cleaning and sanitizing of their air ducts. We have the products and tools to eliminate harmful particles such as dust, dirt, allergens, germs, etc. We can keep your vents pristine.",
     link: "Learn More →",
     href: "/services/air-duct-sanitizing",
-    src: "/service5.avif",
+    src: "/service5-800.avif",
   },
   {
     title: "Attic Insulation",
@@ -202,7 +202,7 @@ export const services = [
       "We provide expert attic insulation services to enhance your home's energy efficiency. Our work helps lower heating and cooling costs while keeping your living space comfortable all year.",
     link: "Learn More →",
     href: "/services/attic-insulation",
-    src: "/service6.avif",
+    src: "/service6-800.avif",
   },
 ];
 
