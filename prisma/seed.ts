@@ -2,12 +2,21 @@ import bcrypt from "bcrypt";
 import { prisma } from "@/lib/db/prisma";
 import { emailsToSeed } from "@/lib/data";
 
+// Admin passwords come from the environment so they never live in git.
+// Set SEED_ADMIN1_PASSWORD and SEED_ADMIN2_PASSWORD in .env.local before `npm run seed`.
+// upsert uses `update: {}`, so existing admins (and their passwords) are never changed.
+function requireEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) throw new Error(`Missing ${name}. Set it in .env.local before running the seed.`);
+  return value;
+}
+
 async function main() {
   console.log("Iniciando seed...");
 
   // Admin 1: admin@rcweb.dev
   const admin1Email = "admin@rcweb.dev";
-  const admin1Password = "***REMOVED***";
+  const admin1Password = requireEnv("SEED_ADMIN1_PASSWORD");
   const hashedPassword1 = await bcrypt.hash(admin1Password, 10);
 
   await prisma.admin.upsert({
@@ -26,7 +35,7 @@ async function main() {
 
   // Admin 2: gsmactx@gmail.com
   const admin2Email = "gsmactx@gmail.com";
-  const admin2Password = "***REMOVED***";
+  const admin2Password = requireEnv("SEED_ADMIN2_PASSWORD");
   const hashedPassword2 = await bcrypt.hash(admin2Password, 10);
 
   await prisma.admin.upsert({
@@ -42,16 +51,6 @@ async function main() {
   });
 
   console.log("✅ Admin 2 created/updated:", admin2Email);
-
-  console.log("\n📋 Admin Credentials:");
-  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-  console.log("Admin 1:");
-  console.log("  Email:    ", admin1Email);
-  console.log("  Password: ", admin1Password);
-  console.log("\nAdmin 2:");
-  console.log("  Email:    ", admin2Email);
-  console.log("  Password: ", admin2Password);
-  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 
   console.log("Seeding completed successfully!");
 }
