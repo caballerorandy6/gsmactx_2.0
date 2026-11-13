@@ -35,6 +35,22 @@ p {
   max-width: 75ch;
 }
 
+/* Hero entrance: transform-only so text paints on the first frame (keeps LCP fast).
+   Reduced motion is handled by the global rule above. */
+@keyframes hero-rise {
+  from {
+    transform: translateY(12px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.hero-rise {
+  animation: hero-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--hero-delay, 0ms);
+}
+
 .nav-blur {
   animation: blur linear both;
   animation-timeline: scroll();
