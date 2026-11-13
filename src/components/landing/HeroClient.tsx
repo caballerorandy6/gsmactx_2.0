@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, type CSSProperties, type ReactNode } from "react";
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import Link from "next/link";
 import { PhoneIcon, CalendarDaysIcon } from "@heroicons/react/24/solid";
 import CustomBadge from "@/components/ui/CustomBadge";
@@ -9,6 +9,16 @@ import { useGSMStore } from "@/store/gsmactx-store";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import Header from "@/components/layout/Header";
 import { businessInfo } from "@/lib/data";
+
+const { props: heroImgProps } = getImageProps({
+  src: "/main.avif",
+  alt: "GSM technicians cleaning air ducts in a Cypress, Texas home",
+  width: 1080,
+  height: 1080,
+  unoptimized: true,
+  loading: "eager",
+  fetchPriority: "high",
+});
 
 interface HeroClientProps {
   ratingSlot: ReactNode;
@@ -36,15 +46,15 @@ export default function HeroClient({ ratingSlot }: HeroClientProps) {
       <Header />
 
       {/* Background Image */}
-      <Image
-        src="/main.avif"
-        alt="Professional HVAC technician installing air conditioning system in Cypress, Texas"
-        priority
-        quality={85}
-        fill
-        sizes="100vw"
-        className="object-cover -z-20"
-      />
+      {/* Art-directed: 1080px file on mobile, 2400px from md up.
+          unoptimized because the files are already exported at final size. */}
+      <picture>
+        <source media="(min-width: 768px)" srcSet="/main-2400.avif" type="image/avif" />
+        <img
+          {...heroImgProps}
+          className="absolute inset-0 size-full object-cover object-[40%_center] md:object-[center_15%] -z-20"
+        />
+      </picture>
 
       {/* Gradient overlay for better text readability */}
       <div
