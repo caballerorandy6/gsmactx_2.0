@@ -179,7 +179,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by name, email, or phone..."
-            className="w-full pl-10 pr-4 py-2 sm:py-2.5 rounded-lg bg-gray-900 border border-white/10 text-white text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+            className="w-full pl-10 pr-4 py-2 sm:py-2.5 rounded-lg bg-gray-900 border border-white/10 text-white text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500"
           />
         </div>
 
@@ -188,7 +188,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
-            className="flex-1 sm:flex-none rounded-lg bg-gray-900 border border-white/10 text-white px-3 py-2 sm:py-2.5 text-sm focus:ring-2 focus:ring-indigo-500"
+            className="flex-1 sm:flex-none rounded-lg bg-gray-900 border border-white/10 text-white px-3 py-2 sm:py-2.5 text-sm focus:ring-2 focus:ring-primary-500"
           >
             <option value="all">All Status</option>
             <option value="active">Active Only</option>
@@ -220,7 +220,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
           <p className="text-gray-400 mb-3">No contacts match your search</p>
           <button
             onClick={clearFilters}
-            className="text-indigo-400 hover:text-indigo-300 text-sm font-medium"
+            className="text-primary-400 hover:text-primary-300 text-sm font-medium"
           >
             Clear filters
           </button>
@@ -269,7 +269,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                             value={editName}
                             onChange={(e) => setEditName(e.target.value)}
                             placeholder="Name"
-                            className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                            className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                           />
                         </td>
                         <td className="px-6 py-4">
@@ -278,7 +278,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                             value={editEmail}
                             onChange={(e) => setEditEmail(e.target.value)}
                             placeholder="Email"
-                            className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                            className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                           />
                         </td>
                         <td className="px-6 py-4">
@@ -287,7 +287,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                             value={editPhone}
                             onChange={(e) => setEditPhone(e.target.value)}
                             placeholder="Phone"
-                            className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                            className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                           />
                         </td>
                         <td className="px-6 py-4">
@@ -296,7 +296,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                             value={editAddress}
                             onChange={(e) => setEditAddress(e.target.value)}
                             placeholder="Address"
-                            className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                            className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                           />
                         </td>
                         <td className="px-6 py-4">
@@ -305,7 +305,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                             onChange={(e) =>
                               setEditIsSubscribed(e.target.value === "active")
                             }
-                            className="rounded-md bg-gray-900 border border-white/20 text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-indigo-500"
+                            className="rounded-md bg-gray-900 border border-white/20 text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-primary-500"
                           >
                             <option value="active">Active</option>
                             <option value="inactive">Inactive</option>
@@ -428,7 +428,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                             <Tooltip text="Edit">
                               <button
                                 onClick={() => handleEdit(contact)}
-                                className="p-2 rounded-lg bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500/30 transition-colors"
+                                className="p-2 rounded-lg bg-primary-500/20 text-primary-400 hover:bg-primary-500/30 transition-colors"
                               >
                                 <PencilIcon className="h-4 w-4" />
                               </button>
@@ -461,28 +461,28 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                       type="text"
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
-                      className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500"
+                      className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500"
                       placeholder="Name"
                     />
                     <input
                       type="email"
                       value={editEmail}
                       onChange={(e) => setEditEmail(e.target.value)}
-                      className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500"
+                      className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500"
                       placeholder="Email"
                     />
                     <input
                       type="tel"
                       value={editPhone}
                       onChange={(e) => setEditPhone(e.target.value)}
-                      className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500"
+                      className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500"
                       placeholder="Phone"
                     />
                     <input
                       type="text"
                       value={editAddress}
                       onChange={(e) => setEditAddress(e.target.value)}
-                      className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500"
+                      className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500"
                       placeholder="Address"
                     />
                     <select
@@ -490,7 +490,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                       onChange={(e) =>
                         setEditIsSubscribed(e.target.value === "active")
                       }
-                      className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500"
+                      className="w-full rounded-md bg-gray-900 border border-white/20 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500"
                     >
                       <option value="active">Active</option>
                       <option value="inactive">Inactive</option>
@@ -584,7 +584,7 @@ const ContactsList = ({ initialContacts }: ContactsListProps) => {
                       <Tooltip text="Edit" position="bottom">
                         <button
                           onClick={() => handleEdit(contact)}
-                          className="p-2 rounded-lg bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500/30 transition-colors"
+                          className="p-2 rounded-lg bg-primary-500/20 text-primary-400 hover:bg-primary-500/30 transition-colors"
                         >
                           <PencilIcon className="h-4 w-4" />
                         </button>

@@ -59,7 +59,7 @@ export default function TrustIndicators({
         whileHover={{ scale: 1.05 }}
         transition={{ type: "spring", stiffness: 400 }}
       >
-        <ClockIcon className="h-3 w-3 sm:h-4 sm:w-4 text-indigo-400" />
+        <ClockIcon className="h-3 w-3 sm:h-4 sm:w-4 text-primary-400" />
         <span className="text-xs sm:text-sm font-semibold text-white">
           {new Date().getFullYear() - parseInt(businessInfo.established)} Years
           in Business

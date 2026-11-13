@@ -26,7 +26,7 @@ const TemplateSelector = ({
             aria-pressed={selectedTemplate === template.id}
             className={`relative p-4 sm:p-5 rounded-xl border-2 transition-all motion-reduce:transition-none text-left min-h-[140px] ${
               selectedTemplate === template.id
-                ? "border-indigo-500 bg-indigo-500/10 shadow-lg shadow-indigo-500/20"
+                ? "border-primary-500 bg-primary-500/10 shadow-lg shadow-primary-500/20"
                 : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
             }`}
           >
@@ -64,7 +64,7 @@ const TemplateSelector = ({
               </div>
             </div>
             {selectedTemplate === template.id && (
-              <div aria-hidden="true" className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-indigo-500 text-white rounded-full p-1.5 sm:p-2">
+              <div aria-hidden="true" className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-primary-600 text-white rounded-full p-1.5 sm:p-2">
                 <svg
                   className="w-4 h-4 sm:w-5 sm:h-5"
                   fill="currentColor"

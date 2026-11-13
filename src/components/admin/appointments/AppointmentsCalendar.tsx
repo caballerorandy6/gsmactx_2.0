@@ -162,7 +162,7 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
 
   // Get status color for appointment indicator
   const getStatusColor = (status: string) => {
-    return STATUS_COLORS[status]?.bg || "bg-indigo-400";
+    return STATUS_COLORS[status]?.bg || "bg-primary-400";
   };
 
   // Format date for aria-label
@@ -195,7 +195,7 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
           <div className="flex items-center gap-2">
             <button
               onClick={goToToday}
-              className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+              className="px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-lg shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
               aria-label="Go to today's date"
             >
               Today
@@ -203,14 +203,14 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
             <nav aria-label="Calendar navigation" className="flex items-center bg-gray-800/80 rounded-lg p-1 border border-white/5">
               <button
                 onClick={goToPreviousMonth}
-                className="p-2 text-gray-400 hover:text-white hover:bg-gray-700/50 rounded-md transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="p-2 text-gray-400 hover:text-white hover:bg-gray-700/50 rounded-md transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
                 aria-label={`Go to ${MONTHS[currentDate.getMonth() === 0 ? 11 : currentDate.getMonth() - 1]} ${currentDate.getMonth() === 0 ? currentDate.getFullYear() - 1 : currentDate.getFullYear()}`}
               >
                 <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
               </button>
               <button
                 onClick={goToNextMonth}
-                className="p-2 text-gray-400 hover:text-white hover:bg-gray-700/50 rounded-md transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                className="p-2 text-gray-400 hover:text-white hover:bg-gray-700/50 rounded-md transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
                 aria-label={`Go to ${MONTHS[currentDate.getMonth() === 11 ? 0 : currentDate.getMonth() + 1]} ${currentDate.getMonth() === 11 ? currentDate.getFullYear() + 1 : currentDate.getFullYear()}`}
               >
                 <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
@@ -227,7 +227,7 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
               className={clsx(
                 "text-center text-xs font-semibold uppercase tracking-wider py-3",
                 index === 0 || index === 6
-                  ? "text-indigo-400"
+                  ? "text-primary-400"
                   : "text-gray-500"
               )}
             >
@@ -250,16 +250,16 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
                 aria-label={`${formatDateForAria(item.date)}${hasAppointments ? `, ${dayAppointments.length} appointment${dayAppointments.length > 1 ? "s" : ""}` : ""}`}
                 aria-pressed={isSelected(item.date)}
                 className={clsx(
-                  "relative aspect-square rounded-xl flex flex-col items-center justify-center group transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-1 focus-visible:ring-offset-gray-900",
+                  "relative aspect-square rounded-xl flex flex-col items-center justify-center group transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-1 focus-visible:ring-offset-gray-900",
                   item.isCurrentMonth
                     ? "text-white"
                     : "text-gray-600",
                   !isSelected(item.date) && item.isCurrentMonth && "hover:bg-white/5",
                   !isSelected(item.date) && !item.isCurrentMonth && "hover:bg-white/2",
                   isToday(item.date) && !isSelected(item.date) &&
-                    "bg-indigo-500/10 ring-2 ring-indigo-500/50",
+                    "bg-primary-500/10 ring-2 ring-primary-500/50",
                   isSelected(item.date) &&
-                    "bg-linear-to-br from-indigo-500 to-indigo-600 shadow-lg shadow-indigo-500/30 scale-105",
+                    "bg-linear-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 scale-105",
                   isWeekend && item.isCurrentMonth && !isSelected(item.date) && "text-gray-400"
                 )}
               >
@@ -267,7 +267,7 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
                   className={clsx(
                     "text-sm sm:text-base font-medium transition-all duration-200",
                     isSelected(item.date) && "font-bold",
-                    isToday(item.date) && !isSelected(item.date) && "text-indigo-400 font-semibold"
+                    isToday(item.date) && !isSelected(item.date) && "text-primary-400 font-semibold"
                   )}
                 >
                   {item.day}
@@ -290,7 +290,7 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
                       <span
                         className={clsx(
                           "text-[9px] font-bold ml-0.5",
-                          isSelected(item.date) ? "text-white/80" : "text-indigo-400"
+                          isSelected(item.date) ? "text-white/80" : "text-primary-400"
                         )}
                       >
                         +{dayAppointments.length - 3}
@@ -347,7 +347,7 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
           </div>
           {selectedDate && (
             <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-800/80 rounded-lg border border-white/5">
-              <CalendarDaysIcon className="h-4 w-4 text-indigo-400" />
+              <CalendarDaysIcon className="h-4 w-4 text-primary-400" />
               <span className="text-sm text-gray-300 font-medium">
                 {selectedDateAppointments.length} appointment{selectedDateAppointments.length !== 1 ? "s" : ""}
               </span>
@@ -368,8 +368,8 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
             </div>
           ) : selectedDateAppointments.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full py-12">
-              <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center mb-4">
-                <CalendarDaysIcon className="h-8 w-8 text-indigo-400" />
+              <div className="w-16 h-16 rounded-2xl bg-primary-500/10 flex items-center justify-center mb-4">
+                <CalendarDaysIcon className="h-8 w-8 text-primary-400" />
               </div>
               <p className="text-gray-300 font-medium mb-1">No appointments</p>
               <p className="text-gray-500 text-sm text-center mb-6">
@@ -377,7 +377,7 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
               </p>
               <Link
                 href="/create-appointment"
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40"
               >
                 <PlusIcon className="h-4 w-4" />
                 New Appointment
@@ -391,13 +391,13 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
                   <Link
                     key={apt.id}
                     href={`/appointments/${apt.id}`}
-                    className="block p-3 sm:p-4 rounded-xl bg-gray-900/60 border border-white/5 hover:border-indigo-500/30 hover:bg-gray-900/80 transition-all motion-reduce:transition-none group"
+                    className="block p-3 sm:p-4 rounded-xl bg-gray-900/60 border border-white/5 hover:border-primary-500/30 hover:bg-gray-900/80 transition-all motion-reduce:transition-none group"
                   >
                     {/* Time & Status - stack on very small screens */}
                     <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between gap-2 mb-3">
-                      <div className="flex items-center gap-1.5 px-2 py-1 bg-indigo-500/10 rounded-lg w-fit">
-                        <ClockIcon aria-hidden="true" className="h-3.5 w-3.5 text-indigo-400" />
-                        <span className="text-xs sm:text-sm font-bold text-indigo-400 tabular-nums">
+                      <div className="flex items-center gap-1.5 px-2 py-1 bg-primary-500/10 rounded-lg w-fit">
+                        <ClockIcon aria-hidden="true" className="h-3.5 w-3.5 text-primary-400" />
+                        <span className="text-xs sm:text-sm font-bold text-primary-400 tabular-nums">
                           {apt.scheduledTime}
                         </span>
                       </div>
@@ -405,7 +405,7 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
                     </div>
 
                     {/* Client Info - allow full name to wrap */}
-                    <h4 className="text-sm sm:text-base font-semibold text-white mb-1 group-hover:text-indigo-300 transition-colors motion-reduce:transition-none wrap-break-word hyphens-auto">
+                    <h4 className="text-sm sm:text-base font-semibold text-white mb-1 group-hover:text-primary-300 transition-colors motion-reduce:transition-none wrap-break-word hyphens-auto">
                       {apt.clientName}
                     </h4>
                     <p className="text-xs sm:text-sm text-gray-400 mb-3">
@@ -433,7 +433,7 @@ const AppointmentsCalendar = ({ appointments }: AppointmentsCalendarProps) => {
         {selectedDate && selectedDateAppointments.length > 0 && (
           <Link
             href="/create-appointment"
-            className="mt-4 flex items-center justify-center gap-2 w-full py-3 bg-gray-800/50 hover:bg-gray-800 border border-white/5 hover:border-indigo-500/30 text-gray-300 hover:text-white text-sm font-medium rounded-xl transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+            className="mt-4 flex items-center justify-center gap-2 w-full py-3 bg-gray-800/50 hover:bg-gray-800 border border-white/5 hover:border-primary-500/30 text-gray-300 hover:text-white text-sm font-medium rounded-xl transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
           >
             <PlusIcon className="h-4 w-4" aria-hidden="true" />
             Add Appointment

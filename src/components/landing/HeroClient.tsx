@@ -116,14 +116,14 @@ export default function HeroClient({ ratingSlot }: HeroClientProps) {
               <div className="flex flex-col sm:flex-row gap-2.5">
                 <Link
                   href="/book-appointment"
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-colors"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-semibold transition-colors"
                 >
                   <CalendarDaysIcon className="w-5 h-5" aria-hidden="true" />
                   Book Now
                 </Link>
                 <Link
                   href={`tel:${businessInfo.phone}`}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-semibold transition-colors"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-white/25 bg-white/5 hover:bg-white/15 text-white font-semibold transition-colors"
                 >
                   <PhoneIcon className="w-5 h-5" aria-hidden="true" />
                   Call Now

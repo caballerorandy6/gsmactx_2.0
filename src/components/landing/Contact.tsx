@@ -159,7 +159,7 @@ export default function Contact() {
                     clipPath:
                       "polygon(74.1% 56.1%, 100% 38.6%, 97.5% 73.3%, 85.5% 100%, 80.7% 98.2%, 72.5% 67.7%, 60.2% 37.8%, 52.4% 32.2%, 47.5% 41.9%, 45.2% 65.8%, 27.5% 23.5%, 0.1% 35.4%, 17.9% 0.1%, 27.6% 23.5%, 76.1% 2.6%, 74.1% 56.1%)",
                   }}
-                  className="aspect-1155/678 w-288.75 bg-linear-to-br from-[#80caff] to-[#4f46e5] opacity-20"
+                  className="aspect-1155/678 w-288.75 bg-linear-to-br from-[#80caff] to-primary-600 opacity-20"
                 />
               </div>
             </div>
@@ -254,7 +254,7 @@ export default function Contact() {
                     name="firstName"
                     type="text"
                     autoComplete="given-name"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -279,7 +279,7 @@ export default function Contact() {
                     name="lastName"
                     type="text"
                     autoComplete="family-name"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -305,7 +305,7 @@ export default function Contact() {
                     type="email"
                     autoComplete="email"
                     spellCheck="false"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -330,7 +330,7 @@ export default function Contact() {
                     name="phone"
                     type="tel"
                     autoComplete="tel"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -356,7 +356,7 @@ export default function Contact() {
                     type="text"
                     autoComplete="street-address"
                     placeholder="123 Main St, Cypress, TX 77433"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                 </div>
               </div>
@@ -373,7 +373,7 @@ export default function Contact() {
                     id="message"
                     name="message"
                     rows={4}
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                     defaultValue={""}
                   />
                 </div>
@@ -389,7 +389,7 @@ export default function Contact() {
                 id="subscribe"
                 name="subscribe"
                 type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
               />
               <label
                 htmlFor="subscribe"
@@ -405,7 +405,7 @@ export default function Contact() {
                   href="https://policies.google.com/privacy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-indigo-400 hover:text-indigo-300 underline"
+                  className="text-primary-400 hover:text-primary-300 underline"
                 >
                   Privacy Policy
                 </Link>{" "}
@@ -414,7 +414,7 @@ export default function Contact() {
                   href="https://policies.google.com/terms"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-indigo-400 hover:text-indigo-300 underline"
+                  className="text-primary-400 hover:text-primary-300 underline"
                 >
                   Terms of Service
                 </Link>{" "}
@@ -425,7 +425,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="rounded-md cursor-pointer bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="rounded-md cursor-pointer bg-primary-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isPending ? "Sending…" : "Send Message"}
               </button>

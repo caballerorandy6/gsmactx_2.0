@@ -54,7 +54,7 @@ const FloatingCTAButtons = () => {
             <Link
               href={`tel:${businessInfo.phone}`}
               aria-label="Call us now"
-              className="group flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-emerald-600 text-white shadow-lg hover:bg-emerald-500 hover:shadow-emerald-500/40 transition-all duration-300"
+              className="group flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-primary-600 text-white shadow-lg hover:bg-primary-700 hover:shadow-primary-500/40 transition-all duration-300"
             >
               <PhoneIcon className="h-6 w-6" />
               <span className="hidden sm:inline font-semibold whitespace-nowrap">
@@ -74,7 +74,7 @@ const FloatingCTAButtons = () => {
             <Link
               href="/book-appointment"
               aria-label="Book an appointment"
-              className="group flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-500 hover:shadow-indigo-500/40 transition-all duration-300"
+              className="group flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-primary-600 text-white shadow-lg hover:bg-primary-700 hover:shadow-primary-500/40 transition-all duration-300"
             >
               <CalendarDaysIcon className="h-6 w-6" />
               <span className="hidden sm:inline font-semibold whitespace-nowrap">

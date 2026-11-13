@@ -65,8 +65,8 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
       name: "Sent Campaigns",
       value: stats.sentCampaigns,
       icon: CheckCircleIcon,
-      color: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
-      iconBg: "bg-indigo-500/20",
+      color: "bg-primary-500/10 text-primary-400 border-primary-500/20",
+      iconBg: "bg-primary-500/20",
     },
     {
       name: "Emails Sent",
@@ -148,8 +148,8 @@ const DashboardStats = ({ stats }: DashboardStatsProps) => {
       name: "In Progress",
       value: stats.inProgressAppointments,
       icon: WrenchScrewdriverIcon,
-      color: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
-      iconBg: "bg-indigo-500/20",
+      color: "bg-primary-500/10 text-primary-400 border-primary-500/20",
+      iconBg: "bg-primary-500/20",
     },
     {
       name: "Completed",

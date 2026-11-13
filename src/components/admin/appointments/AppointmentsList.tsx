@@ -88,7 +88,7 @@ const AppointmentsList = ({
                 className={clsx(
                   "flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors motion-reduce:transition-none",
                   viewMode === "calendar"
-                    ? "bg-indigo-600 text-white"
+                    ? "bg-primary-600 text-white"
                     : "text-gray-400 hover:text-white"
                 )}
               >
@@ -102,7 +102,7 @@ const AppointmentsList = ({
                 className={clsx(
                   "flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors motion-reduce:transition-none",
                   viewMode === "list"
-                    ? "bg-indigo-600 text-white"
+                    ? "bg-primary-600 text-white"
                     : "text-gray-400 hover:text-white"
                 )}
               >
@@ -112,7 +112,7 @@ const AppointmentsList = ({
             </div>
             <Link
               href="/create-appointment"
-              className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition-colors"
+              className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-700 transition-colors"
             >
               <PlusIcon className="h-5 w-5" />
               New Appointment
@@ -134,7 +134,7 @@ const AppointmentsList = ({
                 className={clsx(
                   "rounded-lg p-3 text-center transition-all motion-reduce:transition-none border",
                   selectedStatus === status
-                    ? "bg-indigo-600/20 border-indigo-500/50 ring-1 ring-indigo-500/30"
+                    ? "bg-primary-600/20 border-primary-500/50 ring-1 ring-primary-500/30"
                     : "bg-gray-800/50 border-white/10 hover:bg-gray-700/50"
                 )}
               >
@@ -160,7 +160,7 @@ const AppointmentsList = ({
               <FunnelIcon className="h-5 w-5" />
               Filters
               {hasActiveFilters && (
-                <span className="bg-indigo-600 text-white text-xs px-2 py-0.5 rounded-full">
+                <span className="bg-primary-600 text-white text-xs px-2 py-0.5 rounded-full">
                   Active
                 </span>
               )}
@@ -199,7 +199,7 @@ const AppointmentsList = ({
                   onChange={(e) =>
                     setSelectedStatus(e.target.value as FilterStatus)
                   }
-                  className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   <option value="ALL">All Statuses</option>
                   {APPOINTMENT_STATUSES.map((status) => (
@@ -221,7 +221,7 @@ const AppointmentsList = ({
                   id="service-filter"
                   value={selectedService}
                   onChange={(e) => setSelectedService(e.target.value)}
-                  className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   <option value="ALL">All Services</option>
                   {SERVICE_TYPES.map((type) => (
@@ -265,7 +265,7 @@ const AppointmentsList = ({
                 ) : (
                   <Link
                     href="/create-appointment"
-                    className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 transition-colors"
+                    className="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors"
                   >
                     Create Appointment
                   </Link>

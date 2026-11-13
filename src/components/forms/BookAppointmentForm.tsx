@@ -181,7 +181,7 @@ const BookAppointmentForm = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             onClick={() => setIsSuccess(false)}
-            className="px-6 py-3 rounded-md text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 transition-colors"
+            className="px-6 py-3 rounded-md text-sm font-semibold text-white bg-primary-600 hover:bg-primary-700 transition-colors"
           >
             Schedule Another
           </button>
@@ -205,7 +205,7 @@ const BookAppointmentForm = () => {
         {/* Service Selection */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <WrenchScrewdriverIcon className="h-5 w-5 text-indigo-400" />
+            <WrenchScrewdriverIcon className="h-5 w-5 text-primary-400" />
             <h3 className="text-lg font-semibold text-white">
               Select Your Service
             </h3>
@@ -214,7 +214,7 @@ const BookAppointmentForm = () => {
             {SERVICE_TYPES.map((type) => (
               <label
                 key={type}
-                className="relative flex items-center p-4 cursor-pointer rounded-lg border border-white/10 bg-gray-900/50 hover:bg-gray-900 transition-colors has-checked:border-indigo-500 has-checked:bg-indigo-500/10 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-indigo-400"
+                className="relative flex items-center p-4 cursor-pointer rounded-lg border border-white/10 bg-gray-900/50 hover:bg-gray-900 transition-colors has-checked:border-primary-500 has-checked:bg-primary-500/10 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-400"
               >
                 <input
                   {...register("serviceType")}
@@ -240,7 +240,7 @@ const BookAppointmentForm = () => {
         {/* Date & Time */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <CalendarDaysIcon className="h-5 w-5 text-indigo-400" />
+            <CalendarDaysIcon className="h-5 w-5 text-primary-400" />
             <h3 className="text-lg font-semibold text-white">
               Choose Date & Time
             </h3>
@@ -259,7 +259,7 @@ const BookAppointmentForm = () => {
                 id="scheduledDate"
                 type="date"
                 min={getMinDate()}
-                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent [&::-webkit-calendar-picker-indicator]:brightness-0 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-80 [&::-webkit-calendar-picker-indicator]:hover:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent [&::-webkit-calendar-picker-indicator]:brightness-0 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-80 [&::-webkit-calendar-picker-indicator]:hover:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
               />
               <ErrorMessage
                 errors={errors}
@@ -281,7 +281,7 @@ const BookAppointmentForm = () => {
                 </p>
               ) : isLoadingSlots ? (
                 <div className="flex items-center justify-center py-4 border border-dashed border-white/10 rounded-lg">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-indigo-500"></div>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-primary-500"></div>
                   <span className="ml-2 text-gray-400 text-sm">Loading available times…</span>
                 </div>
               ) : !hasAvailableSlots ? (
@@ -300,11 +300,11 @@ const BookAppointmentForm = () => {
                       <label
                         key={time}
                         className={`
-                          relative flex items-center justify-center p-3 rounded-lg border text-sm font-medium transition-all has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-indigo-400
+                          relative flex items-center justify-center p-3 rounded-lg border text-sm font-medium transition-all has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-400
                           ${isUnavailable
                             ? "bg-red-500/10 border-red-500/30 text-red-400 cursor-not-allowed"
                             : isSelected
-                              ? "bg-indigo-500/20 border-indigo-500 text-white ring-2 ring-indigo-500"
+                              ? "bg-primary-500/20 border-primary-500 text-white ring-2 ring-primary-500"
                               : "bg-gray-900/50 border-white/10 text-white hover:bg-gray-800 hover:border-white/20 cursor-pointer"
                           }
                         `}
@@ -345,7 +345,7 @@ const BookAppointmentForm = () => {
         {/* Contact Information */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <UserIcon className="h-5 w-5 text-indigo-400" />
+            <UserIcon className="h-5 w-5 text-primary-400" />
             <h3 className="text-lg font-semibold text-white">
               Your Information
             </h3>
@@ -365,7 +365,7 @@ const BookAppointmentForm = () => {
                 type="text"
                 autoComplete="name"
                 placeholder="John Doe"
-                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500"
               />
               <ErrorMessage
                 errors={errors}
@@ -391,7 +391,7 @@ const BookAppointmentForm = () => {
                 autoComplete="email"
                 spellCheck="false"
                 placeholder="john@example.com"
-                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500"
               />
               <ErrorMessage
                 errors={errors}
@@ -416,7 +416,7 @@ const BookAppointmentForm = () => {
                 type="tel"
                 autoComplete="tel"
                 placeholder="(281) 555-0123"
-                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500"
               />
               <ErrorMessage
                 errors={errors}
@@ -432,7 +432,7 @@ const BookAppointmentForm = () => {
         {/* Address */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <MapPinIcon className="h-5 w-5 text-indigo-400" />
+            <MapPinIcon className="h-5 w-5 text-primary-400" />
             <h3 className="text-lg font-semibold text-white">
               Service Location
             </h3>
@@ -450,7 +450,7 @@ const BookAppointmentForm = () => {
               type="text"
               autoComplete="street-address"
               placeholder="123 Main St, Cypress, TX 77433"
-              className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+              className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500"
             />
             <ErrorMessage
               errors={errors}
@@ -474,7 +474,7 @@ const BookAppointmentForm = () => {
               id="notes"
               rows={3}
               placeholder="Any details about the issue or special instructions..."
-              className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500 resize-none"
+              className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500 resize-none"
             />
           </div>
         </div>
@@ -487,7 +487,7 @@ const BookAppointmentForm = () => {
           href="https://policies.google.com/privacy"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-indigo-400 hover:text-indigo-300 underline"
+          className="text-primary-400 hover:text-primary-300 underline"
         >
           Privacy Policy
         </Link>{" "}
@@ -496,7 +496,7 @@ const BookAppointmentForm = () => {
           href="https://policies.google.com/terms"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-indigo-400 hover:text-indigo-300 underline"
+          className="text-primary-400 hover:text-primary-300 underline"
         >
           Terms of Service
         </Link>{" "}
@@ -508,7 +508,7 @@ const BookAppointmentForm = () => {
         <button
           type="submit"
           disabled={isPending}
-          className="w-full py-4 rounded-md text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-500 transition-colors disabled:bg-indigo-400 disabled:cursor-not-allowed"
+          className="w-full py-4 rounded-md text-base font-semibold text-white bg-primary-600 hover:bg-primary-700 transition-colors disabled:bg-primary-400 disabled:cursor-not-allowed"
         >
           {isPending ? "Scheduling…" : "Schedule Appointment"}
         </button>

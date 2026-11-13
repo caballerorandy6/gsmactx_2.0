@@ -36,7 +36,7 @@ const EmptyDashboardState = ({ userName }: EmptyDashboardStateProps) => {
 
           <Link
             href="/create-campaign"
-            className="inline-flex items-center gap-2 rounded-md bg-indigo-500 px-6 py-3 text-sm font-semibold text-white hover:bg-indigo-400 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+            className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-6 py-3 text-sm font-semibold text-white hover:bg-primary-700 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
           >
             <svg
               className="h-4 w-4"

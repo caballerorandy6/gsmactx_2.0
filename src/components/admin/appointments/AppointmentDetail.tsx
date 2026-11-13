@@ -111,7 +111,7 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
           <div className="flex items-center gap-3">
             <Link
               href={`/edit-appointment/${appointment.id}`}
-              className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 transition-colors"
+              className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-700 transition-colors"
             >
               <PencilIcon className="h-4 w-4" />
               Edit
@@ -139,7 +139,7 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
 
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <WrenchScrewdriverIcon className="h-5 w-5 text-indigo-400 mt-0.5" />
+                <WrenchScrewdriverIcon className="h-5 w-5 text-primary-400 mt-0.5" />
                 <div>
                   <p className="text-sm text-gray-400">Service</p>
                   <p className="text-white font-medium">{serviceLabel}</p>
@@ -147,7 +147,7 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
               </div>
 
               <div className="flex items-start gap-3">
-                <CalendarIcon className="h-5 w-5 text-indigo-400 mt-0.5" />
+                <CalendarIcon className="h-5 w-5 text-primary-400 mt-0.5" />
                 <div>
                   <p className="text-sm text-gray-400">Date</p>
                   <p className="text-white font-medium">{formattedDate}</p>
@@ -155,7 +155,7 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
               </div>
 
               <div className="flex items-start gap-3">
-                <ClockIcon className="h-5 w-5 text-indigo-400 mt-0.5" />
+                <ClockIcon className="h-5 w-5 text-primary-400 mt-0.5" />
                 <div>
                   <p className="text-sm text-gray-400">Time</p>
                   <p className="text-white font-medium">
@@ -165,7 +165,7 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
               </div>
 
               <div className="flex items-start gap-3">
-                <MapPinIcon className="h-5 w-5 text-indigo-400 mt-0.5" />
+                <MapPinIcon className="h-5 w-5 text-primary-400 mt-0.5" />
                 <div>
                   <p className="text-sm text-gray-400">Address</p>
                   <p className="text-white font-medium">{appointment.address}</p>
@@ -174,7 +174,7 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
 
               {appointment.notes && (
                 <div className="flex items-start gap-3">
-                  <DocumentTextIcon className="h-5 w-5 text-indigo-400 mt-0.5" />
+                  <DocumentTextIcon className="h-5 w-5 text-primary-400 mt-0.5" />
                   <div>
                     <p className="text-sm text-gray-400">Notes</p>
                     <p className="text-white">{appointment.notes}</p>
@@ -198,14 +198,14 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
                 </div>
                 <a
                   href={`mailto:${appointment.clientEmail}`}
-                  className="flex items-center gap-3 text-indigo-400 hover:text-indigo-300 transition-colors"
+                  className="flex items-center gap-3 text-primary-400 hover:text-primary-300 transition-colors"
                 >
                   <EnvelopeIcon className="h-5 w-5" />
                   <span className="truncate">{appointment.clientEmail}</span>
                 </a>
                 <a
                   href={`tel:${formatPhoneForTel(appointment.clientPhone)}`}
-                  className="flex items-center gap-3 text-indigo-400 hover:text-indigo-300 transition-colors"
+                  className="flex items-center gap-3 text-primary-400 hover:text-primary-300 transition-colors"
                 >
                   <PhoneIcon className="h-5 w-5" />
                   <span>{formatPhone(appointment.clientPhone)}</span>

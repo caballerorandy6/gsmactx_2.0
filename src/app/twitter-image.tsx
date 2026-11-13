@@ -52,7 +52,7 @@ export default async function TwitterImage() {
         <div
           style={{
             fontSize: 28,
-            color: "#818cf8",
+            color: "#7fbeff",
             marginBottom: 24,
           }}
         >

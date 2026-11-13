@@ -150,7 +150,7 @@ const AdminDashboard = ({
                   className={clsx(
                     "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all motion-reduce:transition-none",
                     selectedFilter === filter.id
-                      ? "bg-indigo-500/20 text-white border border-indigo-500/30"
+                      ? "bg-primary-500/20 text-white border border-primary-500/30"
                       : "text-gray-400 hover:bg-white/5 hover:text-white border border-transparent"
                   )}
                 >

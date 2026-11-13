@@ -78,7 +78,7 @@ const LoginForm = () => {
                 type="email"
                 autoComplete="email"
                 spellCheck="false"
-                className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
               />
               <ErrorMessage
                 errors={errors}
@@ -103,7 +103,7 @@ const LoginForm = () => {
                 name="password"
                 type="password"
                 autoComplete="current-password"
-                className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
               />
               <ErrorMessage
                 errors={errors}
@@ -118,7 +118,7 @@ const LoginForm = () => {
         <div className="mt-4 text-right">
           <Link
             href="/forgot-password"
-            className="text-sm text-indigo-400 hover:text-indigo-300 transition-colors motion-reduce:transition-none"
+            className="text-sm text-primary-400 hover:text-primary-300 transition-colors motion-reduce:transition-none"
           >
             Forgot Password?
           </Link>
@@ -127,7 +127,7 @@ const LoginForm = () => {
           <button
             type="submit"
             disabled={isPending}
-            className="flex w-28 justify-center rounded-md cursor-pointer bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-colors motion-reduce:transition-none disabled:bg-indigo-300 disabled:cursor-not-allowed"
+            className="flex w-28 justify-center rounded-md cursor-pointer bg-primary-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 transition-colors motion-reduce:transition-none disabled:bg-primary-300 disabled:cursor-not-allowed"
           >
             {isPending ? <ButtonSpinner /> : "Log in"}
           </button>

@@ -18,7 +18,7 @@ const ServiceCard = ({
 }: ServiceCardProps) => {
   return (
     <article className="group flex p-px h-full">
-      <div className="flex flex-col overflow-hidden rounded-lg bg-gray-800 ring-1 ring-white/15 transition-all duration-300 hover:ring-white/30 hover:shadow-lg hover:shadow-indigo-500/10">
+      <div className="flex flex-col overflow-hidden rounded-lg bg-gray-800 ring-1 ring-white/15 transition-all duration-300 hover:ring-white/30 hover:shadow-lg hover:shadow-primary-500/10">
         {/* Image container with responsive height */}
         <div className="relative h-36 sm:h-40 md:h-44 overflow-hidden">
           <Image
@@ -38,7 +38,7 @@ const ServiceCard = ({
           <p className="mt-2 sm:mt-3 text-sm/6 text-gray-300 flex-1">{description}</p>
           <Link
             href={href}
-            className="mt-3 inline-flex items-center text-xs sm:text-sm font-semibold text-blue-400 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800 rounded transition-colors"
+            className="mt-3 inline-flex items-center text-xs sm:text-sm font-semibold text-primary-400 hover:text-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-gray-800 rounded transition-colors"
           >
             <span>{link}</span>
             <span className="sr-only"> about {title}</span>

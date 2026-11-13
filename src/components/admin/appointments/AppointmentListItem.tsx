@@ -37,7 +37,7 @@ const AppointmentListItem = ({ appointment }: AppointmentListItemProps) => {
         </div>
 
         {/* Service type */}
-        <p className="text-sm font-medium text-indigo-400">
+        <p className="text-sm font-medium text-primary-400">
           {serviceLabel}
         </p>
 
@@ -74,7 +74,7 @@ const AppointmentListItem = ({ appointment }: AppointmentListItemProps) => {
         </Link>
         <Link
           href={`/edit-appointment/${appointment.id}`}
-          className="flex-1 md:flex-none text-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 transition-colors motion-reduce:transition-none"
+          className="flex-1 md:flex-none text-center rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-primary-700 transition-colors motion-reduce:transition-none"
         >
           Edit
         </Link>

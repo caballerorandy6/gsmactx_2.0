@@ -103,8 +103,8 @@ const AdminHeader = () => {
                 key={item.href}
                 href={item.href}
                 className={clsx(
-                  "text-sm/6 font-semibold transition-colors hover:text-indigo-300",
-                  isActive(item.href) ? "text-indigo-300" : "text-white"
+                  "text-sm/6 font-semibold transition-colors hover:text-primary-300",
+                  isActive(item.href) ? "text-primary-300" : "text-white"
                 )}
               >
                 {section.title}
@@ -169,14 +169,14 @@ const AdminHeader = () => {
                           className={clsx(
                             "flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all",
                             active
-                              ? "bg-indigo-500/20 text-white border border-indigo-500/30"
+                              ? "bg-primary-500/20 text-white border border-primary-500/30"
                               : "text-gray-300 hover:bg-white/5 hover:text-white"
                           )}
                         >
                           <Icon
                             className={clsx(
                               "h-5 w-5",
-                              active ? "text-indigo-400" : "text-gray-500"
+                              active ? "text-primary-400" : "text-gray-500"
                             )}
                           />
                           {item.name}

@@ -64,7 +64,7 @@ export default async function ServicesOverviewPage() {
                   <Link
                     key={service.id}
                     href={service.href}
-                    className="group relative flex flex-col overflow-hidden rounded-2xl bg-gray-800/50 border border-white/10 hover:border-indigo-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/10"
+                    className="group relative flex flex-col overflow-hidden rounded-2xl bg-gray-800/50 border border-white/10 hover:border-primary-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10"
                   >
                     {/* Image */}
                     <div className="relative h-48 sm:h-52 overflow-hidden">
@@ -83,13 +83,13 @@ export default async function ServicesOverviewPage() {
 
                     {/* Content */}
                     <div className="flex flex-col flex-1 p-5 sm:p-6">
-                      <h2 className="text-lg sm:text-xl font-semibold text-white group-hover:text-indigo-400 transition-colors">
+                      <h2 className="text-lg sm:text-xl font-semibold text-white group-hover:text-primary-400 transition-colors">
                         {service.name}
                       </h2>
                       <p className="mt-2 text-sm text-gray-400 flex-1 line-clamp-3">
                         {serviceData?.description}
                       </p>
-                      <div className="mt-4 flex items-center text-sm font-medium text-indigo-400 group-hover:text-indigo-300">
+                      <div className="mt-4 flex items-center text-sm font-medium text-primary-400 group-hover:text-primary-300">
                         <span>Learn more</span>
                         <span className="sr-only"> about {service.name}</span>
                         <span className="ml-2 transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
@@ -108,15 +108,15 @@ export default async function ServicesOverviewPage() {
             </h2>
             <div className="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
               <div className="p-6 rounded-xl bg-gray-800/30 border border-white/5">
-                <div className="text-3xl sm:text-4xl font-bold text-indigo-400">{yearsInBusiness}+</div>
+                <div className="text-3xl sm:text-4xl font-bold text-primary-400">{yearsInBusiness}+</div>
                 <div className="mt-2 text-sm text-gray-400">Years of Experience</div>
               </div>
               <div className="p-6 rounded-xl bg-gray-800/30 border border-white/5">
-                <div className="text-3xl sm:text-4xl font-bold text-indigo-400">{rating.toFixed(1)}</div>
+                <div className="text-3xl sm:text-4xl font-bold text-primary-400">{rating.toFixed(1)}</div>
                 <div className="mt-2 text-sm text-gray-400">Google Rating</div>
               </div>
               <div className="p-6 rounded-xl bg-gray-800/30 border border-white/5">
-                <div className="text-3xl sm:text-4xl font-bold text-indigo-400">
+                <div className="text-3xl sm:text-4xl font-bold text-primary-400">
                   {reviewCount.toLocaleString()}
                 </div>
                 <div className="mt-2 text-sm text-gray-400">Google Reviews</div>
@@ -135,7 +135,7 @@ export default async function ServicesOverviewPage() {
             <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/book-appointment"
-                className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition-colors"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-semibold transition-colors"
               >
                 Book Appointment
               </Link>

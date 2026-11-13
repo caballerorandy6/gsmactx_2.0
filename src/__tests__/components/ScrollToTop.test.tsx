@@ -104,6 +104,6 @@ describe("ScrollToTop", () => {
     expect(button.className).toContain("bottom-6");
     expect(button.className).toContain("left-6");
     expect(button.className).toContain("rounded-full");
-    expect(button.className).toContain("bg-indigo-600");
+    expect(button.className).toContain("bg-primary-600");
   });
 });

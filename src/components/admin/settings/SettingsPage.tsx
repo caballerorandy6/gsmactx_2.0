@@ -34,7 +34,7 @@ const SettingsPage = ({ currentUser, admins: initialAdmins }: SettingsPageProps)
       {/* Header */}
       <div>
         <h1 className="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
-          <Cog6ToothIcon className="h-7 w-7 sm:h-8 sm:w-8 text-indigo-400" />
+          <Cog6ToothIcon className="h-7 w-7 sm:h-8 sm:w-8 text-primary-400" />
           Settings
         </h1>
         <p className="text-gray-400 text-sm sm:text-base mt-1">

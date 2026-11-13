@@ -55,7 +55,7 @@ const ForgotPasswordForm = () => {
 
             <Link
               href="/login"
-              className="inline-flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors"
+              className="inline-flex items-center gap-2 text-primary-400 hover:text-primary-300 transition-colors"
             >
               <ArrowLeftIcon className="h-4 w-4" />
               Back to Login
@@ -108,7 +108,7 @@ const ForgotPasswordForm = () => {
                   placeholder="admin@example.com"
                   required
                   autoComplete="email"
-                  className="w-full rounded-lg bg-gray-900 border border-white/10 text-white pl-11 pr-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+                  className="w-full rounded-lg bg-gray-900 border border-white/10 text-white pl-11 pr-4 py-3 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500"
                 />
                 <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
               </div>
@@ -117,7 +117,7 @@ const ForgotPasswordForm = () => {
             <button
               type="submit"
               disabled={isPending}
-              className="w-full rounded-lg bg-indigo-600 px-4 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition-colors disabled:bg-indigo-400 disabled:cursor-not-allowed"
+              className="w-full rounded-lg bg-primary-600 px-4 py-3 text-sm font-semibold text-white hover:bg-primary-700 transition-colors disabled:bg-primary-400 disabled:cursor-not-allowed"
             >
               {isPending ? "Sending..." : "Send Reset Link"}
             </button>

@@ -193,7 +193,7 @@ export default function CampaignSender({
           </div>
           <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
             <div
-              className="bg-linear-to-r from-indigo-500 to-purple-500 h-full transition-all duration-500"
+              className="bg-linear-to-r from-primary-500 to-purple-500 h-full transition-all duration-500"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -243,7 +243,7 @@ export default function CampaignSender({
           <button
             onClick={handleInitialize}
             disabled={isInitializing}
-            className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isInitializing ? "Initializing…" : "Initialize Campaign"}
           </button>
@@ -256,7 +256,7 @@ export default function CampaignSender({
             <button
               onClick={handleSendBatch}
               disabled={isSending || stats?.remainingQuota === 0}
-              className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               <EnvelopeIcon className="h-5 w-5" />
               {isSending ? "Sending…" : "Send Next Batch"}

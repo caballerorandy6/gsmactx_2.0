@@ -25,7 +25,7 @@ const ServiceMenu = () => {
         {/* Logo - goes to homepage */}
         <Link
           href="/#home"
-          className="shrink-0 -m-1 p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded-lg transition-transform hover:scale-105"
+          className="shrink-0 -m-1 p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded-lg transition-transform hover:scale-105"
         >
           <span className="sr-only">GSM A/C - Go to homepage</span>
           <Image
@@ -43,10 +43,10 @@ const ServiceMenu = () => {
           href="/book-appointment"
           className={clsx(
             "flex items-center gap-x-1.5",
-            "rounded-lg bg-indigo-600 px-3 py-2",
+            "rounded-lg bg-primary-600 px-3 py-2",
             "text-xs font-semibold text-white shadow-sm",
-            "hover:bg-indigo-500 transition-colors",
-            "focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+            "hover:bg-primary-700 transition-colors",
+            "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
           )}
         >
           <CalendarDaysIcon className="h-4 w-4 shrink-0" aria-hidden="true" />

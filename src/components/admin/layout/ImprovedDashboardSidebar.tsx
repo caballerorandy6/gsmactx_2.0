@@ -82,7 +82,7 @@ const ImprovedDashboardSidebar = ({
       href: "/create-campaign",
       label: "New Campaign",
       icon: EnvelopeIcon,
-      color: "bg-indigo-600 hover:bg-indigo-500",
+      color: "bg-primary-600 hover:bg-primary-700",
     },
     {
       href: "/test-campaign",
@@ -97,7 +97,7 @@ const ImprovedDashboardSidebar = ({
       {/* User Welcome Section */}
       <div className="mb-6 lg:mb-8 pb-4 lg:pb-6 border-b border-white/10">
         <div className="flex items-center gap-3 mb-2">
-          <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-lg">
+          <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-linear-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-lg">
             {userName.charAt(0).toUpperCase()}
           </div>
           <div>
@@ -120,7 +120,7 @@ const ImprovedDashboardSidebar = ({
               className={clsx(
                 "w-full text-left px-3 sm:px-4 py-2 sm:py-3 rounded-lg transition-all flex flex-col lg:flex-row items-center lg:items-center justify-center lg:justify-between group",
                 selectedFilter === item.id
-                  ? "bg-linear-to-r from-indigo-500/20 to-purple-500/20 text-white border border-indigo-500/30 shadow-lg shadow-indigo-500/10"
+                  ? "bg-linear-to-r from-primary-500/20 to-purple-500/20 text-white border border-primary-500/30 shadow-lg shadow-primary-500/10"
                   : "text-gray-300 hover:bg-white/5 hover:text-white hover:border hover:border-white/10"
               )}
             >
@@ -129,7 +129,7 @@ const ImprovedDashboardSidebar = ({
                   className={clsx(
                     "h-5 w-5 transition-colors",
                     selectedFilter === item.id
-                      ? "text-indigo-400"
+                      ? "text-primary-400"
                       : "text-gray-400 group-hover:text-gray-300"
                   )}
                 />
@@ -139,7 +139,7 @@ const ImprovedDashboardSidebar = ({
                 className={clsx(
                   "px-2.5 py-0.5 text-xs font-semibold rounded-full transition-colors mt-1 lg:mt-0",
                   selectedFilter === item.id
-                    ? "bg-indigo-500/30 text-indigo-200"
+                    ? "bg-primary-500/30 text-primary-200"
                     : "bg-gray-700/50 text-gray-400 group-hover:bg-gray-600/50"
                 )}
               >
@@ -174,7 +174,7 @@ const ImprovedDashboardSidebar = ({
       </div>
 
       {/* Stats Summary */}
-      <div className="rounded-xl bg-linear-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 p-3 sm:p-4">
+      <div className="rounded-xl bg-linear-to-br from-primary-500/10 to-purple-500/10 border border-primary-500/20 p-3 sm:p-4">
         <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
           Overview
         </h3>

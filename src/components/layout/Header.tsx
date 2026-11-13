@@ -47,7 +47,7 @@ const Header = () => {
         <div className="flex lg:flex-1">
           <Link
             href="/#home"
-            className="-m-1.5 p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded-lg"
+            className="-m-1.5 p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded-lg"
           >
             <span className="sr-only">GSM A/C - Go to homepage</span>
             <Image
@@ -77,9 +77,9 @@ const Header = () => {
                 key={item.name}
                 href={item.href}
                 className={clsx(
-                  "text-sm/6 font-semibold transition-colors hover:text-indigo-300",
+                  "text-sm/6 font-semibold transition-colors hover:text-primary-300",
                   {
-                    "text-indigo-300": activeSection === item.name,
+                    "text-primary-300": activeSection === item.name,
                   }
                 )}
               >
@@ -92,7 +92,7 @@ const Header = () => {
           <Link
             href="tel:+12812354684"
             passHref
-            className="flex justify-center items-center gap-2 text-white text-sm/6 transition-colors rounded-md bg-indigo-500 px-3.5 py-2.5 font-semibold shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+            className="flex justify-center items-center gap-2 text-white text-sm/6 transition-colors rounded-md bg-primary-600 px-3.5 py-2.5 font-semibold shadow-xs hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
           >
             <span className="font-bold">Call Now!</span>
             <PhoneIcon aria-hidden="true" className="text-white w-4 h-4" />
@@ -109,7 +109,7 @@ const Header = () => {
           <div className="flex items-center justify-between">
             <Link
               href="/#home"
-              className="-m-1.5 p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-lg"
+              className="-m-1.5 p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-lg"
             >
               <span className="sr-only">GSM A/C - Go to homepage</span>
               <Image
@@ -138,9 +138,9 @@ const Header = () => {
                     key={item.name}
                     href={item.href}
                     className={clsx(
-                      "font-semibold transition-colors hover:text-indigo-300",
+                      "font-semibold transition-colors hover:text-primary-300",
                       {
-                        "text-indigo-300": activeSection === item.name,
+                        "text-primary-300": activeSection === item.name,
                       }
                     )}
                     onClick={() => setMobileMenuOpen(false)}
@@ -153,7 +153,7 @@ const Header = () => {
                 <Link
                   href="tel:+12812354684"
                   passHref
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-sm/10 font-semibold text-white hover:text-indigo-300 transition-colors"
+                  className="-mx-3 block rounded-lg px-3 py-2.5 text-sm/10 font-semibold text-white hover:text-primary-300 transition-colors"
                 >
                   <span className="hover">Call Now!</span>
                 </Link>

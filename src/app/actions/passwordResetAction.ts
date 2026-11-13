@@ -83,7 +83,7 @@ export async function requestPasswordResetAction(
 
               <div style="text-align: center; margin: 30px 0;">
                 <a href="${resetUrl}"
-                   style="display: inline-block; background: #4f46e5; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
+                   style="display: inline-block; background: #006ebe; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
                   Reset Password
                 </a>
               </div>
@@ -100,7 +100,7 @@ export async function requestPasswordResetAction(
 
               <p style="font-size: 12px; color: #999;">
                 If the button doesn't work, copy and paste this link into your browser:<br>
-                <a href="${resetUrl}" style="color: #4f46e5; word-break: break-all;">${resetUrl}</a>
+                <a href="${resetUrl}" style="color: #006ebe; word-break: break-all;">${resetUrl}</a>
               </p>
             </div>
           </body>

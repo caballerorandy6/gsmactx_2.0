@@ -30,7 +30,7 @@ export default function SideBar() {
       {/* Logo */}
       <Link
         href="/#home"
-        className="shrink-0 transition-transform hover:scale-105 duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded-lg"
+        className="shrink-0 transition-transform hover:scale-105 duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded-lg"
       >
         <span className="sr-only">GSM A/C - Go to homepage</span>
         <Image
@@ -59,9 +59,9 @@ export default function SideBar() {
                     className={clsx(
                       "block text-xs md:text-sm/6 font-semibold transition-all duration-200",
                       "px-2 py-2 md:px-3 md:py-2.5 rounded-lg group",
-                      "focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500",
+                      "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500",
                       pathname === `/services/${item.id}`
-                        ? "text-white bg-indigo-600 shadow-lg shadow-indigo-600/50"
+                        ? "text-white bg-primary-600 shadow-lg shadow-primary-600/50"
                         : "text-gray-400 hover:text-white hover:bg-gray-800"
                     )}
                   >
@@ -93,7 +93,7 @@ export default function SideBar() {
                 "px-4 py-2 md:px-5 md:py-2.5 lg:px-6",
                 "text-xs md:text-sm/6 font-semibold text-gray-400 hover:text-white",
                 "transition-colors group",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-lg"
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-lg"
               )}
             >
               <PhoneIcon className="h-4 w-4 md:h-5 md:w-5 text-gray-500 group-hover:text-white transition-colors shrink-0" aria-hidden="true" />
@@ -107,9 +107,9 @@ export default function SideBar() {
                 "flex items-center justify-center gap-x-1.5 md:gap-x-2",
                 "mx-4 md:mx-5 lg:mx-6 py-2.5 md:py-3",
                 "text-xs md:text-sm font-bold text-white",
-                "bg-indigo-600 hover:bg-indigo-500 rounded-lg shadow-lg",
-                "transition-all duration-200 hover:shadow-indigo-600/50 hover:scale-[1.02]",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+                "bg-primary-600 hover:bg-primary-700 rounded-lg shadow-lg",
+                "transition-all duration-200 hover:shadow-primary-600/50 hover:scale-[1.02]",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
               )}
             >
               <CalendarDaysIcon className="h-4 w-4 md:h-5 md:w-5 shrink-0" aria-hidden="true" />

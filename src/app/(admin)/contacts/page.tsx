@@ -21,7 +21,7 @@ export default async function ContactsPage() {
       <div className="flex flex-col gap-4">
         <div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white flex items-center gap-2 sm:gap-3">
-            <UsersIcon className="h-6 w-6 sm:h-8 sm:w-8 text-indigo-400" />
+            <UsersIcon className="h-6 w-6 sm:h-8 sm:w-8 text-primary-400" />
             Contacts
           </h1>
           <p className="text-gray-400 text-sm sm:text-base mt-1">

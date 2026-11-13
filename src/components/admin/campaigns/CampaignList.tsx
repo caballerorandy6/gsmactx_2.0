@@ -84,7 +84,7 @@ const CampaignList = async ({ user }) => {
                       {/* Menu icon with dark theme colors */}
                       <MenuButton
                         aria-label="Open options"
-                        className="relative block text-gray-400 hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded"
+                        className="relative block text-gray-400 hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded"
                       >
                         <span className="absolute -inset-2.5" />
                         <EllipsisVerticalIcon

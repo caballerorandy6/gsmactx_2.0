@@ -57,7 +57,7 @@ const ChangePasswordForm = () => {
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
             required
-            className="w-full rounded-lg bg-gray-900 border border-white/10 text-white px-4 py-2.5 pr-10 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            className="w-full rounded-lg bg-gray-900 border border-white/10 text-white px-4 py-2.5 pr-10 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
           <button
             type="button"
@@ -89,7 +89,7 @@ const ChangePasswordForm = () => {
             onChange={(e) => setNewPassword(e.target.value)}
             required
             minLength={8}
-            className="w-full rounded-lg bg-gray-900 border border-white/10 text-white px-4 py-2.5 pr-10 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            className="w-full rounded-lg bg-gray-900 border border-white/10 text-white px-4 py-2.5 pr-10 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
           <button
             type="button"
@@ -123,7 +123,7 @@ const ChangePasswordForm = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            className="w-full rounded-lg bg-gray-900 border border-white/10 text-white px-4 py-2.5 pr-10 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            className="w-full rounded-lg bg-gray-900 border border-white/10 text-white px-4 py-2.5 pr-10 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
           <button
             type="button"
@@ -142,7 +142,7 @@ const ChangePasswordForm = () => {
       <button
         type="submit"
         disabled={isPending}
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 transition-colors disabled:bg-indigo-400 disabled:cursor-not-allowed"
+        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-primary-600 hover:bg-primary-700 transition-colors disabled:bg-primary-400 disabled:cursor-not-allowed"
       >
         <LockClosedIcon className="h-5 w-5" />
         {isPending ? "Changing..." : "Change Password"}
