@@ -32,12 +32,12 @@ const images = [
   },
   {
     src: "/customer.avif",
-    alt: "100% Customer Satisfaction Guaranteed",
+    alt: "10% New Customer and Referral Discount",
     id: "customer",
   },
   {
     src: "/discount.avif",
-    alt: "Special Discounts for Seniors and Military Veterans",
+    alt: "10% Discount for Seniors and Military",
     id: "discount",
   },
 ];
@@ -54,12 +54,11 @@ export default function Footer() {
               className="transition-transform duration-300 hover:scale-110"
             >
               <Image
-                width={100}
-                height={100}
+                width={336}
+                height={336}
                 src={image.src}
                 alt={image.alt}
-                priority={false}
-                className="object-contain w-28 h-auto opacity-90 hover:opacity-100 transition-opacity"
+                className="object-contain size-28 opacity-90 hover:opacity-100 transition-opacity"
               />
             </div>
           ))}
