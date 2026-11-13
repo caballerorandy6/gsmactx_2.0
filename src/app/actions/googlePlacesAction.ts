@@ -24,8 +24,8 @@ export async function getGooglePlaceDetails(): Promise<PlaceRatingData | null> {
     const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,rating,user_ratings_total,reviews&key=${apiKey}`;
 
     const response = await fetch(url, {
-      // Cache for 1 hour to avoid hitting API limits
-      next: { revalidate: 3600 },
+      // Cache for 12 hours to keep Places API usage (and billing) low
+      next: { revalidate: 43200 },
     });
 
     if (!response.ok) {
@@ -71,7 +71,7 @@ export async function getGoogleReviewsAction(): Promise<Review[]> {
     const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=${fields}&key=${apiKey}`;
 
     const response = await fetch(url, {
-      next: { revalidate: 3600 },
+      next: { revalidate: 43200 },
     });
 
     if (!response.ok) {
