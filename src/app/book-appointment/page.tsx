@@ -13,6 +13,7 @@ import {
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { businessInfo } from "@/lib/data";
+import { defaultOgImage } from "@/seo/genPageMetadata";
 
 export const metadata: Metadata = {
   title: "Book an Appointment - GSM A/C & General Contractor",
@@ -31,6 +32,7 @@ export const metadata: Metadata = {
     description:
       "Schedule your HVAC service appointment online. Fast, reliable service in Houston, TX.",
     type: "website",
+    images: [defaultOgImage],
   },
 };
 

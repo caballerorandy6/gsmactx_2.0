@@ -44,10 +44,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  icons: {
-    icon: "/logo.avif",
-    apple: "/logo.avif",
-  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -56,21 +52,12 @@ export const metadata: Metadata = {
     title: "GSM A/C General & Contractor Inc | HVAC Services in Texas",
     description:
       "Professional HVAC services in Cypress, TX. Air conditioning, heating, duct cleaning, and insulation. Licensed & insured. Call (281) 235-4684",
-    images: [
-      {
-        url: "https://www.gsmactx.com/logo.avif",
-        width: 1200,
-        height: 630,
-        alt: "GSM A/C General & Contractor Inc Logo",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "GSM A/C General & Contractor Inc | HVAC Services in Texas",
     description:
       "Professional HVAC services in Cypress, TX. Licensed & insured. Call (281) 235-4684",
-    images: ["https://www.gsmactx.com/logo.avif"],
     creator: "@gsmactx",
     site: "@gsmactx",
   },

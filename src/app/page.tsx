@@ -19,7 +19,6 @@ export const metadata = genPageMetadata({
   description:
     "GSM A/C General & Contractor Inc. offers professional air conditioning installation, air conditioning repair, heating installation, heating repair, air duct sanitizing and attic insulation services in Texas. Trusted HVAC experts delivering efficient, reliable, and affordable climate solutions for homes and businesses.",
   pageRoute: "/",
-  ogImg: "/logo.avif",
 });
 
 export default function Home() {

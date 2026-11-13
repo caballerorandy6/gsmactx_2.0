@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { allServices, businessInfo, services } from "@/lib/data";
+import { defaultOgImage } from "@/seo/genPageMetadata";
 
 // Importing all service components
 import AirConditioningInstallation from "@/components/services/AirConditioningInstallation";
@@ -52,7 +53,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!service) return {};
 
   const { name, id } = service;
-  const serviceImage = serviceImages[id] || "/service1.avif";
   const pageUrl = `https://www.gsmactx.com/services/${id}`;
 
   // Find service description from services array
@@ -83,9 +83,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       locale: "en_US",
       images: [
         {
-          url: `https://www.gsmactx.com${serviceImage}`,
-          width: 1200,
-          height: 630,
+          ...defaultOgImage,
           alt: `${name} - Professional HVAC Service in Cypress and Houston, TX`,
         },
       ],
@@ -94,7 +92,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: `${name} | GSM A/C`,
       description,
-      images: [`https://www.gsmactx.com${serviceImage}`],
+      images: [defaultOgImage.url],
     },
     robots: {
       index: true,

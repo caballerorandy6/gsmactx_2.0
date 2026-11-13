@@ -16,7 +16,6 @@ export const metadata = genPageMetadata({
   description:
     "Professional HVAC services: AC installation & repair, heating installation & repair, air duct sanitizing, and attic insulation. Serving Cypress, Houston, and surrounding areas since 2005.",
   pageRoute: "/services",
-  ogImg: "/worker6.avif",
 });
 
 export default async function ServicesOverviewPage() {
