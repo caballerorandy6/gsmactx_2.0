@@ -140,7 +140,7 @@ const About = () => {
                 variants={imageVariant}
                 className="aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10"
               >
-                <div className={`relative h-80 transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
+                <div className={`relative size-full transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
                   <Image
                     width={560}
                     height={560}
@@ -155,7 +155,7 @@ const About = () => {
                 variants={imageVariant}
                 className="-mt-8 aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10 lg:-mt-40"
               >
-                <div className={`relative h-80 transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
+                <div className={`relative size-full transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
                   <Image
                     width={560}
                     height={560}
@@ -170,7 +170,7 @@ const About = () => {
                 variants={imageVariant}
                 className="aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10"
               >
-                <div className={`relative h-80 transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
+                <div className={`relative size-full transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
                   <Image
                     width={560}
                     height={560}
@@ -185,13 +185,13 @@ const About = () => {
                 variants={imageVariant}
                 className="-mt-8 aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10 lg:-mt-40"
               >
-                <div className={`relative h-80 transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
+                <div className={`relative size-full transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
                   <Image
                     width={560}
                     height={560}
                     alt="Licensed HVAC contractor inspecting air duct system"
                     src="/worker6.avif"
-                    className="block size-full object-cover rounded-2xl shadow-[0_8px_24px_rgba(10,15,26,0.6)]"
+                    className="block size-full object-cover"
                   />
                   <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
                 </div>

@@ -154,22 +154,25 @@ const Testimonials = () => {
               loop
               playsInline
               preload="metadata"
+              width={640}
+              height={360}
+              poster="/video-poster.avif"
               src="/video_compressed.webm"
-              className="inset-0 size-fit object-cover saturate-200 rounded-lg shadow-2xl"
+              className="w-full h-auto aspect-video object-cover rounded-lg shadow-2xl"
             >
               <track
                 kind="captions"
                 src="/captions.vtt"
                 srcLang="en"
                 label="English"
-                default
               />
               Your browser does not support the video tag.
             </video>
           ) : (
-            <div className="aspect-video bg-gray-800 rounded-lg shadow-2xl flex items-center justify-center">
-              <div className="animate-pulse text-gray-500">Loading video…</div>
-            </div>
+            <div
+              className="aspect-video w-full rounded-lg shadow-2xl bg-gray-800"
+              aria-hidden="true"
+            />
           )}
         </motion.div>
       </motion.div>
