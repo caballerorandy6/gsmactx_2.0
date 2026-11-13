@@ -9,6 +9,7 @@ import { PublicAppointmentSchema, PublicAppointmentFormData, SERVICE_TYPES } fro
 import { SERVICE_TYPE_LABELS } from "@/lib/interfaces";
 import { createPublicAppointmentAction } from "@/app/actions/createPublicAppointmentAction";
 import { getBookedTimeSlotsPublicAction } from "@/app/actions/getBookedTimeSlotsPublicAction";
+import { getBusinessToday, isSlotInPast as isBusinessSlotInPast } from "@/lib/utils/bookingTime";
 import { ErrorMessage } from "@hookform/error-message";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import {
@@ -37,22 +38,6 @@ const ALL_TIME_SLOTS = [
   "5:00 PM",
   "6:00 PM",
 ];
-
-// Convert time string like "2:00 PM" to minutes since midnight
-const timeToMinutes = (timeStr: string): number => {
-  const [time, period] = timeStr.split(" ");
-  const [hoursStr, minutesStr] = time.split(":");
-  let hours = parseInt(hoursStr, 10);
-  const minutes = parseInt(minutesStr, 10);
-
-  if (period === "PM" && hours !== 12) {
-    hours += 12;
-  } else if (period === "AM" && hours === 12) {
-    hours = 0;
-  }
-
-  return hours * 60 + minutes;
-};
 
 const BookAppointmentForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -107,19 +92,9 @@ const BookAppointmentForm = () => {
     fetchBookedSlots();
   }, [selectedDate]);
 
-  // Check if a slot is in the past (for today only)
-  const isSlotInPast = (slot: string): boolean => {
-    if (!selectedDate) return false;
-
-    const today = new Date();
-    const todayStr = today.toISOString().split("T")[0];
-
-    if (selectedDate !== todayStr) return false;
-
-    // Add 1 hour buffer for today's slots
-    const currentMinutes = today.getHours() * 60 + today.getMinutes() + 60;
-    return timeToMinutes(slot) <= currentMinutes;
-  };
+  // Same-day slots within the next hour (Houston time) can't be booked
+  const isSlotInPast = (slot: string): boolean =>
+    isBusinessSlotInPast(slot, selectedDate);
 
   // Check if a slot is booked
   const isSlotBooked = (slot: string): boolean => {
@@ -159,10 +134,8 @@ const BookAppointmentForm = () => {
     });
   };
 
-  // Get minimum date (today)
-  const getMinDate = () => {
-    return new Date().toISOString().split("T")[0];
-  };
+  // Minimum date is today in Houston, not UTC
+  const getMinDate = () => getBusinessToday();
 
   if (isSuccess) {
     return (
