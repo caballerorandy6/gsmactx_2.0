@@ -75,11 +75,7 @@ p {
 }
 
 .custom-scrollbar {
-  scrollbar-color: blue #0a0f1a;
-}
-
-.custom-scrollbar {
-  scrollbar-color: blue #0a0f1a; /* Firefox */
+  scrollbar-color: var(--color-indigo-600) #0a0f1a; /* Firefox */
 }
 
 /* WebKit browsers (Chrome, Safari, Edge) */
@@ -88,40 +84,18 @@ p {
   height: 12px;
 }
 
-.custom-scrollbar:-webkit-scrollbar-track {
+.custom-scrollbar::-webkit-scrollbar-track {
   background: #0a0f1a;
 }
 
-.custom-scrollbar:-webkit-scrollbar-thumb {
-  background-color: blue;
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-indigo-600);
   border-radius: 9999px; /* Fully rounded */
   border: 3px solid #0a0f1a;
 }
 
 .gold {
   color: #cbb26a;
-}
-
-@keyframes continuous-spring {
-  0% {
-    transform: scale(1);
-  }
-  25% {
-    transform: scale(1.05);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  75% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.spring-bounce {
-  animation: continuous-spring 1.2s linear infinite;
 }
 
 @layer components {

@@ -56,18 +56,7 @@ const FloatingCTAButtons = () => {
               aria-label="Call us now"
               className="group flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-emerald-600 text-white shadow-lg hover:bg-emerald-500 hover:shadow-emerald-500/40 transition-all duration-300"
             >
-              <motion.div
-                animate={{
-                  rotate: [0, -10, 10, -10, 0],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  repeatDelay: 3,
-                }}
-              >
-                <PhoneIcon className="h-6 w-6" />
-              </motion.div>
+              <PhoneIcon className="h-6 w-6" />
               <span className="hidden sm:inline font-semibold whitespace-nowrap">
                 Call Now
               </span>
@@ -87,18 +76,7 @@ const FloatingCTAButtons = () => {
               aria-label="Book an appointment"
               className="group flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-500 hover:shadow-indigo-500/40 transition-all duration-300"
             >
-              <motion.div
-                animate={{
-                  y: [0, -2, 0],
-                }}
-                transition={{
-                  duration: 1,
-                  repeat: Infinity,
-                  repeatDelay: 2,
-                }}
-              >
-                <CalendarDaysIcon className="h-6 w-6" />
-              </motion.div>
+              <CalendarDaysIcon className="h-6 w-6" />
               <span className="hidden sm:inline font-semibold whitespace-nowrap">
                 Book Now
               </span>

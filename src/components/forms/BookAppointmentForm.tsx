@@ -214,7 +214,7 @@ const BookAppointmentForm = () => {
             {SERVICE_TYPES.map((type) => (
               <label
                 key={type}
-                className="relative flex items-center p-4 cursor-pointer rounded-lg border border-white/10 bg-gray-900/50 hover:bg-gray-900 transition-colors has-checked:border-indigo-500 has-checked:bg-indigo-500/10"
+                className="relative flex items-center p-4 cursor-pointer rounded-lg border border-white/10 bg-gray-900/50 hover:bg-gray-900 transition-colors has-checked:border-indigo-500 has-checked:bg-indigo-500/10 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-indigo-400"
               >
                 <input
                   {...register("serviceType")}
@@ -300,7 +300,7 @@ const BookAppointmentForm = () => {
                       <label
                         key={time}
                         className={`
-                          relative flex items-center justify-center p-3 rounded-lg border text-sm font-medium transition-all
+                          relative flex items-center justify-center p-3 rounded-lg border text-sm font-medium transition-all has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-indigo-400
                           ${isUnavailable
                             ? "bg-red-500/10 border-red-500/30 text-red-400 cursor-not-allowed"
                             : isSelected
