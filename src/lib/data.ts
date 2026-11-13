@@ -38,10 +38,11 @@ export const businessInfo = {
     // Sunday: Closed
   ],
 
-  // Real review data from Google (5.0 rating, 199 reviews)
+  // Fallback review data from Google (snapshot 2026-11-12). Live values come
+  // from getGooglePlaceDetails(); keep this close to them for JSON-LD.
   reviews: {
-    aggregateRating: "5.0",
-    reviewCount: "199",
+    aggregateRating: "4.9",
+    reviewCount: "226",
   },
 
   // Business description from Google

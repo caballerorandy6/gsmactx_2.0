@@ -9,6 +9,7 @@ import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
 import { faqs, businessInfo, allServices, services } from "@/lib/data";
+import { getGooglePlaceDetails } from "@/app/actions/googlePlacesAction";
 
 export const metadata = genPageMetadata({
   title: "HVAC Services in Cypress & Houston, TX | GSM A/C",
@@ -18,7 +19,16 @@ export const metadata = genPageMetadata({
   ogImg: "/worker6.avif",
 });
 
-export default function ServicesOverviewPage() {
+export default async function ServicesOverviewPage() {
+  // Same source as the home hero: live Google data with static fallback
+  const googleData = await getGooglePlaceDetails();
+  const rating =
+    googleData?.rating ?? parseFloat(businessInfo.reviews.aggregateRating);
+  const reviewCount =
+    googleData?.totalReviews ?? parseInt(businessInfo.reviews.reviewCount);
+  const yearsInBusiness =
+    new Date().getFullYear() - parseInt(businessInfo.established);
+
   return (
     <>
       <section
@@ -98,16 +108,18 @@ export default function ServicesOverviewPage() {
             </h2>
             <div className="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
               <div className="p-6 rounded-xl bg-gray-800/30 border border-white/5">
-                <div className="text-3xl sm:text-4xl font-bold text-indigo-400">19+</div>
+                <div className="text-3xl sm:text-4xl font-bold text-indigo-400">{yearsInBusiness}+</div>
                 <div className="mt-2 text-sm text-gray-400">Years of Experience</div>
               </div>
               <div className="p-6 rounded-xl bg-gray-800/30 border border-white/5">
-                <div className="text-3xl sm:text-4xl font-bold text-indigo-400">5.0</div>
+                <div className="text-3xl sm:text-4xl font-bold text-indigo-400">{rating.toFixed(1)}</div>
                 <div className="mt-2 text-sm text-gray-400">Google Rating</div>
               </div>
               <div className="p-6 rounded-xl bg-gray-800/30 border border-white/5">
-                <div className="text-3xl sm:text-4xl font-bold text-indigo-400">199+</div>
-                <div className="mt-2 text-sm text-gray-400">Happy Customers</div>
+                <div className="text-3xl sm:text-4xl font-bold text-indigo-400">
+                  {reviewCount.toLocaleString()}
+                </div>
+                <div className="mt-2 text-sm text-gray-400">Google Reviews</div>
               </div>
             </div>
           </div>
@@ -198,8 +210,8 @@ export default function ServicesOverviewPage() {
         priceRange={businessInfo.priceRange}
         areaServed={businessInfo.serviceAreas}
         aggregateRating={{
-          ratingValue: businessInfo.reviews.aggregateRating,
-          reviewCount: businessInfo.reviews.reviewCount,
+          ratingValue: rating.toFixed(1),
+          reviewCount: String(reviewCount),
         }}
         openingHours={businessInfo.openingHours}
         sameAs={[
