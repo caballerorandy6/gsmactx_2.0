@@ -44,14 +44,6 @@ const TestimonialsCarousel = ({ reviews }: TestimonialsCarouselProps) => {
 
   const scrollTo = (index: number) => emblaApi && emblaApi.scrollTo(index);
 
-  if (reviews.length === 0) {
-    return (
-      <div className="py-16 text-center text-gray-400">
-        Loading reviews...
-      </div>
-    );
-  }
-
   return (
     <div className="py-12">
       {/* Carousel Container */}

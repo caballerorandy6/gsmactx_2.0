@@ -1,7 +1,11 @@
+import { Suspense } from "react";
 import Hero from "@/components/landing/Hero";
 import About from "@/components/landing/About";
 import Services from "@/components/landing/Services";
 import Testimonials from "@/components/landing/Testimonials";
+import GoogleReviews, {
+  GoogleReviewsSkeleton,
+} from "@/components/landing/GoogleReviews";
 import LazyContact from "@/components/landing/LazyContact";
 import ScrollSpyHandler from "@/components/layout/ScrollSpyHandler";
 import ScrollToTop from "@/components/ui/ScrollToTop";
@@ -30,7 +34,13 @@ export default function Home() {
       <Hero />
       <About />
       <Services />
-      <Testimonials />
+      <Testimonials
+        reviewsSlot={
+          <Suspense fallback={<GoogleReviewsSkeleton />}>
+            <GoogleReviews />
+          </Suspense>
+        }
+      />
       <LazyContact />
       <FAQ faqs={faqs} />
       <Footer />

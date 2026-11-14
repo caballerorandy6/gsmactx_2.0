@@ -1,11 +1,6 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-} from "@headlessui/react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import useSectionObserver from "@/hooks/useSectionObserver";
 
@@ -79,34 +74,25 @@ export default function FAQ({ faqs }: FAQProps) {
           </motion.h2>
           <motion.div
             variants={staggerContainer}
-            className="mt-16 space-y-2 divide-y divide-white/10"
+            className="mt-12 divide-y divide-white/10"
           >
             {faqs.map((faq) => (
               <motion.div key={faq.question} variants={itemVariant}>
-                <Disclosure as="div" className="py-8 first:pt-0 last:pb-0">
-                  <div>
-                    <DisclosureButton className="group flex w-full items-start justify-between text-left text-white hover:text-gray-300 transition-colors">
-                      <span className="text-base/7 font-semibold">
-                        {faq.question}
-                      </span>
-                      <span className="ml-6 flex h-7 items-center">
-                        <PlusIcon className="size-6 group-data-open:hidden transition-transform" aria-hidden="true" />
-                        <MinusIcon className="size-6 group-not-data-open:hidden transition-transform" aria-hidden="true" />
-                      </span>
-                    </DisclosureButton>
-                  </div>
-                  <DisclosurePanel as="dd" className="mt-2 pr-12">
-                    <motion.p
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="text-base/7 text-gray-300"
-                    >
-                      {faq.answer}
-                    </motion.p>
-                  </DisclosurePanel>
-                </Disclosure>
+                {/* Native details: answers stay in the HTML even when closed */}
+                <details className="group py-6">
+                  <summary className="flex w-full cursor-pointer list-none items-start justify-between text-left text-white transition-colors hover:text-gray-300 [&::-webkit-details-marker]:hidden">
+                    <h3 className="text-base/7 font-semibold">
+                      {faq.question}
+                    </h3>
+                    <span className="ml-6 flex h-7 items-center">
+                      <PlusIcon className="size-6 group-open:hidden" aria-hidden="true" />
+                      <MinusIcon className="size-6 hidden group-open:block" aria-hidden="true" />
+                    </span>
+                  </summary>
+                  <p className="mt-2 pr-12 text-base/7 text-gray-300">
+                    {faq.answer}
+                  </p>
+                </details>
               </motion.div>
             ))}
           </motion.div>

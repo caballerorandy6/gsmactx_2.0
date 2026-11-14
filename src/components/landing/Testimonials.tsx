@@ -1,16 +1,17 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import TestimonialsCarousel from "./TestimonialsCarousel";
-import { Review } from "@/lib/interfaces";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, type ReactNode } from "react";
 import useSectionObserver from "@/hooks/useSectionObserver";
-import { getGoogleReviewsAction } from "@/app/actions/googlePlacesAction";
 
-const Testimonials = () => {
+interface TestimonialsProps {
+  /** Server-rendered Google reviews (wrapped in Suspense by the page) */
+  reviewsSlot: ReactNode;
+}
+
+const Testimonials = ({ reviewsSlot }: TestimonialsProps) => {
   const ref = useSectionObserver({ sectionName: "Testimonials" });
   const shouldReduceMotion = useReducedMotion();
-  const [testimonials, setTestimonials] = useState<Review[]>([]);
   const [isVideoVisible, setIsVideoVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -39,14 +40,6 @@ const Testimonials = () => {
       videoRef.current.playbackRate = 1;
     }
   }, [isVideoVisible]);
-
-  useEffect(() => {
-    const fetchTestimonials = async () => {
-      const reviews = await getGoogleReviewsAction();
-      setTestimonials(reviews);
-    };
-    fetchTestimonials();
-  }, []);
 
   // Spring-based animation for natural feel
   // Using GPU-accelerated properties only (opacity, transform)
@@ -108,7 +101,7 @@ const Testimonials = () => {
         viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
       >
-        <TestimonialsCarousel reviews={testimonials} />
+        {reviewsSlot}
       </motion.div>
 
       <motion.div
