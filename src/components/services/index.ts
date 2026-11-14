@@ -1,6 +1,5 @@
 export { default as ServiceCard } from "./ServiceCard";
 export { default as ServiceDetails } from "./ServiceDetails";
-export { default as ServiceMenu } from "./ServiceMenu";
 export { default as HeatingRepair } from "./HeatingRepair";
 export { default as HeatingInstallation } from "./HeatingInstallation";
 export { default as AirConditioningRepair } from "./AirConditioningRepair";

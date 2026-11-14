@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import Footer from "@/components/layout/Footer";
-import ServiceMenu from "@/components/services/ServiceMenu";
 import FAQ from "@/components/landing/FAQ";
 import { genPageMetadata } from "@/seo/genPageMetadata";
 import { JsonLdForArticle } from "@/components/seo/JsonLdForArticle";
@@ -32,15 +31,10 @@ export default async function ServicesOverviewPage() {
     <>
       <section
         id="services-overview"
-        className="min-h-screen py-16 sm:py-24"
+        className="min-h-screen pt-32 pb-16 sm:pt-36 sm:pb-24"
         aria-labelledby="services-title"
       >
         <div className="w-full px-4 sm:px-6 lg:px-8">
-          {/* Mobile Header */}
-          <div className="pb-16 sm:pb-0">
-            <ServiceMenu />
-          </div>
-
           {/* Hero Section */}
           <div className="mx-auto max-w-4xl text-center pb-12 sm:pb-16">
             <h1

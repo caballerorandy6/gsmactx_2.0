@@ -62,7 +62,7 @@ const ServiceDetails = ({
   return (
     <section
       id={id}
-      className="overflow-hidden bg-white py-24 sm:py-32 custom-blue"
+      className="overflow-hidden bg-white pt-32 pb-24 sm:pt-36 sm:pb-32 custom-blue"
     >
       <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8 flex flex-col items-center">
         <motion.h1

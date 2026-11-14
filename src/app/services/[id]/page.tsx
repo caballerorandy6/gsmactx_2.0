@@ -137,7 +137,7 @@ export default async function ServicePage({ params }: Props) {
   if (!ServiceComponent) notFound();
 
   return (
-    <main className="p-8">
+    <main>
       <ServiceComponent />
       <FAQ faqs={faqs} />
       <Footer />
