@@ -87,7 +87,7 @@ export default function Services() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="mt-16 max-w-xl space-y-6 text-base/7 lg:max-w-none"
+          className="mt-20 grid max-w-2xl gap-10 lg:max-w-none lg:grid-cols-3 lg:gap-12"
         >
           {features.map((feature) => (
             <motion.div
@@ -95,10 +95,10 @@ export default function Services() {
               variants={fadeInUp}
               className="relative flex flex-col"
             >
-              <h3 className="heading-sub">
+              <h3 className="text-lg/7 font-semibold tracking-tight text-pretty text-white">
                 {feature.name}
               </h3>
-              <p className="mt-4 text-base/7 text-gray-300">
+              <p className="mt-3 text-base/7 text-gray-300">
                 {feature.description}
               </p>
             </motion.div>

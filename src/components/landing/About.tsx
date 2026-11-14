@@ -69,7 +69,7 @@ const About = () => {
           </motion.h2>
           <motion.p
             variants={fadeInUp}
-            className="mt-6 text-base/7 text-gray-300"
+            className="mt-6 max-w-2xl text-base/7 text-gray-300"
           >
             We established our HVAC repair & installation company in 2005 and
             since then, GSM A/C & General Contractor INC. has become a
