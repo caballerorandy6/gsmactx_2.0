@@ -445,6 +445,100 @@ export const commonServiceFaqs: Faq[] = [
   },
 ];
 
+type ServicePageContent = {
+  /** Descriptive H1: names the service and the city. */
+  heading: string;
+  tagline: string;
+  signsHeading: string;
+  /** General HVAC warning signs only: no claims about the business. */
+  signs: string[];
+  /** Ids from `allServices`, linked at the bottom of the page. */
+  related: string[];
+};
+
+/** Per-service page content keyed by service id (see /services/[id]). */
+export const servicePageContent: Record<string, ServicePageContent> = {
+  "air-conditioning-installation": {
+    heading: "Air Conditioning Installation in Cypress, TX",
+    tagline: "New AC and HVAC systems, sized for your home and installed with care.",
+    signsHeading: "Signs it may be time to replace your AC",
+    signs: [
+      "The system is 10 to 15 years old or more.",
+      "Repairs are getting more frequent and more expensive.",
+      "It still runs on R-22 refrigerant, which is no longer produced in the U.S.",
+      "Some rooms never cool down, or the house falls behind on the hottest afternoons.",
+      "Your cooling bills keep rising while your usage stays the same.",
+    ],
+    related: ["air-conditioning-repair", "attic-insulation", "air-duct-sanitizing"],
+  },
+  "air-conditioning-repair": {
+    heading: "Air Conditioning Repair in Cypress, TX",
+    tagline: "We find what is wrong, fix or replace the faulty part, and get your home cool again.",
+    signsHeading: "Signs your AC needs repair",
+    signs: [
+      "The vents blow warm or barely cool air.",
+      "Ice forms on the refrigerant lines or the outdoor unit.",
+      "Water leaks or pools around the indoor unit.",
+      "Grinding, squealing or banging noises when the system runs.",
+      "The system turns on and off in short cycles.",
+      "The thermostat is set, but the house never reaches the temperature.",
+    ],
+    related: ["air-conditioning-installation", "air-duct-sanitizing", "heating-repair"],
+  },
+  "heating-installation": {
+    heading: "Heating Installation in Cypress, TX",
+    tagline: "Furnaces and heating systems placed and set up for even, efficient heat.",
+    signsHeading: "Signs it may be time for a new heating system",
+    signs: [
+      "The furnace is 15 to 20 years old or more.",
+      "You are calling for repairs every winter.",
+      "Some rooms stay cold while others overheat.",
+      "Your heating bills rise from one winter to the next.",
+      "A repair quote is getting close to the cost of a new system.",
+    ],
+    related: ["heating-repair", "attic-insulation", "air-conditioning-installation"],
+  },
+  "heating-repair": {
+    heading: "Heating Repair in Cypress, TX",
+    tagline: "Furnace and heating repair for homes and offices, with faulty parts repaired or replaced.",
+    signsHeading: "Signs your heating needs repair",
+    signs: [
+      "No heat, or the air from the vents is only lukewarm.",
+      "The burner flame on a gas furnace is yellow instead of blue.",
+      "A burning smell that lasts beyond the first days of the season.",
+      "The furnace turns on and off much more often than usual.",
+      "Rattling, banging or screeching noises when the heat runs.",
+    ],
+    related: ["heating-installation", "air-duct-sanitizing", "air-conditioning-repair"],
+  },
+  "air-duct-sanitizing": {
+    heading: "Air Duct Cleaning and Sanitizing in Cypress, TX",
+    tagline: "Dust, allergens and germs removed from your ducts and vents.",
+    signsHeading: "Signs your air ducts need cleaning",
+    signs: [
+      "Dust puffs out of the vents or settles on the registers soon after you clean.",
+      "A musty smell when the system starts.",
+      "Allergy symptoms that get worse indoors.",
+      "You recently remodeled and construction dust got into the system.",
+      "Signs of pests or rodents in the ductwork.",
+    ],
+    related: ["air-conditioning-repair", "heating-repair", "attic-insulation"],
+  },
+  "attic-insulation": {
+    heading: "Attic Insulation in Cypress, TX",
+    tagline: "Insulation that keeps Houston heat out in summer and warm air in during winter.",
+    signsHeading: "Signs your attic needs more insulation",
+    signs: [
+      "Upstairs rooms are noticeably hotter in summer.",
+      "You can see the tops of the ceiling joists, so the insulation is too thin.",
+      "The insulation looks flattened, wet or stained.",
+      "The ceiling feels warm to the touch on hot days.",
+      "Your A/C runs almost nonstop through the summer.",
+    ],
+    related: ["air-conditioning-installation", "heating-installation", "air-duct-sanitizing"],
+  },
+};
+
 /**
  * Service-specific FAQ, keyed by service id. Rendered on the service page and
  * reused verbatim for its FAQPage JSON-LD, so visible text and schema match.

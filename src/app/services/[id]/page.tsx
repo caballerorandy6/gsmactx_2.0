@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const serviceData = services.find((s) => s.href === `/services/${id}`);
   const description =
     serviceData?.metaDescription ??
-    `Professional ${name} services in Cypress, Katy and Houston, TX. Licensed HVAC contractor. Call (281) 235-4684 for same-day service.`;
+    `${name} in Cypress, Katy and Houston, TX. Call GSM A/C at (281) 235-4684.`;
 
   return {
     title: `${name} in Cypress & Houston TX | GSM A/C`,
@@ -74,8 +74,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `${name.toLowerCase()} Cypress TX`,
       `${name.toLowerCase()} Houston`,
       "HVAC services Texas",
-      "licensed HVAC contractor",
-      "same-day HVAC service",
     ],
     alternates: {
       canonical: `/services/${id}`,
@@ -121,6 +119,7 @@ export default async function ServicePage({ params }: Props) {
     return null;
   }
 
+  const serviceData = services.find((s) => s.href === `/services/${id}`);
   const faqs = [...(serviceFaqs[service.id] ?? []), ...commonServiceFaqs];
 
   const ServiceComponent = componentMap[service.id];
@@ -156,7 +155,7 @@ export default async function ServicePage({ params }: Props) {
       <JsonLdForService
         serviceName={service.name}
         serviceType="HVAC Service"
-        description={`Professional ${service.name} services in Cypress and Houston, TX. Licensed and insured HVAC contractors with 5-star rating providing quality service since 2005.`}
+        description={serviceData?.metaDescription ?? `${service.name} in Cypress, Katy and Houston, TX.`}
         providerName={businessInfo.name}
         providerUrl={businessInfo.website}
         telephone={businessInfo.phone}

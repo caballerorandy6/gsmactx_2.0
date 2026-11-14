@@ -2,16 +2,22 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
-import { CalendarDaysIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowRightIcon,
+  CalendarDaysIcon,
+  CheckCircleIcon,
+  PhoneIcon,
+} from "@heroicons/react/24/outline";
 import { ServiceDetailsProps } from "@/lib/types";
+import { allServices, servicePageContent } from "@/lib/data";
 
-const ServiceDetails = ({
-  id,
-  title,
-  imageSrc,
-  array,
-}: ServiceDetailsProps) => {
+const ServiceDetails = ({ id, imageSrc, array }: ServiceDetailsProps) => {
   const shouldReduceMotion = useReducedMotion();
+  const content = servicePageContent[id];
+  const title = content.heading;
+  const related = content.related.flatMap((relatedId) =>
+    allServices.filter((service) => service.id === relatedId),
+  );
 
   // Spring-based animation for natural feel
   // Using GPU-accelerated properties only (opacity, transform)
@@ -67,15 +73,18 @@ const ServiceDetails = ({
       className="overflow-hidden bg-white pt-32 pb-24 sm:pt-36 sm:pb-32 custom-blue"
     >
       <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8 flex flex-col items-center">
-        <motion.h1
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="heading-page text-center"
+          className="max-w-3xl text-center"
         >
-          {title}
-        </motion.h1>
+          <h1 className="heading-page text-balance">{title}</h1>
+          <p className="mt-4 text-lg/8 text-gray-300 text-pretty">
+            {content.tagline}
+          </p>
+        </motion.div>
 
         <motion.div
           initial="hidden"
@@ -97,7 +106,10 @@ const ServiceDetails = ({
             decoding="async"
             className="block size-full object-cover"
           />
-          <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" aria-hidden="true" />
+          <div
+            className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent"
+            aria-hidden="true"
+          />
         </motion.div>
 
         <motion.div
@@ -108,18 +120,30 @@ const ServiceDetails = ({
           className="mt-6 w-full max-w-2xl space-y-10"
         >
           {array.map((item, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariant}
-            >
-              {item.name && (
-                <h2 className="heading-sub mb-3">{item.name}</h2>
-              )}
+            <motion.div key={index} variants={itemVariant}>
+              {item.name && <h2 className="heading-sub mb-3">{item.name}</h2>}
               <p className="text-base/7 text-gray-300 sm:text-lg/8">
                 {item.description}
               </p>
             </motion.div>
           ))}
+          <motion.div variants={itemVariant}>
+            <h2 className="heading-sub mb-4">{content.signsHeading}</h2>
+            <ul role="list" className="space-y-3">
+              {content.signs.map((sign) => (
+                <li
+                  key={sign}
+                  className="flex gap-3 text-base/7 text-gray-300 sm:text-lg/8"
+                >
+                  <CheckCircleIcon
+                    aria-hidden="true"
+                    className="mt-1 size-5 flex-none text-primary-400 sm:mt-1.5"
+                  />
+                  {sign}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
           <div className="flex flex-col gap-3 border-t border-white/10 pt-8 sm:flex-row">
             <Link
               href="/book-appointment"
@@ -136,6 +160,27 @@ const ServiceDetails = ({
               Call (281) 235-4684
             </Link>
           </div>
+          <nav aria-labelledby={`${id}-related`} className="pt-4">
+            <h2 id={`${id}-related`} className="heading-sub mb-2">
+              Related services
+            </h2>
+            <ul role="list" className="divide-y divide-white/10">
+              {related.map((service) => (
+                <li key={service.id}>
+                  <Link
+                    href={service.href}
+                    className="group flex items-center justify-between gap-4 py-4 text-base font-medium text-white hover:text-primary-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+                  >
+                    {service.name}
+                    <ArrowRightIcon
+                      aria-hidden="true"
+                      className="size-5 flex-none text-gray-400 transition-transform group-hover:translate-x-1 group-hover:text-primary-300 motion-reduce:transition-none"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </motion.div>
       </div>
     </section>
