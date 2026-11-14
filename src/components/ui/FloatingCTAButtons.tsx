@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { PhoneIcon, CalendarDaysIcon } from "@heroicons/react/24/solid";
 import { businessInfo } from "@/lib/data";
 
 const FloatingCTAButtons = () => {
   const [isVisible, setIsVisible] = useState(false);
+  // On the booking page itself only the call button is useful.
+  const showBook = usePathname() !== "/book-appointment";
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -42,7 +45,7 @@ const FloatingCTAButtons = () => {
   return (
     <AnimatePresence>
       {isVisible && (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+        <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 lg:hidden">
           {/* Call Button */}
           <motion.div
             custom={0}
@@ -54,20 +57,9 @@ const FloatingCTAButtons = () => {
             <Link
               href={`tel:${businessInfo.phone}`}
               aria-label="Call us now"
-              className="group flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-emerald-600 text-white shadow-lg hover:bg-emerald-500 hover:shadow-emerald-500/40 transition-all duration-300"
+              className="group flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-primary-600 text-white shadow-lg hover:bg-primary-700 hover:shadow-primary-500/40 transition-all duration-300"
             >
-              <motion.div
-                animate={{
-                  rotate: [0, -10, 10, -10, 0],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  repeatDelay: 3,
-                }}
-              >
-                <PhoneIcon className="h-6 w-6" />
-              </motion.div>
+              <PhoneIcon className="h-6 w-6" />
               <span className="hidden sm:inline font-semibold whitespace-nowrap">
                 Call Now
               </span>
@@ -75,35 +67,26 @@ const FloatingCTAButtons = () => {
           </motion.div>
 
           {/* Book Appointment Button */}
-          <motion.div
-            custom={1}
-            variants={buttonVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
-            <Link
-              href="/book-appointment"
-              aria-label="Book an appointment"
-              className="group flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-500 hover:shadow-indigo-500/40 transition-all duration-300"
+          {showBook && (
+            <motion.div
+              custom={1}
+              variants={buttonVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
             >
-              <motion.div
-                animate={{
-                  y: [0, -2, 0],
-                }}
-                transition={{
-                  duration: 1,
-                  repeat: Infinity,
-                  repeatDelay: 2,
-                }}
+              <Link
+                href="/book-appointment"
+                aria-label="Book an appointment"
+                className="group flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-primary-600 text-white shadow-lg hover:bg-primary-700 hover:shadow-primary-500/40 transition-all duration-300"
               >
                 <CalendarDaysIcon className="h-6 w-6" />
-              </motion.div>
-              <span className="hidden sm:inline font-semibold whitespace-nowrap">
-                Book Now
-              </span>
-            </Link>
-          </motion.div>
+                <span className="hidden sm:inline font-semibold whitespace-nowrap">
+                  Book Now
+                </span>
+              </Link>
+            </motion.div>
+          )}
         </div>
       )}
     </AnimatePresence>

@@ -50,9 +50,7 @@ export interface GooglePlacesReview {
   }[];
 }
 
-export interface Review extends GooglePlacesReview {
-  photoUrl: string | null;
-}
+export type Review = Omit<GooglePlacesReview, "photos">;
 
 export interface IImage {
   src: string;

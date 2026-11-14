@@ -111,7 +111,7 @@ const AdminSidebar = () => {
   return (
     <>
       {/* Tablet Sidebar (md-lg) - Collapsed with icons only */}
-      <aside className="hidden md:flex lg:hidden flex-col w-20 min-h-[calc(100vh-4rem)] bg-gray-900/80 backdrop-blur-sm border-r border-white/10 py-6 relative z-30">
+      <aside className="hidden md:flex lg:hidden flex-col w-20 shrink-0 min-h-[calc(100vh-4rem)] bg-gray-900/80 backdrop-blur-sm border-r border-white/10 py-6 relative z-30">
         {navSections.map((section) => (
           <div key={section.title} className="px-2 mb-4">
             <nav className="space-y-1">
@@ -126,7 +126,7 @@ const AdminSidebar = () => {
                     className={clsx(
                       "group relative flex items-center justify-center p-3 rounded-lg transition-all motion-reduce:transition-none",
                       active
-                        ? "bg-indigo-500/20 text-white border border-indigo-500/30"
+                        ? "bg-primary-500/20 text-white border border-primary-500/30"
                         : "text-gray-400 hover:bg-white/5 hover:text-white"
                     )}
                   >
@@ -134,7 +134,7 @@ const AdminSidebar = () => {
                       aria-hidden="true"
                       className={clsx(
                         "h-6 w-6 transition-colors motion-reduce:transition-none",
-                        active ? "text-indigo-400" : "text-gray-500 group-hover:text-gray-300"
+                        active ? "text-primary-400" : "text-gray-500 group-hover:text-gray-300"
                       )}
                     />
                     {/* Tooltip */}
@@ -151,7 +151,7 @@ const AdminSidebar = () => {
       </aside>
 
       {/* Desktop Sidebar (lg+) - Full with labels */}
-      <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:min-h-[calc(100vh-4rem)] bg-gray-900/80 backdrop-blur-sm border-r border-white/10 py-6">
+      <aside className="hidden lg:flex lg:flex-col lg:w-64 shrink-0 lg:min-h-[calc(100vh-4rem)] bg-gray-900/80 backdrop-blur-sm border-r border-white/10 py-6">
         {navSections.map((section) => (
           <div key={section.title} className="px-4 mb-6">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">
@@ -168,7 +168,7 @@ const AdminSidebar = () => {
                     className={clsx(
                       "group flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all motion-reduce:transition-none",
                       active
-                        ? "bg-indigo-500/20 text-white border border-indigo-500/30"
+                        ? "bg-primary-500/20 text-white border border-primary-500/30"
                         : "text-gray-400 hover:bg-white/5 hover:text-white"
                     )}
                   >
@@ -177,13 +177,13 @@ const AdminSidebar = () => {
                         aria-hidden="true"
                         className={clsx(
                           "h-5 w-5 transition-colors motion-reduce:transition-none",
-                          active ? "text-indigo-400" : "text-gray-500 group-hover:text-gray-300"
+                          active ? "text-primary-400" : "text-gray-500 group-hover:text-gray-300"
                         )}
                       />
                       {item.label}
                     </div>
                     {active && (
-                      <ChevronRightIcon aria-hidden="true" className="h-4 w-4 text-indigo-400" />
+                      <ChevronRightIcon aria-hidden="true" className="h-4 w-4 text-primary-400" />
                     )}
                   </Link>
                 );
@@ -213,12 +213,12 @@ const AdminSidebar = () => {
                 className={clsx(
                   "flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-lg transition-colors motion-reduce:transition-none min-w-[60px]",
                   active
-                    ? "text-indigo-400"
+                    ? "text-primary-400"
                     : "text-gray-400 hover:text-white"
                 )}
               >
                 <item.icon aria-hidden="true" className="h-6 w-6" />
-                <span className="text-[10px] font-medium">{item.label}</span>
+                <span className="text-xs font-medium">{item.label}</span>
               </Link>
             );
           })}

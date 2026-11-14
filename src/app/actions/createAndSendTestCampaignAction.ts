@@ -7,17 +7,9 @@ import { prisma } from "@/lib/db/prisma";
 import { cookies } from "next/headers";
 import { put } from "@vercel/blob";
 import { renderCampaignEmail } from "@/lib/email/emailRenderer";
+import { TEST_RECIPIENTS } from "@/lib/email/testRecipients";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-
-// Test emails for campaign testing
-const TEST_EMAILS = [
-  "caballerorandy7@gmail.com",
-  "gsmactx@outlook.com",
-  "michel@gsmactx.com",
-  "mchapelli305@gmail.com",
-  "mchapelli305@yahoo.com",
-];
 
 export async function createAndSendTestCampaignAction(
   formData: FormData
@@ -55,7 +47,7 @@ export async function createAndSendTestCampaignAction(
     // Get test subscribers
     const subscribers = await prisma.subscriber.findMany({
       where: {
-        email: { in: TEST_EMAILS },
+        email: { in: [...TEST_RECIPIENTS] },
         isSubscribed: true,
       },
     });

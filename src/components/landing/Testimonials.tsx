@@ -1,16 +1,17 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import TestimonialsCarousel from "./TestimonialsCarousel";
-import { Review } from "@/lib/interfaces";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, type ReactNode } from "react";
 import useSectionObserver from "@/hooks/useSectionObserver";
-import { getGoogleReviewsAction } from "@/app/actions/googlePlacesAction";
 
-const Testimonials = () => {
+interface TestimonialsProps {
+  /** Server-rendered Google reviews (wrapped in Suspense by the page) */
+  reviewsSlot: ReactNode;
+}
+
+const Testimonials = ({ reviewsSlot }: TestimonialsProps) => {
   const ref = useSectionObserver({ sectionName: "Testimonials" });
   const shouldReduceMotion = useReducedMotion();
-  const [testimonials, setTestimonials] = useState<Review[]>([]);
   const [isVideoVisible, setIsVideoVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -39,14 +40,6 @@ const Testimonials = () => {
       videoRef.current.playbackRate = 1;
     }
   }, [isVideoVisible]);
-
-  useEffect(() => {
-    const fetchTestimonials = async () => {
-      const reviews = await getGoogleReviewsAction();
-      setTestimonials(reviews);
-    };
-    fetchTestimonials();
-  }, []);
 
   // Spring-based animation for natural feel
   // Using GPU-accelerated properties only (opacity, transform)
@@ -92,15 +85,15 @@ const Testimonials = () => {
       id="testimonials"
       className="py-24 sm:py-32 mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8"
     >
-      <motion.p
+      <motion.h2
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={fadeInUp}
-        className="mt-2 max-w-lg text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl"
+        className="mt-2 max-w-lg heading-section"
       >
         What our customers say?
-      </motion.p>
+      </motion.h2>
 
       <motion.div
         initial="hidden"
@@ -108,7 +101,7 @@ const Testimonials = () => {
         viewport={{ once: true, margin: "-100px" }}
         variants={fadeIn}
       >
-        <TestimonialsCarousel reviews={testimonials} />
+        {reviewsSlot}
       </motion.div>
 
       <motion.div
@@ -119,10 +112,10 @@ const Testimonials = () => {
         className="flex flex-col xl:flex-row justify-between gap-8 items-center rounded-r-4xl"
       >
         <motion.div variants={fadeInUp} className="xl:w-1/2">
-          <h2 className="text-2xl font-semibold tracking-tight text-pretty text-white">
+          <h3 className="heading-sub">
             Committed to Excellence: Our Clients&apos; Satisfaction Speaks for
             Itself
-          </h2>
+          </h3>
           <p className="mt-6 text-base/7 text-gray-300">
             At GSM A/C & General Contractor INC., we don&apos;t just specialize in
             HVAC installation and repair — we build long-lasting relationships
@@ -154,22 +147,25 @@ const Testimonials = () => {
               loop
               playsInline
               preload="metadata"
+              width={640}
+              height={360}
+              poster="/video-poster.avif"
               src="/video_compressed.webm"
-              className="inset-0 size-fit object-cover saturate-200 rounded-lg shadow-2xl"
+              className="w-full h-auto aspect-video object-cover rounded-lg shadow-2xl"
             >
               <track
                 kind="captions"
                 src="/captions.vtt"
                 srcLang="en"
                 label="English"
-                default
               />
               Your browser does not support the video tag.
             </video>
           ) : (
-            <div className="aspect-video bg-gray-800 rounded-lg shadow-2xl flex items-center justify-center">
-              <div className="animate-pulse text-gray-500">Loading video…</div>
-            </div>
+            <div
+              className="aspect-video w-full rounded-lg shadow-2xl bg-gray-800"
+              aria-hidden="true"
+            />
           )}
         </motion.div>
       </motion.div>

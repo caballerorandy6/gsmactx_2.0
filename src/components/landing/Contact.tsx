@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { UserFormData, UserSchema } from "@/lib/validations/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import useSectionObserver from "@/hooks/useSectionObserver";
+import { businessInfo } from "@/lib/data";
 import {
   BuildingOffice2Icon,
   EnvelopeIcon,
@@ -125,7 +126,7 @@ export default function Contact() {
           className="relative px-6 pt-24 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48"
         >
           <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
-            <div className="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden ring-1 ring-white/5 lg:w-1/2" aria-hidden="true">
+            <div className="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden lg:w-1/2" aria-hidden="true">
               <svg className="absolute inset-0 size-full mask-[radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-gray-700">
                 <defs>
                   <pattern
@@ -159,13 +160,13 @@ export default function Contact() {
                     clipPath:
                       "polygon(74.1% 56.1%, 100% 38.6%, 97.5% 73.3%, 85.5% 100%, 80.7% 98.2%, 72.5% 67.7%, 60.2% 37.8%, 52.4% 32.2%, 47.5% 41.9%, 45.2% 65.8%, 27.5% 23.5%, 0.1% 35.4%, 17.9% 0.1%, 27.6% 23.5%, 76.1% 2.6%, 74.1% 56.1%)",
                   }}
-                  className="aspect-1155/678 w-288.75 bg-linear-to-br from-[#80caff] to-[#4f46e5] opacity-20"
+                  className="aspect-1155/678 w-288.75 bg-linear-to-br from-primary-300 to-primary-600 opacity-15"
                 />
               </div>
             </div>
             <motion.h2
               variants={fadeInUp}
-              className="text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl"
+              className="heading-section"
             >
               Get in touch
             </motion.h2>
@@ -189,11 +190,21 @@ export default function Contact() {
                   <span className="sr-only">Address</span>
                   <BuildingOffice2Icon className="h-7 w-6 text-gray-400" />
                 </div>
-                <div>
-                  GSM A/C & General Contractor INC.
+                <address className="not-italic">
+                  {businessInfo.name}
                   <br />
-                  Cypress, TX 77433
-                </div>
+                  <a
+                    href={businessInfo.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    {businessInfo.address.street}
+                    <br />
+                    {businessInfo.address.city}, {businessInfo.address.state}{" "}
+                    {businessInfo.address.zip}
+                  </a>
+                </address>
               </motion.div>
               <motion.div variants={itemVariant} className="flex gap-x-4">
                 <div className="flex-none">
@@ -202,10 +213,10 @@ export default function Contact() {
                 </div>
                 <div>
                   <Link
-                    href="tel:+1 (281) 235-4684"
+                    href={`tel:${businessInfo.phone}`}
                     className="hover:text-white transition-colors"
                   >
-                    +1 (281) 235-4684
+                    (281) 235-4684
                   </Link>
                 </div>
               </motion.div>
@@ -254,7 +265,7 @@ export default function Contact() {
                     name="firstName"
                     type="text"
                     autoComplete="given-name"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -279,7 +290,7 @@ export default function Contact() {
                     name="lastName"
                     type="text"
                     autoComplete="family-name"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -305,7 +316,7 @@ export default function Contact() {
                     type="email"
                     autoComplete="email"
                     spellCheck="false"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -330,7 +341,7 @@ export default function Contact() {
                     name="phone"
                     type="tel"
                     autoComplete="tel"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -356,7 +367,7 @@ export default function Contact() {
                     type="text"
                     autoComplete="street-address"
                     placeholder="123 Main St, Cypress, TX 77433"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                 </div>
               </div>
@@ -373,7 +384,7 @@ export default function Contact() {
                     id="message"
                     name="message"
                     rows={4}
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                     defaultValue={""}
                   />
                 </div>
@@ -389,7 +400,7 @@ export default function Contact() {
                 id="subscribe"
                 name="subscribe"
                 type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
               />
               <label
                 htmlFor="subscribe"
@@ -405,7 +416,7 @@ export default function Contact() {
                   href="https://policies.google.com/privacy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-indigo-400 hover:text-indigo-300 underline"
+                  className="text-primary-400 hover:text-primary-300 underline"
                 >
                   Privacy Policy
                 </Link>{" "}
@@ -414,7 +425,7 @@ export default function Contact() {
                   href="https://policies.google.com/terms"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-indigo-400 hover:text-indigo-300 underline"
+                  className="text-primary-400 hover:text-primary-300 underline"
                 >
                   Terms of Service
                 </Link>{" "}
@@ -425,7 +436,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="rounded-md cursor-pointer bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="rounded-md cursor-pointer bg-primary-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isPending ? "Sending…" : "Send Message"}
               </button>

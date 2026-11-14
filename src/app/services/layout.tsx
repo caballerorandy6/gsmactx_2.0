@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Header from "@/components/layout/Header";
 import SideBar from "@/components/ui/SideBar";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import FloatingCTAButtons from "@/components/ui/FloatingCTAButtons";
@@ -16,10 +17,9 @@ export default function ServicesLayout({
   return (
     <section className="sm:flex">
       <ScrollToTop />
+      <Header />
       <FloatingCTAButtons />
-      <div className="hidden sm:block fixed left-0 h-screen w-56 md:w-60 lg:w-64">
-        <SideBar />
-      </div>
+      <SideBar />
       <div className="flex-1 sm:ml-56 md:ml-60 lg:ml-64 mx-auto">{children}</div>
     </section>
   );

@@ -5,10 +5,16 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import Link from "next/link";
-import { PublicAppointmentSchema, PublicAppointmentFormData, SERVICE_TYPES } from "@/lib/validations/zod";
-import { SERVICE_TYPE_LABELS } from "@/lib/interfaces";
+import { PublicAppointmentSchema, PublicAppointmentFormData } from "@/lib/validations/zod";
+import { SERVICE_TYPE_LABELS, type ServiceType } from "@/lib/interfaces";
+import type { heroOffer } from "@/lib/data";
 import { createPublicAppointmentAction } from "@/app/actions/createPublicAppointmentAction";
 import { getBookedTimeSlotsPublicAction } from "@/app/actions/getBookedTimeSlotsPublicAction";
+import {
+  formatBookingDate,
+  getBusinessToday,
+  isSlotInPast as isBusinessSlotInPast,
+} from "@/lib/utils/bookingTime";
 import { ErrorMessage } from "@hookform/error-message";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import {
@@ -20,43 +26,94 @@ import {
   MapPinIcon,
   WrenchScrewdriverIcon,
   CheckCircleIcon,
-  LockClosedIcon,
+  TagIcon,
 } from "@heroicons/react/24/outline";
 
 // 1-hour time slots (8 AM - 6 PM)
-const ALL_TIME_SLOTS = [
-  "8:00 AM",
-  "9:00 AM",
-  "10:00 AM",
-  "11:00 AM",
-  "12:00 PM",
-  "1:00 PM",
-  "2:00 PM",
-  "3:00 PM",
-  "4:00 PM",
-  "5:00 PM",
-  "6:00 PM",
+const TIME_SLOT_GROUPS = [
+  { label: "Morning", empty: "No times left this morning", slots: ["8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM"] },
+  { label: "Afternoon", empty: "No times left this afternoon", slots: ["12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM"] },
+  { label: "Evening", empty: "No times left this evening", slots: ["4:00 PM", "5:00 PM", "6:00 PM"] },
+] as const;
+
+const ALL_TIME_SLOTS: readonly string[] = TIME_SLOT_GROUPS.flatMap((g) => g.slots);
+
+// Services grouped by system so visitors scan 3 short rows instead of 9 cards.
+// Inside Cooling/Heating the group name carries the system, so buttons show only the action.
+const SERVICE_GROUPS: {
+  label: string;
+  stackOnMobile?: boolean;
+  services: { type: ServiceType; label: string }[];
+}[] = [
+  {
+    label: "Cooling (A/C)",
+    services: [
+      { type: "AC_MAINTENANCE", label: "Maintenance" },
+      { type: "AC_REPAIR", label: "Repair" },
+      { type: "AC_INSTALLATION", label: "Installation" },
+    ],
+  },
+  {
+    label: "Heating",
+    services: [
+      { type: "HEATING_MAINTENANCE", label: "Maintenance" },
+      { type: "HEATING_REPAIR", label: "Repair" },
+      { type: "HEATING_INSTALLATION", label: "Installation" },
+    ],
+  },
+  {
+    label: "Other services",
+    stackOnMobile: true,
+    services: [
+      { type: "FULL_HVAC_INSTALLATION", label: SERVICE_TYPE_LABELS.FULL_HVAC_INSTALLATION },
+      { type: "DUCT_CLEANING", label: SERVICE_TYPE_LABELS.DUCT_CLEANING },
+      { type: "FREE_ESTIMATE", label: SERVICE_TYPE_LABELS.FREE_ESTIMATE },
+    ],
+  },
 ];
 
-// Convert time string like "2:00 PM" to minutes since midnight
-const timeToMinutes = (timeStr: string): number => {
-  const [time, period] = timeStr.split(" ");
-  const [hoursStr, minutesStr] = time.split(":");
-  let hours = parseInt(hoursStr, 10);
-  const minutes = parseInt(minutesStr, 10);
+type BookingSummary = Pick<
+  PublicAppointmentFormData,
+  "serviceType" | "scheduledDate" | "scheduledTime" | "address"
+>;
 
-  if (period === "PM" && hours !== 12) {
-    hours += 12;
-  } else if (period === "AM" && hours === 12) {
-    hours = 0;
-  }
+const SummaryRows = ({ summary }: { summary: Partial<BookingSummary> }) => {
+  const rows = [
+    {
+      icon: WrenchScrewdriverIcon,
+      label: "Service",
+      value: summary.serviceType ? SERVICE_TYPE_LABELS[summary.serviceType] : "",
+    },
+    { icon: CalendarDaysIcon, label: "Date", value: formatBookingDate(summary.scheduledDate ?? "") },
+    { icon: ClockIcon, label: "Time", value: summary.scheduledTime ?? "" },
+    { icon: MapPinIcon, label: "Location", value: summary.address?.trim() ?? "" },
+  ];
 
-  return hours * 60 + minutes;
+  return (
+    <dl className="divide-y divide-white/5">
+      {rows.map(({ icon: Icon, label, value }) => (
+        <div key={label} className="flex items-start gap-3 py-2.5">
+          <Icon className="h-4 w-4 mt-0.5 shrink-0 text-primary-400" aria-hidden="true" />
+          <dt className="w-20 shrink-0 text-sm text-gray-400">{label}</dt>
+          <dd className={`text-sm min-w-0 wrap-break-word ${value ? "text-white font-medium" : "text-gray-500"}`}>
+            {value || "Not selected yet"}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
 };
 
-const BookAppointmentForm = () => {
+type BookAppointmentFormProps = {
+  /** Service preselected from a deep link (?service= or ?offer=). */
+  initialService?: ServiceType;
+  /** Hero offer the visitor came from, shown as a banner and noted for the office. */
+  offer?: typeof heroOffer;
+};
+
+const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps) => {
   const [isPending, startTransition] = useTransition();
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [bookedSummary, setBookedSummary] = useState<BookingSummary | null>(null);
   const [bookedTimeSlots, setBookedTimeSlots] = useState<string[]>([]);
   const [isLoadingSlots, setIsLoadingSlots] = useState(false);
   const { executeRecaptcha } = useGoogleReCaptcha();
@@ -73,16 +130,18 @@ const BookAppointmentForm = () => {
       clientName: "",
       clientEmail: "",
       clientPhone: "",
-      serviceType: undefined,
+      serviceType: initialService,
       scheduledDate: "",
       scheduledTime: "",
       address: "",
-      notes: "",
+      notes: offer ? `${offer.title} offer (${offer.price})` : "",
     },
   });
 
   const selectedDate = watch("scheduledDate");
   const selectedTime = watch("scheduledTime");
+  const selectedService = watch("serviceType");
+  const enteredAddress = watch("address");
 
   // Fetch booked slots when date changes
   useEffect(() => {
@@ -107,19 +166,9 @@ const BookAppointmentForm = () => {
     fetchBookedSlots();
   }, [selectedDate]);
 
-  // Check if a slot is in the past (for today only)
-  const isSlotInPast = (slot: string): boolean => {
-    if (!selectedDate) return false;
-
-    const today = new Date();
-    const todayStr = today.toISOString().split("T")[0];
-
-    if (selectedDate !== todayStr) return false;
-
-    // Add 1 hour buffer for today's slots
-    const currentMinutes = today.getHours() * 60 + today.getMinutes() + 60;
-    return timeToMinutes(slot) <= currentMinutes;
-  };
+  // Same-day slots within the next hour (Houston time) can't be booked
+  const isSlotInPast = (slot: string): boolean =>
+    isBusinessSlotInPast(slot, selectedDate);
 
   // Check if a slot is booked
   const isSlotBooked = (slot: string): boolean => {
@@ -147,7 +196,12 @@ const BookAppointmentForm = () => {
 
         if (result.success) {
           toast.success(result.message);
-          setIsSuccess(true);
+          setBookedSummary({
+            serviceType: data.serviceType,
+            scheduledDate: data.scheduledDate,
+            scheduledTime: data.scheduledTime,
+            address: data.address,
+          });
           reset();
         } else {
           toast.error(result.message);
@@ -159,12 +213,10 @@ const BookAppointmentForm = () => {
     });
   };
 
-  // Get minimum date (today)
-  const getMinDate = () => {
-    return new Date().toISOString().split("T")[0];
-  };
+  // Minimum date is today in Houston, not UTC
+  const getMinDate = () => getBusinessToday();
 
-  if (isSuccess) {
+  if (bookedSummary) {
     return (
       <div className="max-w-lg mx-auto text-center py-16 px-6">
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-500/20 mb-6">
@@ -173,6 +225,9 @@ const BookAppointmentForm = () => {
         <h2 className="text-3xl font-bold text-white mb-4">
           Appointment Scheduled!
         </h2>
+        <div className="text-left rounded-lg border border-white/10 bg-gray-900/50 px-4 py-2 mb-6">
+          <SummaryRows summary={bookedSummary} />
+        </div>
         <p className="text-gray-300 mb-8">
           Thank you for scheduling an appointment with GSM A/C & General
           Contractor. We&apos;ve sent a confirmation email to your inbox with all the
@@ -180,8 +235,8 @@ const BookAppointmentForm = () => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
-            onClick={() => setIsSuccess(false)}
-            className="px-6 py-3 rounded-md text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 transition-colors"
+            onClick={() => setBookedSummary(null)}
+            className="px-6 py-3 rounded-md text-sm font-semibold text-white bg-primary-600 hover:bg-primary-700 transition-colors"
           >
             Schedule Another
           </button>
@@ -205,27 +260,48 @@ const BookAppointmentForm = () => {
         {/* Service Selection */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <WrenchScrewdriverIcon className="h-5 w-5 text-indigo-400" />
+            <WrenchScrewdriverIcon className="h-5 w-5 text-primary-400" />
             <h3 className="text-lg font-semibold text-white">
               Select Your Service
             </h3>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {SERVICE_TYPES.map((type) => (
-              <label
-                key={type}
-                className="relative flex items-center p-4 cursor-pointer rounded-lg border border-white/10 bg-gray-900/50 hover:bg-gray-900 transition-colors has-checked:border-indigo-500 has-checked:bg-indigo-500/10"
-              >
-                <input
-                  {...register("serviceType")}
-                  type="radio"
-                  value={type}
-                  className="sr-only"
-                />
-                <span className="text-sm text-white">
-                  {SERVICE_TYPE_LABELS[type]}
-                </span>
-              </label>
+          {offer && (
+            <p className="mb-4 flex items-start gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-gray-200">
+              <TagIcon className="h-5 w-5 shrink-0 text-emerald-400" aria-hidden="true" />
+              <span>
+                <span className="font-semibold text-white">{offer.title} special: </span>
+                <span className="font-semibold text-emerald-300 tabular-nums">{offer.price}</span>{" "}
+                <span className="text-gray-400 line-through tabular-nums">{offer.regularPrice}</span>
+                . We preselected {SERVICE_TYPE_LABELS[offer.serviceType]} for you.
+              </span>
+            </p>
+          )}
+          <div className="space-y-5">
+            {SERVICE_GROUPS.map((group) => (
+              <fieldset key={group.label}>
+                <legend className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                  {group.label}
+                </legend>
+                <div
+                  className={`grid gap-2 sm:grid-cols-3 sm:gap-3 ${group.stackOnMobile ? "grid-cols-1" : "grid-cols-3"}`}
+                >
+                  {group.services.map(({ type, label }) => (
+                    <label
+                      key={type}
+                      className="relative flex min-h-12 items-center justify-center rounded-lg border border-white/10 bg-gray-900/50 px-2 py-3 text-center text-sm text-white cursor-pointer transition-colors hover:bg-gray-900 has-checked:border-primary-500 has-checked:bg-primary-500/10 has-checked:font-semibold has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-400 sm:px-3"
+                    >
+                      <input
+                        {...register("serviceType")}
+                        type="radio"
+                        value={type}
+                        aria-label={SERVICE_TYPE_LABELS[type]}
+                        className="sr-only"
+                      />
+                      <span aria-hidden="true">{label}</span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
             ))}
           </div>
           <ErrorMessage
@@ -240,7 +316,7 @@ const BookAppointmentForm = () => {
         {/* Date & Time */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <CalendarDaysIcon className="h-5 w-5 text-indigo-400" />
+            <CalendarDaysIcon className="h-5 w-5 text-primary-400" />
             <h3 className="text-lg font-semibold text-white">
               Choose Date & Time
             </h3>
@@ -259,7 +335,7 @@ const BookAppointmentForm = () => {
                 id="scheduledDate"
                 type="date"
                 min={getMinDate()}
-                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent [&::-webkit-calendar-picker-indicator]:brightness-0 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-80 [&::-webkit-calendar-picker-indicator]:hover:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent [&::-webkit-calendar-picker-indicator]:brightness-0 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-80 [&::-webkit-calendar-picker-indicator]:hover:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
               />
               <ErrorMessage
                 errors={errors}
@@ -281,7 +357,7 @@ const BookAppointmentForm = () => {
                 </p>
               ) : isLoadingSlots ? (
                 <div className="flex items-center justify-center py-4 border border-dashed border-white/10 rounded-lg">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-indigo-500"></div>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-primary-500"></div>
                   <span className="ml-2 text-gray-400 text-sm">Loading available times…</span>
                 </div>
               ) : !hasAvailableSlots ? (
@@ -289,44 +365,51 @@ const BookAppointmentForm = () => {
                   No available time slots for this date. Please select a different date.
                 </p>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-                  {ALL_TIME_SLOTS.map((time) => {
-                    const isBooked = isSlotBooked(time);
-                    const isPast = isSlotInPast(time);
-                    const isUnavailable = isBooked || isPast;
-                    const isSelected = selectedTime === time;
+                <div className="space-y-4">
+                  {TIME_SLOT_GROUPS.map((group) => {
+                    const groupHasOpenSlot = group.slots.some(
+                      (slot) => !isSlotBooked(slot) && !isSlotInPast(slot)
+                    );
 
                     return (
-                      <label
-                        key={time}
-                        className={`
-                          relative flex items-center justify-center p-3 rounded-lg border text-sm font-medium transition-all
-                          ${isUnavailable
-                            ? "bg-red-500/10 border-red-500/30 text-red-400 cursor-not-allowed"
-                            : isSelected
-                              ? "bg-indigo-500/20 border-indigo-500 text-white ring-2 ring-indigo-500"
-                              : "bg-gray-900/50 border-white/10 text-white hover:bg-gray-800 hover:border-white/20 cursor-pointer"
-                          }
-                        `}
-                      >
-                        <input
-                          {...register("scheduledTime")}
-                          type="radio"
-                          value={time}
-                          disabled={isUnavailable}
-                          className="sr-only"
-                        />
-                        {isBooked ? (
-                          <span className="flex items-center gap-1">
-                            <LockClosedIcon className="h-3.5 w-3.5" />
-                            Reserved
-                          </span>
-                        ) : isPast ? (
-                          <span className="text-gray-500">Passed</span>
+                      <fieldset key={group.label}>
+                        <legend className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                          {group.label}
+                        </legend>
+                        {!groupHasOpenSlot ? (
+                          <p className="text-sm text-gray-500">{group.empty}</p>
                         ) : (
-                          time
+                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            {group.slots.map((time) => {
+                              const isUnavailable = isSlotBooked(time) || isSlotInPast(time);
+                              const isSelected = selectedTime === time;
+
+                              return (
+                                <label
+                                  key={time}
+                                  className={`relative flex items-center justify-center rounded-lg border p-3 text-sm font-medium tabular-nums transition-colors has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-400 ${
+                                    isUnavailable
+                                      ? "border-white/5 text-gray-600 line-through cursor-not-allowed"
+                                      : isSelected
+                                        ? "border-primary-500 bg-primary-500/20 text-white ring-2 ring-primary-500"
+                                        : "border-white/10 bg-gray-900/50 text-white cursor-pointer hover:border-white/20 hover:bg-gray-800"
+                                  }`}
+                                >
+                                  <input
+                                    {...register("scheduledTime")}
+                                    type="radio"
+                                    value={time}
+                                    disabled={isUnavailable}
+                                    className="sr-only"
+                                  />
+                                  {time}
+                                  {isUnavailable && <span className="sr-only"> (unavailable)</span>}
+                                </label>
+                              );
+                            })}
+                          </div>
                         )}
-                      </label>
+                      </fieldset>
                     );
                   })}
                 </div>
@@ -345,7 +428,7 @@ const BookAppointmentForm = () => {
         {/* Contact Information */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <UserIcon className="h-5 w-5 text-indigo-400" />
+            <UserIcon className="h-5 w-5 text-primary-400" />
             <h3 className="text-lg font-semibold text-white">
               Your Information
             </h3>
@@ -365,7 +448,7 @@ const BookAppointmentForm = () => {
                 type="text"
                 autoComplete="name"
                 placeholder="John Doe"
-                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500"
               />
               <ErrorMessage
                 errors={errors}
@@ -391,7 +474,7 @@ const BookAppointmentForm = () => {
                 autoComplete="email"
                 spellCheck="false"
                 placeholder="john@example.com"
-                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500"
               />
               <ErrorMessage
                 errors={errors}
@@ -416,7 +499,7 @@ const BookAppointmentForm = () => {
                 type="tel"
                 autoComplete="tel"
                 placeholder="(281) 555-0123"
-                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+                className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500"
               />
               <ErrorMessage
                 errors={errors}
@@ -432,7 +515,7 @@ const BookAppointmentForm = () => {
         {/* Address */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <MapPinIcon className="h-5 w-5 text-indigo-400" />
+            <MapPinIcon className="h-5 w-5 text-primary-400" />
             <h3 className="text-lg font-semibold text-white">
               Service Location
             </h3>
@@ -450,7 +533,7 @@ const BookAppointmentForm = () => {
               type="text"
               autoComplete="street-address"
               placeholder="123 Main St, Cypress, TX 77433"
-              className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+              className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500"
             />
             <ErrorMessage
               errors={errors}
@@ -474,11 +557,29 @@ const BookAppointmentForm = () => {
               id="notes"
               rows={3}
               placeholder="Any details about the issue or special instructions..."
-              className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500 resize-none"
+              className="w-full rounded-md bg-gray-900 border-white/10 text-white px-4 py-3 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500 resize-none"
             />
           </div>
         </div>
       </div>
+
+      {/* Review before submitting */}
+      <section
+        aria-labelledby="booking-summary-heading"
+        className="mt-8 rounded-lg border border-primary-500/30 bg-primary-500/5 px-4 py-3"
+      >
+        <h3 id="booking-summary-heading" className="text-sm font-semibold text-white mb-1">
+          Review your appointment
+        </h3>
+        <SummaryRows
+          summary={{
+            serviceType: selectedService,
+            scheduledDate: selectedDate,
+            scheduledTime: selectedTime,
+            address: enteredAddress,
+          }}
+        />
+      </section>
 
       {/* reCAPTCHA Notice */}
       <p className="mt-6 text-xs text-gray-400">
@@ -487,7 +588,7 @@ const BookAppointmentForm = () => {
           href="https://policies.google.com/privacy"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-indigo-400 hover:text-indigo-300 underline"
+          className="text-primary-400 hover:text-primary-300 underline"
         >
           Privacy Policy
         </Link>{" "}
@@ -496,7 +597,7 @@ const BookAppointmentForm = () => {
           href="https://policies.google.com/terms"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-indigo-400 hover:text-indigo-300 underline"
+          className="text-primary-400 hover:text-primary-300 underline"
         >
           Terms of Service
         </Link>{" "}
@@ -508,7 +609,7 @@ const BookAppointmentForm = () => {
         <button
           type="submit"
           disabled={isPending}
-          className="w-full py-4 rounded-md text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-500 transition-colors disabled:bg-indigo-400 disabled:cursor-not-allowed"
+          className="w-full py-4 rounded-md text-base font-semibold text-white bg-primary-600 hover:bg-primary-700 transition-colors disabled:bg-primary-400 disabled:cursor-not-allowed"
         >
           {isPending ? "Scheduling…" : "Schedule Appointment"}
         </button>

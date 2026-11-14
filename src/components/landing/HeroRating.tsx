@@ -1,6 +1,5 @@
-import { StarIcon } from "@heroicons/react/24/solid";
-import { getGooglePlaceDetails } from "@/app/actions/googlePlacesAction";
-import { businessInfo } from "@/lib/data";
+import StarRating from "@/components/ui/StarRating";
+import { getRatingSummary } from "@/app/actions/googlePlacesAction";
 
 /**
  * Skeleton fallback for the rating badge
@@ -25,29 +24,12 @@ export function RatingBadgeSkeleton() {
  * Streams in via Suspense - doesn't block initial render
  */
 export default async function HeroRating() {
-  const googleData = await getGooglePlaceDetails();
-
-  const rating = googleData?.rating ?? parseFloat(businessInfo.reviews.aggregateRating);
-  const reviewCount = googleData?.totalReviews ?? parseInt(businessInfo.reviews.reviewCount);
+  const { rating, reviewCount } = await getRatingSummary();
 
   return (
     <div className="mb-4 sm:mb-6">
       <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 sm:px-4 sm:py-2 border border-white/20">
-        <div
-          className="flex"
-          role="img"
-          aria-label={`${rating} out of 5 stars`}
-        >
-          {[...Array(5)].map((_, i) => (
-            <StarIcon
-              key={i}
-              className={`h-4 w-4 sm:h-5 sm:w-5 ${
-                i < Math.round(rating) ? "text-yellow-400" : "text-gray-500"
-              }`}
-              aria-hidden="true"
-            />
-          ))}
-        </div>
+        <StarRating rating={rating} starClassName="h-4 w-4 sm:h-5 sm:w-5" />
         <span className="text-xs sm:text-sm font-medium text-white">
           {rating.toFixed(1)} · {reviewCount.toLocaleString()} reviews
         </span>

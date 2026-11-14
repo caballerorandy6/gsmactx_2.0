@@ -6,7 +6,7 @@
  */
 
 import sharp from 'sharp';
-import { readdir, mkdir, copyFile } from 'fs/promises';
+import { mkdir, copyFile } from 'fs/promises';
 import { existsSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';

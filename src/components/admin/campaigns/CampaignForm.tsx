@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { CampaignSchema, CampaignFormData } from "@/lib/validations/zod";
 import { upsertCampaignAction } from "@/app/actions/campaignAction";
 import { ErrorMessage } from "@hookform/error-message";
-import { SafeAdmin } from "@/lib/types";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 import { Campaign } from "@/lib/interfaces";
 import { useRouter } from "next/navigation";
 import CampaignEmailPreview from "./CampaignEmailPreview";
@@ -18,10 +18,8 @@ import { getTemplateById } from "@/lib/utils/utils";
 
 const CampaignForm = ({
   campaign,
-  user,
 }: {
   campaign?: Campaign;
-  user: SafeAdmin | null;
 }) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -155,14 +153,12 @@ const CampaignForm = ({
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl sm:text-3xl font-bold text-center text-white mb-6">
-        Welcome, {user?.name}!
-      </h1>
+    <div className="max-w-2xl">
+      <AdminPageHeader
+        title={isEditing ? "Edit campaign" : "New campaign"}
+        back={{ href: "/view-campaigns", label: "All campaigns" }}
+      />
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-            <h2 className="text-center text-2xl sm:text-3xl font-bold tracking-tight text-white mb-6 sm:mb-8">
-              {isEditing ? "Edit Campaign" : "Create Campaign"}
-            </h2>
 
             {/* Template Selector - Only show when creating new campaign */}
             {!isEditing && (
@@ -189,7 +185,7 @@ const CampaignForm = ({
                     type="text"
                     autoComplete="off"
                     placeholder="e.g., Summer Promotion 2025"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -217,7 +213,7 @@ const CampaignForm = ({
                     type="text"
                     autoComplete="off"
                     placeholder="e.g., 🔥 50% OFF on all our services!"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -244,7 +240,7 @@ const CampaignForm = ({
                     accept="image/png, image/jpeg, image/webp, image/gif, image/avif"
                     // No use `register` here to avoid issues with file inputs
                     onChange={handleImageChange}
-                    className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-500 file:text-white hover:file:bg-indigo-400"
+                    className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary-500 file:text-white hover:file:bg-primary-400"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -294,7 +290,7 @@ const CampaignForm = ({
                     maxLength={2000}
                     autoComplete="off"
                     placeholder="Write your email content here. You can include promotion details, important dates, etc."
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <div className="flex justify-between items-center mt-1">
                     <ErrorMessage
@@ -316,7 +312,7 @@ const CampaignForm = ({
                 type="button"
                 onClick={() => setShowPreview(true)}
                 disabled={!watchedTitle || !watchedSubject || !watchedContent}
-                className="flex justify-center rounded-md cursor-pointer bg-purple-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-purple-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 transition-colors disabled:bg-purple-300 disabled:cursor-not-allowed"
+                className="flex justify-center rounded-md cursor-pointer bg-white/5 px-3.5 py-2.5 text-center text-sm font-semibold text-white ring-1 ring-inset ring-white/25 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Preview Email
               </button>
@@ -331,7 +327,7 @@ const CampaignForm = ({
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="flex justify-center rounded-md cursor-pointer bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-colors disabled:bg-indigo-300 disabled:cursor-not-allowed"
+                  className="flex justify-center rounded-md cursor-pointer bg-primary-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 transition-colors disabled:bg-primary-300 disabled:cursor-not-allowed"
                 >
                   {isPending
                     ? isEditing
@@ -372,7 +368,7 @@ const CampaignForm = ({
             <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 p-4 flex justify-end">
               <button
                 onClick={() => setShowPreview(false)}
-                className="bg-indigo-500 hover:bg-indigo-400 text-white px-4 py-2 rounded-md transition-colors"
+                className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md transition-colors"
               >
                 Close Preview
               </button>

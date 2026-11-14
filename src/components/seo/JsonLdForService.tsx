@@ -4,6 +4,8 @@ interface JsonLdForServiceProps {
   description: string;
   providerName: string;
   providerUrl: string;
+  /** Official profiles of the provider (schema.org sameAs). */
+  providerSameAs?: string[];
   telephone: string;
   areaServed: string[];
   image?: string;
@@ -42,6 +44,7 @@ export const JsonLdForService = ({
   description,
   providerName,
   providerUrl,
+  providerSameAs,
   telephone,
   areaServed,
   image,
@@ -60,6 +63,7 @@ export const JsonLdForService = ({
       name: providerName,
       url: providerUrl,
       telephone,
+      ...(providerSameAs?.length ? { sameAs: providerSameAs } : {}),
     },
     areaServed: areaServed.map((area) => ({
       "@type": "City",

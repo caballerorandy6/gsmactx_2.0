@@ -408,7 +408,7 @@ const CampaignEmail = ({
               <Container
                 style={{
                   backgroundColor: "#f9fafb",
-                  borderLeft: "4px solid #3b82f6",
+                  border: "1px solid #e5e7eb",
                   borderRadius: "6px",
                   padding: "20px 24px",
                   margin: "0",

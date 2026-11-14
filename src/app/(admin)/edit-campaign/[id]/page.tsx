@@ -30,7 +30,7 @@ const CampaignEditPage = async ({ params }: { params: Params }) => {
     notFound();
   }
 
-  return <CampaignForm campaign={campaign} user={user} />;
+  return <CampaignForm campaign={campaign} />;
 };
 
 export default CampaignEditPage;

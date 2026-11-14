@@ -42,7 +42,7 @@ const CampaignEmailPreview = ({
             </div>
           </div>
 
-          <p className="text-[#64748b] text-[12px] max-sm:text-[11px] max-[380px]:text-[10px] font-semibold uppercase tracking-widest opacity-90 absolute bottom-[10px] max-sm:bottom-2 left-0 right-0 w-full text-center m-0">
+          <p className="text-[#64748b] text-[12px] max-sm:text-[11px] max-[380px]:text-xs font-semibold uppercase tracking-widest opacity-90 absolute bottom-[10px] max-sm:bottom-2 left-0 right-0 w-full text-center m-0">
             Your Trusted HVAC Partner
           </p>
         </div>
@@ -75,7 +75,7 @@ const CampaignEmailPreview = ({
             </div>
           )}
 
-          <div className="bg-[#f9fafb] border-l-4 border-[#3b82f6] rounded-md p-5 sm:p-6">
+          <div className="bg-[#f9fafb] border border-[#e5e7eb] rounded-md p-5 sm:p-6">
             <p
               className="text-[#334155] text-[15px] leading-7 whitespace-pre-wrap m-0"
               style={{ fontFamily: "Arial, sans-serif" }}
@@ -167,7 +167,7 @@ const CampaignEmailPreview = ({
               Unsubscribe from emails
             </Link>
           </p>
-          <p className="text-[#6b7fd1] text-[10px] m-0 mx-auto ">
+          <p className="text-[#6b7fd1] text-xs m-0 mx-auto ">
             © {new Date().getFullYear()} GSMACTX, Inc. All rights reserved.
           </p>
         </div>

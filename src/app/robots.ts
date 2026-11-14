@@ -11,6 +11,8 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [
           "/admin-dashboard",
           "/appointments",
+          "/contacts",
+          "/settings",
           "/create-appointment",
           "/edit-appointment",
           "/create-campaign",
@@ -19,6 +21,7 @@ export default function robots(): MetadataRoute.Robots {
           "/view-campaigns",
           "/login",
           "/unsubscribe",
+          "/api/",
         ],
       },
     ],

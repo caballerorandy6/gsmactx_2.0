@@ -5,7 +5,6 @@ export interface EmailTemplate {
   name: string;
   description: string;
   category: string;
-  icon: string;
   thumbnail: string;
   defaultTitle: string;
   defaultSubject: string;
@@ -22,7 +21,6 @@ export const emailTemplates: EmailTemplate[] = [
     name: "Promotional",
     description: "Perfect for special offers, discounts, and urgent deals",
     category: "Sales",
-    icon: "🔥",
     thumbnail: "/templates/promotional.png",
     defaultTitle: "Wishing You a Safe & Cozy Halloween!",
     defaultSubject: "🎃 Happy Halloween from GSM A/C & General Contractor INC! Special HVAC Offers Inside",
@@ -55,7 +53,6 @@ Your Trusted HVAC Partner in Cypress, TX`,
     name: "Newsletter",
     description: "Share company news, tips, and valuable information",
     category: "Information",
-    icon: "📰",
     thumbnail: "/templates/newsletter.png",
     defaultTitle: "Your Monthly HVAC Tips & News",
     defaultSubject: "📰 Your Monthly HVAC Newsletter from GSM A/C & General Contractor INC - Expert Tips Inside",
@@ -70,7 +67,6 @@ Your Trusted HVAC Partner in Cypress, TX`,
     name: "Service Reminder",
     description: "Remind customers about maintenance and checkups",
     category: "Service",
-    icon: "🛠️",
     thumbnail: "/templates/service.png",
     defaultTitle: "Time for Your HVAC Maintenance Checkup",
     defaultSubject: "🛠️ Don't Forget: Your HVAC Maintenance is Due - GSM A/C & General Contractor INC",
@@ -85,7 +81,6 @@ Your Trusted HVAC Partner in Cypress, TX`,
     name: "Seasonal/Event",
     description: "Holiday specials, summer/winter campaigns, anniversaries",
     category: "Events",
-    icon: "🎉",
     thumbnail: "/templates/seasonal.png",
     defaultTitle: "Get Ready for Summer with Cool Savings!",
     defaultSubject: "🎉 Summer Special from GSM A/C & General Contractor INC: Beat the Heat with Our AC Deals!",

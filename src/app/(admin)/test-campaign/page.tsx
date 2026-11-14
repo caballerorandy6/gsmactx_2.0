@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { redirect } from "next/navigation";
-import AdminHeader from "@/components/admin/layout/AdminHeader";
 import TestCampaignForm from "@/components/admin/campaigns/TestCampaignForm";
 
 const TestCampaignPage = async () => {
@@ -12,12 +11,7 @@ const TestCampaignPage = async () => {
     redirect("/login");
   }
 
-  return (
-    <>
-      <AdminHeader />
-      <TestCampaignForm user={user} />
-    </>
-  );
+  return <TestCampaignForm />;
 };
 
 export default TestCampaignPage;

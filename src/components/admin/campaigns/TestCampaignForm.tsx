@@ -8,15 +8,19 @@ import { toast } from "sonner";
 import { CampaignSchema, CampaignFormData } from "@/lib/validations/zod";
 import { createAndSendTestCampaignAction } from "@/app/actions/createAndSendTestCampaignAction";
 import { ErrorMessage } from "@hookform/error-message";
-import { SafeAdmin } from "@/lib/types";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 import { useRouter } from "next/navigation";
+import ConfirmDialog from "@/components/admin/common/ConfirmDialog";
+import { TEST_RECIPIENTS } from "@/lib/email/testRecipients";
 import CampaignEmailPreview from "./CampaignEmailPreview";
+import TestRecipientList from "./TestRecipientList";
 
-const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
+const TestCampaignForm = () => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(false);
+  const [pendingData, setPendingData] = useState<CampaignFormData | null>(null);
 
   const {
     register,
@@ -61,12 +65,11 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
     }
   };
 
-  const onSubmit = async (data: CampaignFormData) => {
-    const confirmed = confirm(
-      "Send test campaign to test emails?\n\nThis will send to:\n• caballerorandy7@gmail.com\n• gsmactx@outlook.com\n• michel@gsmactx.com\n• mchapelli305@gmail.com\n• mchapelli305@yahoo.com"
-    );
+  const onSubmit = (data: CampaignFormData) => setPendingData(data);
 
-    if (!confirmed) return;
+  const sendTest = () => {
+    if (!pendingData) return;
+    const data = pendingData;
 
     const formData = new FormData();
     formData.append("title", data.title);
@@ -78,45 +81,35 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
     }
 
     startTransition(async () => {
+      const toastId = toast.loading("Sending test…");
       try {
-        toast.loading("Sending test campaign…");
         const result = await createAndSendTestCampaignAction(formData);
-
-        toast.dismiss();
         if (result.success) {
-          toast.success(result.message);
+          toast.success(result.message, { id: toastId });
+          setPendingData(null);
           reset();
           setImagePreview(null);
         } else {
-          toast.error(result.message);
+          toast.error(result.message, { id: toastId });
         }
       } catch {
-        toast.dismiss();
-        toast.error("An unexpected error occurred.");
+        toast.error("Couldn't send the test. Try again.", { id: toastId });
       }
     });
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      <h1 className="text-2xl sm:text-3xl font-bold text-center text-white mb-6">
-        Welcome, {user?.name}!
-      </h1>
+    <div className="max-w-md">
+      <AdminPageHeader
+        title="Test campaign"
+        description="Check how a campaign looks in a real inbox before sending it to subscribers."
+      />
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-            <div className="bg-purple-900/20 border border-purple-500/30 rounded-lg p-4 mb-6 flex flex-col items-center justify-center">
-              <h2 className="text-center text-3xl font-bold tracking-tight text-white mb-2">
-                Test Campaign
-              </h2>
-              <p className="text-center text-sm text-purple-300">
-                This will be sent immediately to:
+            <div className="bg-white/5 border border-white/10 rounded-lg p-4 mb-6">
+              <p className="text-sm text-gray-300">
+                Sent immediately to:
               </p>
-              <ul className="text-xs text-purple-200 mt-2 space-y-1">
-                <li>• caballerorandy7@gmail.com</li>
-                <li>• gsmactx@outlook.com</li>
-                <li>• michel@gsmactx.com</li>
-                <li>• mchapelli305@gmail.com</li>
-                <li>• mchapelli305@yahoo.com</li>
-              </ul>
+              <TestRecipientList />
             </div>
 
             {/* Title */}
@@ -136,7 +129,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
                     type="text"
                     autoComplete="off"
                     placeholder="e.g., Summer Promotion 2025"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-purple-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -167,7 +160,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
                     type="text"
                     autoComplete="off"
                     placeholder="e.g., 🔥 50% OFF on all our services!"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-purple-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -196,7 +189,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
                     type="file"
                     accept="image/png, image/jpeg, image/webp, image/gif, image/avif"
                     onChange={handleImageChange}
-                    className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-purple-500 file:text-white hover:file:bg-purple-400"
+                    className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary-600 file:text-white hover:file:bg-primary-700"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -248,7 +241,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
                     maxLength={2000}
                     autoComplete="off"
                     placeholder="Write your email content here. You can include promotion details, important dates, etc."
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-purple-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <div className="flex justify-between items-center mt-1">
                     <ErrorMessage
@@ -286,13 +279,25 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="flex justify-center rounded-md cursor-pointer bg-purple-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-purple-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 transition-colors disabled:bg-purple-300 disabled:cursor-not-allowed"
+                  className="flex justify-center rounded-md cursor-pointer bg-primary-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors disabled:bg-primary-600/50 disabled:cursor-not-allowed"
                 >
                   {isPending ? "Sending…" : "Send Test Campaign"}
                 </button>
               </div>
             </div>
       </form>
+
+      <ConfirmDialog
+        open={pendingData !== null}
+        onClose={() => setPendingData(null)}
+        onConfirm={sendTest}
+        tone="primary"
+        title="Send this test now?"
+        description={`It goes out right away, marked [TEST], to the ${TEST_RECIPIENTS.length} inboxes listed on this page.`}
+        confirmLabel="Send test"
+        pendingLabel="Sending…"
+        isPending={isPending}
+      />
 
       {/* Email Preview Modal */}
       {showPreview && (
@@ -320,7 +325,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
             <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 p-4 flex justify-end">
               <button
                 onClick={() => setShowPreview(false)}
-                className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-md transition-colors"
+                className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md transition-colors"
               >
                 Close Preview
               </button>

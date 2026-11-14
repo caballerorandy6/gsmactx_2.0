@@ -18,7 +18,7 @@ const CampaignCreatePage = async () => {
     redirect("/login");
   }
 
-  return <CampaignForm user={user} />;
+  return <CampaignForm />;
 };
 
 export default CampaignCreatePage;

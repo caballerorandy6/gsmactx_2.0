@@ -5,6 +5,7 @@ import type {
   PlaceRatingData,
 } from "@/types/google-places";
 import { Review } from "@/lib/interfaces";
+import { businessInfo } from "@/lib/data";
 
 /**
  * Fetches place details from Google Places API
@@ -24,8 +25,8 @@ export async function getGooglePlaceDetails(): Promise<PlaceRatingData | null> {
     const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,rating,user_ratings_total,reviews&key=${apiKey}`;
 
     const response = await fetch(url, {
-      // Cache for 1 hour to avoid hitting API limits
-      next: { revalidate: 3600 },
+      // Cache for 12 hours to keep Places API usage (and billing) low
+      next: { revalidate: 43200 },
     });
 
     if (!response.ok) {
@@ -55,7 +56,26 @@ export async function getGooglePlaceDetails(): Promise<PlaceRatingData | null> {
 }
 
 /**
- * Fetches Google reviews with photos for testimonials
+ * Live Google rating and review count, falling back to the snapshot in
+ * businessInfo.reviews when the API is unavailable. Shared by every place
+ * that shows or publishes the rating, so page text and JSON-LD always match.
+ */
+export async function getRatingSummary(): Promise<{
+  rating: number;
+  reviewCount: number;
+}> {
+  const googleData = await getGooglePlaceDetails();
+  return {
+    rating:
+      googleData?.rating ?? parseFloat(businessInfo.reviews.aggregateRating),
+    reviewCount:
+      googleData?.totalReviews ?? parseInt(businessInfo.reviews.reviewCount),
+  };
+}
+
+/**
+ * Fetches the Google reviews shown in the testimonials carousel.
+ * Runs on the server so the review text ships in the HTML.
  */
 export async function getGoogleReviewsAction(): Promise<Review[]> {
   try {
@@ -67,11 +87,10 @@ export async function getGoogleReviewsAction(): Promise<Review[]> {
       return [];
     }
 
-    const fields = "name,rating,reviews,photos";
-    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=${fields}&key=${apiKey}`;
+    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews&key=${apiKey}`;
 
     const response = await fetch(url, {
-      next: { revalidate: 3600 },
+      next: { revalidate: 43200 },
     });
 
     if (!response.ok) {
@@ -80,23 +99,19 @@ export async function getGoogleReviewsAction(): Promise<Review[]> {
     }
 
     const data = await response.json();
+    const reviews: Review[] = data.result?.reviews ?? [];
 
-    if (!data.result?.reviews) {
-      return [];
-    }
-
-    const reviewsWithPhotoUrl = data.result.reviews.map((review: Review) => {
-      let photoUrl = null;
-      if (review.photos && review.photos.length > 0) {
-        photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=${review.photos[0].photo_reference}&key=${apiKey}`;
-      }
-      return {
-        ...review,
-        photoUrl,
-      };
-    });
-
-    return reviewsWithPhotoUrl;
+    // Keep only what the carousel renders; never pass the API key along
+    return reviews.map((review) => ({
+      author_name: review.author_name,
+      author_url: review.author_url,
+      language: review.language,
+      profile_photo_url: review.profile_photo_url,
+      rating: review.rating,
+      relative_time_description: review.relative_time_description,
+      text: review.text,
+      time: review.time,
+    }));
   } catch (error) {
     console.error("Error fetching Google reviews:", error);
     return [];

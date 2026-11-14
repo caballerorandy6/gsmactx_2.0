@@ -62,3 +62,6 @@ yarn-error.log*
 # Claude Code (local AI context)
 .claude/
 .agents/
+
+# Impeccable design critique snapshots (local only)
+.impeccable/

@@ -15,6 +15,16 @@ export function formatRating(rating: number): string {
 }
 
 /**
+ * Fill ratio (0..1) for each star of a rating, e.g. 4.9 -> [1, 1, 1, 1, 0.9]
+ */
+export function getStarFills(rating: number, max = 5): number[] {
+  const value = Number.isFinite(rating) ? Math.min(Math.max(rating, 0), max) : 0;
+  return Array.from({ length: max }, (_, i) =>
+    Math.min(Math.max(value - i, 0), 1)
+  );
+}
+
+/**
  * Get formatted reviews count (e.g., "199" or "1.2K")
  */
 export function formatReviewsCount(count: number): string {

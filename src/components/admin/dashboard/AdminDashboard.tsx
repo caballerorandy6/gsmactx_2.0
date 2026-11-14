@@ -1,16 +1,25 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 import CampaignsListDashboard from "@/components/admin/campaigns/CampaignListDashboard";
-import DashboardStats from "@/components/admin/dashboard/DashboardStats";
-import EmptyDashboardState from "@/components/admin/dashboard/EmptyDashboardState";
+import {
+  AppointmentSummary,
+  DashboardStatsData,
+  OutreachStats,
+} from "@/components/admin/dashboard/DashboardStats";
+import UpcomingAppointments, {
+  UpcomingAppointment,
+} from "@/components/admin/dashboard/UpcomingAppointments";
 import { Campaign } from "@/lib/interfaces";
 import { SafeAdmin } from "@/lib/types";
 import {
   Squares2X2Icon,
   PaperAirplaneIcon,
   ClockIcon,
+  PlusIcon,
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 
@@ -21,35 +30,8 @@ interface AdminDashboardProps {
   campaigns: Campaign[];
   dashboardStats?: {
     success: boolean;
-    stats: {
-      // Email Campaign Stats
-      totalSubscribers: number;
-      activeSubscribers: number;
-      inactiveSubscribers: number;
-      totalCampaigns: number;
-      sentCampaigns: number;
-      notSentCampaigns: number;
-      emailsSent: number;
-      emailsFailed: number;
-      emailsPending: number;
-      // SMS Campaign Stats
-      totalSMSCampaigns: number;
-      sentSMSCampaigns: number;
-      notSentSMSCampaigns: number;
-      smsSent: number;
-      smsFailed: number;
-      smsPending: number;
-      // Appointment Stats
-      totalAppointments: number;
-      pendingAppointments: number;
-      confirmedAppointments: number;
-      inProgressAppointments: number;
-      completedAppointments: number;
-      cancelledAppointments: number;
-      todayAppointments: number;
-      weekAppointments: number;
-    } | null;
-    recentCampaigns: unknown[];
+    stats: DashboardStatsData | null;
+    upcomingAppointments?: UpcomingAppointment[];
   };
 }
 
@@ -60,36 +42,17 @@ const AdminDashboard = ({
 }: AdminDashboardProps) => {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>("all");
 
-  // Redirect to 404 if user is not authenticated
   if (!user) {
     notFound();
   }
 
-  // Show empty state if no campaigns exist
-  if (campaigns.length === 0 && !dashboardStats?.stats) {
-    return <EmptyDashboardState userName={user.name} />;
-  }
-
-  // Memoize campaign counts to avoid recalculation on every render
-  const { sentCount, notSentCount } = useMemo(() => {
-    let sent = 0;
-    let notSent = 0;
-    for (const campaign of campaigns) {
-      if (campaign.sent) {
-        sent++;
-      } else {
-        notSent++;
-      }
-    }
-    return { sentCount: sent, notSentCount: notSent };
-  }, [campaigns]);
-
-  // Memoize filtered campaigns based on selected filter
-  const filteredCampaigns = useMemo(() => {
-    if (selectedFilter === "all") return campaigns;
-    const isSent = selectedFilter === "sent";
-    return campaigns.filter((c) => c.sent === isSent);
-  }, [campaigns, selectedFilter]);
+  const stats = dashboardStats?.success ? dashboardStats.stats : null;
+  const sentCount = campaigns.filter((c) => c.sent).length;
+  const notSentCount = campaigns.length - sentCount;
+  const filteredCampaigns =
+    selectedFilter === "all"
+      ? campaigns
+      : campaigns.filter((c) => c.sent === (selectedFilter === "sent"));
 
   const filterButtons = [
     {
@@ -114,21 +77,39 @@ const AdminDashboard = ({
 
   return (
     <div className="space-y-4 sm:space-y-6 pb-24 lg:pb-6">
-      {/* Welcome Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">
-            Dashboard
-          </h1>
-          <p className="text-gray-400 text-sm mt-1">
-            Welcome back, {user.name}
-          </p>
-        </div>
-      </div>
+      <AdminPageHeader
+        title="Dashboard"
+        description={`Welcome back, ${user.name}`}
+        actions={
+        <Link
+          href="/create-appointment"
+          className="inline-flex items-center gap-1.5 rounded-md bg-primary-600 px-3.5 py-2 text-sm font-semibold text-white hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+        >
+          <PlusIcon aria-hidden="true" className="size-4" />
+          New appointment
+        </Link>
+        }
+      />
 
-      {/* Dashboard Stats */}
-      {dashboardStats?.success && dashboardStats.stats && (
-        <DashboardStats stats={dashboardStats.stats} />
+      {stats ? (
+        <>
+          <AppointmentSummary stats={stats} />
+          <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
+            <div className="lg:col-span-2">
+              <UpcomingAppointments
+                appointments={dashboardStats?.upcomingAppointments ?? []}
+              />
+            </div>
+            <OutreachStats stats={stats} />
+          </div>
+        </>
+      ) : (
+        <p
+          role="alert"
+          className="rounded-lg border border-red-500/30 bg-red-950/40 px-4 py-3 text-sm text-red-200"
+        >
+          Dashboard numbers couldn&apos;t load. Refresh the page to try again.
+        </p>
       )}
 
       {/* Campaigns Section */}
@@ -150,7 +131,7 @@ const AdminDashboard = ({
                   className={clsx(
                     "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all motion-reduce:transition-none",
                     selectedFilter === filter.id
-                      ? "bg-indigo-500/20 text-white border border-indigo-500/30"
+                      ? "bg-primary-500/20 text-white border border-primary-500/30"
                       : "text-gray-400 hover:bg-white/5 hover:text-white border border-transparent"
                   )}
                 >

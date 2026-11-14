@@ -10,7 +10,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { SafeAdmin } from "@/lib/types";
 import { Appointment, SERVICE_TYPE_LABELS } from "@/lib/interfaces";
 import { useRouter } from "next/navigation";
-import { LockClosedIcon } from "@heroicons/react/24/outline";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 
 interface PrefillData {
   clientName: string;
@@ -25,7 +25,7 @@ interface AppointmentFormProps {
   prefillData?: PrefillData;
 }
 
-const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProps) => {
+const AppointmentForm = ({ appointment, prefillData }: AppointmentFormProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [bookedTimeSlots, setBookedTimeSlots] = useState<string[]>([]);
@@ -163,13 +163,15 @@ const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProp
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold text-center text-white mb-2">
-          {isEditing ? "Edit Appointment" : "Create Appointment"}
-        </h1>
-        <p className="text-gray-400 text-center mb-8">
-          Welcome, {user?.name}
-        </p>
+    <div className="max-w-2xl">
+      <AdminPageHeader
+        title={isEditing ? "Edit appointment" : "New appointment"}
+        back={
+          isEditing && appointment?.id
+            ? { href: `/appointments/${appointment.id}`, label: "Appointment details" }
+            : { href: "/appointments", label: "All appointments" }
+        }
+      />
 
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -195,7 +197,7 @@ const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProp
                     type="text"
                     autoComplete="name"
                     placeholder="John Doe"
-                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -220,7 +222,7 @@ const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProp
                     autoComplete="email"
                     spellCheck="false"
                     placeholder="john@example.com"
-                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -244,7 +246,7 @@ const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProp
                     type="tel"
                     autoComplete="tel"
                     placeholder="(281) 555-0123"
-                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -273,7 +275,7 @@ const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProp
                   <select
                     {...register("serviceType")}
                     id="serviceType"
-                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   >
                     <option value="">Select a service...</option>
                     {SERVICE_TYPES.map((type) => (
@@ -303,7 +305,7 @@ const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProp
                     id="scheduledDate"
                     type="date"
                     min={getMinDate()}
-                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent [&::-webkit-calendar-picker-indicator]:brightness-0 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-80 [&::-webkit-calendar-picker-indicator]:hover:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent [&::-webkit-calendar-picker-indicator]:brightness-0 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:opacity-80 [&::-webkit-calendar-picker-indicator]:hover:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -324,7 +326,7 @@ const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProp
                     </p>
                   ) : isLoadingSlots ? (
                     <div className="flex items-center justify-center py-3 border border-dashed border-white/10 rounded-lg">
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-indigo-500"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-500"></div>
                       <span className="ml-2 text-gray-400 text-sm">Loading…</span>
                     </div>
                   ) : !hasAvailableSlots ? (
@@ -341,11 +343,11 @@ const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProp
                           <label
                             key={time}
                             className={`
-                              relative flex items-center justify-center p-2.5 rounded-lg border text-xs font-medium transition-all
+                              relative flex items-center justify-center p-2.5 rounded-lg border text-xs font-medium tabular-nums transition-colors has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-400
                               ${isBooked
-                                ? "bg-red-500/10 border-red-500/30 text-red-400 cursor-not-allowed"
+                                ? "border-white/5 text-gray-600 line-through cursor-not-allowed"
                                 : isSelected
-                                  ? "bg-indigo-500/20 border-indigo-500 text-white ring-2 ring-indigo-500"
+                                  ? "bg-primary-500/20 border-primary-500 text-white ring-2 ring-primary-500"
                                   : "bg-gray-900/50 border-white/10 text-white hover:bg-gray-800 hover:border-white/20 cursor-pointer"
                               }
                             `}
@@ -357,14 +359,8 @@ const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProp
                               disabled={isBooked}
                               className="sr-only"
                             />
-                            {isBooked ? (
-                              <span className="flex items-center gap-1">
-                                <LockClosedIcon className="h-3 w-3" />
-                                Reserved
-                              </span>
-                            ) : (
-                              time
-                            )}
+                            {time}
+                            {isBooked && <span className="sr-only"> (reserved)</span>}
                           </label>
                         );
                       })}
@@ -392,7 +388,7 @@ const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProp
                     type="text"
                     autoComplete="street-address"
                     placeholder="123 Main St, Cypress, TX 77433"
-                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500"
+                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -414,7 +410,7 @@ const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProp
                     <select
                       {...register("status")}
                       id="status"
-                      className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     >
                       {APPOINTMENT_STATUSES.map((status) => (
                         <option key={status} value={status}>
@@ -438,7 +434,7 @@ const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProp
                     id="notes"
                     rows={3}
                     placeholder="Any additional information about the appointment..."
-                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-gray-500 resize-none"
+                    className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent placeholder:text-gray-500 resize-none"
                   />
                 </div>
               </div>
@@ -457,7 +453,7 @@ const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProp
             <button
               type="submit"
               disabled={isPending}
-              className="px-6 py-2.5 rounded-md text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 transition-colors disabled:bg-indigo-400 disabled:cursor-not-allowed"
+              className="px-6 py-2.5 rounded-md text-sm font-semibold text-white bg-primary-600 hover:bg-primary-700 transition-colors disabled:bg-primary-400 disabled:cursor-not-allowed"
             >
               {isPending
                 ? isEditing

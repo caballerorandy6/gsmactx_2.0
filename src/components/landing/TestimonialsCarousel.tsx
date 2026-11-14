@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { Review } from "@/lib/interfaces";
@@ -31,33 +31,18 @@ const TestimonialsCarousel = ({ reviews }: TestimonialsCarouselProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
   useEffect(() => {
     if (!emblaApi) return;
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
     setScrollSnaps(emblaApi.scrollSnapList());
     emblaApi.on("select", onSelect);
     emblaApi.plugins().autoplay?.play();
     return () => {
       emblaApi.off("select", onSelect);
     };
-  }, [emblaApi, onSelect]);
+  }, [emblaApi]);
 
-  const scrollTo = useCallback(
-    (index: number) => emblaApi && emblaApi.scrollTo(index),
-    [emblaApi]
-  );
-
-  if (reviews.length === 0) {
-    return (
-      <div className="py-16 text-center text-gray-400">
-        Loading reviews...
-      </div>
-    );
-  }
+  const scrollTo = (index: number) => emblaApi && emblaApi.scrollTo(index);
 
   return (
     <div className="py-12">
@@ -69,9 +54,9 @@ const TestimonialsCarousel = ({ reviews }: TestimonialsCarouselProps) => {
               key={index}
               className="flex-[0_0_100%] min-w-0 pl-4 md:flex-[0_0_50%] lg:flex-[0_0_33.333%] xl:flex-[0_0_25%]"
             >
-              <div className="group relative h-full bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-2xl border border-white/10 p-6 transition-all duration-300 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10">
+              <div className="group relative h-full bg-linear-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-2xl border border-white/10 p-6 transition-all duration-300 hover:border-primary-500/50 hover:shadow-xl hover:shadow-primary-500/10">
                 {/* Quote Icon */}
-                <div className="absolute -top-3 -left-1 text-6xl text-indigo-500/20 font-serif">
+                <div className="absolute -top-3 -left-1 text-6xl text-primary-500/20 font-serif">
                   &ldquo;
                 </div>
 
@@ -83,10 +68,10 @@ const TestimonialsCarousel = ({ reviews }: TestimonialsCarouselProps) => {
                       alt={review.author_name}
                       width={48}
                       height={48}
-                      className="rounded-full ring-2 ring-indigo-500/30"
+                      className="rounded-full ring-2 ring-primary-500/30"
                     />
                   ) : (
-                    <div className="w-12 h-12 rounded-full bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+                    <div className="w-12 h-12 rounded-full bg-linear-to-br from-primary-500 to-primary-800 flex items-center justify-center text-white font-bold text-lg">
                       {review.author_name.charAt(0).toUpperCase()}
                     </div>
                   )}
@@ -149,7 +134,7 @@ const TestimonialsCarousel = ({ reviews }: TestimonialsCarouselProps) => {
             onClick={() => scrollTo(index)}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               index === selectedIndex
-                ? "bg-indigo-500 w-6"
+                ? "bg-primary-500 w-6"
                 : "bg-gray-600 hover:bg-gray-500"
             }`}
             aria-label={`Go to slide ${index + 1}`}

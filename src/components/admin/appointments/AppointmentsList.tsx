@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 import clsx from "clsx";
 import {
   Appointment,
@@ -22,7 +23,6 @@ import {
 
 interface AppointmentsListProps {
   appointments: Appointment[];
-  userName: string;
 }
 
 type FilterStatus = AppointmentStatus | "ALL";
@@ -30,7 +30,6 @@ type ViewMode = "list" | "calendar";
 
 const AppointmentsList = ({
   appointments,
-  userName,
 }: AppointmentsListProps) => {
   const [viewMode, setViewMode] = useState<ViewMode>("calendar");
   const [selectedStatus, setSelectedStatus] = useState<FilterStatus>("ALL");
@@ -69,16 +68,12 @@ const AppointmentsList = ({
   const hasActiveFilters = selectedStatus !== "ALL" || selectedService !== "ALL";
 
   return (
-    <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">Appointments</h1>
-            <p className="text-gray-400 mt-1">
-              Welcome, {userName}. Manage your scheduled appointments.
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
+    <div className="max-w-6xl">
+        <AdminPageHeader
+          title="Appointments"
+          description="Scheduled service visits, by day or as a list."
+          actions={
+          <>
             {/* View Mode Toggle */}
             <div className="flex items-center bg-gray-800/50 rounded-lg p-1 border border-white/10" role="group" aria-label="View mode">
               <button
@@ -88,12 +83,12 @@ const AppointmentsList = ({
                 className={clsx(
                   "flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors motion-reduce:transition-none",
                   viewMode === "calendar"
-                    ? "bg-indigo-600 text-white"
+                    ? "bg-primary-600 text-white"
                     : "text-gray-400 hover:text-white"
                 )}
               >
                 <CalendarDaysIcon aria-hidden="true" className="h-4 w-4" />
-                Calendar
+                <span className="max-sm:sr-only">Calendar</span>
               </button>
               <button
                 onClick={() => setViewMode("list")}
@@ -102,23 +97,24 @@ const AppointmentsList = ({
                 className={clsx(
                   "flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors motion-reduce:transition-none",
                   viewMode === "list"
-                    ? "bg-indigo-600 text-white"
+                    ? "bg-primary-600 text-white"
                     : "text-gray-400 hover:text-white"
                 )}
               >
                 <ListBulletIcon aria-hidden="true" className="h-4 w-4" />
-                List
+                <span className="max-sm:sr-only">List</span>
               </button>
             </div>
             <Link
               href="/create-appointment"
-              className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition-colors"
+              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-md bg-primary-600 px-3.5 py-2 text-sm font-semibold text-white hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
             >
-              <PlusIcon className="h-5 w-5" />
-              New Appointment
+              <PlusIcon aria-hidden="true" className="size-4" />
+              New appointment
             </Link>
-          </div>
-        </div>
+          </>
+          }
+        />
 
         {/* Quick Stats - Only show in list view */}
         {viewMode === "list" && (
@@ -134,7 +130,7 @@ const AppointmentsList = ({
                 className={clsx(
                   "rounded-lg p-3 text-center transition-all motion-reduce:transition-none border",
                   selectedStatus === status
-                    ? "bg-indigo-600/20 border-indigo-500/50 ring-1 ring-indigo-500/30"
+                    ? "bg-primary-600/20 border-primary-500/50 ring-1 ring-primary-500/30"
                     : "bg-gray-800/50 border-white/10 hover:bg-gray-700/50"
                 )}
               >
@@ -160,7 +156,7 @@ const AppointmentsList = ({
               <FunnelIcon className="h-5 w-5" />
               Filters
               {hasActiveFilters && (
-                <span className="bg-indigo-600 text-white text-xs px-2 py-0.5 rounded-full">
+                <span className="bg-primary-600 text-white text-xs px-2 py-0.5 rounded-full">
                   Active
                 </span>
               )}
@@ -199,7 +195,7 @@ const AppointmentsList = ({
                   onChange={(e) =>
                     setSelectedStatus(e.target.value as FilterStatus)
                   }
-                  className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   <option value="ALL">All Statuses</option>
                   {APPOINTMENT_STATUSES.map((status) => (
@@ -221,7 +217,7 @@ const AppointmentsList = ({
                   id="service-filter"
                   value={selectedService}
                   onChange={(e) => setSelectedService(e.target.value)}
-                  className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full rounded-md bg-gray-900 border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 >
                   <option value="ALL">All Services</option>
                   {SERVICE_TYPES.map((type) => (
@@ -265,7 +261,7 @@ const AppointmentsList = ({
                 ) : (
                   <Link
                     href="/create-appointment"
-                    className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 transition-colors"
+                    className="rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors"
                   >
                     Create Appointment
                   </Link>

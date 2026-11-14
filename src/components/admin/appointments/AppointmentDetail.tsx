@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import {
   Appointment,
@@ -12,6 +13,7 @@ import {
 import { APPOINTMENT_STATUSES } from "@/lib/validations/zod";
 import { formatPhone, formatPhoneForTel } from "@/lib/utils/phone";
 import AppointmentStatusBadge from "./AppointmentStatusBadge";
+import ConfirmDialog from "@/components/admin/common/ConfirmDialog";
 import {
   updateAppointmentStatusAction,
   deleteAppointmentAction,
@@ -25,7 +27,6 @@ import {
   UserIcon,
   WrenchScrewdriverIcon,
   DocumentTextIcon,
-  ArrowLeftIcon,
   PencilIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
@@ -37,6 +38,8 @@ interface AppointmentDetailProps {
 const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [isDeletePending, startDeleteTransition] = useTransition();
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
   const formattedDate = new Date(appointment.scheduledDate).toLocaleDateString(
     "en-US",
@@ -69,63 +72,47 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
     });
   };
 
-  const handleDelete = async () => {
-    if (
-      !confirm(
-        "Are you sure you want to delete this appointment? This action cannot be undone."
-      )
-    ) {
-      return;
-    }
-
-    startTransition(async () => {
-      toast.loading("Deleting appointment...");
+  const handleDelete = () => {
+    startDeleteTransition(async () => {
+      const toastId = toast.loading("Deleting appointment…");
       const result = await deleteAppointmentAction(appointment.id);
-      toast.dismiss();
 
       if (result.success) {
-        toast.success(result.message);
+        toast.success(result.message, { id: toastId });
+        setConfirmDeleteOpen(false);
         router.push("/appointments");
       } else {
-        toast.error(result.message);
+        toast.error(result.message, { id: toastId });
       }
     });
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
-          <div>
-            <Link
-              href="/appointments"
-              className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4"
-            >
-              <ArrowLeftIcon className="h-4 w-4" />
-              Back to Appointments
-            </Link>
-            <h1 className="text-3xl font-bold text-white">
-              Appointment Details
-            </h1>
-          </div>
-          <div className="flex items-center gap-3">
+    <div className="max-w-4xl">
+        <AdminPageHeader
+          title="Appointment details"
+          back={{ href: "/appointments", label: "All appointments" }}
+          actions={
+          <>
             <Link
               href={`/edit-appointment/${appointment.id}`}
-              className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 transition-colors"
+              className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-700 transition-colors"
             >
               <PencilIcon className="h-4 w-4" />
               Edit
             </Link>
             <button
-              onClick={handleDelete}
-              disabled={isPending}
-              className="inline-flex items-center gap-2 rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-500 transition-colors disabled:opacity-50"
+              type="button"
+              onClick={() => setConfirmDeleteOpen(true)}
+              disabled={isPending || isDeletePending}
+              className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold text-red-400 ring-1 ring-inset ring-red-500/30 hover:bg-red-500/10 hover:text-red-300 transition-colors disabled:opacity-50"
             >
               <TrashIcon className="h-4 w-4" />
               Delete
             </button>
-          </div>
-        </div>
+          </>
+          }
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Info Card */}
@@ -139,7 +126,7 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
 
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <WrenchScrewdriverIcon className="h-5 w-5 text-indigo-400 mt-0.5" />
+                <WrenchScrewdriverIcon className="h-5 w-5 text-primary-400 mt-0.5" />
                 <div>
                   <p className="text-sm text-gray-400">Service</p>
                   <p className="text-white font-medium">{serviceLabel}</p>
@@ -147,7 +134,7 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
               </div>
 
               <div className="flex items-start gap-3">
-                <CalendarIcon className="h-5 w-5 text-indigo-400 mt-0.5" />
+                <CalendarIcon className="h-5 w-5 text-primary-400 mt-0.5" />
                 <div>
                   <p className="text-sm text-gray-400">Date</p>
                   <p className="text-white font-medium">{formattedDate}</p>
@@ -155,7 +142,7 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
               </div>
 
               <div className="flex items-start gap-3">
-                <ClockIcon className="h-5 w-5 text-indigo-400 mt-0.5" />
+                <ClockIcon className="h-5 w-5 text-primary-400 mt-0.5" />
                 <div>
                   <p className="text-sm text-gray-400">Time</p>
                   <p className="text-white font-medium">
@@ -165,7 +152,7 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
               </div>
 
               <div className="flex items-start gap-3">
-                <MapPinIcon className="h-5 w-5 text-indigo-400 mt-0.5" />
+                <MapPinIcon className="h-5 w-5 text-primary-400 mt-0.5" />
                 <div>
                   <p className="text-sm text-gray-400">Address</p>
                   <p className="text-white font-medium">{appointment.address}</p>
@@ -174,7 +161,7 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
 
               {appointment.notes && (
                 <div className="flex items-start gap-3">
-                  <DocumentTextIcon className="h-5 w-5 text-indigo-400 mt-0.5" />
+                  <DocumentTextIcon className="h-5 w-5 text-primary-400 mt-0.5" />
                   <div>
                     <p className="text-sm text-gray-400">Notes</p>
                     <p className="text-white">{appointment.notes}</p>
@@ -198,14 +185,14 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
                 </div>
                 <a
                   href={`mailto:${appointment.clientEmail}`}
-                  className="flex items-center gap-3 text-indigo-400 hover:text-indigo-300 transition-colors"
+                  className="flex items-center gap-3 text-primary-400 hover:text-primary-300 transition-colors"
                 >
                   <EnvelopeIcon className="h-5 w-5" />
                   <span className="truncate">{appointment.clientEmail}</span>
                 </a>
                 <a
                   href={`tel:${formatPhoneForTel(appointment.clientPhone)}`}
-                  className="flex items-center gap-3 text-indigo-400 hover:text-indigo-300 transition-colors"
+                  className="flex items-center gap-3 text-primary-400 hover:text-primary-300 transition-colors"
                 >
                   <PhoneIcon className="h-5 w-5" />
                   <span>{formatPhone(appointment.clientPhone)}</span>
@@ -286,6 +273,25 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
             </div>
           </div>
         </div>
+      <ConfirmDialog
+        open={confirmDeleteOpen}
+        onClose={() => setConfirmDeleteOpen(false)}
+        onConfirm={handleDelete}
+        title="Delete this appointment?"
+        description={
+          <>
+            The appointment for{" "}
+            <strong className="font-semibold text-white">
+              {appointment.clientName}
+            </strong>{" "}
+            on {formattedDate} will be permanently deleted. This can&apos;t be
+            undone.
+          </>
+        }
+        confirmLabel="Delete appointment"
+        pendingLabel="Deleting…"
+        isPending={isDeletePending}
+      />
     </div>
   );
 };

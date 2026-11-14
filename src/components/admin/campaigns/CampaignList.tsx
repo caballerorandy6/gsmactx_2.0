@@ -1,114 +1,141 @@
-import { Menu, MenuButton, MenuItems } from "@headlessui/react";
-import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
 import { getCampaignsListAction } from "@/app/actions/campaignAction";
 import Link from "next/link";
 import clsx from "clsx";
-import AdminDeleteCampaignButton from "@/components/admin/campaigns/DeleteCampaignButton";
-import AdminSendCampaignButton from "@/components/admin/campaigns/SendCampaignButton";
-import AdminSendTestCampaignButton from "@/components/admin/campaigns/SendTestCampaignButton";
-import AdminEditCampaignButton from "@/components/admin/campaigns/EditCampaignButton";
-import AdminDuplicateCampaignButton from "@/components/admin/campaigns/DuplicateCampaignButton";
+import CampaignActionsMenu from "@/components/admin/campaigns/CampaignActionsMenu";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
+import { BeakerIcon, EnvelopeIcon, PlusIcon } from "@heroicons/react/24/outline";
 
-const CampaignList = async ({ user }) => {
+const CampaignList = async () => {
   const campaigns = await getCampaignsListAction();
+
+  const header = (
+    <AdminPageHeader
+      title="Campaigns"
+      description={
+        campaigns.length === 1 ? "1 campaign" : `${campaigns.length} campaigns`
+      }
+      actions={
+        <>
+          <Link
+            href="/test-campaign"
+            className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-md px-3.5 py-2 text-sm font-semibold text-gray-200 ring-1 ring-inset ring-white/20 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+          >
+            <BeakerIcon aria-hidden="true" className="size-4" />
+            Send a test
+          </Link>
+          {campaigns.length > 0 && (
+            <Link
+              href="/create-campaign"
+              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-md bg-primary-600 px-3.5 py-2 text-sm font-semibold text-white hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+            >
+              <PlusIcon aria-hidden="true" className="size-4" />
+              New campaign
+            </Link>
+          )}
+        </>
+      }
+    />
+  );
 
   if (campaigns.length === 0) {
     return (
-      <div className="text-center text-gray-400">
-        No campaigns available. Start by creating one!
+      <div className="max-w-4xl">
+        {header}
+        <div className="rounded-lg border border-dashed border-white/15 px-6 py-12 text-center">
+          <EnvelopeIcon
+            aria-hidden="true"
+            className="mx-auto size-8 text-gray-500"
+          />
+          <h2 className="mt-3 text-base font-semibold text-white">
+            No campaigns yet
+          </h2>
+          <p className="mx-auto mt-1 max-w-sm text-sm text-gray-400">
+            Write an email once and send it to every newsletter subscriber.
+            Sending runs daily, up to 100 emails per day.
+          </p>
+          <Link
+            href="/create-campaign"
+            className="mt-5 inline-flex items-center gap-1.5 rounded-md bg-primary-600 px-3.5 py-2 text-sm font-semibold text-white hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+          >
+            <PlusIcon aria-hidden="true" className="size-4" />
+            Create your first campaign
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <h1 className="text-2xl sm:text-3xl font-bold text-center text-white mb-8">
-        Welcome, {user?.name}!
-      </h1>
+    <div className="max-w-4xl">
+      {header}
 
       {/* List container with a dark background and rounded borders */}
       <div className="bg-gray-900/50 backdrop-blur-sm rounded-lg border border-white/10">
-          <ul role="list" className="divide-y divide-white/10">
-            {campaigns.map((campaign) => (
-              <li
-                key={campaign.id}
-                className="flex items-center justify-between gap-x-6 p-5 hover:bg-gray-800/50 transition-colors"
-              >
-                <div className="min-w-0">
-                  <div className="flex items-start gap-x-3">
-                    {/* Main text now in a light color */}
-                    <p className="text-sm/6 font-semibold text-white">
-                      {campaign.title}
-                    </p>
+        <ul role="list" className="divide-y divide-white/10">
+          {campaigns.map((campaign) => (
+            <li
+              key={campaign.id}
+              className="flex items-center justify-between gap-x-6 p-5 hover:bg-gray-800/50 transition-colors"
+            >
+              <div className="min-w-0">
+                <div className="flex items-start gap-x-3">
+                  {/* Main text now in a light color */}
+                  <p className="text-sm/6 font-semibold text-white">
+                    {campaign.title}
+                  </p>
 
-                    {/* Badge with conditional colors */}
-                    <p
-                      className={clsx(
-                        "mt-0.5 rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset",
-                        campaign.sent === true
-                          ? "bg-green-900/50 text-green-300 ring-green-400/20"
-                          : "bg-red-900/50 text-red-300 ring-red-400/20"
-                      )}
-                    >
-                      {campaign.sent === true ? "Sent" : "Not Sent"}
-                    </p>
-                  </div>
-                  <div className="mt-1 flex items-center gap-x-2 text-xs/5 text-gray-400">
-                    <p className="whitespace-nowrap">
-                      Created on{" "}
-                      {campaign.createdAt.toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </p>
-                    <svg viewBox="0 0 2 2" aria-hidden="true" className="size-0.5 fill-current">
-                      <circle r={1} cx={1} cy={1} />
-                    </svg>
-                    <p className="truncate">By {campaign.admin.name}</p>
-                  </div>
-                </div>
-                <div className="flex flex-none items-center gap-x-4">
-                  {/* Button with dark theme styles */}
-                  <Link
-                    href={`/view-campaigns/${campaign.id}`} // Link to a detail/preview page
-                    className="hidden rounded-md bg-white/10 px-2.5 py-1.5 text-sm font-semibold text-white shadow-xs ring-1 ring-inset ring-white/20 hover:bg-white/20 sm:block"
+                  {/* Badge with conditional colors */}
+                  <p
+                    className={clsx(
+                      "mt-0.5 rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset",
+                      campaign.sent === true
+                        ? "bg-green-900/50 text-green-300 ring-green-400/20"
+                        : "bg-red-900/50 text-red-300 ring-red-400/20",
+                    )}
                   >
-                    View campaign
-                    <span className="sr-only">, {campaign.id}</span>
-                  </Link>
-                  {campaign.sent === true ? (
-                    ""
-                  ) : (
-                    <Menu as="div" className="relative flex-none">
-                      {/* Menu icon with dark theme colors */}
-                      <MenuButton
-                        aria-label="Open options"
-                        className="relative block text-gray-400 hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded"
-                      >
-                        <span className="absolute -inset-2.5" />
-                        <EllipsisVerticalIcon
-                          aria-hidden="true"
-                          className="size-5"
-                        />
-                      </MenuButton>
-                      {/* Dropdown menu with dark theme styles */}
-                      <MenuItems
-                        transition
-                        className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-gray-800 py-2 shadow-lg ring-1 ring-white/10 transition focus:outline-none data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in "
-                      >
-                        <AdminSendTestCampaignButton id={campaign.id} />
-                        <AdminSendCampaignButton id={campaign.id} />
-                        <AdminEditCampaignButton id={campaign.id} />
-                        <AdminDuplicateCampaignButton id={campaign.id} />
-                        <AdminDeleteCampaignButton id={campaign.id} />
-                      </MenuItems>
-                    </Menu>
-                  )}
+                    {campaign.sent === true ? "Sent" : "Not Sent"}
+                  </p>
                 </div>
-              </li>
-            ))}
-          </ul>
+                <div className="mt-1 flex items-center gap-x-2 text-xs/5 text-gray-400">
+                  <p className="whitespace-nowrap">
+                    Created on{" "}
+                    {campaign.createdAt.toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </p>
+                  <svg
+                    viewBox="0 0 2 2"
+                    aria-hidden="true"
+                    className="size-0.5 fill-current"
+                  >
+                    <circle r={1} cx={1} cy={1} />
+                  </svg>
+                  <p className="truncate">By {campaign.admin.name}</p>
+                </div>
+              </div>
+              <div className="flex flex-none items-center gap-x-4">
+                {/* Button with dark theme styles */}
+                <Link
+                  href={`/view-campaigns/${campaign.id}`} // Link to a detail/preview page
+                  className="hidden rounded-md bg-white/10 px-2.5 py-1.5 text-sm font-semibold text-white shadow-xs ring-1 ring-inset ring-white/20 hover:bg-white/20 sm:block"
+                >
+                  View campaign
+                  <span className="sr-only">, {campaign.id}</span>
+                </Link>
+                {campaign.sent === true ? (
+                  ""
+                ) : (
+                  <CampaignActionsMenu
+                    id={campaign.id}
+                    title={campaign.title}
+                  />
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

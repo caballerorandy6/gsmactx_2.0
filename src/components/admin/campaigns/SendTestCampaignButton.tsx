@@ -1,75 +1,17 @@
 "use client";
 
 import { MenuItem } from "@headlessui/react";
-import { createAndSendTestCampaignAction } from "@/app/actions/createAndSendTestCampaignAction";
-import { getCampaignByIdAction } from "@/app/actions/campaignAction";
-import { toast } from "sonner";
 
-interface AdminSendTestCampaignButtonProps {
-  id: string;
-}
+const SendTestCampaignButton = ({ onSelect }: { onSelect: () => void }) => (
+  <MenuItem>
+    <button
+      type="button"
+      onClick={onSelect}
+      className="block w-full cursor-pointer px-3 py-1 text-left text-sm/6 text-white transition-colors hover:bg-gray-700 data-focus:bg-white/10"
+    >
+      Send test
+    </button>
+  </MenuItem>
+);
 
-const AdminSendTestCampaignButton = ({
-  id,
-}: AdminSendTestCampaignButtonProps) => {
-  const handleSendTestCampaign = async () => {
-    const confirmed = confirm(
-      "Send test campaign to test emails?\n\nThis will send to:\n• caballerorandy7@gmail.com\n• gsmactx@outlook.com\n• michel@gsmactx.com\n• mchapelli305@gmail.com\n• mchapelli305@yahoo.com"
-    );
-
-    if (!confirmed) return;
-
-    try {
-      toast.loading("Fetching campaign data…");
-
-      // Fetch campaign data using server action
-      const campaign = await getCampaignByIdAction(id);
-      if (!campaign) {
-        throw new Error("Failed to fetch campaign");
-      }
-
-      // Create FormData from campaign
-      const formData = new FormData();
-      formData.append("title", campaign.title);
-      formData.append("subject", campaign.subject);
-      formData.append("content", campaign.content);
-
-      // If there's an image URL, we need to fetch it and convert to File
-      if (campaign.imageUrl) {
-        const imageResponse = await fetch(campaign.imageUrl);
-        const imageBlob = await imageResponse.blob();
-        const imageName = campaign.imageUrl.split('/').pop() || 'image.jpg';
-        const imageFile = new File([imageBlob], imageName, { type: imageBlob.type });
-        formData.append("image", imageFile);
-      }
-
-      toast.dismiss();
-      toast.loading("Sending test campaign…");
-
-      const result = await createAndSendTestCampaignAction(formData);
-      toast.dismiss();
-
-      if (result.success) {
-        toast.success(result.message);
-      } else {
-        toast.error(result.message);
-      }
-    } catch {
-      toast.dismiss();
-      toast.error("Failed to send test campaign");
-    }
-  };
-
-  return (
-    <MenuItem>
-      <button
-        onClick={handleSendTestCampaign}
-        className="block w-full text-left px-3 py-1 text-sm/6 text-white hover:bg-gray-700 cursor-pointer"
-      >
-        Send Test
-      </button>
-    </MenuItem>
-  );
-};
-
-export default AdminSendTestCampaignButton;
+export default SendTestCampaignButton;

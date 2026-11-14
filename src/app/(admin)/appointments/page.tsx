@@ -24,7 +24,7 @@ const AppointmentsPage = async () => {
   }
 
   return (
-    <AppointmentsList appointments={appointments} userName={user.name} />
+    <AppointmentsList appointments={appointments} />
   );
 };
 

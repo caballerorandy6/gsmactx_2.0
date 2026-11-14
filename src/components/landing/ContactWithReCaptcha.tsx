@@ -73,7 +73,7 @@ function ContactSkeleton() {
             </div>
             {/* Submit button */}
             <div className="mt-8 flex justify-end">
-              <div className="h-10 w-32 bg-indigo-600/50 rounded-md" />
+              <div className="h-10 w-32 bg-primary-600/50 rounded-md" />
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import clsx from "clsx";
@@ -12,8 +13,16 @@ import {
   useActiveSection,
 } from "@/store/gsmactx-store";
 import { navigation } from "@/lib/data";
+
+const PHONE_HREF = "tel:+12812354684";
+const PHONE_LABEL = "(281) 235-4684";
 import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  XMarkIcon,
+  PhoneIcon,
+  CalendarDaysIcon,
+} from "@heroicons/react/24/outline";
 
 const Header = () => {
   // Using selectors for optimized re-renders
@@ -22,6 +31,14 @@ const Header = () => {
   const setScrolled = useSetScrolled();
   const mobileMenuOpen = useMobileMenuOpen();
   const setMobileMenuOpen = useSetMobileMenuOpen();
+  const pathname = usePathname();
+  // Outside the home page the scroll-spy section is stale; mark by route instead.
+  const isActive = (name: string) =>
+    pathname === "/"
+      ? activeSection === name
+      : (name === "Services" && pathname.startsWith("/services")) ||
+        (name === "Book Appointment" && pathname === "/book-appointment");
+  const menuLinks = navigation.filter((item) => item.name !== "Book Appointment");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,7 +64,7 @@ const Header = () => {
         <div className="flex lg:flex-1">
           <Link
             href="/#home"
-            className="-m-1.5 p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded-lg"
+            className="-m-1.5 p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded-lg"
           >
             <span className="sr-only">GSM A/C - Go to homepage</span>
             <Image
@@ -77,11 +94,12 @@ const Header = () => {
                 key={item.name}
                 href={item.href}
                 className={clsx(
-                  "text-sm/6 font-semibold transition-colors hover:text-indigo-300",
+                  "text-sm/6 font-semibold transition-colors hover:text-primary-300",
                   {
-                    "text-indigo-300": activeSection === item.name,
+                    "text-primary-300": isActive(item.name),
                   }
                 )}
+                aria-current={isActive(item.name) ? "page" : undefined}
               >
                 {item.name}
               </Link>
@@ -90,9 +108,8 @@ const Header = () => {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-2 text-sm/6 font-semibold text-white">
           <Link
-            href="tel:+12812354684"
-            passHref
-            className="flex justify-center items-center gap-2 text-white text-sm/6 transition-colors rounded-md bg-indigo-500 px-3.5 py-2.5 font-semibold shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+            href={PHONE_HREF}
+            className="flex justify-center items-center gap-2 text-white text-sm/6 transition-colors rounded-md bg-primary-600 px-3.5 py-2.5 font-semibold shadow-xs hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
           >
             <span className="font-bold">Call Now!</span>
             <PhoneIcon aria-hidden="true" className="text-white w-4 h-4" />
@@ -109,7 +126,7 @@ const Header = () => {
           <div className="flex items-center justify-between">
             <Link
               href="/#home"
-              className="-m-1.5 p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-lg"
+              className="-m-1.5 p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-lg"
             >
               <span className="sr-only">GSM A/C - Go to homepage</span>
               <Image
@@ -125,41 +142,47 @@ const Header = () => {
               type="button"
               onClick={() => setMobileMenuOpen(false)}
               aria-label="Close menu"
-              className="-m-2.5 rounded-md p-2.5 text-gray-400"
+              className="-m-2.5 rounded-md p-2.5 text-gray-300 hover:text-white"
             >
               <XMarkIcon aria-hidden="true" className="size-6 cursor-pointer" />
             </button>
           </div>
-          <div className="mt-6 flow-root text-white">
-            <div className="-my-6 divide-y divide-gray-500/25">
-              <div className="flex flex-col space-y-6 py-6 text-sm/10 font-semibold">
-                {navigation.map((item) => (
+          <nav aria-label="Mobile" className="mt-6 text-white">
+            <ul role="list" className="divide-y divide-white/10 border-y border-white/10">
+              {menuLinks.map((item) => (
+                <li key={item.name}>
                   <Link
-                    key={item.name}
                     href={item.href}
+                    aria-current={isActive(item.name) ? "page" : undefined}
                     className={clsx(
-                      "font-semibold transition-colors hover:text-indigo-300",
-                      {
-                        "text-indigo-300": activeSection === item.name,
-                      }
+                      "block py-3.5 text-base font-semibold transition-colors hover:text-primary-300",
+                      isActive(item.name) && "text-primary-300"
                     )}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}
                   </Link>
-                ))}
-              </div>
-              <div className="py-6">
-                <Link
-                  href="tel:+12812354684"
-                  passHref
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-sm/10 font-semibold text-white hover:text-indigo-300 transition-colors"
-                >
-                  <span className="hover">Call Now!</span>
-                </Link>
-              </div>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8 flex flex-col gap-3">
+              <Link
+                href="/book-appointment"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-3 text-base font-semibold text-white hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+              >
+                <CalendarDaysIcon aria-hidden="true" className="size-5" />
+                Book Appointment
+              </Link>
+              <Link
+                href={PHONE_HREF}
+                className="flex items-center justify-center gap-2 rounded-md px-4 py-3 text-base font-semibold text-white ring-1 ring-inset ring-white/25 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+              >
+                <PhoneIcon aria-hidden="true" className="size-5" />
+                Call {PHONE_LABEL}
+              </Link>
             </div>
-          </div>
+          </nav>
         </DialogPanel>
       </Dialog>
     </header>

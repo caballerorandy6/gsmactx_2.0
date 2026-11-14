@@ -13,12 +13,13 @@ const CustomBadge = ({ children, showIcon = true }: CustomBadgeProps) => {
       href="https://apply.optimusfinancing.com/EG-51065"
       target="_blank"
       rel="noopener noreferrer"
-      className="group inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 rounded-xl border-2 border-amber-400 bg-amber-400/10 text-amber-300 text-sm sm:text-base font-semibold transition-all duration-200 hover:bg-amber-400 hover:text-gray-900 hover:scale-105"
+      className="inline-flex items-center justify-center gap-2 rounded text-sm font-medium text-gray-200 underline decoration-white/30 underline-offset-4 transition-colors hover:text-white hover:decoration-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
     >
       {showIcon && (
-        <BanknotesIcon className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
+        <BanknotesIcon className="size-4 text-gold" aria-hidden="true" />
       )}
       {children}
+      <span className="sr-only"> (opens in a new tab)</span>
     </Link>
   );
 };

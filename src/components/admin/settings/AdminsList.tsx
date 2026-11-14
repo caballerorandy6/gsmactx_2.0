@@ -130,7 +130,7 @@ const AdminsList = ({
         {!showCreateForm && (
           <button
             onClick={() => setShowCreateForm(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white bg-primary-600 hover:bg-primary-700 transition-colors"
           >
             <UserPlusIcon className="h-5 w-5" />
             Add Admin
@@ -140,7 +140,7 @@ const AdminsList = ({
 
       {/* Create Form */}
       {showCreateForm && (
-        <div className="bg-gray-900/50 rounded-lg border border-indigo-500/30 p-4 mb-4">
+        <div className="bg-gray-900/50 rounded-lg border border-primary-500/30 p-4 mb-4">
           <h3 className="text-sm font-medium text-white mb-3">New Admin</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
             <input
@@ -148,21 +148,21 @@ const AdminsList = ({
               placeholder="Name"
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
-              className="rounded-lg bg-gray-800 border border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="rounded-lg bg-gray-800 border border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
             <input
               type="email"
               placeholder="Email"
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
-              className="rounded-lg bg-gray-800 border border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="rounded-lg bg-gray-800 border border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
             <input
               type="password"
               placeholder="Password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="rounded-lg bg-gray-800 border border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="rounded-lg bg-gray-800 border border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
           <p className="text-xs text-gray-500 mb-3">
@@ -207,26 +207,26 @@ const AdminsList = ({
                   type="text"
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className="flex-1 rounded-lg bg-gray-800 border border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="flex-1 rounded-lg bg-gray-800 border border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 />
                 <input
                   type="email"
                   value={editEmail}
                   onChange={(e) => setEditEmail(e.target.value)}
-                  className="flex-1 rounded-lg bg-gray-800 border border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="flex-1 rounded-lg bg-gray-800 border border-white/10 text-white px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 />
               </div>
             ) : (
               // View mode
               <div className="flex items-center gap-3">
-                <div className="rounded-full bg-indigo-500/20 p-2">
-                  <UserCircleIcon className="h-6 w-6 text-indigo-400" />
+                <div className="rounded-full bg-primary-500/20 p-2">
+                  <UserCircleIcon className="h-6 w-6 text-primary-400" />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white">
                     {admin.name}
                     {admin.id === currentUserId && (
-                      <span className="ml-2 text-xs text-indigo-400">(You)</span>
+                      <span className="ml-2 text-xs text-primary-400">(You)</span>
                     )}
                   </p>
                   <p className="text-xs text-gray-400">{admin.email}</p>

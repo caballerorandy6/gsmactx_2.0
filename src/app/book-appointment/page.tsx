@@ -1,3 +1,4 @@
+import { getRatingSummary } from "@/app/actions/googlePlacesAction";
 import { Metadata } from "next";
 import Link from "next/link";
 import BookAppointmentForm from "@/components/forms/BookAppointmentForm";
@@ -5,6 +6,7 @@ import ReCaptchaProvider from "@/components/forms/ReCaptchaProvider";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
+import FloatingCTAButtons from "@/components/ui/FloatingCTAButtons";
 import {
   PhoneIcon,
   ClockIcon,
@@ -12,7 +14,10 @@ import {
 } from "@heroicons/react/24/outline";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
-import { businessInfo } from "@/lib/data";
+import { businessInfo, businessSameAs, heroOffer } from "@/lib/data";
+import { SERVICE_TYPES } from "@/lib/validations/zod";
+import type { ServiceType } from "@/lib/interfaces";
+import { defaultOgImage } from "@/seo/genPageMetadata";
 
 export const metadata: Metadata = {
   title: "Book an Appointment - GSM A/C & General Contractor",
@@ -31,19 +36,33 @@ export const metadata: Metadata = {
     description:
       "Schedule your HVAC service appointment online. Fast, reliable service in Houston, TX.",
     type: "website",
+    images: [defaultOgImage],
   },
 };
 
-const BookAppointmentPage = () => {
+type BookAppointmentPageProps = {
+  searchParams: Promise<{ service?: string; offer?: string }>;
+};
+
+const isServiceType = (value: string | undefined): value is ServiceType =>
+  SERVICE_TYPES.some((type) => type === value);
+
+const BookAppointmentPage = async ({ searchParams }: BookAppointmentPageProps) => {
+  const { service, offer: offerSlug } = await searchParams;
+  const offer = offerSlug === heroOffer.slug ? heroOffer : undefined;
+  const { rating, reviewCount } = await getRatingSummary();
+  const initialService = offer?.serviceType ?? (isServiceType(service) ? service : undefined);
+
   return (
     <>
       <Header />
       <ScrollToTop />
+      <FloatingCTAButtons />
       <main className="min-h-screen bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 pt-20">
       {/* Hero Section */}
       <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+          <h1 className="heading-page mb-4">
             Schedule Your Service
           </h1>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-8">
@@ -59,11 +78,11 @@ const BookAppointmentPage = () => {
               <span className="text-sm">Licensed & Insured</span>
             </div>
             <div className="flex items-center gap-2 text-gray-300">
-              <ClockIcon className="h-5 w-5 text-blue-400" />
+              <ClockIcon className="h-5 w-5 text-primary-400" />
               <span className="text-sm">24/7 Emergency Service</span>
             </div>
             <div className="flex items-center gap-2 text-gray-300">
-              <PhoneIcon className="h-5 w-5 text-indigo-400" />
+              <PhoneIcon className="h-5 w-5 text-primary-400" />
               <Link
                 href="tel:+12812354684"
                 className="text-sm hover:text-white transition-colors"
@@ -78,20 +97,20 @@ const BookAppointmentPage = () => {
       {/* Form Section */}
       <section className="pb-24 px-4 sm:px-6 lg:px-8">
         <ReCaptchaProvider>
-          <BookAppointmentForm />
+          <BookAppointmentForm initialService={initialService} offer={offer} />
         </ReCaptchaProvider>
       </section>
 
       {/* Additional Info */}
       <section className="bg-gray-900/50 border-t border-white/10 py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold text-white text-center mb-8">
+          <h2 className="heading-section text-center mb-8">
             Why Choose GSM A/C?
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-indigo-500/20 mb-4">
-                <ShieldCheckIcon className="h-6 w-6 text-indigo-400" />
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-500/20 mb-4">
+                <ShieldCheckIcon className="h-6 w-6 text-primary-400" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">
                 Licensed Experts
@@ -102,8 +121,8 @@ const BookAppointmentPage = () => {
               </p>
             </div>
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-500/20 mb-4">
-                <ClockIcon className="h-6 w-6 text-green-400" />
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-500/20 mb-4">
+                <ClockIcon aria-hidden="true" className="h-6 w-6 text-primary-400" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">
                 Fast Response
@@ -114,8 +133,8 @@ const BookAppointmentPage = () => {
               </p>
             </div>
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 mb-4">
-                <PhoneIcon className="h-6 w-6 text-blue-400" />
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-500/20 mb-4">
+                <PhoneIcon className="h-6 w-6 text-primary-400" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">
                 Free Estimates
@@ -167,15 +186,12 @@ const BookAppointmentPage = () => {
         image="/logo.avif"
         priceRange={businessInfo.priceRange}
         aggregateRating={{
-          ratingValue: businessInfo.reviews.aggregateRating,
-          reviewCount: businessInfo.reviews.reviewCount,
+          ratingValue: rating.toFixed(1),
+          reviewCount: String(reviewCount),
         }}
         areaServed={businessInfo.serviceAreas}
         openingHours={businessInfo.openingHours}
-        sameAs={[
-          "https://www.facebook.com/gsmactx/",
-          "https://www.google.com/maps/place/G+S+M+A%2FC+%26+General+Contractor+INC./@29.8801535,-95.7088008,15z",
-        ]}
+        sameAs={businessSameAs}
       />
     </>
   );
