@@ -2,6 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { businessInfo, navigation } from "@/lib/data";
 import Facebook from "@/components/icons/Facebook";
+import Instagram from "@/components/icons/Instagram";
+import TikTok from "@/components/icons/TikTok";
+import YouTube from "@/components/icons/YouTube";
 import Google from "@/components/icons/Google";
 
 interface Social {
@@ -59,12 +62,19 @@ const phoneDisplay = businessInfo.phone.replace(
   "($1) $2-$3"
 );
 
+const socialIcons: Record<string, Social["icon"]> = {
+  Facebook,
+  Instagram,
+  YouTube,
+  TikTok,
+};
+
 const social: Social[] = [
-  {
-    name: "Facebook",
-    href: "https://www.facebook.com/gsmactx/?ref=page_internal",
-    icon: Facebook,
-  },
+  ...businessInfo.socialProfiles.map((profile) => ({
+    name: profile.name,
+    href: profile.href,
+    icon: socialIcons[profile.name],
+  })),
   {
     name: "Google",
     href: businessInfo.mapsUrl,
@@ -180,17 +190,19 @@ export default function Footer() {
         </nav>
 
         {/* Social Media Icons */}
-        <div className="flex justify-center gap-x-8 mb-10">
+        <div className="flex justify-center gap-x-4 mb-10">
           {social.map((item) => (
             <Link
               key={item.name}
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors duration-200"
+              className="rounded-md p-2 text-gray-400 transition-colors duration-200 hover:text-white focus-visible:outline-2 focus-visible:outline-primary-400"
             >
-              <span className="sr-only">{item.name}</span>
-              <item.icon className="h-6 w-6" />
+              <span className="sr-only">
+                GSM A/C on {item.name} (opens in a new tab)
+              </span>
+              <item.icon aria-hidden="true" className="size-6" />
             </Link>
           ))}
         </div>

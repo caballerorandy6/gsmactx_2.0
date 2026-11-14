@@ -35,6 +35,16 @@ export const businessInfo = {
   mapsUrl:
     "https://www.google.com/maps/place/G+S+M+A%2FC+%26+General+Contractor+INC./@29.8801535,-95.7088008,15z/data=!4m6!3m5!1s0x8640d7a7761d3e75:0x5aa72afac9b36840!8m2!3d29.8801145!4d-95.7088761!16s%2Fg%2F11n5cyv1cm?entry=ttu",
 
+  // Verified 2026-11-14: each profile names the business and links gsmactx.com
+  socialProfiles: [
+    { name: "Facebook", href: "https://www.facebook.com/GSMACTX.USA/" },
+    { name: "Instagram", href: "https://www.instagram.com/gsmactx/" },
+    { name: "YouTube", href: "https://www.youtube.com/@gsmactx" },
+    { name: "TikTok", href: "https://www.tiktok.com/@gsmactx" },
+  ],
+  // Older Facebook page ("GSM AC TX"), still the company's; schema only
+  legacyFacebook: "https://www.facebook.com/gsmactx/",
+
   // Real coordinates from Google Maps
   geo: {
     latitude: "29.8801145",
@@ -1118,3 +1128,10 @@ export const getSidebarNavigation = async () => {
     },
   ];
 };
+
+/** Every official profile, for schema.org `sameAs` (entity linking for search and AI). */
+export const businessSameAs = [
+  ...businessInfo.socialProfiles.map((profile) => profile.href),
+  businessInfo.legacyFacebook,
+  businessInfo.mapsUrl,
+];

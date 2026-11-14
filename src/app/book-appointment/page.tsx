@@ -14,7 +14,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
-import { businessInfo, heroOffer } from "@/lib/data";
+import { businessInfo, businessSameAs, heroOffer } from "@/lib/data";
 import { SERVICE_TYPES } from "@/lib/validations/zod";
 import type { ServiceType } from "@/lib/interfaces";
 import { defaultOgImage } from "@/seo/genPageMetadata";
@@ -191,10 +191,7 @@ const BookAppointmentPage = async ({ searchParams }: BookAppointmentPageProps) =
         }}
         areaServed={businessInfo.serviceAreas}
         openingHours={businessInfo.openingHours}
-        sameAs={[
-          "https://www.facebook.com/gsmactx/",
-          "https://www.google.com/maps/place/G+S+M+A%2FC+%26+General+Contractor+INC./@29.8801535,-95.7088008,15z",
-        ]}
+        sameAs={businessSameAs}
       />
     </>
   );

@@ -16,7 +16,7 @@ import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
 import FAQ from "@/components/landing/FAQ";
-import { faqs, businessInfo } from "@/lib/data";
+import { faqs, businessInfo, businessSameAs } from "@/lib/data";
 import Footer from "@/components/layout/Footer";
 
 export const metadata = genPageMetadata({
@@ -98,10 +98,7 @@ export default async function Home() {
         }}
         areaServed={businessInfo.serviceAreas}
         openingHours={businessInfo.openingHours}
-        sameAs={[
-          "https://www.facebook.com/gsmactx/",
-          "https://www.google.com/maps/place/G+S+M+A%2FC+%26+General+Contractor+INC./@29.8801535,-95.7088008,15z",
-        ]}
+        sameAs={businessSameAs}
       />
     </main>
   );

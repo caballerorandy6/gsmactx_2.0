@@ -1,4 +1,4 @@
-import { allServices, businessInfo } from "@/lib/data";
+import { allServices, businessInfo, services } from "@/lib/data";
 
 export const dynamic = "force-static";
 
@@ -40,7 +40,18 @@ export function GET() {
 
 ## Services
 
-${allServices.map((s) => `- [${s.name}](${website}${s.href})`).join("\n")}
+${allServices
+  .map((s) => {
+    const summary = services
+      .find((card) => card.href === s.href)
+      ?.metaDescription.replace(/ Call .*$/, "");
+    return `- [${s.name}](${website}${s.href})${summary ? `: ${summary}` : ""}`;
+  })
+  .join("\n")}
+
+## Official profiles
+
+${businessInfo.socialProfiles.map((p) => `- ${p.name}: ${p.href}`).join("\n")}
 
 ## Main pages
 

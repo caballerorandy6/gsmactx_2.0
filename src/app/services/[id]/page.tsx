@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import {
   allServices,
   businessInfo,
+  businessSameAs,
   commonServiceFaqs,
   serviceFaqs,
   services,
@@ -162,6 +163,7 @@ export default async function ServicePage({ params }: Props) {
         description={`${(serviceData?.metaDescription ?? `${service.name} in Cypress, Katy and Houston, TX.`).replace(/ Call .*$/, "")} Licensed and insured, same-day service, rated ${rating.toFixed(1)} on Google, serving the area since ${businessInfo.established}.`}
         providerName={businessInfo.name}
         providerUrl={businessInfo.website}
+        providerSameAs={businessSameAs}
         telephone={businessInfo.phone}
         areaServed={businessInfo.serviceAreas}
         image={`https://www.gsmactx.com${serviceImage}`}
