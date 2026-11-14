@@ -43,12 +43,10 @@ test.describe("Book Appointment Page", () => {
   });
 
   test("should allow selecting a service type", async ({ page }) => {
-    const acRepairOption = page.getByText("A/C Repair", { exact: true });
-    await acRepairOption.click();
-
-    // The label should have the checked state
-    const label = page.locator("label").filter({ hasText: "A/C Repair" });
-    await expect(label).toHaveClass(/has-checked/);
+    // The radio is visually hidden; users click its label
+    const acRepairOption = page.getByRole("radio", { name: "A/C Repair" });
+    await page.locator("label").filter({ has: acRepairOption }).click();
+    await expect(acRepairOption).toBeChecked();
   });
 
   test("should display date picker", async ({ page }) => {
@@ -76,15 +74,14 @@ test.describe("Book Appointment Page", () => {
     const dateStr = tomorrow.toISOString().split("T")[0];
 
     const dateInput = page.locator("#scheduledDate");
-    await dateInput.fill(dateStr);
-
-    // Wait for time slots to load
-    await page.waitForTimeout(1000);
-
-    // Should show some time slots (8 AM - 6 PM range)
     const timeSlots = page.locator('input[name="scheduledTime"]');
-    const count = await timeSlots.count();
-    expect(count).toBeGreaterThan(0);
+
+    // Slots load from the server after the form hydrates; retry the fill
+    // instead of waiting a fixed delay
+    await expect(async () => {
+      await dateInput.fill(dateStr);
+      await expect(timeSlots.first()).toBeAttached({ timeout: 3000 });
+    }).toPass({ timeout: 20000 });
   });
 
   test("should display contact information fields", async ({ page }) => {

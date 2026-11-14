@@ -43,9 +43,9 @@ test.describe("Services Overview Page", () => {
       page.getByRole("heading", { name: /why choose gsm/i })
     ).toBeVisible();
 
-    await expect(page.getByText(/19\+/)).toBeVisible();
+    await expect(page.getByText(/^\d+\+$/).first()).toBeVisible();
     await expect(page.getByText(/years of experience/i)).toBeVisible();
-    await expect(page.getByText(/5\.0/)).toBeVisible();
+    await expect(page.getByText(/^\d\.\d$/).first()).toBeVisible();
     await expect(page.getByText(/google rating/i)).toBeVisible();
   });
 

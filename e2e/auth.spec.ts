@@ -85,7 +85,7 @@ test.describe("Forgot Password Page", () => {
 
   test("should display forgot password form", async ({ page }) => {
     // Check heading
-    const heading = page.getByRole("heading", { name: /forgot password/i });
+    const heading = page.getByRole("heading", { name: /forgot your password/i });
     await expect(heading).toBeVisible();
 
     // Check form elements
@@ -120,9 +120,10 @@ test.describe("Forgot Password Page", () => {
     await expect(page.getByText(/check your email/i)).toBeVisible({ timeout: 5000 });
   });
 
-  test("should display company logo", async ({ page }) => {
-    const logo = page.locator('img[alt*="GSM"]');
-    await expect(logo).toBeVisible();
+  test("should link the company logo home", async ({ page }) => {
+    const logoLink = page.getByRole("link", { name: /gsm a\/c home/i });
+    await expect(logoLink).toBeVisible();
+    await expect(logoLink).toHaveAttribute("href", "/");
   });
 });
 
@@ -132,7 +133,7 @@ test.describe("Reset Password Page", () => {
 
     // Should show invalid/expired heading
     await expect(
-      page.getByRole("heading", { name: /invalid or expired/i })
+      page.getByRole("heading", { name: /invalid or has expired/i })
     ).toBeVisible({ timeout: 5000 });
   });
 
@@ -141,17 +142,14 @@ test.describe("Reset Password Page", () => {
 
     // Should show invalid/expired heading
     await expect(
-      page.getByRole("heading", { name: /invalid or expired/i })
+      page.getByRole("heading", { name: /invalid or has expired/i })
     ).toBeVisible({ timeout: 5000 });
   });
 
   test("should have 'Request New Link' button when token is invalid", async ({ page }) => {
     await page.goto("/reset-password?token=fake-token");
 
-    // Wait for validation
-    await page.waitForTimeout(2000);
-
-    const requestNewLink = page.getByRole("link", { name: /request new link/i });
+    const requestNewLink = page.getByRole("link", { name: /request a new link/i });
     await expect(requestNewLink).toBeVisible();
   });
 

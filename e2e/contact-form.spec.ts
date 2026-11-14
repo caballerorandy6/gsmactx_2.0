@@ -15,11 +15,14 @@ test.describe("Contact Form", () => {
   test.beforeEach(async ({ page }) => {
     // Navigate directly to the contact section to trigger lazy loading
     await page.goto("/#contact");
-    // Wait for the form to fully load (the submit button is a good indicator)
-    // The form is lazy loaded with dynamic() + ssr: false
-    await expect(
-      page.getByRole("button", { name: /send message/i })
-    ).toBeVisible({ timeout: 20000 });
+    // The form is lazy loaded with dynamic() + ssr: false once the section
+    // nears the viewport. Late layout shifts can move it away from the hash
+    // target, so scroll to it again until the submit button shows up.
+    const submitButton = page.getByRole("button", { name: /send message/i });
+    await expect(async () => {
+      await page.locator("#contact").scrollIntoViewIfNeeded();
+      await expect(submitButton).toBeVisible({ timeout: 3000 });
+    }).toPass({ timeout: 30000 });
   });
 
   test("should display all form fields", async ({ page }) => {
@@ -144,7 +147,9 @@ test.describe("Contact Form", () => {
   });
 
   test("should have clickable phone link", async ({ page }) => {
-    const phoneLink = page.getByRole("link", { name: /281.*235.*4684/ });
+    const phoneLink = page
+      .locator("#contact")
+      .getByRole("link", { name: /281.*235.*4684/ });
     await expect(phoneLink).toBeVisible();
     await expect(phoneLink).toHaveAttribute("href", /tel:/);
   });
