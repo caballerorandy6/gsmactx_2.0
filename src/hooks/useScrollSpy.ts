@@ -1,47 +1,41 @@
 import { useEffect } from "react";
 
-const sectionTitles: Record<string, string> = {
-  home: "GSM AC | Home",
-  about: "GSM AC | About",
-  services: "GSM AC | Services",
-  testimonials: "GSM AC | Testimonials",
-  contact: "GSM AC | Contact",
-  faq: "GSM AC | FAQ",
-};
-
+/**
+ * Keeps the URL hash in sync with the section under the middle of the
+ * viewport. Sections are looked up by id on every check (not observed once),
+ * because some are swapped after load (the contact skeleton becomes the real
+ * form) and a stale observer would never see the new element.
+ *
+ * The document title is left alone so the page keeps its SEO title.
+ */
 export function useScrollSpy(sectionIds: string[]) {
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute("id");
-            if (id) {
-              // Actualiza la URL sin recargar
-              history.replaceState(null, "", `#${id}`);
+    let frame = 0;
+    let current = "";
 
-              // Cambia dinámicamente el título
-              const newTitle = sectionTitles[id] || "GSM AC";
-              if (document.title !== newTitle) {
-                document.title = newTitle;
-              }
-            }
-            break;
-          }
-        }
-      },
-      {
-        rootMargin: "-50% 0px -50% 0px", // activa cuando la sección esté centrada
-        threshold: 0,
+    const update = () => {
+      frame = 0;
+      const middle = window.innerHeight / 2;
+      const id = sectionIds.find((sectionId) => {
+        const rect = document.getElementById(sectionId)?.getBoundingClientRect();
+        return rect !== undefined && rect.top <= middle && rect.bottom > middle;
+      });
+
+      if (id && id !== current) {
+        current = id;
+        // Keep Next.js router state; only the hash changes
+        history.replaceState(history.state, "", `#${id}`);
       }
-    );
+    };
 
-    const elements = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
 
-    elements.forEach((el) => observer.observe(el!));
-
-    return () => observer.disconnect();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+    };
   }, [sectionIds]);
 }
