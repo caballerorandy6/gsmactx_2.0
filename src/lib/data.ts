@@ -238,7 +238,7 @@ export const servicesIntro = [
   {
     name: "",
     description:
-      "If you are planning to have a new home constructed in Cypress, TX, one of the first things that you would need to do is to choose a reliable and professional heating installation company. This is one of the most essential parts of the house, especially if you want to be comfortable inside your own home. This is why you should always make sure to hire GSM A/C & General Contractor INC. when it comes to the heating system in your home. Here are some benefits to hiring home heating repair experts like us:",
+      "If you are planning to have a new home constructed in Cypress, TX, one of the first things that you would need to do is to choose a reliable and professional heating installation company. This is one of the most essential parts of the house, especially if you want to be comfortable inside your own home. This is why you should always make sure to hire GSM A/C & General Contractor INC. when it comes to the heating system in your home. Here are some benefits to hiring home heating installation experts like us:",
   },
   {
     mame: "Professionals can provide you with a system that is efficient and works well with the house",
@@ -259,7 +259,7 @@ export const air_conditioning_installation = [
       "You should not delay when it comes to replacing your old and damaged air conditioning system. Doing so means you are going to end up spending more money on recurring repairs and potentially more damage. When it's already very old, it means a lot more frequent repairs will be needed. This isn't something that you’d want to happen. Save yourself from that. If it's the cost of our quality air conditioning replacement services you are worried about, there is GSM A/C & General Contractor INC. that can offer you really affordable rates for the high-quality services that we provide. Our affordable AC replacement services are just a call away from the property owners in the Cypress, TX area.",
   },
   {
-    name: " When Replacing an AC System",
+    name: "When Replacing an AC System",
     description:
       "Air conditioning systems can be tricky to deal with, especially if you have no experience whatsoever. You need the expertise and proper training as well as the right tools in order to successfully replace an air conditioning system. It can get quite overwhelming planning the entire replacement process. So, you should leave the job to professionals like us. We can determine which air conditioning system will work best for your home or workplace, and we'll handle the replacement process from start to end.",
   },
@@ -282,7 +282,7 @@ export const air_conditioning_repair = [
       "Even if you’re careful with your AC maintenance, there will come a time when it will break down on you. Frequent AC malfunctions can be a result of underlying problems in your HVAC system. Don’t wait for it to get worse. Have it fixed now! There is nothing to fret about that because you can always rely on GSM A/C & General Contractor INC. for a quick and quality AC repair service. We offer immediate HVAC repair solutions to property owners in the Cypress, TX area, so don’t hesitate to call us!",
   },
   {
-    name: " Is it time for a repair?",
+    name: "Is it time for a repair?",
     description:
       "You should have your air conditioning fixed as soon as possible once it starts to malfunction. You need not wait for days to come and go without using your AC. Ensure you get the repair done in a single sitting. That is only possible when you turn to our team for the repair job. We respond to all calls right, and we complete the air conditioning repair task in a timely manner, ensuring excellent workmanship.",
   },
@@ -302,15 +302,15 @@ export const heating_installation = [
   {
     name: "",
     description:
-      "If you are planning to have a new home constructed in Cypress, TX, one of the first things that you would need to do is to choose a reliable and professional heating installation company. This is one of the most essential parts of the house, especially if you want to be comfortable inside your own home. This is why you should always make sure to hire GSM A/C & General Contractor INC. when it comes to the heating system in your home. Here are some benefits to hiring home heating repair experts like us:",
+      "If you are planning to have a new home constructed in Cypress, TX, one of the first things that you would need to do is to choose a reliable and professional heating installation company. This is one of the most essential parts of the house, especially if you want to be comfortable inside your own home. This is why you should always make sure to hire GSM A/C & General Contractor INC. when it comes to the heating system in your home. Here are some benefits to hiring home heating installation experts like us:",
   },
   {
     name: "Professionals can provide you with a system that is efficient and works well with the house",
     description:
-      "When it comes to the heating installation of your home you would not only be dealing with the actual installation of the furnace or air conditioner or the wiring of your heating system you would also be dealing with the type of system you should have for your home. You would also have to consider the climate of your area and the design of your house when you are deciding which kind of system to buy. When you leave the heating installation to us, you would no longer have to worry about any of this. We can guide you in buying the right systemb for your home and your area.",
+      "When it comes to the heating installation of your home you would not only be dealing with the actual installation of the furnace or air conditioner or the wiring of your heating system you would also be dealing with the type of system you should have for your home. You would also have to consider the climate of your area and the design of your house when you are deciding which kind of system to buy. When you leave the heating installation to us, you would no longer have to worry about any of this. We can guide you in buying the right system for your home and your area.",
   },
   {
-    name: " Professionals have the skills and training to do the job",
+    name: "Professionals have the skills and training to do the job",
     description:
       "Another reason why it is better to leave the installation of the system to professionals like us is because we would already be trained to handle such a complicated task and install the right kind of heating system for your home. You would not have to worry about anything during or after the installation, we would be responsible for it. If you want to make sure that the heating system installed in your home in Cypress, TX is up to par with the standards of the industry, hire experts. GSM A/C & General Contractor INC. offers a reliable home heating repair and installation service that you can count on. If you need more information about the services we offer, give us a call at (281) 235-4684 and let us address your concerns.",
   },
@@ -371,7 +371,27 @@ export const attic_insulation = [
   {
     name: "",
     description:
-      "Customers can trust us with the cleaning and sanitizing of their air ducts. We have the products and tools to eliminate harmful particles such as dust, dirt, allergens, germs, etc. We can keep your vents pristine.",
+      "A poorly insulated attic lets Houston heat pour into your home in summer and lets warm air escape in winter, so your HVAC system works harder and your energy bills climb. GSM A/C & General Contractor INC. adds and replaces attic insulation for homes in Cypress, TX and the surrounding area.",
+  },
+  {
+    name: "Lower Energy Bills",
+    description:
+      "Insulation slows the transfer of heat through your ceiling, so your A/C and furnace run less to hold the temperature you set.",
+  },
+  {
+    name: "More Even Comfort",
+    description:
+      "Rooms under the attic stop running hotter or colder than the rest of the house.",
+  },
+  {
+    name: "Less Strain on Your HVAC System",
+    description:
+      "Shorter run times mean less wear on your equipment.",
+  },
+  {
+    name: "",
+    description:
+      "Call GSM A/C & General Contractor INC. at (281) 235-4684 to have your attic insulation checked, or book an appointment online.",
   },
 ];
 
