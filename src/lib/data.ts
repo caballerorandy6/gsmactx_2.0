@@ -173,6 +173,8 @@ export const services = [
     link: "Learn more",
     href: "/services/air-conditioning-installation",
     src: "/service1-800.avif",
+    metaDescription:
+      "New AC and HVAC system installation in Cypress, Katy and Houston, TX. Clean, careful work and help choosing the right unit. Call (281) 235-4684.",
   },
   {
     title: "Air Conditioning Repair",
@@ -181,6 +183,8 @@ export const services = [
     link: "Learn more",
     href: "/services/air-conditioning-repair",
     src: "/service2-800.avif",
+    metaDescription:
+      "AC repair in Cypress, Katy and Houston, TX. We find the problem, fix or replace the faulty part, and get your home cool again. Call (281) 235-4684.",
   },
   {
     title: "Heating Installation",
@@ -189,6 +193,8 @@ export const services = [
     link: "Learn more",
     href: "/services/heating-installation",
     src: "/service3-800.avif",
+    metaDescription:
+      "Furnace and heating system installation in Cypress, Katy and Houston, TX, placed for even, efficient heat. Call GSM A/C at (281) 235-4684.",
   },
   {
     title: "Heating Repair",
@@ -197,6 +203,8 @@ export const services = [
     link: "Learn more",
     href: "/services/heating-repair",
     src: "/service4-800.avif",
+    metaDescription:
+      "Heating and furnace repair in Cypress, Katy and Houston, TX. We repair or replace faulty parts at fair prices. Call GSM A/C at (281) 235-4684.",
   },
   {
     title: "Air Duct Sanitizing",
@@ -205,6 +213,8 @@ export const services = [
     link: "Learn more",
     href: "/services/air-duct-sanitizing",
     src: "/service5-800.avif",
+    metaDescription:
+      "Air duct cleaning and sanitizing in Cypress, Katy and Houston, TX. We remove dust, allergens and germs from your vents. Call (281) 235-4684.",
   },
   {
     title: "Attic Insulation",
@@ -213,6 +223,8 @@ export const services = [
     link: "Learn more",
     href: "/services/attic-insulation",
     src: "/service6-800.avif",
+    metaDescription:
+      "Attic insulation in Cypress, Katy and Houston, TX that lowers heating and cooling costs and keeps your home comfortable. Call (281) 235-4684.",
   },
 ];
 

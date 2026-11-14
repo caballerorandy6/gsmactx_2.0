@@ -15,9 +15,9 @@ import { faqs, businessInfo } from "@/lib/data";
 import Footer from "@/components/layout/Footer";
 
 export const metadata = genPageMetadata({
-  title: "GSM A/C General & Contractor Inc, the best HVAC company in Texas",
+  title: "AC & Heating Repair in Cypress, Katy & Houston TX | GSM A/C",
   description:
-    "GSM A/C General & Contractor Inc. offers professional air conditioning installation, air conditioning repair, heating installation, heating repair, air duct sanitizing and attic insulation services in Texas. Trusted HVAC experts delivering efficient, reliable, and affordable climate solutions for homes and businesses.",
+    "Air conditioning and heating repair, installation, duct sanitizing and attic insulation in Cypress, Katy and Houston, TX. Same-day service. Call (281) 235-4684.",
   pageRoute: "/",
 });
 

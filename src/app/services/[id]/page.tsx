@@ -57,9 +57,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   // Find service description from services array
   const serviceData = services.find((s) => s.href === `/services/${id}`);
-  const description = serviceData?.description
-    ? `${serviceData.description.slice(0, 150)}... Professional ${name} in Cypress, Houston TX. Call (281) 235-4684.`
-    : `Professional ${name} services in Cypress and Houston, TX. Licensed HVAC contractor with 5-star rating. Call (281) 235-4684 for same-day service.`;
+  const description =
+    serviceData?.metaDescription ??
+    `Professional ${name} services in Cypress, Katy and Houston, TX. Licensed HVAC contractor. Call (281) 235-4684 for same-day service.`;
 
   return {
     title: `${name} in Cypress & Houston TX | GSM A/C`,
