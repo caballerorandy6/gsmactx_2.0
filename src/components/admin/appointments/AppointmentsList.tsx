@@ -88,7 +88,7 @@ const AppointmentsList = ({
                 )}
               >
                 <CalendarDaysIcon aria-hidden="true" className="h-4 w-4" />
-                Calendar
+                <span className="max-sm:sr-only">Calendar</span>
               </button>
               <button
                 onClick={() => setViewMode("list")}
@@ -102,7 +102,7 @@ const AppointmentsList = ({
                 )}
               >
                 <ListBulletIcon aria-hidden="true" className="h-4 w-4" />
-                List
+                <span className="max-sm:sr-only">List</span>
               </button>
             </div>
             <Link

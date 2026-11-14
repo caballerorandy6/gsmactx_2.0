@@ -23,7 +23,7 @@ export default function AdminLayout({
     <div className="min-h-screen bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       <AdminHeader />
 
-      <div className="flex pt-24 sm:pt-28 md:pt-32">
+      <div className="flex pt-16 md:pt-28">
         <AdminSidebar />
 
         <main className="min-w-0 flex-1 px-3 sm:px-4 md:px-6 lg:px-8 pb-24 md:pb-4">

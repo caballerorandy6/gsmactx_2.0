@@ -3,7 +3,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import CampaignActionsMenu from "@/components/admin/campaigns/CampaignActionsMenu";
 import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
-import { EnvelopeIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { BeakerIcon, EnvelopeIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 const CampaignList = async () => {
   const campaigns = await getCampaignsListAction();
@@ -15,15 +15,24 @@ const CampaignList = async () => {
         campaigns.length === 1 ? "1 campaign" : `${campaigns.length} campaigns`
       }
       actions={
-        campaigns.length > 0 && (
+        <>
           <Link
-            href="/create-campaign"
-            className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-md bg-primary-600 px-3.5 py-2 text-sm font-semibold text-white hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+            href="/test-campaign"
+            className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-md px-3.5 py-2 text-sm font-semibold text-gray-200 ring-1 ring-inset ring-white/20 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
           >
-            <PlusIcon aria-hidden="true" className="size-4" />
-            New campaign
+            <BeakerIcon aria-hidden="true" className="size-4" />
+            Send a test
           </Link>
-        )
+          {campaigns.length > 0 && (
+            <Link
+              href="/create-campaign"
+              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-md bg-primary-600 px-3.5 py-2 text-sm font-semibold text-white hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+            >
+              <PlusIcon aria-hidden="true" className="size-4" />
+              New campaign
+            </Link>
+          )}
+        </>
       }
     />
   );
