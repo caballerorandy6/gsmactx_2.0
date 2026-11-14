@@ -1,5 +1,15 @@
 import { getCampaignsListAction } from "@/app/actions/campaignAction";
 
+/** Limited-time offer shown in the home hero; `slug` deep-links it into /book-appointment. */
+export const heroOffer = {
+  slug: "ac-checkup",
+  title: "AC Check-Up",
+  price: "$69.99",
+  regularPrice: "$99.99",
+  discount: "30% OFF",
+  serviceType: "AC_MAINTENANCE",
+} as const;
+
 /**
  * Real Business Information from Google Business Profile
  * Source: Google Maps - GSM A/C & General Contractor INC.

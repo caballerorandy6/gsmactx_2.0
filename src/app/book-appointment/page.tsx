@@ -12,7 +12,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
-import { businessInfo } from "@/lib/data";
+import { businessInfo, heroOffer } from "@/lib/data";
+import { SERVICE_TYPES } from "@/lib/validations/zod";
+import type { ServiceType } from "@/lib/interfaces";
 import { defaultOgImage } from "@/seo/genPageMetadata";
 
 export const metadata: Metadata = {
@@ -36,7 +38,18 @@ export const metadata: Metadata = {
   },
 };
 
-const BookAppointmentPage = () => {
+type BookAppointmentPageProps = {
+  searchParams: Promise<{ service?: string; offer?: string }>;
+};
+
+const isServiceType = (value: string | undefined): value is ServiceType =>
+  SERVICE_TYPES.some((type) => type === value);
+
+const BookAppointmentPage = async ({ searchParams }: BookAppointmentPageProps) => {
+  const { service, offer: offerSlug } = await searchParams;
+  const offer = offerSlug === heroOffer.slug ? heroOffer : undefined;
+  const initialService = offer?.serviceType ?? (isServiceType(service) ? service : undefined);
+
   return (
     <>
       <Header />
@@ -80,7 +93,7 @@ const BookAppointmentPage = () => {
       {/* Form Section */}
       <section className="pb-24 px-4 sm:px-6 lg:px-8">
         <ReCaptchaProvider>
-          <BookAppointmentForm />
+          <BookAppointmentForm initialService={initialService} offer={offer} />
         </ReCaptchaProvider>
       </section>
 

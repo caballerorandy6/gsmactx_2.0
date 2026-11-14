@@ -6,7 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import Link from "next/link";
 import { PublicAppointmentSchema, PublicAppointmentFormData, SERVICE_TYPES } from "@/lib/validations/zod";
-import { SERVICE_TYPE_LABELS } from "@/lib/interfaces";
+import { SERVICE_TYPE_LABELS, type ServiceType } from "@/lib/interfaces";
+import type { heroOffer } from "@/lib/data";
 import { createPublicAppointmentAction } from "@/app/actions/createPublicAppointmentAction";
 import { getBookedTimeSlotsPublicAction } from "@/app/actions/getBookedTimeSlotsPublicAction";
 import {
@@ -26,6 +27,7 @@ import {
   WrenchScrewdriverIcon,
   CheckCircleIcon,
   LockClosedIcon,
+  TagIcon,
 } from "@heroicons/react/24/outline";
 
 // 1-hour time slots (8 AM - 6 PM)
@@ -75,7 +77,14 @@ const SummaryRows = ({ summary }: { summary: Partial<BookingSummary> }) => {
   );
 };
 
-const BookAppointmentForm = () => {
+type BookAppointmentFormProps = {
+  /** Service preselected from a deep link (?service= or ?offer=). */
+  initialService?: ServiceType;
+  /** Hero offer the visitor came from, shown as a banner and noted for the office. */
+  offer?: typeof heroOffer;
+};
+
+const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps) => {
   const [isPending, startTransition] = useTransition();
   const [bookedSummary, setBookedSummary] = useState<BookingSummary | null>(null);
   const [bookedTimeSlots, setBookedTimeSlots] = useState<string[]>([]);
@@ -94,11 +103,11 @@ const BookAppointmentForm = () => {
       clientName: "",
       clientEmail: "",
       clientPhone: "",
-      serviceType: undefined,
+      serviceType: initialService,
       scheduledDate: "",
       scheduledTime: "",
       address: "",
-      notes: "",
+      notes: offer ? `${offer.title} offer (${offer.price})` : "",
     },
   });
 
@@ -229,6 +238,17 @@ const BookAppointmentForm = () => {
               Select Your Service
             </h3>
           </div>
+          {offer && (
+            <p className="mb-4 flex items-start gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-gray-200">
+              <TagIcon className="h-5 w-5 shrink-0 text-emerald-400" aria-hidden="true" />
+              <span>
+                <span className="font-semibold text-white">{offer.title} special: </span>
+                <span className="font-semibold text-emerald-300 tabular-nums">{offer.price}</span>{" "}
+                <span className="text-gray-400 line-through tabular-nums">{offer.regularPrice}</span>
+                . We preselected {SERVICE_TYPE_LABELS[offer.serviceType]} for you.
+              </span>
+            </p>
+          )}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {SERVICE_TYPES.map((type) => (
               <label

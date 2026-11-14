@@ -8,7 +8,7 @@ import CustomBadge from "@/components/ui/CustomBadge";
 import { useGSMStore } from "@/store/gsmactx-store";
 import useSectionObserver from "@/hooks/useSectionObserver";
 import Header from "@/components/layout/Header";
-import { businessInfo } from "@/lib/data";
+import { businessInfo, heroOffer } from "@/lib/data";
 
 const { props: heroImgProps } = getImageProps({
   src: "/main.avif",
@@ -106,26 +106,26 @@ export default function HeroClient({ ratingSlot }: HeroClientProps) {
 
               {/* Service Title */}
               <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">
-                AC Check-Up
+                {heroOffer.title}
               </h2>
 
               {/* Price Row */}
               <div className="flex items-baseline justify-center gap-3 mb-5">
                 <span className="text-4xl sm:text-5xl font-black text-emerald-400 tabular-nums">
-                  $69.99
+                  {heroOffer.price}
                 </span>
                 <span className="text-base text-gray-400 line-through tabular-nums">
-                  $99.99
+                  {heroOffer.regularPrice}
                 </span>
                 <span className="px-2 py-0.5 text-xs font-bold text-emerald-900 bg-emerald-400 rounded">
-                  30% OFF
+                  {heroOffer.discount}
                 </span>
               </div>
 
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-2.5">
                 <Link
-                  href="/book-appointment"
+                  href={`/book-appointment?offer=${heroOffer.slug}`}
                   className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-semibold transition-colors"
                 >
                   <CalendarDaysIcon className="w-5 h-5" aria-hidden="true" />
