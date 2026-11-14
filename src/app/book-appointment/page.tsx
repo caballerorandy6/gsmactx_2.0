@@ -5,6 +5,7 @@ import ReCaptchaProvider from "@/components/forms/ReCaptchaProvider";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
+import FloatingCTAButtons from "@/components/ui/FloatingCTAButtons";
 import {
   PhoneIcon,
   ClockIcon,
@@ -54,6 +55,7 @@ const BookAppointmentPage = async ({ searchParams }: BookAppointmentPageProps) =
     <>
       <Header />
       <ScrollToTop />
+      <FloatingCTAButtons />
       <main className="min-h-screen bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 pt-20">
       {/* Hero Section */}
       <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8">

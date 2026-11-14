@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { PhoneIcon, CalendarDaysIcon } from "@heroicons/react/24/solid";
 import { businessInfo } from "@/lib/data";
 
 const FloatingCTAButtons = () => {
   const [isVisible, setIsVisible] = useState(false);
+  // On the booking page itself only the call button is useful.
+  const showBook = usePathname() !== "/book-appointment";
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -64,24 +67,26 @@ const FloatingCTAButtons = () => {
           </motion.div>
 
           {/* Book Appointment Button */}
-          <motion.div
-            custom={1}
-            variants={buttonVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
-            <Link
-              href="/book-appointment"
-              aria-label="Book an appointment"
-              className="group flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-primary-600 text-white shadow-lg hover:bg-primary-700 hover:shadow-primary-500/40 transition-all duration-300"
+          {showBook && (
+            <motion.div
+              custom={1}
+              variants={buttonVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
             >
-              <CalendarDaysIcon className="h-6 w-6" />
-              <span className="hidden sm:inline font-semibold whitespace-nowrap">
-                Book Now
-              </span>
-            </Link>
-          </motion.div>
+              <Link
+                href="/book-appointment"
+                aria-label="Book an appointment"
+                className="group flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-primary-600 text-white shadow-lg hover:bg-primary-700 hover:shadow-primary-500/40 transition-all duration-300"
+              >
+                <CalendarDaysIcon className="h-6 w-6" />
+                <span className="hidden sm:inline font-semibold whitespace-nowrap">
+                  Book Now
+                </span>
+              </Link>
+            </motion.div>
+          )}
         </div>
       )}
     </AnimatePresence>
