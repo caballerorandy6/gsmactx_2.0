@@ -170,7 +170,7 @@ export const services = [
     title: "Air Conditioning Installation",
     description:
       "We have the know-how and resources to install AC and HVAC units of all generations. We keep drilling to a minimum and always clean up after ourselves because we respect the properties of our customers.",
-    link: "Learn More →",
+    link: "Learn more",
     href: "/services/air-conditioning-installation",
     src: "/service1-800.avif",
   },
@@ -178,7 +178,7 @@ export const services = [
     title: "Air Conditioning Repair",
     description:
       "When it comes to AC or HVAC repair, we are the specialists that you should contact. Our technicians can quickly pinpoint and remedy or replace defective parts and components.",
-    link: "Learn More →",
+    link: "Learn more",
     href: "/services/air-conditioning-repair",
     src: "/service2-800.avif",
   },
@@ -186,15 +186,15 @@ export const services = [
     title: "Heating Installation",
     description:
       "Apart from installing ACs and HVACs, we can also set up heating devices. We strive to choose locations that offer maximum coverage so our customers can heat their properties without using too much energy.",
-    link: "Learn More →",
+    link: "Learn more",
     href: "/services/heating-installation",
     src: "/service3-800.avif",
   },
   {
     title: "Heating Repair",
     description:
-      "Use our office & home heating repair services services to remedy problematic heating units. We can repair or replace faulty parts to restore the original functionality of the devices. Our prices are pocket-friendly and you will get your money's worth.",
-    link: "Learn More →",
+      "Use our office & home heating repair services to remedy problematic heating units. We can repair or replace faulty parts to restore the original functionality of the devices. Our prices are pocket-friendly and you will get your money's worth.",
+    link: "Learn more",
     href: "/services/heating-repair",
     src: "/service4-800.avif",
   },
@@ -202,7 +202,7 @@ export const services = [
     title: "Air Duct Sanitizing",
     description:
       "Customers can trust us with the cleaning and sanitizing of their air ducts. We have the products and tools to eliminate harmful particles such as dust, dirt, allergens, germs, etc. We can keep your vents pristine.",
-    link: "Learn More →",
+    link: "Learn more",
     href: "/services/air-duct-sanitizing",
     src: "/service5-800.avif",
   },
@@ -210,7 +210,7 @@ export const services = [
     title: "Attic Insulation",
     description:
       "We provide expert attic insulation services to enhance your home's energy efficiency. Our work helps lower heating and cooling costs while keeping your living space comfortable all year.",
-    link: "Learn More →",
+    link: "Learn more",
     href: "/services/attic-insulation",
     src: "/service6-800.avif",
   },
@@ -271,7 +271,7 @@ export const air_conditioning_installation = [
   {
     name: "",
     description:
-      "When it comes to affordable AC replacement services in Cypress, TX, you can always rely on GSM A/C & General Contractor INC.. To book our services, feel free to call us at (281) 235-4684 today!",
+      "When it comes to affordable AC replacement services in Cypress, TX, you can always rely on GSM A/C & General Contractor INC. To book our services, feel free to call us at (281) 235-4684 today!",
   },
 ];
 
