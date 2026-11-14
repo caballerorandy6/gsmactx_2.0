@@ -51,3 +51,15 @@ export const isSlotInPast = (
   if (selectedDate !== date) return false;
   return timeToMinutes(slot) <= minutes + SAME_DAY_BUFFER_MINUTES;
 };
+
+/** "2026-11-14" → "Saturday, November 14, 2026". Anchored at noon UTC so no timezone can shift the day. */
+export const formatBookingDate = (date: string): string => {
+  if (!date) return "";
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: "UTC",
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(`${date}T12:00:00Z`));
+};

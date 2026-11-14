@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
+  formatBookingDate,
   getBusinessToday,
   isSlotInPast,
   timeToMinutes,
@@ -55,5 +56,19 @@ describe("isSlotInPast", () => {
 
   it("returns false when no date is selected", () => {
     expect(isSlotInPast("8:00 AM", "", morning)).toBe(false);
+  });
+});
+
+describe("formatBookingDate", () => {
+  it("formats a date-input value as a readable day without timezone shift", () => {
+    expect(formatBookingDate("2026-11-14")).toBe("Saturday, November 14, 2026");
+  });
+
+  it("does not roll back a day for the first of the month", () => {
+    expect(formatBookingDate("2026-12-01")).toBe("Tuesday, December 1, 2026");
+  });
+
+  it("returns an empty string for an empty value", () => {
+    expect(formatBookingDate("")).toBe("");
   });
 });

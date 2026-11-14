@@ -9,7 +9,11 @@ import { PublicAppointmentSchema, PublicAppointmentFormData, SERVICE_TYPES } fro
 import { SERVICE_TYPE_LABELS } from "@/lib/interfaces";
 import { createPublicAppointmentAction } from "@/app/actions/createPublicAppointmentAction";
 import { getBookedTimeSlotsPublicAction } from "@/app/actions/getBookedTimeSlotsPublicAction";
-import { getBusinessToday, isSlotInPast as isBusinessSlotInPast } from "@/lib/utils/bookingTime";
+import {
+  formatBookingDate,
+  getBusinessToday,
+  isSlotInPast as isBusinessSlotInPast,
+} from "@/lib/utils/bookingTime";
 import { ErrorMessage } from "@hookform/error-message";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import {
@@ -39,9 +43,41 @@ const ALL_TIME_SLOTS = [
   "6:00 PM",
 ];
 
+type BookingSummary = Pick<
+  PublicAppointmentFormData,
+  "serviceType" | "scheduledDate" | "scheduledTime" | "address"
+>;
+
+const SummaryRows = ({ summary }: { summary: Partial<BookingSummary> }) => {
+  const rows = [
+    {
+      icon: WrenchScrewdriverIcon,
+      label: "Service",
+      value: summary.serviceType ? SERVICE_TYPE_LABELS[summary.serviceType] : "",
+    },
+    { icon: CalendarDaysIcon, label: "Date", value: formatBookingDate(summary.scheduledDate ?? "") },
+    { icon: ClockIcon, label: "Time", value: summary.scheduledTime ?? "" },
+    { icon: MapPinIcon, label: "Location", value: summary.address?.trim() ?? "" },
+  ];
+
+  return (
+    <dl className="divide-y divide-white/5">
+      {rows.map(({ icon: Icon, label, value }) => (
+        <div key={label} className="flex items-start gap-3 py-2.5">
+          <Icon className="h-4 w-4 mt-0.5 shrink-0 text-primary-400" aria-hidden="true" />
+          <dt className="w-20 shrink-0 text-sm text-gray-400">{label}</dt>
+          <dd className={`text-sm min-w-0 wrap-break-word ${value ? "text-white font-medium" : "text-gray-500"}`}>
+            {value || "Not selected yet"}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
+};
+
 const BookAppointmentForm = () => {
   const [isPending, startTransition] = useTransition();
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [bookedSummary, setBookedSummary] = useState<BookingSummary | null>(null);
   const [bookedTimeSlots, setBookedTimeSlots] = useState<string[]>([]);
   const [isLoadingSlots, setIsLoadingSlots] = useState(false);
   const { executeRecaptcha } = useGoogleReCaptcha();
@@ -68,6 +104,8 @@ const BookAppointmentForm = () => {
 
   const selectedDate = watch("scheduledDate");
   const selectedTime = watch("scheduledTime");
+  const selectedService = watch("serviceType");
+  const enteredAddress = watch("address");
 
   // Fetch booked slots when date changes
   useEffect(() => {
@@ -122,7 +160,12 @@ const BookAppointmentForm = () => {
 
         if (result.success) {
           toast.success(result.message);
-          setIsSuccess(true);
+          setBookedSummary({
+            serviceType: data.serviceType,
+            scheduledDate: data.scheduledDate,
+            scheduledTime: data.scheduledTime,
+            address: data.address,
+          });
           reset();
         } else {
           toast.error(result.message);
@@ -137,7 +180,7 @@ const BookAppointmentForm = () => {
   // Minimum date is today in Houston, not UTC
   const getMinDate = () => getBusinessToday();
 
-  if (isSuccess) {
+  if (bookedSummary) {
     return (
       <div className="max-w-lg mx-auto text-center py-16 px-6">
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-500/20 mb-6">
@@ -146,6 +189,9 @@ const BookAppointmentForm = () => {
         <h2 className="text-3xl font-bold text-white mb-4">
           Appointment Scheduled!
         </h2>
+        <div className="text-left rounded-lg border border-white/10 bg-gray-900/50 px-4 py-2 mb-6">
+          <SummaryRows summary={bookedSummary} />
+        </div>
         <p className="text-gray-300 mb-8">
           Thank you for scheduling an appointment with GSM A/C & General
           Contractor. We&apos;ve sent a confirmation email to your inbox with all the
@@ -153,7 +199,7 @@ const BookAppointmentForm = () => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
-            onClick={() => setIsSuccess(false)}
+            onClick={() => setBookedSummary(null)}
             className="px-6 py-3 rounded-md text-sm font-semibold text-white bg-primary-600 hover:bg-primary-700 transition-colors"
           >
             Schedule Another
@@ -452,6 +498,24 @@ const BookAppointmentForm = () => {
           </div>
         </div>
       </div>
+
+      {/* Review before submitting */}
+      <section
+        aria-labelledby="booking-summary-heading"
+        className="mt-8 rounded-lg border border-primary-500/30 bg-primary-500/5 px-4 py-3"
+      >
+        <h3 id="booking-summary-heading" className="text-sm font-semibold text-white mb-1">
+          Review your appointment
+        </h3>
+        <SummaryRows
+          summary={{
+            serviceType: selectedService,
+            scheduledDate: selectedDate,
+            scheduledTime: selectedTime,
+            address: enteredAddress,
+          }}
+        />
+      </section>
 
       {/* reCAPTCHA Notice */}
       <p className="mt-6 text-xs text-gray-400">
