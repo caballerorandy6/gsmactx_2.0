@@ -105,7 +105,7 @@ const ContactForm = () => {
         </div>
       </div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <p className="text-[10px] sm:text-xs text-gray-500 order-2 sm:order-1">* At least email or phone is required</p>
+        <p className="text-xs text-gray-500 order-2 sm:order-1">* At least email or phone is required</p>
         <button
           type="submit"
           disabled={isPending}

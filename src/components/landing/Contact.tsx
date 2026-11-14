@@ -165,7 +165,7 @@ export default function Contact() {
             </div>
             <motion.h2
               variants={fadeInUp}
-              className="text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl"
+              className="heading-section"
             >
               Get in touch
             </motion.h2>

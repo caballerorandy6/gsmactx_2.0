@@ -167,7 +167,7 @@ const ImprovedDashboardSidebar = ({
             >
               <action.icon className="h-5 w-5" />
               <span className="hidden sm:inline lg:inline">{action.label}</span>
-              <span className="sm:hidden lg:hidden text-[10px] text-center">{action.label.split(' ')[0]}</span>
+              <span className="sm:hidden lg:hidden text-xs text-center">{action.label.split(' ')[0]}</span>
             </Link>
           ))}
         </div>

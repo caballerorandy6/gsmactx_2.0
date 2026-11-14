@@ -80,7 +80,7 @@ export default function HeroClient({ ratingSlot }: HeroClientProps) {
 
           {/* Services Keywords - SEO */}
           <p
-            className="hero-rise mt-3 sm:mt-4 text-base sm:text-lg md:text-xl text-gray-300 font-light"
+            className="hero-rise mt-3 sm:mt-4 text-base sm:text-lg md:text-xl text-gray-200"
             style={{ "--hero-delay": "200ms" } as CSSProperties}
           >
             AC Installation · Heating Repair · Duct Cleaning · Attic Insulation
@@ -99,7 +99,7 @@ export default function HeroClient({ ratingSlot }: HeroClientProps) {
                   role="presentation"
                   aria-hidden="true"
                 />
-                <span className="text-[10px] sm:text-xs text-emerald-300 font-semibold uppercase tracking-wider">
+                <span className="text-xs text-emerald-300 font-semibold uppercase tracking-wider">
                   Limited Time Offer
                 </span>
               </span>

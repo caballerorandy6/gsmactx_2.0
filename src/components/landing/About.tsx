@@ -63,7 +63,7 @@ const About = () => {
         >
           <motion.h2
             variants={fadeInUp}
-            className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl"
+            className="heading-section"
           >
             About Our HVAC Repair & Installation Company
           </motion.h2>

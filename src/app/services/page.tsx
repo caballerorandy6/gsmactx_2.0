@@ -45,7 +45,7 @@ export default async function ServicesOverviewPage() {
           <div className="mx-auto max-w-4xl text-center pb-12 sm:pb-16">
             <h1
               id="services-title"
-              className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white"
+              className="heading-page"
             >
               Our HVAC Services
             </h1>
@@ -103,7 +103,7 @@ export default async function ServicesOverviewPage() {
 
           {/* Why Choose Us Section */}
           <div className="mx-auto max-w-4xl mt-16 sm:mt-24 text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+            <h2 className="heading-section">
               Why Choose GSM A/C?
             </h2>
             <div className="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
@@ -126,7 +126,7 @@ export default async function ServicesOverviewPage() {
 
           {/* CTA Section */}
           <div className="mx-auto max-w-2xl mt-16 sm:mt-24 text-center">
-            <h2 className="text-xl sm:text-2xl font-semibold text-white">
+            <h2 className="heading-sub">
               Ready to Get Started?
             </h2>
             <p className="mt-3 text-gray-400">

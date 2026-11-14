@@ -73,7 +73,7 @@ export default function FAQ({ faqs }: FAQProps) {
         >
           <motion.h2
             variants={fadeInUp}
-            className="text-4xl font-semibold tracking-tight text-white sm:text-5xl"
+            className="heading-section"
           >
             Frequently Asked Questions
           </motion.h2>

@@ -58,7 +58,7 @@ const BookAppointmentPage = async ({ searchParams }: BookAppointmentPageProps) =
       {/* Hero Section */}
       <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+          <h1 className="heading-page mb-4">
             Schedule Your Service
           </h1>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-8">
@@ -100,7 +100,7 @@ const BookAppointmentPage = async ({ searchParams }: BookAppointmentPageProps) =
       {/* Additional Info */}
       <section className="bg-gray-900/50 border-t border-white/10 py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold text-white text-center mb-8">
+          <h2 className="heading-section text-center mb-8">
             Why Choose GSM A/C?
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">

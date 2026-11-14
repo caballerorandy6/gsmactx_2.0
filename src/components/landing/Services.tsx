@@ -57,7 +57,7 @@ export default function Services() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-pretty text-white"
+          className="heading-section"
         >
           What Are Our Services?
         </motion.h2>
@@ -95,7 +95,7 @@ export default function Services() {
               variants={fadeInUp}
               className="relative flex flex-col"
             >
-              <h3 className="text-2xl font-semibold tracking-tight text-pretty text-white">
+              <h3 className="heading-sub">
                 {feature.name}
               </h3>
               <p className="mt-4 text-base/7 text-gray-300">

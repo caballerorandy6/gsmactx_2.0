@@ -65,15 +65,15 @@ const ServiceDetails = ({
       className="overflow-hidden bg-white py-24 sm:py-32 custom-blue"
     >
       <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8 flex flex-col items-center">
-        <motion.h2
+        <motion.h1
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl text-center"
+          className="heading-page text-center"
         >
           {title}
-        </motion.h2>
+        </motion.h1>
 
         <motion.div
           initial="hidden"
@@ -111,9 +111,9 @@ const ServiceDetails = ({
               variants={itemVariant}
               className="w-full flex flex-col items-center bg-gray-800/30 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-white/10 hover:border-white/20 transition-colors"
             >
-              <h3 className="text-2xl font-semibold tracking-tight text-pretty text-white w-full text-center mb-4">
+              <h2 className="heading-sub w-full text-center mb-4">
                 {item.name}
-              </h3>
+              </h2>
               <p className="text-base/7 text-gray-300 w-full text-center">
                 {item.description}
               </p>

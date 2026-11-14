@@ -47,7 +47,7 @@ export default function SideBar() {
       <nav className="flex flex-1 flex-col mt-6 md:mt-7 lg:mt-8 overflow-y-auto">
         <ul role="list" className="flex flex-1 flex-col gap-y-4 md:gap-y-5 lg:gap-y-6">
           <li>
-            <p className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2 md:mb-3">
+            <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2 md:mb-3">
               Our Services
             </p>
             <ul role="list" className="-mx-1.5 md:-mx-2 space-y-0.5 md:space-y-1">

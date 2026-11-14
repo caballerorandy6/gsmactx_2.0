@@ -88,7 +88,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth!" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} scroll-smooth!`}
+      suppressHydrationWarning
+    >
       <head>
         {/* DNS prefetch for lazy-loaded GA (preconnect is wasted with lazyOnload) */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
@@ -111,7 +115,7 @@ export default function RootLayout({
         </Script>
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased text-pretty custom-blue custom-scrollbar`}
+        className="antialiased text-pretty custom-blue custom-scrollbar"
       >
         <StoreHydration />
         {children}

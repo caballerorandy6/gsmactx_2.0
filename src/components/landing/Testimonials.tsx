@@ -92,15 +92,15 @@ const Testimonials = () => {
       id="testimonials"
       className="py-24 sm:py-32 mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8"
     >
-      <motion.p
+      <motion.h2
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={fadeInUp}
-        className="mt-2 max-w-lg text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl"
+        className="mt-2 max-w-lg heading-section"
       >
         What our customers say?
-      </motion.p>
+      </motion.h2>
 
       <motion.div
         initial="hidden"
@@ -119,10 +119,10 @@ const Testimonials = () => {
         className="flex flex-col xl:flex-row justify-between gap-8 items-center rounded-r-4xl"
       >
         <motion.div variants={fadeInUp} className="xl:w-1/2">
-          <h2 className="text-2xl font-semibold tracking-tight text-pretty text-white">
+          <h3 className="heading-sub">
             Committed to Excellence: Our Clients&apos; Satisfaction Speaks for
             Itself
-          </h2>
+          </h3>
           <p className="mt-6 text-base/7 text-gray-300">
             At GSM A/C & General Contractor INC., we don&apos;t just specialize in
             HVAC installation and repair — we build long-lasting relationships
