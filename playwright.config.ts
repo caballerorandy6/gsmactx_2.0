@@ -7,6 +7,17 @@
 
 import { defineConfig, devices } from "@playwright/test";
 
+/**
+ * E2E_BASE_URL: test a server that is already running (for example
+ * http://localhost:3011) and don't start one.
+ * Otherwise Playwright starts its own dev server on E2E_PORT (default 3010).
+ * Not 3000: that port is often another project's server, and
+ * reuseExistingServer would silently run these tests against it.
+ */
+const externalBaseURL = process.env.E2E_BASE_URL;
+const port = Number(process.env.E2E_PORT ?? 3010);
+const baseURL = externalBaseURL ?? `http://localhost:${port}`;
+
 export default defineConfig({
   // Directory where tests are located
   testDir: "./e2e",
@@ -29,7 +40,7 @@ export default defineConfig({
   // Shared settings for all the projects below
   use: {
     // Base URL to use in actions like `await page.goto('/')`
-    baseURL: "http://localhost:3000",
+    baseURL,
 
     // Collect trace when retrying the failed test
     trace: "on-first-retry",
@@ -56,10 +67,12 @@ export default defineConfig({
   ],
 
   // Run your local dev server before starting the tests
-  webServer: {
-    command: "npm run dev",
-    url: "http://localhost:3000",
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000, // 2 minutes to start
-  },
+  webServer: externalBaseURL
+    ? undefined
+    : {
+        command: `npm run dev -- --port ${port}`,
+        url: baseURL,
+        reuseExistingServer: !process.env.CI,
+        timeout: 120 * 1000, // 2 minutes to start
+      },
 });
