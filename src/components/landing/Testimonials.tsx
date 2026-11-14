@@ -137,7 +137,7 @@ const Testimonials = ({ reviewsSlot }: TestimonialsProps) => {
         <motion.div
           ref={videoContainerRef}
           variants={fadeInUp}
-          className="xl:w-1/2 mt-20"
+          className="w-full xl:w-1/2 mt-20"
         >
           {isVideoVisible ? (
             <video
