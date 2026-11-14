@@ -132,14 +132,14 @@ export async function createPublicAppointmentAction(
             subject: "Appointment Confirmation - GSM A/C & General Contractor",
             html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                <div style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); padding: 30px; text-align: center;">
+                <div style="background: #005898; padding: 30px; text-align: center;">
                   <h1 style="color: white; margin: 0;">Appointment Confirmed</h1>
                 </div>
                 <div style="padding: 30px; background: #f9f9f9;">
                   <p style="font-size: 16px;">Dear <strong>${clientName}</strong>,</p>
                   <p style="font-size: 16px;">Thank you for scheduling an appointment with GSM A/C & General Contractor. Here are your appointment details:</p>
 
-                  <div style="background: white; border-radius: 8px; padding: 20px; margin: 20px 0; border-left: 4px solid #2d5a87;">
+                  <div style="background: white; border-radius: 8px; padding: 20px; margin: 20px 0; border: 1px solid #dbe5ef;">
                     <p style="margin: 10px 0;"><strong>Service:</strong> ${serviceLabel}</p>
                     <p style="margin: 10px 0;"><strong>Date:</strong> ${formattedDate}</p>
                     <p style="margin: 10px 0;"><strong>Time:</strong> ${scheduledTime}</p>
@@ -171,7 +171,7 @@ export async function createPublicAppointmentAction(
                 <div style="padding: 30px; background: #f9f9f9;">
                   <p style="font-size: 16px;">A new appointment has been requested through the website.</p>
 
-                  <div style="background: white; border-radius: 8px; padding: 20px; margin: 20px 0; border-left: 4px solid #059669;">
+                  <div style="background: white; border-radius: 8px; padding: 20px; margin: 20px 0; border: 1px solid #dbe5ef;">
                     <h3 style="margin-top: 0; color: #059669;">Client Information</h3>
                     <p style="margin: 10px 0;"><strong>Name:</strong> ${clientName}</p>
                     <p style="margin: 10px 0;"><strong>Email:</strong> ${clientEmail}</p>

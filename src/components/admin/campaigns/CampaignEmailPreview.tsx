@@ -75,7 +75,7 @@ const CampaignEmailPreview = ({
             </div>
           )}
 
-          <div className="bg-[#f9fafb] border-l-4 border-[#3b82f6] rounded-md p-5 sm:p-6">
+          <div className="bg-[#f9fafb] border border-[#e5e7eb] rounded-md p-5 sm:p-6">
             <p
               className="text-[#334155] text-[15px] leading-7 whitespace-pre-wrap m-0"
               style={{ fontFamily: "Arial, sans-serif" }}

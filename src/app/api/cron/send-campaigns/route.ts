@@ -61,7 +61,7 @@ async function notifyAdminsOfCompletion(
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
               </head>
               <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
+                <div style="background: #005898; color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
                   <h1 style="margin: 0; font-size: 28px;">✅ Campaign Completed!</h1>
                 </div>
 
@@ -70,8 +70,8 @@ async function notifyAdminsOfCompletion(
 
                   <p style="font-size: 16px; margin-bottom: 20px;">Great news! Your email campaign has been successfully completed.</p>
 
-                  <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #667eea;">
-                    <h2 style="margin-top: 0; color: #667eea; font-size: 20px;">Campaign Details</h2>
+                  <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #dbe5ef;">
+                    <h2 style="margin-top: 0; color: #005898; font-size: 20px;">Campaign Details</h2>
                     <p style="margin: 10px 0;"><strong>Campaign:</strong> ${campaignTitle}</p>
                     <p style="margin: 10px 0;"><strong>Total Emails Sent:</strong> ${totalSent}</p>
                     ${

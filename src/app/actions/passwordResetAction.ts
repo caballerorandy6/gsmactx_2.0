@@ -66,7 +66,7 @@ export async function requestPasswordResetAction(
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
           </head>
           <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <div style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
+            <div style="background: #005898; color: white; padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
               <h1 style="margin: 0; font-size: 24px;">Password Reset Request</h1>
             </div>
 
@@ -83,7 +83,7 @@ export async function requestPasswordResetAction(
 
               <div style="text-align: center; margin: 30px 0;">
                 <a href="${resetUrl}"
-                   style="display: inline-block; background: #006ebe; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
+                   style="display: inline-block; background: #005898; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
                   Reset Password
                 </a>
               </div>
@@ -100,7 +100,7 @@ export async function requestPasswordResetAction(
 
               <p style="font-size: 12px; color: #999;">
                 If the button doesn't work, copy and paste this link into your browser:<br>
-                <a href="${resetUrl}" style="color: #006ebe; word-break: break-all;">${resetUrl}</a>
+                <a href="${resetUrl}" style="color: #005898; word-break: break-all;">${resetUrl}</a>
               </p>
             </div>
           </body>
