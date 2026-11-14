@@ -316,7 +316,7 @@ const CampaignForm = ({
                 type="button"
                 onClick={() => setShowPreview(true)}
                 disabled={!watchedTitle || !watchedSubject || !watchedContent}
-                className="flex justify-center rounded-md cursor-pointer bg-purple-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-purple-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 transition-colors disabled:bg-purple-300 disabled:cursor-not-allowed"
+                className="flex justify-center rounded-md cursor-pointer bg-white/5 px-3.5 py-2.5 text-center text-sm font-semibold text-white ring-1 ring-inset ring-white/25 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Preview Email
               </button>

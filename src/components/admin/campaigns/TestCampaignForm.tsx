@@ -103,14 +103,14 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
         Welcome, {user?.name}!
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-            <div className="bg-purple-900/20 border border-purple-500/30 rounded-lg p-4 mb-6 flex flex-col items-center justify-center">
+            <div className="bg-white/5 border border-white/10 rounded-lg p-4 mb-6 flex flex-col items-center justify-center">
               <h2 className="text-center text-3xl font-bold tracking-tight text-white mb-2">
                 Test Campaign
               </h2>
-              <p className="text-center text-sm text-purple-300">
+              <p className="text-center text-sm text-gray-300">
                 This will be sent immediately to:
               </p>
-              <ul className="text-xs text-purple-200 mt-2 space-y-1">
+              <ul className="text-xs text-gray-200 mt-2 space-y-1">
                 <li>• caballerorandy7@gmail.com</li>
                 <li>• gsmactx@outlook.com</li>
                 <li>• michel@gsmactx.com</li>
@@ -136,7 +136,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
                     type="text"
                     autoComplete="off"
                     placeholder="e.g., Summer Promotion 2025"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-purple-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -167,7 +167,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
                     type="text"
                     autoComplete="off"
                     placeholder="e.g., 🔥 50% OFF on all our services!"
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-purple-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -196,7 +196,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
                     type="file"
                     accept="image/png, image/jpeg, image/webp, image/gif, image/avif"
                     onChange={handleImageChange}
-                    className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-purple-500 file:text-white hover:file:bg-purple-400"
+                    className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary-600 file:text-white hover:file:bg-primary-700"
                   />
                   <ErrorMessage
                     errors={errors}
@@ -248,7 +248,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
                     maxLength={2000}
                     autoComplete="off"
                     placeholder="Write your email content here. You can include promotion details, important dates, etc."
-                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-purple-500"
+                    className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
                   />
                   <div className="flex justify-between items-center mt-1">
                     <ErrorMessage
@@ -286,7 +286,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="flex justify-center rounded-md cursor-pointer bg-purple-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-purple-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 transition-colors disabled:bg-purple-300 disabled:cursor-not-allowed"
+                  className="flex justify-center rounded-md cursor-pointer bg-primary-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 transition-colors disabled:bg-primary-600/50 disabled:cursor-not-allowed"
                 >
                   {isPending ? "Sending…" : "Send Test Campaign"}
                 </button>
@@ -320,7 +320,7 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
             <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 p-4 flex justify-end">
               <button
                 onClick={() => setShowPreview(false)}
-                className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-md transition-colors"
+                className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md transition-colors"
               >
                 Close Preview
               </button>
