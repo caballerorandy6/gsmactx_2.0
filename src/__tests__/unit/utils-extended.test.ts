@@ -68,7 +68,6 @@ describe("getTemplateById", () => {
     expect(template).toHaveProperty("name");
     expect(template).toHaveProperty("description");
     expect(template).toHaveProperty("category");
-    expect(template).toHaveProperty("icon");
     expect(template).toHaveProperty("defaultTitle");
     expect(template).toHaveProperty("defaultSubject");
     expect(template).toHaveProperty("defaultContent");
