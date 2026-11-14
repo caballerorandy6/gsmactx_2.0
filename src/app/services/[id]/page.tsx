@@ -1,6 +1,12 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { allServices, businessInfo, services } from "@/lib/data";
+import {
+  allServices,
+  businessInfo,
+  commonServiceFaqs,
+  serviceFaqs,
+  services,
+} from "@/lib/data";
 import { defaultOgImage } from "@/seo/genPageMetadata";
 
 // Importing all service components
@@ -115,22 +121,7 @@ export default async function ServicePage({ params }: Props) {
     return null;
   }
 
-  const faqs = [
-    {
-      question: `What is ${service.name}?`,
-      answer: `Learn more about our ${service.name} services at GSM A/C General & Contractor Inc.`,
-    },
-    {
-      question: "How can I schedule a service?",
-      answer:
-        "You can schedule a service by contacting us through our website or calling our customer service number.",
-    },
-    {
-      question: "Do you provide emergency HVAC services?",
-      answer:
-        "Yes, we provide emergency HVAC services to ensure your comfort and safety at all times.",
-    },
-  ];
+  const faqs = [...(serviceFaqs[service.id] ?? []), ...commonServiceFaqs];
 
   const ServiceComponent = componentMap[service.id];
   const serviceImage = serviceImages[service.id] || "/service1.avif";
@@ -160,24 +151,7 @@ export default async function ServicePage({ params }: Props) {
         ]}
       />
 
-      <JsonLdForFaq
-        faqs={[
-          {
-            question: `What is ${service.name}?`,
-            answer: `Learn more about our ${service.name} services at GSM A/C General & Contractor Inc.`,
-          },
-          {
-            question: "How can I schedule a service?",
-            answer:
-              "You can schedule a service by contacting us through our website or calling our customer service number.",
-          },
-          {
-            question: "Do you provide emergency HVAC services?",
-            answer:
-              "Yes, we provide emergency HVAC services to ensure your comfort and safety at all times.",
-          },
-        ]}
-      />
+      <JsonLdForFaq faqs={faqs} />
 
       <JsonLdForService
         serviceName={service.name}

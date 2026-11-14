@@ -416,7 +416,7 @@ export const faqs = [
   {
     question: "How can I schedule a service?",
     answer:
-      "You can schedule a service by contacting us through our website or calling our customer service number.",
+      "Book online at gsmactx.com/book-appointment or call us at (281) 235-4684. We are open Monday through Saturday, 8 AM to 8 PM.",
   },
   {
     question: "Do you provide emergency HVAC services?",
@@ -424,6 +424,131 @@ export const faqs = [
       "Yes, we provide emergency HVAC services to ensure your comfort and safety at all times.",
   },
 ];
+
+type Faq = { question: string; answer: string };
+
+/** Questions shown on every service page, after the service-specific ones. */
+export const commonServiceFaqs: Faq[] = [
+  {
+    question: "How can I schedule a service?",
+    answer:
+      "Book online at gsmactx.com/book-appointment or call us at (281) 235-4684. We are open Monday through Saturday, 8 AM to 8 PM.",
+  },
+  {
+    question: "What areas do you serve?",
+    answer:
+      "We are based in Cypress, TX and serve homes and businesses in Cypress, Houston, Katy, Spring, Tomball and The Woodlands.",
+  },
+];
+
+/**
+ * Service-specific FAQ, keyed by service id. Rendered on the service page and
+ * reused verbatim for its FAQPage JSON-LD, so visible text and schema match.
+ */
+export const serviceFaqs: Record<string, Faq[]> = {
+  "air-conditioning-installation": [
+    {
+      question: "Should I repair or replace my old AC?",
+      answer:
+        "If your unit is old and needs repairs again and again, replacing it usually costs less over time than paying for recurring repairs. Our technicians look at your current system, explain the pros and cons of each option, and recommend what fits your home and budget.",
+    },
+    {
+      question: "What does an AC installation include?",
+      answer:
+        "We help you choose the right system for your home, remove the old unit without damaging the wall or the area around it, install the new system to industry standards, double-check the work and clean up before we leave.",
+    },
+    {
+      question: "Which AC brands do you install?",
+      answer:
+        "We install air conditioning and HVAC units of any make and model, and help you compare the options before you buy.",
+    },
+  ],
+  "air-conditioning-repair": [
+    {
+      question: "What are the signs my AC needs repair?",
+      answer:
+        "Warm air from the vents, a unit that turns on and off often, strange noises or smells, and breakdowns that keep coming back. Frequent malfunctions usually point to an underlying problem, so it is best to have it checked before the damage grows.",
+    },
+    {
+      question: "Can you fix my AC in one visit?",
+      answer:
+        "That is our goal. Our technicians find the cause, then repair or replace the faulty part so the system cools again, and they double-check the work before leaving.",
+    },
+    {
+      question: "Do you repair all AC brands?",
+      answer:
+        "Yes. We work on air conditioning and HVAC systems of any make and model.",
+    },
+  ],
+  "heating-installation": [
+    {
+      question: "Which heating system is right for my home?",
+      answer:
+        "It depends on the size and layout of your home and on the local climate. We explain the options, help you pick an efficient system and install it so it works well with the house.",
+    },
+    {
+      question: "Where should a furnace be installed?",
+      answer:
+        "We choose a location that gives the best coverage, so the heat reaches every room evenly without wasting energy.",
+    },
+    {
+      question: "Do you install heating in new homes?",
+      answer:
+        "Yes. If you are building a new home in Cypress or the surrounding area, we can plan and install the heating system from the start.",
+    },
+  ],
+  "heating-repair": [
+    {
+      question: "What are the signs my furnace needs repair?",
+      answer:
+        "Strange odors, vibrations or noises coming from the system, uneven heat, or a furnace that will not turn on. Damage grows the longer you wait, so it is cheaper to fix it right away.",
+    },
+    {
+      question: "Can I repair my furnace myself?",
+      answer:
+        "We do not recommend it. Heating systems are complex, and a DIY repair can create bigger and more expensive problems. Our technicians are trained to diagnose and repair them safely.",
+    },
+    {
+      question: "Do you repair or replace heating parts?",
+      answer:
+        "Both. We repair the faulty part when that is the better option, and replace it when it cannot be restored.",
+    },
+  ],
+  "air-duct-sanitizing": [
+    {
+      question: "Why should I clean and sanitize my air ducts?",
+      answer:
+        "Dust collects in the ductwork and is blown back into your rooms every time the system turns on. Cleaning and sanitizing the ducts means less dust on your furniture and bedding, cleaner air and a fresher-smelling home.",
+    },
+    {
+      question: "What does duct sanitizing remove?",
+      answer:
+        "Dust, dirt, pollen, pet dander, mildew, bacteria and the odors trapped in dust particles.",
+    },
+    {
+      question: "Who benefits most from duct sanitizing?",
+      answer:
+        "Everyone breathes the air that moves through the ducts, but it helps most in homes with allergies, asthma or other breathing problems, and in homes with pets.",
+    },
+  ],
+  "attic-insulation": [
+    {
+      question: "How does attic insulation lower my energy bills?",
+      answer:
+        "Insulation slows the heat moving through your ceiling, so less Houston heat gets in during summer and less warm air escapes in winter. Your A/C and furnace run less to hold the temperature you set.",
+    },
+    {
+      question: "How do I know if my attic needs more insulation?",
+      answer:
+        "Rooms under the attic that run hotter or colder than the rest of the house, an HVAC system that runs for a long time, and energy bills that keep climbing. We can check your attic and tell you what it needs.",
+    },
+    {
+      question: "Do you add new insulation or replace the old one?",
+      answer:
+        "Both. We add insulation on top of what you have when it is in good condition, and replace it when it is not.",
+    },
+  ],
+};
 
 export const emailsToSeed = [
   "88ragnarok@gmail.com",

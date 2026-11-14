@@ -170,25 +170,7 @@ export default async function ServicesOverviewPage() {
           { name: "Services", item: "https://www.gsmactx.com/services" },
         ]}
       />
-      <JsonLdForFaq
-        faqs={[
-          {
-            question: "What HVAC services do you offer?",
-            answer:
-              "We offer air conditioning installation and repair, heating installation and repair, air duct sanitizing, and attic insulation services.",
-          },
-          {
-            question: "How can I schedule a service?",
-            answer:
-              "You can schedule a service by booking online through our website or calling us at (281) 235-4684.",
-          },
-          {
-            question: "Do you provide emergency HVAC services?",
-            answer:
-              "Yes, we provide emergency HVAC services to ensure your comfort and safety at all times.",
-          },
-        ]}
-      />
+      <JsonLdForFaq faqs={faqs} />
       <JsonLdForLocalBusiness
         name={businessInfo.name}
         description={businessInfo.description}
