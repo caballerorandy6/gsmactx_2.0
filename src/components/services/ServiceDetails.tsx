@@ -122,9 +122,16 @@ const ServiceDetails = ({ id, imageSrc, array }: ServiceDetailsProps) => {
           {array.map((item, index) => (
             <motion.div key={index} variants={itemVariant}>
               {item.name && <h2 className="heading-sub mb-3">{item.name}</h2>}
-              <p className="text-base/7 text-gray-300 sm:text-lg/8">
-                {item.description}
-              </p>
+              <div className="space-y-4">
+                {item.description.split("\n\n").map((paragraph) => (
+                  <p
+                    key={paragraph}
+                    className="text-base/7 text-gray-300 sm:text-lg/8"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
             </motion.div>
           ))}
           <motion.div variants={itemVariant}>

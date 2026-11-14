@@ -260,44 +260,34 @@ export const features = [
   },
 ];
 
-export const servicesIntro = [
-  {
-    name: "",
-    description:
-      "If you are planning to have a new home constructed in Cypress, TX, one of the first things that you would need to do is to choose a reliable and professional heating installation company. This is one of the most essential parts of the house, especially if you want to be comfortable inside your own home. This is why you should always make sure to hire GSM A/C & General Contractor INC. when it comes to the heating system in your home. Here are some benefits to hiring home heating installation experts like us:",
-  },
-  {
-    mame: "Professionals can provide you with a system that is efficient and works well with the house",
-    description:
-      "When it comes to the heating installation of your home you would not only be dealing with the actual installation of the furnace or air conditioner or the wiring of your heating system you would also be dealing with the type of system you should have for your home. You would also have to consider the climate of your area and the design of your house when you are deciding which kind of system to buy. When you leave the heating installation to us, you would no longer have to worry about any of this. We can guide you in buying the right system for your home and your area.",
-  },
-  {
-    name: "Professionals have the skills and training to do the job",
-    description:
-      "Another reason why it is better to leave the installation of the system to professionals like us is because we would already be trained to handle such a complicated task and install the right kind of heating system for your home. You would not have to worry about anything during or after the installation, we would be responsible for it. If you want to make sure that the heating system installed in your home in Cypress, TX is up to par with the standards of the industry, hire experts. GSM A/C & General Contractor INC. offers a reliable home heating repair and installation service that you can count on. If you need more information about the services we offer, give us a call at (281) 235-4684 and let us address your concerns.",
-  },
-];
-
+// Service page copy. Restructured for search and AI citation (question
+// headings, answer first, short paragraphs) without adding or dropping claims.
+// A blank line inside `description` starts a new paragraph.
 export const air_conditioning_installation = [
   {
     name: "",
     description:
-      "You should not delay when it comes to replacing your old and damaged air conditioning system. Doing so means you are going to end up spending more money on recurring repairs and potentially more damage. When it's already very old, it means a lot more frequent repairs will be needed. This isn't something that you’d want to happen. Save yourself from that. If it's the cost of our quality air conditioning replacement services you are worried about, there is GSM A/C & General Contractor INC. that can offer you really affordable rates for the high-quality services that we provide. Our affordable AC replacement services are just a call away from the property owners in the Cypress, TX area.",
+      "Our affordable AC replacement services are just a call away for property owners in the Cypress, TX area. If the cost of quality air conditioning replacement is what worries you, GSM A/C & General Contractor INC. offers really affordable rates for the high-quality services we provide.",
   },
   {
-    name: "When Replacing an AC System",
+    name: "Why shouldn't you delay replacing an old AC?",
     description:
-      "Air conditioning systems can be tricky to deal with, especially if you have no experience whatsoever. You need the expertise and proper training as well as the right tools in order to successfully replace an air conditioning system. It can get quite overwhelming planning the entire replacement process. So, you should leave the job to professionals like us. We can determine which air conditioning system will work best for your home or workplace, and we'll handle the replacement process from start to end.",
+      "Because an old and damaged air conditioning system costs you more money in recurring repairs and can lead to more damage. When a system is already very old, it needs a lot more frequent repairs.\n\nThis isn't something you'd want to happen, so save yourself from it and replace the system before it gets there.",
   },
   {
-    name: "We Can Replace Air Conditioning Systems!",
+    name: "Why leave AC replacement to professionals?",
     description:
-      "Our air conditioning replacement service is all about using the right tools and following the correct procedures so that the new air conditioning system will be installed according to industry standards. We'll prepare the tools needed for the replacement task, including proper sealants and fixatives. We'll then proceed to remove the existing air conditioning system, making sure we do it correctly so that we won't cause any kind of damage to the wall behind the AC unit. We'll then install the new AC system, making sure we double-check our work for accuracy. If your air conditioning system is too old, you know who to call for a successful replacement.",
+      "Replacing an air conditioning system takes expertise, proper training and the right tools. Air conditioning systems can be tricky to deal with, especially if you have no experience whatsoever, and planning the entire replacement process can get quite overwhelming.\n\nLeave the job to professionals like us: we determine which air conditioning system will work best for your home or workplace, and we handle the replacement process from start to end.",
+  },
+  {
+    name: "How do we replace an air conditioning system?",
+    description:
+      "Our air conditioning replacement service is all about using the right tools and following the correct procedures, so the new system is installed according to industry standards.\n\nFirst, we prepare the tools the replacement needs, including proper sealants and fixatives. Then we remove the existing air conditioning system correctly, so we don't cause any kind of damage to the wall behind the AC unit. Finally, we install the new AC system and double-check our work for accuracy.",
   },
   {
     name: "",
     description:
-      "When it comes to affordable AC replacement services in Cypress, TX, you can always rely on GSM A/C & General Contractor INC. To book our services, feel free to call us at (281) 235-4684 today!",
+      "If your air conditioning system is too old, you know who to call for a successful replacement. When it comes to affordable AC replacement services in Cypress, TX, you can always rely on GSM A/C & General Contractor INC. To book our services, call us at (281) 235-4684 today!",
   },
 ];
 
@@ -305,22 +295,22 @@ export const air_conditioning_repair = [
   {
     name: "",
     description:
-      "Even if you’re careful with your AC maintenance, there will come a time when it will break down on you. Frequent AC malfunctions can be a result of underlying problems in your HVAC system. Don’t wait for it to get worse. Have it fixed now! There is nothing to fret about that because you can always rely on GSM A/C & General Contractor INC. for a quick and quality AC repair service. We offer immediate HVAC repair solutions to property owners in the Cypress, TX area, so don’t hesitate to call us!",
+      "GSM A/C & General Contractor INC. offers immediate HVAC repair solutions to property owners in the Cypress, TX area, so you can always rely on us for a quick and quality AC repair service. Even if you're careful with your AC maintenance, there will come a time when it breaks down on you.",
   },
   {
-    name: "Is it time for a repair?",
+    name: "How soon should a malfunctioning AC be repaired?",
     description:
-      "You should have your air conditioning fixed as soon as possible once it starts to malfunction. You need not wait for days to come and go without using your AC. Ensure you get the repair done in a single sitting. That is only possible when you turn to our team for the repair job. We respond to all calls right, and we complete the air conditioning repair task in a timely manner, ensuring excellent workmanship.",
+      "As soon as possible once it starts to malfunction. Frequent AC malfunctions can be a result of underlying problems in your HVAC system, so don't wait for it to get worse, and don't let days come and go without using your AC.\n\nGet the repair done in a single sitting. That is only possible when you turn to our team for the repair job: we respond to all calls right away, and we complete the air conditioning repair in a timely manner, ensuring excellent workmanship.",
   },
   {
-    name: "It is time to call our experts!",
+    name: "What can you expect from our AC repair service?",
     description:
-      "When it’s time to have your air conditioning unit fixed, don’t hesitate to call us right away. You can expect our technicians to promptly respond to your calls and provide you with an efficient repair service. We can guarantee to provide you with long-lasting repair solutions at all times. We have the skills, tools, and other equipment that allow us to complete the repair work in a timely manner. Rest assured that there will be no damage that will be left untreated.",
+      "Our technicians promptly respond to your calls and provide an efficient repair service. We guarantee long-lasting repair solutions at all times.\n\nWe have the skills, tools and other equipment to complete the repair work in a timely manner, and rest assured that no damage will be left untreated. When it's time to have your air conditioning unit fixed, don't hesitate to call us right away.",
   },
   {
     name: "",
     description:
-      "Once you notice signs of AC failure, call GSM A/C & General Contractor INC. for a reliable air conditioning repair service right away. Don’t delay as it can only lead to more problems. If you’re looking for a reliable AC technician in Cypress, TX, you now know which one to call for the job. To book our HVAC repair services, feel free to give us a call at (281) 235-4684 today!",
+      "Once you notice signs of AC failure, call GSM A/C & General Contractor INC. for a reliable air conditioning repair service right away. Don't delay, as it can only lead to more problems. If you're looking for a reliable AC technician in Cypress, TX, you now know which one to call. To book our HVAC repair services, give us a call at (281) 235-4684 today!",
   },
 ];
 
@@ -328,17 +318,17 @@ export const heating_installation = [
   {
     name: "",
     description:
-      "If you are planning to have a new home constructed in Cypress, TX, one of the first things that you would need to do is to choose a reliable and professional heating installation company. This is one of the most essential parts of the house, especially if you want to be comfortable inside your own home. This is why you should always make sure to hire GSM A/C & General Contractor INC. when it comes to the heating system in your home. Here are some benefits to hiring home heating installation experts like us:",
+      "GSM A/C & General Contractor INC. offers a reliable home heating repair and installation service in Cypress, TX that you can count on. If you are planning to have a new home constructed, one of the first things you need to do is choose a reliable and professional heating installation company, because the heating system is one of the most essential parts of the house if you want to be comfortable inside your own home.",
   },
   {
-    name: "Professionals can provide you with a system that is efficient and works well with the house",
+    name: "How do professionals choose the right heating system for your home?",
     description:
-      "When it comes to the heating installation of your home you would not only be dealing with the actual installation of the furnace or air conditioner or the wiring of your heating system you would also be dealing with the type of system you should have for your home. You would also have to consider the climate of your area and the design of your house when you are deciding which kind of system to buy. When you leave the heating installation to us, you would no longer have to worry about any of this. We can guide you in buying the right system for your home and your area.",
+      "We guide you in buying the right system for your home and your area, taking into account the climate of your area and the design of your house. That way you get a system that is efficient and works well with the house.\n\nHeating installation is not only the installation of the furnace or air conditioner or the wiring of your heating system; you also have to decide the type of system your home should have. When you leave the heating installation to us, you no longer have to worry about any of this.",
   },
   {
-    name: "Professionals have the skills and training to do the job",
+    name: "Why leave heating installation to trained professionals?",
     description:
-      "Another reason why it is better to leave the installation of the system to professionals like us is because we would already be trained to handle such a complicated task and install the right kind of heating system for your home. You would not have to worry about anything during or after the installation, we would be responsible for it. If you want to make sure that the heating system installed in your home in Cypress, TX is up to par with the standards of the industry, hire experts. GSM A/C & General Contractor INC. offers a reliable home heating repair and installation service that you can count on. If you need more information about the services we offer, give us a call at (281) 235-4684 and let us address your concerns.",
+      "Because we are trained to handle such a complicated task and to install the right kind of heating system for your home. You don't have to worry about anything during or after the installation: we are responsible for it.\n\nIf you want to make sure that the heating system installed in your home in Cypress, TX is up to par with the standards of the industry, hire experts. If you need more information about the services we offer, give us a call at (281) 235-4684 and let us address your concerns.",
   },
 ];
 
@@ -346,17 +336,17 @@ export const heating_repair = [
   {
     name: "",
     description:
-      "You need to be careful around your home’s HVAC system. This is because it is a complex system that keeps a home at a comfortable temperature. Your HVAC system also helps regulate the temperature and humidity in your home. You should keep your HVAC system in great condition if you want to keep your family comfortable. You can do this by calling a reliable heating repair service. GSM A/C & General Contractor INC. is a highly recommended company that you can trust in Cypress, TX when it comes to your heating repair needs.",
+      "GSM A/C & General Contractor INC. is a highly recommended company that you can trust in Cypress, TX for your heating repair needs. Your HVAC system is a complex system that keeps your home at a comfortable temperature and helps regulate its temperature and humidity. To keep your family comfortable, keep it in great condition by calling a reliable heating repair service.",
   },
   {
-    name: "Why Fix Your HVAC System Right Away",
+    name: "Why should you fix your heating system right away?",
     description:
-      "Some signs will tell you that your HVAC system needs immediate repair. Strange odors, vibrations, and sounds emanating from your HVAC system should not be ignored. Once signs of HVAC failure show, you must take action right away. Damage will increase in proportion to how long you wait. This means higher repair costs. The best course of action is an immediate repair to stop further harm. Avoid taking the DIY route, though, because doing so can potentially lead to more problems. If you have some HVAC repair experts like us, you don’t need to worry about the cost, as we provide some of the best HVAC service rates.",
+      "Because damage increases in proportion to how long you wait, and that means higher repair costs. Once signs of HVAC failure show, such as strange odors, vibrations and sounds coming from the system, take action right away: an immediate repair is the best way to stop further harm.\n\nAvoid taking the DIY route, because it can lead to more problems. With HVAC repair experts like us you don't need to worry about the cost, as we provide some of the best HVAC service rates.",
   },
   {
-    name: "Let Us Fix Your Heating System",
+    name: "How do we repair your heating system?",
     description:
-      "We have extensive training in the repair of complex HVAC systems. We can handle any HVAC work because we have the experience, knowledge, and abilities. We have the equipment to perform any HVAC repair service. With us, you can guarantee the best solution for your damaged HVAC system. We can guarantee efficient service and quality solutions because we operate with a high-standard checklist as part of our HVAC repair process. With years of experience, trusting a professional like GSM A/C & General Contractor INC. is the right choice. If you need our quality heating repair service in Cypress, TX, feel free to contact us at (281) 235-4684 right away!",
+      "We operate with a high-standard checklist as part of our HVAC repair process, which is how we guarantee efficient service and quality solutions for your damaged HVAC system. We have extensive training in the repair of complex HVAC systems, plus the experience, knowledge, abilities and equipment to perform any HVAC repair service.\n\nWith years of experience, trusting a professional like GSM A/C & General Contractor INC. is the right choice. If you need our quality heating repair service in Cypress, TX, contact us at (281) 235-4684 right away!",
   },
 ];
 
@@ -364,32 +354,32 @@ export const air_duct_sanitizing = [
   {
     name: "",
     description:
-      "The negative impacts of mold and dust are significantly decreased by cleaning up the contaminants from your air duct system. Those who are susceptible to indoor air pollution, especially those with allergies, should breathe clean, healthy air that is constantly flowing. We provide quality HVAC services that also include special air duct sanitizing services. Here are the top 4 comfort-related reasons why you need GSM A/C & General Contractor INC.",
+      "Cleaning the contaminants out of your air duct system significantly decreases the negative impacts of mold and dust. People who are susceptible to indoor air pollution, especially those with allergies, should breathe clean, healthy air that is constantly flowing. GSM A/C & General Contractor INC. provides quality HVAC services that include special air duct sanitizing. Here are the top 4 comfort-related reasons to have it done.",
   },
   {
-    name: "Cleaner Home Environment",
+    name: "How does duct cleaning make your home cleaner?",
     description:
-      "After a few hours of inactivity, dust in your ductwork begins to collect like it does everywhere else in your house in Cypress, TX. The dust starts to move when the system turns on, but it doesn’t stay in the ductwork. It enters your home through the walls and floors and settles into the carpeting, furniture, and bedding. Your home will become a cleaner environment to live in if you remove dust from within.",
+      "Removing the dust from inside your ductwork makes your home a cleaner place to live. After a few hours of inactivity, dust begins to collect in your ductwork like it does everywhere else in your house in Cypress, TX.\n\nWhen the system turns on, that dust starts to move, but it doesn't stay in the ductwork: it enters your home through the walls and floors and settles into the carpeting, furniture and bedding.",
   },
   {
-    name: "Better Air Quality",
+    name: "Does duct cleaning improve indoor air quality?",
     description:
-      "What level of air quality are you breathing? Cleaner air keeps your family safe even if no one in your home has allergies or respiratory issues. Every time you breathe in dangerous pollutants and dust, it may cause sneezing and coughing, as well as have an impact on your sinuses and bronchial congestion. You’ll always have cleaner air to breathe if you keep your air ducts clean.",
+      "Yes. You'll always have cleaner air to breathe if you keep your air ducts clean, and cleaner air keeps your family safe even if no one in your home has allergies or respiratory issues. Every time you breathe in dangerous pollutants and dust, it may cause sneezing and coughing and affect your sinuses and bronchial congestion.",
   },
   {
-    name: "Fewer Irritants",
+    name: "What irritants are in your air ducts?",
     description:
-      "Your air ducts contain more than just dust. There are also contaminants and harmful microorganisms there. The air you breathe may contain bacteria, pollen, mildew, pet dander, and other contaminants. Instead of recirculating possible issues, our routine air duct cleaning services can help keep your family far healthier.",
+      "More than just dust. Your air ducts also hold contaminants and harmful microorganisms, so the air you breathe may contain bacteria, pollen, mildew, pet dander and other contaminants. Instead of recirculating those possible issues, our routine air duct cleaning services can help keep your family far healthier.",
   },
   {
-    name: "Better Odor",
+    name: "Can duct cleaning remove odors?",
     description:
-      "Every house has a distinct aroma. It’s not always the most enjoyable experience. Stale odours can develop over time and can be caused by a variety of things, including mildew, paint fumes, tobacco usage, food, cleaning supplies, and pets. You’ll have a house with a fresher scent thanks to our thorough cleaning of the air ducts, which helps remove aromas that are trapped in dust particles.",
+      "Yes. Our thorough cleaning of the air ducts helps remove odors trapped in dust particles, so your house has a fresher scent. Every house has a distinct aroma, and it's not always the most enjoyable: stale odors can develop over time from mildew, paint fumes, tobacco use, food, cleaning supplies and pets.",
   },
   {
     name: "",
     description:
-      "Call GSM A/C & General Contractor INC. at (281) 235-4684 if you require our air duct cleaning & sanitizing services for your property in Cypress, TX. You can also call our team for quality HVAC services.",
+      "Call GSM A/C & General Contractor INC. at (281) 235-4684 if you need our air duct cleaning and sanitizing services for your property in Cypress, TX. You can also call our team for quality HVAC services.",
   },
 ];
 
@@ -400,19 +390,19 @@ export const attic_insulation = [
       "A poorly insulated attic lets Houston heat pour into your home in summer and lets warm air escape in winter, so your HVAC system works harder and your energy bills climb. GSM A/C & General Contractor INC. adds and replaces attic insulation for homes in Cypress, TX and the surrounding area.",
   },
   {
-    name: "Lower Energy Bills",
+    name: "How does attic insulation lower your energy bills?",
     description:
       "Insulation slows the transfer of heat through your ceiling, so your A/C and furnace run less to hold the temperature you set.",
   },
   {
-    name: "More Even Comfort",
+    name: "Does it make your home more comfortable?",
     description:
-      "Rooms under the attic stop running hotter or colder than the rest of the house.",
+      "Yes. Rooms under the attic stop running hotter or colder than the rest of the house.",
   },
   {
-    name: "Less Strain on Your HVAC System",
+    name: "Does insulation put less strain on your HVAC system?",
     description:
-      "Shorter run times mean less wear on your equipment.",
+      "Yes. Shorter run times mean less wear on your equipment.",
   },
   {
     name: "",
