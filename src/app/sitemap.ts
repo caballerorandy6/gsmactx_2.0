@@ -1,114 +1,31 @@
 import type { MetadataRoute } from "next";
-import fs from "fs/promises";
-import path from "path";
-
-interface SitemapConfig {
-  baseUrl: string;
-  dynamicRoutes: string[];
-}
+import { allServices, businessInfo } from "@/lib/data";
 
 /**
- * Sitemap configuration
- *
- * @property {string} url - The base URL of the site.
- * @property {string[]} dynamicRoutes - The dynamic routes of the site.
- *
+ * Only public, indexable pages. Built from allServices so a new service
+ * shows up here automatically; admin, auth and unsubscribe pages never do.
  */
-const sitemapConfig: SitemapConfig = {
-  baseUrl: "https://www.gsmactx.com",
-  dynamicRoutes: [
-    "/services",
-    "/services/air-conditioning-installation",
-    "/services/air-conditioning-repair",
-    "/services/heating-installation",
-    "/services/heating-repair",
-    "/services/air-duct-sanitizing",
-    "/services/attic-insulation",
-    "/book-appointment",
-  ],
-};
+export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = businessInfo.website;
 
-// Priority configuration for different route types
-const getRoutePriority = (route: string): number => {
-  if (route === "/") return 1.0;
-  if (route === "/book-appointment") return 0.9;
-  if (route === "/services") return 0.8;
-  if (route.startsWith("/services/")) return 0.7;
-  return 0.5;
-};
+  const routes: Array<{
+    path: string;
+    priority: number;
+    changeFrequency: "weekly" | "monthly";
+  }> = [
+    { path: "/", priority: 1, changeFrequency: "weekly" },
+    { path: "/book-appointment", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/services", priority: 0.8, changeFrequency: "monthly" },
+    ...allServices.map((service) => ({
+      path: service.href,
+      priority: 0.7,
+      changeFrequency: "monthly" as const,
+    })),
+  ];
 
-// Change frequency based on content type
-const getChangeFrequency = (route: string): "daily" | "weekly" | "monthly" => {
-  if (route === "/") return "weekly";
-  if (route === "/book-appointment") return "monthly";
-  if (route.startsWith("/services")) return "monthly";
-  return "monthly";
-};
-
-const getFiles = async (
-  dir: string,
-  extensions: string[]
-): Promise<string[]> => {
-  const entries = await fs.readdir(dir, { withFileTypes: true });
-  const files: string[] = [];
-
-  for (const entry of entries) {
-    if (entry.parentPath.includes("(.")) continue;
-
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      const nestedFiles = await getFiles(fullPath, extensions);
-      files.push(...nestedFiles);
-    } else if (extensions.some((ext) => entry.name.endsWith(ext))) {
-      files.push(fullPath);
-    }
-  }
-
-  return files;
-};
-
-const getBasePath = async (): Promise<string> => {
-  const srcAppPath = path.join(process.cwd(), "src/app");
-  const appPath = path.join(process.cwd(), "app");
-  try {
-    await fs.access(srcAppPath);
-    return srcAppPath;
-  } catch {
-    return appPath;
-  }
-};
-
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const extensions = [".tsx", ".jsx", ".mdx"];
-  const basePath = await getBasePath();
-  const pages = await getFiles(basePath, extensions);
-  const { baseUrl, dynamicRoutes } = sitemapConfig;
-
-  const routes = await Promise.all(
-    pages
-      .filter((filePath) => /page\.(tsx|jsx|mdx)$/.test(filePath))
-      .map(async (filePath) => {
-        const relativePath = path.relative(basePath, path.dirname(filePath));
-        const route =
-          relativePath === ""
-            ? "/"
-            : `/${relativePath
-                .replace(/\\/g, "/")
-                .replace(/\([^\/]+\)/g, "")
-                .replace(/\/\/+/g, "/")
-                .replace(/^\/|\/$/g, "")}`;
-
-        return route;
-      })
-  );
-
-  return [...routes, ...dynamicRoutes]
-    .filter((route) => !route.includes("["))
-    .filter((route) => !route.includes("@"))
-    .map((route) => ({
-      url: `${baseUrl}${route}`,
-      lastModified: new Date(),
-      changeFrequency: getChangeFrequency(route),
-      priority: getRoutePriority(route),
-    }));
+  return routes.map(({ path, priority, changeFrequency }) => ({
+    url: path === "/" ? baseUrl : `${baseUrl}${path}`,
+    changeFrequency,
+    priority,
+  }));
 }
