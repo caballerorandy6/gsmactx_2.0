@@ -41,6 +41,8 @@ export const businessInfo = {
     { name: "Instagram", href: "https://www.instagram.com/gsmactx/" },
     { name: "YouTube", href: "https://www.youtube.com/@gsmactx" },
     { name: "TikTok", href: "https://www.tiktok.com/@gsmactx" },
+    // Confirmed by the user 2026-11-14; owner will update hours on Yelp
+    { name: "Yelp", href: "https://www.yelp.com/biz/gsm-air-conditioning-cypress" },
   ],
   // Older Facebook page ("GSM AC TX"), still the company's; schema only
   legacyFacebook: "https://www.facebook.com/gsmactx/",

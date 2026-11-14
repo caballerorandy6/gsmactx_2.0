@@ -5,6 +5,7 @@ import Facebook from "@/components/icons/Facebook";
 import Instagram from "@/components/icons/Instagram";
 import TikTok from "@/components/icons/TikTok";
 import YouTube from "@/components/icons/YouTube";
+import Yelp from "@/components/icons/Yelp";
 import Google from "@/components/icons/Google";
 
 interface Social {
@@ -67,6 +68,7 @@ const socialIcons: Record<string, Social["icon"]> = {
   Instagram,
   YouTube,
   TikTok,
+  Yelp,
 };
 
 const social: Social[] = [
