@@ -54,7 +54,10 @@ export async function getDashboardStatsAction() {
       }),
       // Appointments
       prisma.appointment.count(),
-      prisma.appointment.count({ where: { status: "PENDING" } }),
+      // Only upcoming bookings still need a call; past unconfirmed ones live in the appointments list.
+      prisma.appointment.count({
+        where: { status: "PENDING", scheduledDate: { gte: today } },
+      }),
       prisma.appointment.count({ where: { status: "CONFIRMED" } }),
       prisma.appointment.count({ where: { status: "IN_PROGRESS" } }),
       prisma.appointment.count({ where: { status: "COMPLETED" } }),

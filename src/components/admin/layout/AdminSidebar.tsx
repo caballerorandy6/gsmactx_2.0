@@ -111,7 +111,7 @@ const AdminSidebar = () => {
   return (
     <>
       {/* Tablet Sidebar (md-lg) - Collapsed with icons only */}
-      <aside className="hidden md:flex lg:hidden flex-col w-20 min-h-[calc(100vh-4rem)] bg-gray-900/80 backdrop-blur-sm border-r border-white/10 py-6 relative z-30">
+      <aside className="hidden md:flex lg:hidden flex-col w-20 shrink-0 min-h-[calc(100vh-4rem)] bg-gray-900/80 backdrop-blur-sm border-r border-white/10 py-6 relative z-30">
         {navSections.map((section) => (
           <div key={section.title} className="px-2 mb-4">
             <nav className="space-y-1">
@@ -151,7 +151,7 @@ const AdminSidebar = () => {
       </aside>
 
       {/* Desktop Sidebar (lg+) - Full with labels */}
-      <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:min-h-[calc(100vh-4rem)] bg-gray-900/80 backdrop-blur-sm border-r border-white/10 py-6">
+      <aside className="hidden lg:flex lg:flex-col lg:w-64 shrink-0 lg:min-h-[calc(100vh-4rem)] bg-gray-900/80 backdrop-blur-sm border-r border-white/10 py-6">
         {navSections.map((section) => (
           <div key={section.title} className="px-4 mb-6">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">
