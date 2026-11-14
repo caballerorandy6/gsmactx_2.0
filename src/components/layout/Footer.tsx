@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { navigation } from "@/lib/data";
+import { businessInfo, navigation } from "@/lib/data";
 import Facebook from "@/components/icons/Facebook";
 import Google from "@/components/icons/Google";
 
@@ -10,6 +10,58 @@ interface Social {
   icon: React.ElementType;
 }
 
+const mapsUrl =
+  "https://www.google.com/maps/place/G+S+M+A%2FC+%26+General+Contractor+INC./@29.8801535,-95.7088008,15z/data=!4m6!3m5!1s0x8640d7a7761d3e75:0x5aa72afac9b36840!8m2!3d29.8801145!4d-95.7088761!16s%2Fg%2F11n5cyv1cm?entry=ttu";
+
+const WEEK = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+
+/** "08:00" → "8 AM", "20:30" → "8:30 PM" */
+function formatTime(time: string) {
+  const [h, m] = time.split(":").map(Number);
+  const suffix = h >= 12 ? "PM" : "AM";
+  const hour = h % 12 || 12;
+  return m ? `${hour}:${String(m).padStart(2, "0")} ${suffix}` : `${hour} ${suffix}`;
+}
+
+/** Groups consecutive days that share the same hours: "Mon–Sat" / "8 AM – 8 PM". */
+function groupHours() {
+  const byDay = new Map(
+    businessInfo.openingHours.map((h) => [
+      h.dayOfWeek,
+      `${formatTime(h.opens)} – ${formatTime(h.closes)}`,
+    ])
+  );
+  const groups: { days: string; hours: string }[] = [];
+  let start = 0;
+  for (let i = 1; i <= WEEK.length; i++) {
+    const prev = byDay.get(WEEK[i - 1]) ?? "Closed";
+    const next = i < WEEK.length ? (byDay.get(WEEK[i]) ?? "Closed") : null;
+    if (next !== prev) {
+      const first = WEEK[start].slice(0, 3);
+      const last = WEEK[i - 1].slice(0, 3);
+      groups.push({
+        days: start === i - 1 ? WEEK[start] : `${first}–${last}`,
+        hours: prev,
+      });
+      start = i;
+    }
+  }
+  return groups;
+}
+
+const phoneDisplay = businessInfo.phone.replace(
+  /^\+1-(\d{3})-(\d{3})-(\d{4})$/,
+  "($1) $2-$3"
+);
+
 const social: Social[] = [
   {
     name: "Facebook",
@@ -18,7 +70,7 @@ const social: Social[] = [
   },
   {
     name: "Google",
-    href: "https://www.google.com/maps/place/G+S+M+A%2FC+%26+General+Contractor+INC./@29.8801535,-95.7088008,15z/data=!4m6!3m5!1s0x8640d7a7761d3e75:0x5aa72afac9b36840!8m2!3d29.8801145!4d-95.7088761!16s%2Fg%2F11n5cyv1cm?entry=ttu",
+    href: mapsUrl,
     icon: Google,
   },
 ];
@@ -65,6 +117,54 @@ export default function Footer() {
 
         {/* Divider */}
         <div className="h-px bg-linear-to-r from-transparent via-white/10 to-transparent mb-12" aria-hidden="true" />
+
+        {/* Name, address, phone, hours and service areas (match the LocalBusiness JSON-LD) */}
+        <div className="mx-auto mb-12 grid max-w-4xl grid-cols-1 gap-10 text-center text-sm/6 text-gray-300 sm:grid-cols-3 sm:text-left">
+          <div>
+            <h2 className="font-semibold text-white">{businessInfo.name}</h2>
+            <address className="mt-3 not-italic">
+              <a
+                href={mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                {businessInfo.address.street}
+                <br />
+                {businessInfo.address.city}, {businessInfo.address.state}{" "}
+                {businessInfo.address.zip}
+              </a>
+              <br />
+              <a
+                href={`tel:${businessInfo.phone}`}
+                className="mt-2 inline-block font-semibold text-white hover:text-primary-300 transition-colors"
+              >
+                {phoneDisplay}
+              </a>
+            </address>
+          </div>
+          <div>
+            <h2 className="font-semibold text-white">Hours</h2>
+            <dl className="mt-3 space-y-1">
+              {groupHours().map((g) => (
+                <div
+                  key={g.days}
+                  className="flex justify-center gap-x-3 sm:justify-start"
+                >
+                  <dt className="w-16 shrink-0 text-right text-gray-400 sm:w-20 sm:text-left">{g.days}</dt>
+                  <dd className="tabular-nums">{g.hours}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+          <div>
+            <h2 className="font-semibold text-white">Service areas</h2>
+            <p className="mt-3">
+              {businessInfo.serviceAreas.slice(0, -1).join(", ")} and{" "}
+              {businessInfo.serviceAreas.at(-1)}.
+            </p>
+          </div>
+        </div>
 
         {/* Navigation Links */}
         <nav
