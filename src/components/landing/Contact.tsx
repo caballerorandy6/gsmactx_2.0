@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { UserFormData, UserSchema } from "@/lib/validations/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import useSectionObserver from "@/hooks/useSectionObserver";
+import { businessInfo } from "@/lib/data";
 import {
   BuildingOffice2Icon,
   EnvelopeIcon,
@@ -189,11 +190,21 @@ export default function Contact() {
                   <span className="sr-only">Address</span>
                   <BuildingOffice2Icon className="h-7 w-6 text-gray-400" />
                 </div>
-                <div>
-                  GSM A/C & General Contractor INC.
+                <address className="not-italic">
+                  {businessInfo.name}
                   <br />
-                  Cypress, TX 77433
-                </div>
+                  <a
+                    href={businessInfo.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    {businessInfo.address.street}
+                    <br />
+                    {businessInfo.address.city}, {businessInfo.address.state}{" "}
+                    {businessInfo.address.zip}
+                  </a>
+                </address>
               </motion.div>
               <motion.div variants={itemVariant} className="flex gap-x-4">
                 <div className="flex-none">
@@ -202,10 +213,10 @@ export default function Contact() {
                 </div>
                 <div>
                   <Link
-                    href="tel:+1 (281) 235-4684"
+                    href={`tel:${businessInfo.phone}`}
                     className="hover:text-white transition-colors"
                   >
-                    +1 (281) 235-4684
+                    (281) 235-4684
                   </Link>
                 </div>
               </motion.div>

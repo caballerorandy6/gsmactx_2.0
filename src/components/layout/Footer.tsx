@@ -10,9 +10,6 @@ interface Social {
   icon: React.ElementType;
 }
 
-const mapsUrl =
-  "https://www.google.com/maps/place/G+S+M+A%2FC+%26+General+Contractor+INC./@29.8801535,-95.7088008,15z/data=!4m6!3m5!1s0x8640d7a7761d3e75:0x5aa72afac9b36840!8m2!3d29.8801145!4d-95.7088761!16s%2Fg%2F11n5cyv1cm?entry=ttu";
-
 const WEEK = [
   "Monday",
   "Tuesday",
@@ -70,7 +67,7 @@ const social: Social[] = [
   },
   {
     name: "Google",
-    href: mapsUrl,
+    href: businessInfo.mapsUrl,
     icon: Google,
   },
 ];
@@ -124,7 +121,7 @@ export default function Footer() {
             <h2 className="font-semibold text-white">{businessInfo.name}</h2>
             <address className="mt-3 not-italic">
               <a
-                href={mapsUrl}
+                href={businessInfo.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"

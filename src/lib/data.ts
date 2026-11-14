@@ -31,6 +31,10 @@ export const businessInfo = {
     fullAddress: "19410 FM 529 A4, Cypress, TX 77433",
   },
 
+  // Google Maps listing (Business Profile)
+  mapsUrl:
+    "https://www.google.com/maps/place/G+S+M+A%2FC+%26+General+Contractor+INC./@29.8801535,-95.7088008,15z/data=!4m6!3m5!1s0x8640d7a7761d3e75:0x5aa72afac9b36840!8m2!3d29.8801145!4d-95.7088761!16s%2Fg%2F11n5cyv1cm?entry=ttu",
+
   // Real coordinates from Google Maps
   geo: {
     latitude: "29.8801145",
