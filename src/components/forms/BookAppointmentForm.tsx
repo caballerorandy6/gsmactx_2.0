@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import Link from "next/link";
-import { PublicAppointmentSchema, PublicAppointmentFormData, SERVICE_TYPES } from "@/lib/validations/zod";
+import { PublicAppointmentSchema, PublicAppointmentFormData } from "@/lib/validations/zod";
 import { SERVICE_TYPE_LABELS, type ServiceType } from "@/lib/interfaces";
 import type { heroOffer } from "@/lib/data";
 import { createPublicAppointmentAction } from "@/app/actions/createPublicAppointmentAction";
@@ -26,23 +26,50 @@ import {
   MapPinIcon,
   WrenchScrewdriverIcon,
   CheckCircleIcon,
-  LockClosedIcon,
   TagIcon,
 } from "@heroicons/react/24/outline";
 
 // 1-hour time slots (8 AM - 6 PM)
-const ALL_TIME_SLOTS = [
-  "8:00 AM",
-  "9:00 AM",
-  "10:00 AM",
-  "11:00 AM",
-  "12:00 PM",
-  "1:00 PM",
-  "2:00 PM",
-  "3:00 PM",
-  "4:00 PM",
-  "5:00 PM",
-  "6:00 PM",
+const TIME_SLOT_GROUPS = [
+  { label: "Morning", empty: "No times left this morning", slots: ["8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM"] },
+  { label: "Afternoon", empty: "No times left this afternoon", slots: ["12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM"] },
+  { label: "Evening", empty: "No times left this evening", slots: ["4:00 PM", "5:00 PM", "6:00 PM"] },
+] as const;
+
+const ALL_TIME_SLOTS: readonly string[] = TIME_SLOT_GROUPS.flatMap((g) => g.slots);
+
+// Services grouped by system so visitors scan 3 short rows instead of 9 cards.
+// Inside Cooling/Heating the group name carries the system, so buttons show only the action.
+const SERVICE_GROUPS: {
+  label: string;
+  stackOnMobile?: boolean;
+  services: { type: ServiceType; label: string }[];
+}[] = [
+  {
+    label: "Cooling (A/C)",
+    services: [
+      { type: "AC_MAINTENANCE", label: "Maintenance" },
+      { type: "AC_REPAIR", label: "Repair" },
+      { type: "AC_INSTALLATION", label: "Installation" },
+    ],
+  },
+  {
+    label: "Heating",
+    services: [
+      { type: "HEATING_MAINTENANCE", label: "Maintenance" },
+      { type: "HEATING_REPAIR", label: "Repair" },
+      { type: "HEATING_INSTALLATION", label: "Installation" },
+    ],
+  },
+  {
+    label: "Other services",
+    stackOnMobile: true,
+    services: [
+      { type: "FULL_HVAC_INSTALLATION", label: SERVICE_TYPE_LABELS.FULL_HVAC_INSTALLATION },
+      { type: "DUCT_CLEANING", label: SERVICE_TYPE_LABELS.DUCT_CLEANING },
+      { type: "FREE_ESTIMATE", label: SERVICE_TYPE_LABELS.FREE_ESTIMATE },
+    ],
+  },
 ];
 
 type BookingSummary = Pick<
@@ -249,22 +276,32 @@ const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps
               </span>
             </p>
           )}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {SERVICE_TYPES.map((type) => (
-              <label
-                key={type}
-                className="relative flex items-center p-4 cursor-pointer rounded-lg border border-white/10 bg-gray-900/50 hover:bg-gray-900 transition-colors has-checked:border-primary-500 has-checked:bg-primary-500/10 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-400"
-              >
-                <input
-                  {...register("serviceType")}
-                  type="radio"
-                  value={type}
-                  className="sr-only"
-                />
-                <span className="text-sm text-white">
-                  {SERVICE_TYPE_LABELS[type]}
-                </span>
-              </label>
+          <div className="space-y-5">
+            {SERVICE_GROUPS.map((group) => (
+              <fieldset key={group.label}>
+                <legend className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                  {group.label}
+                </legend>
+                <div
+                  className={`grid gap-2 sm:grid-cols-3 sm:gap-3 ${group.stackOnMobile ? "grid-cols-1" : "grid-cols-3"}`}
+                >
+                  {group.services.map(({ type, label }) => (
+                    <label
+                      key={type}
+                      className="relative flex min-h-12 items-center justify-center rounded-lg border border-white/10 bg-gray-900/50 px-2 py-3 text-center text-sm text-white cursor-pointer transition-colors hover:bg-gray-900 has-checked:border-primary-500 has-checked:bg-primary-500/10 has-checked:font-semibold has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-400 sm:px-3"
+                    >
+                      <input
+                        {...register("serviceType")}
+                        type="radio"
+                        value={type}
+                        aria-label={SERVICE_TYPE_LABELS[type]}
+                        className="sr-only"
+                      />
+                      <span aria-hidden="true">{label}</span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
             ))}
           </div>
           <ErrorMessage
@@ -328,44 +365,51 @@ const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps
                   No available time slots for this date. Please select a different date.
                 </p>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-                  {ALL_TIME_SLOTS.map((time) => {
-                    const isBooked = isSlotBooked(time);
-                    const isPast = isSlotInPast(time);
-                    const isUnavailable = isBooked || isPast;
-                    const isSelected = selectedTime === time;
+                <div className="space-y-4">
+                  {TIME_SLOT_GROUPS.map((group) => {
+                    const groupHasOpenSlot = group.slots.some(
+                      (slot) => !isSlotBooked(slot) && !isSlotInPast(slot)
+                    );
 
                     return (
-                      <label
-                        key={time}
-                        className={`
-                          relative flex items-center justify-center p-3 rounded-lg border text-sm font-medium transition-all has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-400
-                          ${isUnavailable
-                            ? "bg-red-500/10 border-red-500/30 text-red-400 cursor-not-allowed"
-                            : isSelected
-                              ? "bg-primary-500/20 border-primary-500 text-white ring-2 ring-primary-500"
-                              : "bg-gray-900/50 border-white/10 text-white hover:bg-gray-800 hover:border-white/20 cursor-pointer"
-                          }
-                        `}
-                      >
-                        <input
-                          {...register("scheduledTime")}
-                          type="radio"
-                          value={time}
-                          disabled={isUnavailable}
-                          className="sr-only"
-                        />
-                        {isBooked ? (
-                          <span className="flex items-center gap-1">
-                            <LockClosedIcon className="h-3.5 w-3.5" />
-                            Reserved
-                          </span>
-                        ) : isPast ? (
-                          <span className="text-gray-500">Passed</span>
+                      <fieldset key={group.label}>
+                        <legend className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                          {group.label}
+                        </legend>
+                        {!groupHasOpenSlot ? (
+                          <p className="text-sm text-gray-500">{group.empty}</p>
                         ) : (
-                          time
+                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            {group.slots.map((time) => {
+                              const isUnavailable = isSlotBooked(time) || isSlotInPast(time);
+                              const isSelected = selectedTime === time;
+
+                              return (
+                                <label
+                                  key={time}
+                                  className={`relative flex items-center justify-center rounded-lg border p-3 text-sm font-medium tabular-nums transition-colors has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-400 ${
+                                    isUnavailable
+                                      ? "border-white/5 text-gray-600 line-through cursor-not-allowed"
+                                      : isSelected
+                                        ? "border-primary-500 bg-primary-500/20 text-white ring-2 ring-primary-500"
+                                        : "border-white/10 bg-gray-900/50 text-white cursor-pointer hover:border-white/20 hover:bg-gray-800"
+                                  }`}
+                                >
+                                  <input
+                                    {...register("scheduledTime")}
+                                    type="radio"
+                                    value={time}
+                                    disabled={isUnavailable}
+                                    className="sr-only"
+                                  />
+                                  {time}
+                                  {isUnavailable && <span className="sr-only"> (unavailable)</span>}
+                                </label>
+                              );
+                            })}
+                          </div>
                         )}
-                      </label>
+                      </fieldset>
                     );
                   })}
                 </div>
