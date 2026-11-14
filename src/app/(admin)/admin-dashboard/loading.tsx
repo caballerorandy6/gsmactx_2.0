@@ -1,9 +1,9 @@
-import { Skeleton } from "@/components/ui/Skeleton";
+import { Skeleton, SkeletonPage } from "@/components/ui/Skeleton";
 
 // Mirrors AdminDashboard: header, summary strip, upcoming list + outreach panel.
 export default function DashboardLoading() {
   return (
-    <div className="space-y-4 sm:space-y-6 pb-24 lg:pb-6" aria-busy="true">
+    <SkeletonPage label="Loading dashboard" className="space-y-4 sm:space-y-6 pb-24 lg:pb-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <Skeleton className="h-8 w-40 mb-2" />
@@ -42,6 +42,6 @@ export default function DashboardLoading() {
           ))}
         </div>
       </div>
-    </div>
+    </SkeletonPage>
   );
 }
