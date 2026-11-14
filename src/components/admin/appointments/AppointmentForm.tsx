@@ -11,7 +11,6 @@ import { SafeAdmin } from "@/lib/types";
 import { Appointment, SERVICE_TYPE_LABELS } from "@/lib/interfaces";
 import { useRouter } from "next/navigation";
 import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
-import { LockClosedIcon } from "@heroicons/react/24/outline";
 
 interface PrefillData {
   clientName: string;
@@ -344,9 +343,9 @@ const AppointmentForm = ({ appointment, prefillData }: AppointmentFormProps) => 
                           <label
                             key={time}
                             className={`
-                              relative flex items-center justify-center p-2.5 rounded-lg border text-xs font-medium transition-all
+                              relative flex items-center justify-center p-2.5 rounded-lg border text-xs font-medium tabular-nums transition-colors has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-400
                               ${isBooked
-                                ? "bg-red-500/10 border-red-500/30 text-red-400 cursor-not-allowed"
+                                ? "border-white/5 text-gray-600 line-through cursor-not-allowed"
                                 : isSelected
                                   ? "bg-primary-500/20 border-primary-500 text-white ring-2 ring-primary-500"
                                   : "bg-gray-900/50 border-white/10 text-white hover:bg-gray-800 hover:border-white/20 cursor-pointer"
@@ -360,14 +359,8 @@ const AppointmentForm = ({ appointment, prefillData }: AppointmentFormProps) => 
                               disabled={isBooked}
                               className="sr-only"
                             />
-                            {isBooked ? (
-                              <span className="flex items-center gap-1">
-                                <LockClosedIcon className="h-3 w-3" />
-                                Reserved
-                              </span>
-                            ) : (
-                              time
-                            )}
+                            {time}
+                            {isBooked && <span className="sr-only"> (reserved)</span>}
                           </label>
                         );
                       })}

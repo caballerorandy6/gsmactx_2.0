@@ -105,7 +105,7 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
               type="button"
               onClick={() => setConfirmDeleteOpen(true)}
               disabled={isPending || isDeletePending}
-              className="inline-flex items-center gap-2 rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-500 transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold text-red-400 ring-1 ring-inset ring-red-500/30 hover:bg-red-500/10 hover:text-red-300 transition-colors disabled:opacity-50"
             >
               <TrashIcon className="h-4 w-4" />
               Delete
