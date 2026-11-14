@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import {
   Appointment,
@@ -12,6 +12,7 @@ import {
 import { APPOINTMENT_STATUSES } from "@/lib/validations/zod";
 import { formatPhone, formatPhoneForTel } from "@/lib/utils/phone";
 import AppointmentStatusBadge from "./AppointmentStatusBadge";
+import ConfirmDialog from "@/components/admin/common/ConfirmDialog";
 import {
   updateAppointmentStatusAction,
   deleteAppointmentAction,
@@ -37,6 +38,8 @@ interface AppointmentDetailProps {
 const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [isDeletePending, startDeleteTransition] = useTransition();
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
   const formattedDate = new Date(appointment.scheduledDate).toLocaleDateString(
     "en-US",
@@ -69,25 +72,17 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
     });
   };
 
-  const handleDelete = async () => {
-    if (
-      !confirm(
-        "Are you sure you want to delete this appointment? This action cannot be undone."
-      )
-    ) {
-      return;
-    }
-
-    startTransition(async () => {
-      toast.loading("Deleting appointment...");
+  const handleDelete = () => {
+    startDeleteTransition(async () => {
+      const toastId = toast.loading("Deleting appointment…");
       const result = await deleteAppointmentAction(appointment.id);
-      toast.dismiss();
 
       if (result.success) {
-        toast.success(result.message);
+        toast.success(result.message, { id: toastId });
+        setConfirmDeleteOpen(false);
         router.push("/appointments");
       } else {
-        toast.error(result.message);
+        toast.error(result.message, { id: toastId });
       }
     });
   };
@@ -117,8 +112,9 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
               Edit
             </Link>
             <button
-              onClick={handleDelete}
-              disabled={isPending}
+              type="button"
+              onClick={() => setConfirmDeleteOpen(true)}
+              disabled={isPending || isDeletePending}
               className="inline-flex items-center gap-2 rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-500 transition-colors disabled:opacity-50"
             >
               <TrashIcon className="h-4 w-4" />
@@ -286,6 +282,25 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
             </div>
           </div>
         </div>
+      <ConfirmDialog
+        open={confirmDeleteOpen}
+        onClose={() => setConfirmDeleteOpen(false)}
+        onConfirm={handleDelete}
+        title="Delete this appointment?"
+        description={
+          <>
+            The appointment for{" "}
+            <strong className="font-semibold text-white">
+              {appointment.clientName}
+            </strong>{" "}
+            on {formattedDate} will be permanently deleted. This can&apos;t be
+            undone.
+          </>
+        }
+        confirmLabel="Delete appointment"
+        pendingLabel="Deleting…"
+        isPending={isDeletePending}
+      />
     </div>
   );
 };

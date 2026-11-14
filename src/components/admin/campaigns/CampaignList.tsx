@@ -1,13 +1,7 @@
-import { Menu, MenuButton, MenuItems } from "@headlessui/react";
-import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
 import { getCampaignsListAction } from "@/app/actions/campaignAction";
 import Link from "next/link";
 import clsx from "clsx";
-import AdminDeleteCampaignButton from "@/components/admin/campaigns/DeleteCampaignButton";
-import AdminSendCampaignButton from "@/components/admin/campaigns/SendCampaignButton";
-import AdminSendTestCampaignButton from "@/components/admin/campaigns/SendTestCampaignButton";
-import AdminEditCampaignButton from "@/components/admin/campaigns/EditCampaignButton";
-import AdminDuplicateCampaignButton from "@/components/admin/campaigns/DuplicateCampaignButton";
+import CampaignActionsMenu from "@/components/admin/campaigns/CampaignActionsMenu";
 
 const CampaignList = async ({ user }) => {
   const campaigns = await getCampaignsListAction();
@@ -80,30 +74,7 @@ const CampaignList = async ({ user }) => {
                   {campaign.sent === true ? (
                     ""
                   ) : (
-                    <Menu as="div" className="relative flex-none">
-                      {/* Menu icon with dark theme colors */}
-                      <MenuButton
-                        aria-label="Open options"
-                        className="relative block text-gray-400 hover:text-white cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded"
-                      >
-                        <span className="absolute -inset-2.5" />
-                        <EllipsisVerticalIcon
-                          aria-hidden="true"
-                          className="size-5"
-                        />
-                      </MenuButton>
-                      {/* Dropdown menu with dark theme styles */}
-                      <MenuItems
-                        transition
-                        className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-gray-800 py-2 shadow-lg ring-1 ring-white/10 transition focus:outline-none data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in "
-                      >
-                        <AdminSendTestCampaignButton id={campaign.id} />
-                        <AdminSendCampaignButton id={campaign.id} />
-                        <AdminEditCampaignButton id={campaign.id} />
-                        <AdminDuplicateCampaignButton id={campaign.id} />
-                        <AdminDeleteCampaignButton id={campaign.id} />
-                      </MenuItems>
-                    </Menu>
+                    <CampaignActionsMenu id={campaign.id} title={campaign.title} />
                   )}
                 </div>
               </li>
