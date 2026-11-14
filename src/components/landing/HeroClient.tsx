@@ -52,6 +52,7 @@ export default function HeroClient({ ratingSlot }: HeroClientProps) {
         <source media="(min-width: 768px)" srcSet="/main-2400.avif" type="image/avif" />
         <img
           {...heroImgProps}
+          alt={heroImgProps.alt}
           className="absolute inset-0 size-full object-cover object-[40%_center] md:object-[center_15%] -z-20"
         />
       </picture>

@@ -9,7 +9,7 @@
  * Para testear, creamos tokens reales con la librería JWT
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import jwt from "jsonwebtoken";
 import { verifyToken } from "@/lib/auth/verifyToken";
 
