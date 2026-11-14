@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getSubscribersAction } from "@/app/actions/subscriberAction";
 import ContactForm from "@/components/admin/contacts/ContactForm";
 import ContactsList from "@/components/admin/contacts/ContactsList";
-import { UsersIcon } from "@heroicons/react/24/outline";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 
 export const metadata: Metadata = {
   title: "Contacts",
@@ -19,15 +19,11 @@ export default async function ContactsPage() {
     <div className="space-y-4 sm:space-y-6">
       {/* Header */}
       <div className="flex flex-col gap-4">
-        <div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white flex items-center gap-2 sm:gap-3">
-            <UsersIcon className="h-6 w-6 sm:h-8 sm:w-8 text-primary-400" />
-            Contacts
-          </h1>
-          <p className="text-gray-400 text-sm sm:text-base mt-1">
-            Manage your email subscribers and contacts
-          </p>
-        </div>
+        <AdminPageHeader
+          title="Contacts"
+          className=""
+          description="Email subscribers and their subscription status."
+        />
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-2 sm:gap-4">

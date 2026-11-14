@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 import clsx from "clsx";
 import {
   Appointment,
@@ -22,7 +23,6 @@ import {
 
 interface AppointmentsListProps {
   appointments: Appointment[];
-  userName: string;
 }
 
 type FilterStatus = AppointmentStatus | "ALL";
@@ -30,7 +30,6 @@ type ViewMode = "list" | "calendar";
 
 const AppointmentsList = ({
   appointments,
-  userName,
 }: AppointmentsListProps) => {
   const [viewMode, setViewMode] = useState<ViewMode>("calendar");
   const [selectedStatus, setSelectedStatus] = useState<FilterStatus>("ALL");
@@ -69,16 +68,12 @@ const AppointmentsList = ({
   const hasActiveFilters = selectedStatus !== "ALL" || selectedService !== "ALL";
 
   return (
-    <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">Appointments</h1>
-            <p className="text-gray-400 mt-1">
-              Welcome, {userName}. Manage your scheduled appointments.
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
+    <div className="max-w-6xl">
+        <AdminPageHeader
+          title="Appointments"
+          description="Scheduled service visits, by day or as a list."
+          actions={
+          <>
             {/* View Mode Toggle */}
             <div className="flex items-center bg-gray-800/50 rounded-lg p-1 border border-white/10" role="group" aria-label="View mode">
               <button
@@ -112,13 +107,14 @@ const AppointmentsList = ({
             </div>
             <Link
               href="/create-appointment"
-              className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-700 transition-colors"
+              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-md bg-primary-600 px-3.5 py-2 text-sm font-semibold text-white hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
             >
-              <PlusIcon className="h-5 w-5" />
-              New Appointment
+              <PlusIcon aria-hidden="true" className="size-4" />
+              New appointment
             </Link>
-          </div>
-        </div>
+          </>
+          }
+        />
 
         {/* Quick Stats - Only show in list view */}
         {viewMode === "list" && (

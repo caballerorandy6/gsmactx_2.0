@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 import CampaignsListDashboard from "@/components/admin/campaigns/CampaignListDashboard";
 import {
   AppointmentSummary,
@@ -76,11 +77,10 @@ const AdminDashboard = ({
 
   return (
     <div className="space-y-4 sm:space-y-6 pb-24 lg:pb-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-white sm:text-3xl">Dashboard</h1>
-          <p className="mt-1 text-sm text-gray-400">Welcome back, {user.name}</p>
-        </div>
+      <AdminPageHeader
+        title="Dashboard"
+        description={`Welcome back, ${user.name}`}
+        actions={
         <Link
           href="/create-appointment"
           className="inline-flex items-center gap-1.5 rounded-md bg-primary-600 px-3.5 py-2 text-sm font-semibold text-white hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
@@ -88,7 +88,8 @@ const AdminDashboard = ({
           <PlusIcon aria-hidden="true" className="size-4" />
           New appointment
         </Link>
-      </div>
+        }
+      />
 
       {stats ? (
         <>

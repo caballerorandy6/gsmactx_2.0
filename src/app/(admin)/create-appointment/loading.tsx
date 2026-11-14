@@ -2,7 +2,7 @@ import { Skeleton, SkeletonInput, SkeletonButton } from "@/components/ui/Skeleto
 
 export default function CreateAppointmentLoading() {
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl">
       {/* Header */}
       <div className="mb-8">
         <Skeleton className="h-8 w-56 mb-2" />

@@ -2,7 +2,7 @@ import { Skeleton, SkeletonButton } from "@/components/ui/Skeleton";
 
 export default function AppointmentDetailLoading() {
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl">
       {/* Back Button */}
       <Skeleton className="h-5 w-32 mb-6" />
 

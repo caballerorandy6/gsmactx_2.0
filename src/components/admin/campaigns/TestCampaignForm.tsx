@@ -8,11 +8,11 @@ import { toast } from "sonner";
 import { CampaignSchema, CampaignFormData } from "@/lib/validations/zod";
 import { createAndSendTestCampaignAction } from "@/app/actions/createAndSendTestCampaignAction";
 import { ErrorMessage } from "@hookform/error-message";
-import { SafeAdmin } from "@/lib/types";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 import { useRouter } from "next/navigation";
 import CampaignEmailPreview from "./CampaignEmailPreview";
 
-const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
+const TestCampaignForm = () => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -98,19 +98,17 @@ const TestCampaignForm = ({ user }: { user: SafeAdmin | null }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      <h1 className="text-2xl sm:text-3xl font-bold text-center text-white mb-6">
-        Welcome, {user?.name}!
-      </h1>
+    <div className="max-w-md">
+      <AdminPageHeader
+        title="Test campaign"
+        description="Check how a campaign looks in a real inbox before sending it to subscribers."
+      />
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-            <div className="bg-white/5 border border-white/10 rounded-lg p-4 mb-6 flex flex-col items-center justify-center">
-              <h2 className="text-center text-3xl font-bold tracking-tight text-white mb-2">
-                Test Campaign
-              </h2>
-              <p className="text-center text-sm text-gray-300">
-                This will be sent immediately to:
+            <div className="bg-white/5 border border-white/10 rounded-lg p-4 mb-6">
+              <p className="text-sm text-gray-300">
+                Sent immediately to:
               </p>
-              <ul className="text-xs text-gray-200 mt-2 space-y-1">
+              <ul className="text-sm text-gray-200 mt-2 space-y-1">
                 <li>• caballerorandy7@gmail.com</li>
                 <li>• gsmactx@outlook.com</li>
                 <li>• michel@gsmactx.com</li>

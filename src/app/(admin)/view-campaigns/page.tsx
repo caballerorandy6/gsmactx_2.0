@@ -17,7 +17,7 @@ const CampaignListPage = async () => {
     redirect("/login");
   }
 
-  return <AdminCampaignList user={user} />;
+  return <AdminCampaignList />;
 };
 
 export default CampaignListPage;

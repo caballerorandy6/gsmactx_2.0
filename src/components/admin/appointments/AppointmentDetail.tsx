@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
@@ -26,7 +27,6 @@ import {
   UserIcon,
   WrenchScrewdriverIcon,
   DocumentTextIcon,
-  ArrowLeftIcon,
   PencilIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
@@ -88,22 +88,12 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
-          <div>
-            <Link
-              href="/appointments"
-              className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4"
-            >
-              <ArrowLeftIcon className="h-4 w-4" />
-              Back to Appointments
-            </Link>
-            <h1 className="text-3xl font-bold text-white">
-              Appointment Details
-            </h1>
-          </div>
-          <div className="flex items-center gap-3">
+    <div className="max-w-4xl">
+        <AdminPageHeader
+          title="Appointment details"
+          back={{ href: "/appointments", label: "All appointments" }}
+          actions={
+          <>
             <Link
               href={`/edit-appointment/${appointment.id}`}
               className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-700 transition-colors"
@@ -120,8 +110,9 @@ const AppointmentDetail = ({ appointment }: AppointmentDetailProps) => {
               <TrashIcon className="h-4 w-4" />
               Delete
             </button>
-          </div>
-        </div>
+          </>
+          }
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Info Card */}

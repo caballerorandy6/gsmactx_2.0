@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { CampaignSchema, CampaignFormData } from "@/lib/validations/zod";
 import { upsertCampaignAction } from "@/app/actions/campaignAction";
 import { ErrorMessage } from "@hookform/error-message";
-import { SafeAdmin } from "@/lib/types";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 import { Campaign } from "@/lib/interfaces";
 import { useRouter } from "next/navigation";
 import CampaignEmailPreview from "./CampaignEmailPreview";
@@ -18,10 +18,8 @@ import { getTemplateById } from "@/lib/utils/utils";
 
 const CampaignForm = ({
   campaign,
-  user,
 }: {
   campaign?: Campaign;
-  user: SafeAdmin | null;
 }) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -155,14 +153,12 @@ const CampaignForm = ({
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl sm:text-3xl font-bold text-center text-white mb-6">
-        Welcome, {user?.name}!
-      </h1>
+    <div className="max-w-2xl">
+      <AdminPageHeader
+        title={isEditing ? "Edit campaign" : "New campaign"}
+        back={{ href: "/view-campaigns", label: "All campaigns" }}
+      />
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-            <h2 className="text-center text-2xl sm:text-3xl font-bold tracking-tight text-white mb-6 sm:mb-8">
-              {isEditing ? "Edit Campaign" : "Create Campaign"}
-            </h2>
 
             {/* Template Selector - Only show when creating new campaign */}
             {!isEditing && (

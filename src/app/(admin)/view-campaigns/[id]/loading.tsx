@@ -2,7 +2,7 @@ import { Skeleton, SkeletonButton, SkeletonStat } from "@/components/ui/Skeleton
 
 export default function CampaignDetailLoading() {
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-5xl">
       {/* Back Button */}
       <Skeleton className="h-5 w-32 mb-6" />
 

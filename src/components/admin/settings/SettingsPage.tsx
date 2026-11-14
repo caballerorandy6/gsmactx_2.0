@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 import { SafeAdmin } from "@/lib/types";
 import { AdminUser } from "@/app/actions/adminAction";
 import ChangePasswordForm from "./ChangePasswordForm";
@@ -32,15 +32,10 @@ const SettingsPage = ({ currentUser, admins: initialAdmins }: SettingsPageProps)
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
-          <Cog6ToothIcon className="h-7 w-7 sm:h-8 sm:w-8 text-primary-400" />
-          Settings
-        </h1>
-        <p className="text-gray-400 text-sm sm:text-base mt-1">
-          Manage your account and admin users
-        </p>
-      </div>
+      <AdminPageHeader
+        title="Settings"
+        description="Your password and the admins who can sign in."
+      />
 
       {/* Change Password Section */}
       <div className="bg-gray-800/50 rounded-xl border border-white/10 p-4 sm:p-6">

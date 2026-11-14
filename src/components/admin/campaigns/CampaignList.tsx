@@ -2,23 +2,44 @@ import { getCampaignsListAction } from "@/app/actions/campaignAction";
 import Link from "next/link";
 import clsx from "clsx";
 import CampaignActionsMenu from "@/components/admin/campaigns/CampaignActionsMenu";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
-const CampaignList = async ({ user }) => {
+const CampaignList = async () => {
   const campaigns = await getCampaignsListAction();
+
+  const header = (
+    <AdminPageHeader
+      title="Campaigns"
+      description={
+        campaigns.length === 1 ? "1 campaign" : `${campaigns.length} campaigns`
+      }
+      actions={
+        <Link
+          href="/create-campaign"
+          className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-md bg-primary-600 px-3.5 py-2 text-sm font-semibold text-white hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+        >
+          <PlusIcon aria-hidden="true" className="size-4" />
+          New campaign
+        </Link>
+      }
+    />
+  );
 
   if (campaigns.length === 0) {
     return (
-      <div className="text-center text-gray-400">
-        No campaigns available. Start by creating one!
+      <div className="max-w-4xl">
+        {header}
+        <p className="text-gray-400">
+          No campaigns available. Start by creating one!
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <h1 className="text-2xl sm:text-3xl font-bold text-center text-white mb-8">
-        Welcome, {user?.name}!
-      </h1>
+    <div className="max-w-4xl">
+      {header}
 
       {/* List container with a dark background and rounded borders */}
       <div className="bg-gray-900/50 backdrop-blur-sm rounded-lg border border-white/10">

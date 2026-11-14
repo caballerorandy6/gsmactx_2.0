@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { Metadata } from "next";
 import CampaignSender from "@/components/admin/campaigns/CampaignSender";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 import { getCurrentUser } from "@/lib/auth/getCurrentUser";
 import { prisma } from "@/lib/db/prisma";
 import { renderCampaignEmail } from "@/lib/email/emailRenderer";
@@ -42,20 +43,22 @@ const CampaignPage = async ({ params }: { params: Params }) => {
   });
 
   return (
-    <div className="py-10 px-5 flex flex-col items-center min-h-screen font-sans">
-      <h1 className="mt-2 w-full py-10 text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl text-center">
-        Campaign Management
-      </h1>
+    <div className="max-w-5xl">
+      <AdminPageHeader
+        title={campaign.title}
+        description={`Subject: ${campaign.subject}`}
+        back={{ href: "/view-campaigns", label: "All campaigns" }}
+      />
 
       {/* Campaign Sender Component */}
       {!campaign.sent && (
-        <div className="w-full max-w-5xl mb-10">
+        <div className="w-full mb-10">
           <CampaignSender campaignId={campaign.id} campaignTitle={campaign.title} />
         </div>
       )}
 
       {campaign.sent && (
-        <div className="w-full max-w-5xl mb-10 space-y-6">
+        <div className="w-full mb-10 space-y-6">
           <div className="bg-green-600 rounded-lg p-6 text-center">
             <p className="text-2xl font-bold text-white">
               ✓ Campaign Completed!
@@ -120,9 +123,9 @@ const CampaignPage = async ({ params }: { params: Params }) => {
       )}
 
       {/* Email Preview */}
-      <div className="w-full max-w-5xl">
-        <h2 className="text-2xl font-bold text-white mb-6 text-center">
-          Email Preview
+      <div className="w-full">
+        <h2 className="text-lg font-semibold text-white mb-4">
+          Email preview
         </h2>
         <iframe
           className="w-full h-[700px] border border-white/10 rounded-lg shadow-2xl"

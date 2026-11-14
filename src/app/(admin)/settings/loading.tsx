@@ -5,10 +5,7 @@ export default function SettingsLoading() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <div className="flex items-center gap-3 mb-2">
-          <Skeleton className="h-8 w-8 rounded" />
-          <Skeleton className="h-8 w-32" />
-        </div>
+        <Skeleton className="h-8 w-32 mb-2" />
         <Skeleton className="h-4 w-64" />
       </div>
 

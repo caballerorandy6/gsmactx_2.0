@@ -10,6 +10,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { SafeAdmin } from "@/lib/types";
 import { Appointment, SERVICE_TYPE_LABELS } from "@/lib/interfaces";
 import { useRouter } from "next/navigation";
+import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 import { LockClosedIcon } from "@heroicons/react/24/outline";
 
 interface PrefillData {
@@ -25,7 +26,7 @@ interface AppointmentFormProps {
   prefillData?: PrefillData;
 }
 
-const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProps) => {
+const AppointmentForm = ({ appointment, prefillData }: AppointmentFormProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [bookedTimeSlots, setBookedTimeSlots] = useState<string[]>([]);
@@ -163,13 +164,15 @@ const AppointmentForm = ({ appointment, user, prefillData }: AppointmentFormProp
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold text-center text-white mb-2">
-          {isEditing ? "Edit Appointment" : "Create Appointment"}
-        </h1>
-        <p className="text-gray-400 text-center mb-8">
-          Welcome, {user?.name}
-        </p>
+    <div className="max-w-2xl">
+      <AdminPageHeader
+        title={isEditing ? "Edit appointment" : "New appointment"}
+        back={
+          isEditing && appointment?.id
+            ? { href: `/appointments/${appointment.id}`, label: "Appointment details" }
+            : { href: "/appointments", label: "All appointments" }
+        }
+      />
 
         <form
           onSubmit={handleSubmit(onSubmit)}

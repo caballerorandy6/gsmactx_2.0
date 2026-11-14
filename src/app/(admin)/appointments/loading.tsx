@@ -2,7 +2,7 @@ import { Skeleton, SkeletonStat } from "@/components/ui/Skeleton";
 
 export default function AppointmentsLoading() {
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>

@@ -2,7 +2,7 @@ import { Skeleton, SkeletonInput, SkeletonButton } from "@/components/ui/Skeleto
 
 export default function CreateCampaignLoading() {
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-2xl">
       {/* Header */}
       <div className="mb-8">
         <Skeleton className="h-8 w-48 mb-2" />
