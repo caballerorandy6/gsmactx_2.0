@@ -39,7 +39,7 @@ const ServiceCard = ({
           <p className="mt-2 sm:mt-3 text-sm/6 text-gray-300 flex-1">{description}</p>
           <Link
             href={href}
-            className="mt-3 inline-flex items-center text-xs sm:text-sm font-semibold text-primary-400 hover:text-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-gray-800 rounded transition-colors"
+            className="mt-3 inline-flex items-center text-xs sm:text-sm font-semibold text-primary-400 hover:text-primary-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 rounded transition-colors"
           >
             <span>{link}</span>
             <span className="sr-only"> about {title}</span>

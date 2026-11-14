@@ -125,7 +125,7 @@ export default function Contact() {
           className="relative px-6 pt-24 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48"
         >
           <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
-            <div className="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden ring-1 ring-white/5 lg:w-1/2" aria-hidden="true">
+            <div className="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden lg:w-1/2" aria-hidden="true">
               <svg className="absolute inset-0 size-full mask-[radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-gray-700">
                 <defs>
                   <pattern
@@ -159,7 +159,7 @@ export default function Contact() {
                     clipPath:
                       "polygon(74.1% 56.1%, 100% 38.6%, 97.5% 73.3%, 85.5% 100%, 80.7% 98.2%, 72.5% 67.7%, 60.2% 37.8%, 52.4% 32.2%, 47.5% 41.9%, 45.2% 65.8%, 27.5% 23.5%, 0.1% 35.4%, 17.9% 0.1%, 27.6% 23.5%, 76.1% 2.6%, 74.1% 56.1%)",
                   }}
-                  className="aspect-1155/678 w-288.75 bg-linear-to-br from-[#80caff] to-primary-600 opacity-20"
+                  className="aspect-1155/678 w-288.75 bg-linear-to-br from-primary-300 to-primary-600 opacity-15"
                 />
               </div>
             </div>

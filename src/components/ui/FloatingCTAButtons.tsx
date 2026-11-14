@@ -42,7 +42,7 @@ const FloatingCTAButtons = () => {
   return (
     <AnimatePresence>
       {isVisible && (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+        <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 lg:hidden">
           {/* Call Button */}
           <motion.div
             custom={0}

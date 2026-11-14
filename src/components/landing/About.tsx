@@ -140,7 +140,7 @@ const About = () => {
                 variants={imageVariant}
                 className="aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10"
               >
-                <div className={`relative size-full transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
+                <div className="relative size-full">
                   <Image
                     width={560}
                     height={560}
@@ -155,7 +155,7 @@ const About = () => {
                 variants={imageVariant}
                 className="-mt-8 aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10 lg:-mt-40"
               >
-                <div className={`relative size-full transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
+                <div className="relative size-full">
                   <Image
                     width={560}
                     height={560}
@@ -170,7 +170,7 @@ const About = () => {
                 variants={imageVariant}
                 className="aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10"
               >
-                <div className={`relative size-full transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
+                <div className="relative size-full">
                   <Image
                     width={560}
                     height={560}
@@ -185,7 +185,7 @@ const About = () => {
                 variants={imageVariant}
                 className="-mt-8 aspect-square overflow-hidden rounded-xl shadow-xl outline-1 -outline-offset-1 outline-black/10 lg:-mt-40"
               >
-                <div className={`relative size-full transition-transform duration-300 ${shouldReduceMotion ? "" : "hover:scale-110"}`}>
+                <div className="relative size-full">
                   <Image
                     width={560}
                     height={560}

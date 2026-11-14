@@ -51,7 +51,7 @@ export default function Footer() {
           {images.map((image) => (
             <div
               key={image.id}
-              className="transition-transform duration-300 hover:scale-110"
+              className="block"
             >
               <Image
                 width={336}
@@ -91,7 +91,7 @@ export default function Footer() {
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-all duration-200 hover:scale-110"
+              className="text-gray-400 hover:text-white transition-colors duration-200"
             >
               <span className="sr-only">{item.name}</span>
               <item.icon className="h-6 w-6" />

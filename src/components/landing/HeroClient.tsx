@@ -144,7 +144,7 @@ export default function HeroClient({ ratingSlot }: HeroClientProps) {
               <div className="my-4 border-t border-white/10" />
 
               {/* Financing */}
-              <CustomBadge>Financing Available</CustomBadge>
+              <CustomBadge>Financing available — apply online</CustomBadge>
 
               <p className="mt-3 text-xs sm:text-sm text-gray-300">
                 <span className="text-emerald-400">+</span> Free filter with any system replacement
