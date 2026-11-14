@@ -11,6 +11,12 @@ import { loginAction } from "@/app/actions/loginAction";
 import ButtonSpinner from "@/components/ui/ButtonSpinner";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import AuthShell, {
+  authInputClass,
+  authLabelClass,
+  authPrimaryButtonClass,
+  authSecondaryLinkClass,
+} from "@/components/auth/AuthShell";
 
 const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -48,92 +54,85 @@ const LoginForm = () => {
   };
 
   return (
-    // 1. Contenedor principal para centrar todo en la pantalla
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors motion-reduce:transition-none mb-6"
-        >
-          <ArrowLeftIcon aria-hidden="true" className="h-4 w-4" />
-          Back to Home
-        </Link>
-        <h2 className="text-center text-3xl font-bold tracking-tight text-white mb-8">
-          Admin Login
-        </h2>
-
+    <AuthShell>
+      <h1 className="text-2xl font-bold tracking-tight text-balance text-white text-center mb-8">
+        Admin Login
+      </h1>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="grid grid-cols-1 gap-y-6">
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm/6 font-semibold text-white"
-            >
+            <label htmlFor="email" className={authLabelClass}>
               Email
             </label>
-            <div className="mt-2.5">
-              <input
-                {...register("email")}
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                spellCheck="false"
-                className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
-              />
-              <ErrorMessage
-                errors={errors}
-                name="email"
-                render={({ message }) => (
-                  <p className="text-red-500 text-sm mt-1">{message}</p>
-                )}
-              />
-            </div>
+            <input
+              {...register("email")}
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              spellCheck="false"
+              aria-invalid={errors.email ? true : undefined}
+              aria-describedby={errors.email ? "email-error" : undefined}
+              className={`mt-2.5 ${authInputClass}`}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="email"
+              render={({ message }) => (
+                <p id="email-error" className="text-red-400 text-sm mt-2">
+                  {message}
+                </p>
+              )}
+            />
           </div>
           <div>
-            <label
-              htmlFor="password"
-              className="block text-sm/6 font-semibold text-white"
-            >
-              Password
-            </label>
-            <div className="mt-2.5">
-              <input
-                {...register("password")}
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-500"
-              />
-              <ErrorMessage
-                errors={errors}
-                name="password"
-                render={({ message }) => (
-                  <p className="text-red-500 text-sm mt-1">{message}</p>
-                )}
-              />
+            <div className="flex items-center justify-between">
+              <label htmlFor="password" className={authLabelClass}>
+                Password
+              </label>
+              <Link
+                href="/forgot-password"
+                className="rounded-sm text-sm text-primary-400 hover:text-primary-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 transition-colors motion-reduce:transition-none"
+              >
+                Forgot password?
+              </Link>
             </div>
+            <input
+              {...register("password")}
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              aria-invalid={errors.password ? true : undefined}
+              aria-describedby={errors.password ? "password-error" : undefined}
+              className={`mt-2.5 ${authInputClass}`}
+            />
+            <ErrorMessage
+              errors={errors}
+              name="password"
+              render={({ message }) => (
+                <p id="password-error" className="text-red-400 text-sm mt-2">
+                  {message}
+                </p>
+              )}
+            />
           </div>
         </div>
-        <div className="mt-4 text-right">
-          <Link
-            href="/forgot-password"
-            className="text-sm text-primary-400 hover:text-primary-300 transition-colors motion-reduce:transition-none"
-          >
-            Forgot Password?
-          </Link>
-        </div>
-        <div className="mt-6 flex justify-end">
-          <button
-            type="submit"
-            disabled={isPending}
-            className="flex w-28 justify-center rounded-md cursor-pointer bg-primary-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 transition-colors motion-reduce:transition-none disabled:bg-primary-300 disabled:cursor-not-allowed"
-          >
-            {isPending ? <ButtonSpinner /> : "Log in"}
-          </button>
-        </div>
+        <button
+          type="submit"
+          disabled={isPending}
+          className={`mt-8 ${authPrimaryButtonClass}`}
+        >
+          {isPending ? <ButtonSpinner label="Logging in" /> : "Log in"}
+        </button>
       </form>
-    </div>
+      <div className="mt-6 text-center">
+        <Link href="/" className={authSecondaryLinkClass}>
+          <ArrowLeftIcon aria-hidden="true" className="size-4" />
+          Back to Home
+        </Link>
+      </div>
+    </AuthShell>
   );
 };
 

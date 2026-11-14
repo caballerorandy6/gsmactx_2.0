@@ -1,61 +1,81 @@
 "use client";
 
 import { useTransition, useState } from "react";
-import { toast } from "sonner";
-import { unsubscribeFromCampaignAction } from "@/app/actions/campaignAction";
 import Link from "next/link";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import { unsubscribeFromCampaignAction } from "@/app/actions/campaignAction";
+import {
+  authPrimaryButtonClass,
+  authSecondaryLinkClass,
+} from "@/components/auth/AuthShell";
+import ButtonSpinner from "@/components/ui/ButtonSpinner";
 
 const UnsubscribeButtonAction = ({ token }: { token: string }) => {
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  const handleUnsubscribe = async () => {
+  const handleUnsubscribe = () => {
+    setError(null);
     startTransition(async () => {
-      toast.loading("Unsubscribing…");
       try {
         const result = await unsubscribeFromCampaignAction(token);
-        toast.dismiss();
-
         if (result.success) {
-          toast.success(result.message);
           setIsSuccess(true);
         } else {
-          toast.error(`Failed to unsubscribe: ${result.message}`);
+          setError(result.message);
         }
       } catch {
-        toast.dismiss();
-        toast.error("An unexpected error occurred. Please try again.");
+        setError("Something went wrong. Please try again.");
       }
     });
   };
 
   if (isSuccess) {
     return (
-      <div className="text-center">
-        <h3 className="text-2xl font-semibold text-green-400">
-          Successfully Unsubscribed
-        </h3>
-        <p className="mt-2 text-gray-300">
-          You will no longer receive emails from this campaign.
+      <div className="text-center" role="status">
+        <CheckCircleIcon aria-hidden="true" className="mx-auto mb-4 size-10 text-green-400" />
+        <h1 className="text-2xl font-bold tracking-tight text-balance text-white mb-3">
+          You&apos;re unsubscribed
+        </h1>
+        <p className="text-gray-300 mb-6">
+          You won&apos;t receive any more marketing emails from GSM A/C.
         </p>
-        <Link
-          href="/"
-          className="mt-8 inline-block rounded-md bg-white/10 px-6 py-3 text-sm font-semibold text-white shadow-xs ring-1 ring-inset ring-white/20 hover:bg-white/20 transition-colors"
-        >
-          Return to Homepage
+        <Link href="/" className={authSecondaryLinkClass}>
+          Back to Home
         </Link>
       </div>
     );
   }
 
   return (
-    <button
-      onClick={handleUnsubscribe}
-      disabled={isPending}
-      className="bg-red-600 font-semibold text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors cursor-pointer disabled:bg-red-400 disabled:cursor-not-allowed"
-    >
-      {isPending ? "Unsubscribing…" : "Unsubscribe"}
-    </button>
+    <div className="text-center">
+      <h1 className="text-2xl font-bold tracking-tight text-balance text-white mb-3">
+        Unsubscribe from our emails
+      </h1>
+      <p className="text-gray-300 mb-8">
+        You&apos;ll stop receiving offers and seasonal reminders from GSM A/C.
+        Appointment confirmations aren&apos;t affected.
+      </p>
+      <button
+        type="button"
+        onClick={handleUnsubscribe}
+        disabled={isPending}
+        className={authPrimaryButtonClass}
+      >
+        {isPending ? <ButtonSpinner label="Unsubscribing" /> : "Unsubscribe"}
+      </button>
+      {error && (
+        <p role="alert" className="mt-4 text-sm text-red-400">
+          {error}
+        </p>
+      )}
+      <div className="mt-6">
+        <Link href="/" className={authSecondaryLinkClass}>
+          Keep me subscribed
+        </Link>
+      </div>
+    </div>
   );
 };
 
