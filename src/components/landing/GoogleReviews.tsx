@@ -19,12 +19,14 @@ export function GoogleReviewsSkeleton() {
         {[0, 1, 2, 3].map((i) => (
           <div
             key={i}
-            className={`h-56 flex-1 rounded-2xl border border-white/10 bg-gray-800/60 ${
+            className={`h-67 flex-1 rounded-2xl border border-white/10 bg-gray-800/60 ${
               i > 0 ? "hidden md:block" : ""
             } ${i > 1 ? "md:hidden lg:block" : ""} ${i > 2 ? "lg:hidden xl:block" : ""}`}
           />
         ))}
       </div>
+      {/* Same height as the carousel dots row, so nothing shifts on swap */}
+      <div className="mt-8 h-2" aria-hidden="true" />
     </div>
   );
 }

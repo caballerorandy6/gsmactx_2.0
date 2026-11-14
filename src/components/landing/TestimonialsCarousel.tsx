@@ -127,7 +127,7 @@ const TestimonialsCarousel = ({ reviews }: TestimonialsCarouselProps) => {
       </div>
 
       {/* Dots Navigation */}
-      <div className="flex justify-center gap-2 mt-8">
+      <div className="flex justify-center gap-2 mt-8 h-2">
         {scrollSnaps.map((_, index) => (
           <button
             key={index}

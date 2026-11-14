@@ -96,10 +96,12 @@ const AdminSidebar = () => {
     if (href === "/contacts" && pathname.startsWith("/contacts")) {
       return true;
     }
-    if (href === "/view-campaigns" && pathname.startsWith("/view-campaigns")) {
-      return true;
-    }
-    if (href === "/edit-campaign" && pathname.startsWith("/edit-campaign")) {
+    // Editing a campaign belongs to the Campaigns section
+    if (
+      href === "/view-campaigns" &&
+      (pathname.startsWith("/view-campaigns") ||
+        pathname.startsWith("/edit-campaign"))
+    ) {
       return true;
     }
     if (href === "/settings" && pathname.startsWith("/settings")) {

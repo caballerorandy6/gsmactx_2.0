@@ -132,7 +132,8 @@ npm run lint             # ESLint
 npm run test             # Vitest watch mode
 npm run test:run         # Vitest single run
 npm run test -- Hero     # Run specific test file
-npm run test:e2e         # Playwright E2E tests (starts dev server)
+npm run test:e2e         # Playwright E2E tests (starts its own dev server on port 3010, E2E_PORT to change)
+E2E_BASE_URL=http://localhost:3011 npm run test:e2e  # test an already running dev server (Next allows one `next dev` per folder)
 npm run test:e2e:ui      # Playwright with UI
 
 # Database
