@@ -81,10 +81,14 @@ export default function HeroClient({ ratingSlot }: HeroClientProps) {
 
           {/* Services Keywords - SEO */}
           <p
-            className="hero-rise mt-3 sm:mt-4 text-base sm:text-lg md:text-xl text-gray-200"
+            className="hero-rise mt-3 sm:mt-4 text-base sm:text-lg lg:text-xl text-gray-200"
             style={{ "--hero-delay": "200ms" } as CSSProperties}
           >
-            AC Installation · Heating Repair · Duct Cleaning · Attic Insulation
+            {/* Two unbreakable halves: on phones they stack cleanly instead of
+                leaving a dangling "·" at the end of a line. */}
+            <span className="inline-block">AC Installation · Heating Repair</span>
+            <span className="hidden sm:inline" aria-hidden="true">{" · "}</span>{" "}
+            <span className="inline-block">Air Duct Sanitizing · Attic Insulation</span>
           </p>
 
           {/* Special Offer Card with CTAs */}
@@ -112,7 +116,7 @@ export default function HeroClient({ ratingSlot }: HeroClientProps) {
 
               {/* Price Row */}
               <div className="flex items-baseline justify-center gap-3 mb-5">
-                <span className="text-4xl sm:text-5xl font-black text-emerald-400 tabular-nums">
+                <span className="text-3xl sm:text-5xl font-black text-emerald-400 tabular-nums">
                   {heroOffer.price}
                 </span>
                 <span className="text-base text-gray-400 line-through tabular-nums">
