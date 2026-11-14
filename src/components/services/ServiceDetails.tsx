@@ -10,11 +10,14 @@ import {
 } from "@heroicons/react/24/outline";
 import { ServiceDetailsProps } from "@/lib/types";
 import { allServices, servicePageContent } from "@/lib/data";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 
 const ServiceDetails = ({ id, imageSrc, array }: ServiceDetailsProps) => {
   const shouldReduceMotion = useReducedMotion();
   const content = servicePageContent[id];
   const title = content.heading;
+  const serviceName =
+    allServices.find((service) => service.id === id)?.name ?? title;
   const related = content.related.flatMap((relatedId) =>
     allServices.filter((service) => service.id === relatedId),
   );
@@ -80,6 +83,14 @@ const ServiceDetails = ({ id, imageSrc, array }: ServiceDetailsProps) => {
           variants={fadeInUp}
           className="max-w-3xl text-center"
         >
+          <Breadcrumbs
+            className="mb-6"
+            items={[
+              { name: "Home", href: "/" },
+              { name: "Services", href: "/services" },
+              { name: serviceName, href: `/services/${id}` },
+            ]}
+          />
           <h1 className="heading-page text-balance">{title}</h1>
           <p className="mt-4 text-lg/8 text-gray-300 text-pretty">
             {content.tagline}

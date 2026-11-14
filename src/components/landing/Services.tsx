@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { motion, useReducedMotion } from "framer-motion";
 import { services } from "@/lib/data";
 import ServiceCard from "@/components/services/ServiceCard";
@@ -81,6 +83,19 @@ export default function Services() {
             </motion.div>
           ))}
         </motion.div>
+
+        <div className="mt-8 flex justify-center sm:justify-start">
+          <Link
+            href="/services"
+            className="group inline-flex items-center gap-1 rounded-sm text-sm font-semibold text-primary-400 hover:text-primary-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+          >
+            View all services
+            <ArrowRightIcon
+              aria-hidden="true"
+              className="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
+            />
+          </Link>
+        </div>
 
         <motion.div
           initial="hidden"

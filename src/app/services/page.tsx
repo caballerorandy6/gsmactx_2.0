@@ -4,7 +4,7 @@ import Footer from "@/components/layout/Footer";
 import FAQ from "@/components/landing/FAQ";
 import { genPageMetadata } from "@/seo/genPageMetadata";
 import { JsonLdForServiceList } from "@/components/seo/JsonLdForServiceList";
-import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
 import { faqs, businessInfo, businessSameAs, allServices, services } from "@/lib/data";
@@ -33,6 +33,13 @@ export default async function ServicesOverviewPage() {
         <div className="w-full px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
           <div className="mx-auto max-w-4xl text-center pb-12 sm:pb-16">
+            <Breadcrumbs
+              className="mb-6"
+              items={[
+                { name: "Home", href: "/" },
+                { name: "Services", href: "/services" },
+              ]}
+            />
             <h1
               id="services-title"
               className="heading-page"
@@ -155,12 +162,6 @@ export default async function ServicesOverviewPage() {
           name: service.name,
           url: `${businessInfo.website}${service.href}`,
         }))}
-      />
-      <JsonLdForBreadcrumb
-        itemList={[
-          { name: "Home", item: "https://www.gsmactx.com" },
-          { name: "Services", item: "https://www.gsmactx.com/services" },
-        ]}
       />
       <JsonLdForFaq faqs={faqs} />
       <JsonLdForLocalBusiness

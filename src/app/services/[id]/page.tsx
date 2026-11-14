@@ -18,7 +18,6 @@ import AirDuctSanitizing from "@/components/services/AirDuctSanitizing";
 import AtticInsullation from "@/components/services/AtticInsullation";
 import HeatingInstallation from "@/components/services/HeatingInstallation";
 import HeatingRepair from "@/components/services/HeatingRepair";
-import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
 import { JsonLdForService } from "@/components/seo/JsonLdForService";
 import Footer from "@/components/layout/Footer";
@@ -138,22 +137,6 @@ export default async function ServicePage({ params }: Props) {
       <Footer />
 
       {/* JSON-LD Structured Data */}
-      <JsonLdForBreadcrumb
-        itemList={[
-          {
-            name: "Home",
-            item: "https://www.gsmactx.com",
-          },
-          {
-            name: "Services",
-            item: "https://www.gsmactx.com/services",
-          },
-          {
-            name: service.name,
-            item: `https://www.gsmactx.com/services/${service.id}`,
-          },
-        ]}
-      />
 
       <JsonLdForFaq faqs={faqs} />
 

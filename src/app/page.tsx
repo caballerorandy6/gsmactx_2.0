@@ -12,7 +12,6 @@ import ScrollSpyHandler from "@/components/layout/ScrollSpyHandler";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import FloatingCTAButtons from "@/components/ui/FloatingCTAButtons";
 import { genPageMetadata } from "@/seo/genPageMetadata";
-import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
 import FAQ from "@/components/landing/FAQ";
@@ -49,18 +48,6 @@ export default async function Home() {
       <Footer />
 
       {/* JSON-LD Structured Data */}
-      <JsonLdForBreadcrumb
-        itemList={[
-          {
-            name: "Home",
-            item: "https://www.gsmactx.com/",
-          },
-          {
-            name: "Services",
-            item: "https://www.gsmactx.com/services",
-          },
-        ]}
-      />
 
       <JsonLdForFaq
         faqs={[

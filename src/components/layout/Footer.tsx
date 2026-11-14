@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { businessInfo, navigation } from "@/lib/data";
+import { allServices, businessInfo, navigation } from "@/lib/data";
 import Facebook from "@/components/icons/Facebook";
 import Instagram from "@/components/icons/Instagram";
 import TikTok from "@/components/icons/TikTok";
@@ -128,7 +128,7 @@ export default function Footer() {
         <div className="h-px bg-linear-to-r from-transparent via-white/10 to-transparent mb-12" aria-hidden="true" />
 
         {/* Name, address, phone, hours and service areas (match the LocalBusiness JSON-LD) */}
-        <div className="mx-auto mb-12 grid max-w-4xl grid-cols-1 gap-10 text-center text-sm/6 text-gray-300 sm:grid-cols-3 sm:text-left">
+        <div className="mx-auto mb-12 grid max-w-6xl grid-cols-1 gap-10 text-center text-sm/6 text-gray-300 sm:grid-cols-2 sm:text-left lg:grid-cols-4">
           <div>
             <h2 className="font-semibold text-white">{businessInfo.name}</h2>
             <address className="mt-3 not-italic">
@@ -166,6 +166,28 @@ export default function Footer() {
               ))}
             </dl>
           </div>
+          <nav aria-labelledby="footer-services">
+            <h2 id="footer-services" className="font-semibold text-white">
+              <Link
+                href="/services"
+                className="rounded-sm hover:text-primary-300 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+              >
+                Services
+              </Link>
+            </h2>
+            <ul role="list" className="mt-3 space-y-1">
+              {allServices.map((service) => (
+                <li key={service.id}>
+                  <Link
+                    href={service.href}
+                    className="rounded-sm hover:text-white transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+                  >
+                    {service.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
           <div>
             <h2 className="font-semibold text-white">Service areas</h2>
             <p className="mt-3">
