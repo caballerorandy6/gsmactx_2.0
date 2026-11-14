@@ -1,3 +1,4 @@
+import { getRatingSummary } from "@/app/actions/googlePlacesAction";
 import { Metadata } from "next";
 import Link from "next/link";
 import BookAppointmentForm from "@/components/forms/BookAppointmentForm";
@@ -49,6 +50,7 @@ const isServiceType = (value: string | undefined): value is ServiceType =>
 const BookAppointmentPage = async ({ searchParams }: BookAppointmentPageProps) => {
   const { service, offer: offerSlug } = await searchParams;
   const offer = offerSlug === heroOffer.slug ? heroOffer : undefined;
+  const { rating, reviewCount } = await getRatingSummary();
   const initialService = offer?.serviceType ?? (isServiceType(service) ? service : undefined);
 
   return (
@@ -184,8 +186,8 @@ const BookAppointmentPage = async ({ searchParams }: BookAppointmentPageProps) =
         image="/logo.avif"
         priceRange={businessInfo.priceRange}
         aggregateRating={{
-          ratingValue: businessInfo.reviews.aggregateRating,
-          reviewCount: businessInfo.reviews.reviewCount,
+          ratingValue: rating.toFixed(1),
+          reviewCount: String(reviewCount),
         }}
         areaServed={businessInfo.serviceAreas}
         openingHours={businessInfo.openingHours}

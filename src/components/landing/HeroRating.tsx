@@ -1,6 +1,5 @@
 import StarRating from "@/components/ui/StarRating";
-import { getGooglePlaceDetails } from "@/app/actions/googlePlacesAction";
-import { businessInfo } from "@/lib/data";
+import { getRatingSummary } from "@/app/actions/googlePlacesAction";
 
 /**
  * Skeleton fallback for the rating badge
@@ -25,10 +24,7 @@ export function RatingBadgeSkeleton() {
  * Streams in via Suspense - doesn't block initial render
  */
 export default async function HeroRating() {
-  const googleData = await getGooglePlaceDetails();
-
-  const rating = googleData?.rating ?? parseFloat(businessInfo.reviews.aggregateRating);
-  const reviewCount = googleData?.totalReviews ?? parseInt(businessInfo.reviews.reviewCount);
+  const { rating, reviewCount } = await getRatingSummary();
 
   return (
     <div className="mb-4 sm:mb-6">

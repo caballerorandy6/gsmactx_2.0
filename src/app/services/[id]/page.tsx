@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { getRatingSummary } from "@/app/actions/googlePlacesAction";
 import { Metadata } from "next";
 import {
   allServices,
@@ -122,6 +123,7 @@ export default async function ServicePage({ params }: Props) {
   }
 
   const serviceData = services.find((s) => s.href === `/services/${id}`);
+  const { rating } = await getRatingSummary();
   const faqs = [...(serviceFaqs[service.id] ?? []), ...commonServiceFaqs];
 
   const ServiceComponent = componentMap[service.id];
@@ -157,7 +159,7 @@ export default async function ServicePage({ params }: Props) {
       <JsonLdForService
         serviceName={service.name}
         serviceType="HVAC Service"
-        description={`${(serviceData?.metaDescription ?? `${service.name} in Cypress, Katy and Houston, TX.`).replace(/ Call .*$/, "")} Licensed and insured, same-day service, rated ${businessInfo.reviews.aggregateRating} on Google, serving the area since ${businessInfo.established}.`}
+        description={`${(serviceData?.metaDescription ?? `${service.name} in Cypress, Katy and Houston, TX.`).replace(/ Call .*$/, "")} Licensed and insured, same-day service, rated ${rating.toFixed(1)} on Google, serving the area since ${businessInfo.established}.`}
         providerName={businessInfo.name}
         providerUrl={businessInfo.website}
         telephone={businessInfo.phone}

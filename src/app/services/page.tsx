@@ -8,7 +8,7 @@ import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
 import { faqs, businessInfo, allServices, services } from "@/lib/data";
-import { getGooglePlaceDetails } from "@/app/actions/googlePlacesAction";
+import { getRatingSummary } from "@/app/actions/googlePlacesAction";
 
 export const metadata = genPageMetadata({
   title: "HVAC Services in Cypress & Houston, TX | GSM A/C",
@@ -19,11 +19,7 @@ export const metadata = genPageMetadata({
 
 export default async function ServicesOverviewPage() {
   // Same source as the home hero: live Google data with static fallback
-  const googleData = await getGooglePlaceDetails();
-  const rating =
-    googleData?.rating ?? parseFloat(businessInfo.reviews.aggregateRating);
-  const reviewCount =
-    googleData?.totalReviews ?? parseInt(businessInfo.reviews.reviewCount);
+  const { rating, reviewCount } = await getRatingSummary();
   const yearsInBusiness =
     new Date().getFullYear() - parseInt(businessInfo.established);
 

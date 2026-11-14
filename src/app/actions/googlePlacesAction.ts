@@ -5,6 +5,7 @@ import type {
   PlaceRatingData,
 } from "@/types/google-places";
 import { Review } from "@/lib/interfaces";
+import { businessInfo } from "@/lib/data";
 
 /**
  * Fetches place details from Google Places API
@@ -52,6 +53,24 @@ export async function getGooglePlaceDetails(): Promise<PlaceRatingData | null> {
     console.error("Error fetching Google Place details:", error);
     return null;
   }
+}
+
+/**
+ * Live Google rating and review count, falling back to the snapshot in
+ * businessInfo.reviews when the API is unavailable. Shared by every place
+ * that shows or publishes the rating, so page text and JSON-LD always match.
+ */
+export async function getRatingSummary(): Promise<{
+  rating: number;
+  reviewCount: number;
+}> {
+  const googleData = await getGooglePlaceDetails();
+  return {
+    rating:
+      googleData?.rating ?? parseFloat(businessInfo.reviews.aggregateRating),
+    reviewCount:
+      googleData?.totalReviews ?? parseInt(businessInfo.reviews.reviewCount),
+  };
 }
 
 /**

@@ -1,3 +1,4 @@
+import { getRatingSummary } from "@/app/actions/googlePlacesAction";
 import { Suspense } from "react";
 import Hero from "@/components/landing/Hero";
 import About from "@/components/landing/About";
@@ -25,7 +26,9 @@ export const metadata = genPageMetadata({
   pageRoute: "/",
 });
 
-export default function Home() {
+export default async function Home() {
+  const { rating, reviewCount } = await getRatingSummary();
+
   return (
     <main>
       <ScrollSpyHandler />
@@ -90,8 +93,8 @@ export default function Home() {
         image="/logo.avif"
         priceRange={businessInfo.priceRange}
         aggregateRating={{
-          ratingValue: businessInfo.reviews.aggregateRating,
-          reviewCount: businessInfo.reviews.reviewCount,
+          ratingValue: rating.toFixed(1),
+          reviewCount: String(reviewCount),
         }}
         areaServed={businessInfo.serviceAreas}
         openingHours={businessInfo.openingHours}
