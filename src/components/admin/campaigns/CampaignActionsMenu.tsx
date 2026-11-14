@@ -4,20 +4,59 @@ import { useState, useTransition } from "react";
 import { Menu, MenuButton, MenuItems } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
 import { toast } from "sonner";
-import { deleteCampaignAction } from "@/app/actions/campaignAction";
+import {
+  deleteCampaignAction,
+  getCampaignByIdAction,
+} from "@/app/actions/campaignAction";
+import { createAndSendTestCampaignAction } from "@/app/actions/createAndSendTestCampaignAction";
 import { initializeCampaignEmailLogsAction } from "@/app/actions/sendCampaignEmailAction";
 import ConfirmDialog from "@/components/admin/common/ConfirmDialog";
 import DeleteCampaignButton from "./DeleteCampaignButton";
 import SendCampaignButton from "./SendCampaignButton";
 import SendTestCampaignButton from "./SendTestCampaignButton";
+import TestRecipientList from "./TestRecipientList";
 import EditCampaignButton from "./EditCampaignButton";
 import DuplicateCampaignButton from "./DuplicateCampaignButton";
 
-type PendingConfirm = "send" | "delete" | null;
+type PendingConfirm = "test" | "send" | "delete" | null;
 
 const CampaignActionsMenu = ({ id, title }: { id: string; title: string }) => {
   const [confirming, setConfirming] = useState<PendingConfirm>(null);
   const [isPending, startTransition] = useTransition();
+
+  const runTest = () => {
+    startTransition(async () => {
+      const toastId = toast.loading("Sending test…");
+      try {
+        const campaign = await getCampaignByIdAction(id);
+        if (!campaign) throw new Error("Campaign not found");
+
+        const formData = new FormData();
+        formData.append("title", campaign.title);
+        formData.append("subject", campaign.subject);
+        formData.append("content", campaign.content);
+
+        if (campaign.imageUrl) {
+          const imageBlob = await (await fetch(campaign.imageUrl)).blob();
+          const imageName = campaign.imageUrl.split("/").pop() || "image.jpg";
+          formData.append(
+            "image",
+            new File([imageBlob], imageName, { type: imageBlob.type })
+          );
+        }
+
+        const result = await createAndSendTestCampaignAction(formData);
+        if (result.success) {
+          toast.success(result.message, { id: toastId });
+          setConfirming(null);
+        } else {
+          toast.error(result.message, { id: toastId });
+        }
+      } catch {
+        toast.error("Couldn't send the test. Try again.", { id: toastId });
+      }
+    });
+  };
 
   const runSend = () => {
     startTransition(async () => {
@@ -71,13 +110,31 @@ const CampaignActionsMenu = ({ id, title }: { id: string; title: string }) => {
           transition
           className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-gray-800 py-2 shadow-lg ring-1 ring-white/10 transition focus:outline-none data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
         >
-          <SendTestCampaignButton id={id} />
+          <SendTestCampaignButton onSelect={() => setConfirming("test")} />
           <SendCampaignButton onSelect={() => setConfirming("send")} />
           <EditCampaignButton id={id} />
           <DuplicateCampaignButton id={id} />
           <DeleteCampaignButton onSelect={() => setConfirming("delete")} />
         </MenuItems>
       </Menu>
+
+      <ConfirmDialog
+        open={confirming === "test"}
+        onClose={() => setConfirming(null)}
+        onConfirm={runTest}
+        tone="primary"
+        title="Send a test of this campaign?"
+        description={
+          <>
+            <strong className="font-semibold text-white">{title}</strong> goes
+            out right away, marked [TEST], to:
+            <TestRecipientList />
+          </>
+        }
+        confirmLabel="Send test"
+        pendingLabel="Sending…"
+        isPending={isPending}
+      />
 
       <ConfirmDialog
         open={confirming === "send"}

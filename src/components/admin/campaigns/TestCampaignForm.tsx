@@ -10,13 +10,17 @@ import { createAndSendTestCampaignAction } from "@/app/actions/createAndSendTest
 import { ErrorMessage } from "@hookform/error-message";
 import AdminPageHeader from "@/components/admin/common/AdminPageHeader";
 import { useRouter } from "next/navigation";
+import ConfirmDialog from "@/components/admin/common/ConfirmDialog";
+import { TEST_RECIPIENTS } from "@/lib/email/testRecipients";
 import CampaignEmailPreview from "./CampaignEmailPreview";
+import TestRecipientList from "./TestRecipientList";
 
 const TestCampaignForm = () => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(false);
+  const [pendingData, setPendingData] = useState<CampaignFormData | null>(null);
 
   const {
     register,
@@ -61,12 +65,11 @@ const TestCampaignForm = () => {
     }
   };
 
-  const onSubmit = async (data: CampaignFormData) => {
-    const confirmed = confirm(
-      "Send test campaign to test emails?\n\nThis will send to:\n• caballerorandy7@gmail.com\n• gsmactx@outlook.com\n• michel@gsmactx.com\n• mchapelli305@gmail.com\n• mchapelli305@yahoo.com"
-    );
+  const onSubmit = (data: CampaignFormData) => setPendingData(data);
 
-    if (!confirmed) return;
+  const sendTest = () => {
+    if (!pendingData) return;
+    const data = pendingData;
 
     const formData = new FormData();
     formData.append("title", data.title);
@@ -78,21 +81,19 @@ const TestCampaignForm = () => {
     }
 
     startTransition(async () => {
+      const toastId = toast.loading("Sending test…");
       try {
-        toast.loading("Sending test campaign…");
         const result = await createAndSendTestCampaignAction(formData);
-
-        toast.dismiss();
         if (result.success) {
-          toast.success(result.message);
+          toast.success(result.message, { id: toastId });
+          setPendingData(null);
           reset();
           setImagePreview(null);
         } else {
-          toast.error(result.message);
+          toast.error(result.message, { id: toastId });
         }
       } catch {
-        toast.dismiss();
-        toast.error("An unexpected error occurred.");
+        toast.error("Couldn't send the test. Try again.", { id: toastId });
       }
     });
   };
@@ -108,13 +109,7 @@ const TestCampaignForm = () => {
               <p className="text-sm text-gray-300">
                 Sent immediately to:
               </p>
-              <ul className="text-sm text-gray-200 mt-2 space-y-1">
-                <li>• caballerorandy7@gmail.com</li>
-                <li>• gsmactx@outlook.com</li>
-                <li>• michel@gsmactx.com</li>
-                <li>• mchapelli305@gmail.com</li>
-                <li>• mchapelli305@yahoo.com</li>
-              </ul>
+              <TestRecipientList />
             </div>
 
             {/* Title */}
@@ -291,6 +286,18 @@ const TestCampaignForm = () => {
               </div>
             </div>
       </form>
+
+      <ConfirmDialog
+        open={pendingData !== null}
+        onClose={() => setPendingData(null)}
+        onConfirm={sendTest}
+        tone="primary"
+        title="Send this test now?"
+        description={`It goes out right away, marked [TEST], to the ${TEST_RECIPIENTS.length} inboxes listed on this page.`}
+        confirmLabel="Send test"
+        pendingLabel="Sending…"
+        isPending={isPending}
+      />
 
       {/* Email Preview Modal */}
       {showPreview && (

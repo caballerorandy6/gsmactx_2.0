@@ -9,12 +9,14 @@ import {
   retryFailedEmailsAction,
 } from "@/app/actions/sendCampaignEmailAction";
 import {
-  EnvelopeIcon,
-  CheckCircleIcon,
-  XCircleIcon,
-  ClockIcon,
   ArrowPathIcon,
+  CheckCircleIcon,
+  EnvelopeIcon,
+  ExclamationTriangleIcon,
+  InformationCircleIcon,
 } from "@heroicons/react/24/outline";
+import ConfirmDialog from "@/components/admin/common/ConfirmDialog";
+import CampaignStatTiles, { percentOf } from "./CampaignStatTiles";
 
 interface CampaignSenderProps {
   campaignId: string;
@@ -39,6 +41,7 @@ export default function CampaignSender({
   const [isSending, setIsSending] = useState(false);
   const [isRetrying, setIsRetrying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [confirmingInit, setConfirmingInit] = useState(false);
 
   // Load stats on mount and after operations
   const loadStats = async () => {
@@ -66,23 +69,18 @@ export default function CampaignSender({
   }, [campaignId, stats?.pending]);
 
   const handleInitialize = async () => {
-    const confirmed = confirm(
-      `Initialize campaign "${campaignTitle}"?\n\nThis will prepare ${stats?.total || "all"} email(s) for sending. This action cannot be undone.`
-    );
-
-    if (!confirmed) return;
-
     setIsInitializing(true);
     try {
       const result = await initializeCampaignEmailLogsAction(campaignId);
       if (result.success) {
         toast.success(result.message);
+        setConfirmingInit(false);
         await loadStats();
       } else {
         toast.error(result.message);
       }
     } catch {
-      toast.error("Failed to initialize campaign");
+      toast.error("Couldn't queue the campaign. Try again.");
     } finally {
       setIsInitializing(false);
     }
@@ -124,9 +122,13 @@ export default function CampaignSender({
 
   if (isLoading) {
     return (
-      <div className="bg-gray-800 rounded-lg p-6 animate-pulse">
-        <div className="h-6 bg-gray-700 rounded w-1/3 mb-4"></div>
-        <div className="h-4 bg-gray-700 rounded w-1/2"></div>
+      <div
+        role="status"
+        className="space-y-4 rounded-xl border border-white/10 bg-gray-800/50 p-6 motion-safe:animate-pulse"
+      >
+        <span className="sr-only">Loading sending status…</span>
+        <div className="h-5 w-1/3 rounded bg-white/10" />
+        <div className="h-4 w-1/2 rounded bg-white/10" />
       </div>
     );
   }
@@ -134,167 +136,161 @@ export default function CampaignSender({
   const isInitialized = stats && stats.total > 0;
   const isComplete = stats && stats.pending === 0 && stats.total > 0;
   const progress = stats && stats.total > 0 ? (stats.sent / stats.total) * 100 : 0;
+  const quotaUsed = stats ? Math.min(stats.emailsSentToday, 100) : 0;
 
   return (
-    <div className="bg-gray-800 rounded-lg p-6 space-y-6">
-      {/* Header */}
+    <section
+      aria-labelledby="sending-heading"
+      className="space-y-6 rounded-xl border border-white/10 bg-gray-800/50 p-4 sm:p-6"
+    >
       <div>
-        <h3 className="text-xl font-bold text-white mb-2">
-          Campaign: {campaignTitle}
-        </h3>
-        <p className="text-sm text-gray-400">
-          Send emails in batches to respect Resend&apos;s daily limit
+        <h2 id="sending-heading" className="text-lg font-semibold text-white">
+          Sending
+        </h2>
+        <p className="mt-1 text-sm text-gray-400">
+          Emails go out in batches of up to 100 a day, the limit of our email
+          provider.
         </p>
       </div>
 
-      {/* Stats Grid */}
       {isInitialized && stats && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-gray-700 rounded-lg p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <EnvelopeIcon className="h-5 w-5 text-blue-400" />
-              <span className="text-sm text-gray-400">Total</span>
-            </div>
-            <p className="text-2xl font-bold text-white">{stats.total}</p>
-          </div>
+        <>
+          <CampaignStatTiles
+            stats={[
+              { label: "Recipients", value: stats.total },
+              { label: "Sent", value: stats.sent, note: percentOf(stats.sent, stats.total) },
+              { label: "Failed", value: stats.failed, alert: stats.failed > 0 },
+              { label: "Waiting", value: stats.pending },
+            ]}
+          />
 
-          <div className="bg-gray-700 rounded-lg p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <CheckCircleIcon className="h-5 w-5 text-green-400" />
-              <span className="text-sm text-gray-400">Sent</span>
+          <div>
+            <div className="mb-2 flex justify-between text-sm text-gray-400">
+              <span id="progress-label">Progress</span>
+              <span className="tabular-nums">{Math.round(progress)}%</span>
             </div>
-            <p className="text-2xl font-bold text-green-400">{stats.sent}</p>
-          </div>
-
-          <div className="bg-gray-700 rounded-lg p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <XCircleIcon className="h-5 w-5 text-red-400" />
-              <span className="text-sm text-gray-400">Failed</span>
-            </div>
-            <p className="text-2xl font-bold text-red-400">{stats.failed}</p>
-          </div>
-
-          <div className="bg-gray-700 rounded-lg p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <ClockIcon className="h-5 w-5 text-yellow-400" />
-              <span className="text-sm text-gray-400">Pending</span>
-            </div>
-            <p className="text-2xl font-bold text-yellow-400">{stats.pending}</p>
-          </div>
-        </div>
-      )}
-
-      {/* Progress Bar */}
-      {isInitialized && stats && (
-        <div>
-          <div className="flex justify-between text-sm text-gray-400 mb-2">
-            <span>Progress</span>
-            <span>{progress.toFixed(1)}%</span>
-          </div>
-          <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
             <div
-              className="bg-primary-500 h-full transition-all duration-500"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Daily Quota Info */}
-      {stats && (
-        <div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
-          <h4 className="text-sm font-semibold text-white mb-2">
-            Today&apos;s Quota
-          </h4>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-400">
-              {stats.emailsSentToday} / 100 emails sent today
-            </span>
-            <span
-              className={`text-sm font-bold ${
-                stats.remainingQuota > 20
-                  ? "text-green-400"
-                  : stats.remainingQuota > 0
-                  ? "text-yellow-400"
-                  : "text-red-400"
-              }`}
+              role="progressbar"
+              aria-labelledby="progress-label"
+              aria-valuenow={Math.round(progress)}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              className="h-2 w-full overflow-hidden rounded-full bg-white/10"
             >
-              {stats.remainingQuota} remaining
+              <div
+                className="h-full bg-primary-500 transition-[width] duration-500 ease-out"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
+        </>
+      )}
+
+      {stats && (
+        <div className="border-t border-white/10 pt-4">
+          <div className="flex items-baseline justify-between gap-4 text-sm">
+            <span className="text-gray-300">Today&apos;s sending limit</span>
+            <span className="tabular-nums text-gray-400">
+              <span
+                className={
+                  stats.remainingQuota === 0 ? "font-semibold text-red-400" : "font-semibold text-white"
+                }
+              >
+                {stats.remainingQuota}
+              </span>{" "}
+              of 100 left
             </span>
           </div>
-          <div className="w-full bg-gray-600 rounded-full h-2 mt-2">
+          <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
             <div
-              className={`h-full rounded-full transition-all duration-300 ${
-                stats.remainingQuota > 20
-                  ? "bg-green-500"
-                  : stats.remainingQuota > 0
-                  ? "bg-yellow-500"
-                  : "bg-red-500"
-              }`}
-              style={{ width: `${(stats.emailsSentToday / 100) * 100}%` }}
+              className={
+                stats.remainingQuota === 0
+                  ? "h-full rounded-full bg-red-500"
+                  : "h-full rounded-full bg-gray-400"
+              }
+              style={{ width: `${quotaUsed}%` }}
             />
           </div>
         </div>
       )}
 
-      {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-3">
+      {!isInitialized && (
+        <p className="flex gap-2 text-sm text-gray-300">
+          <InformationCircleIcon aria-hidden="true" className="size-5 shrink-0 text-primary-300" />
+          Nothing has been sent yet. Queue the campaign to prepare one email per
+          subscriber, then send it in batches.
+        </p>
+      )}
+
+      {stats && stats.remainingQuota === 0 && stats.pending > 0 && (
+        <p className="flex gap-2 text-sm text-gray-300">
+          <ExclamationTriangleIcon aria-hidden="true" className="size-5 shrink-0 text-amber-400" />
+          <span>
+            <strong className="font-semibold text-white">Daily limit reached.</strong>{" "}
+            The remaining {stats.pending} emails go out with tomorrow
+            morning&apos;s automatic send, or you can send them by hand then.
+          </span>
+        </p>
+      )}
+
+      <div className="flex flex-col gap-3 sm:flex-row">
         {!isInitialized ? (
           <button
-            onClick={handleInitialize}
-            disabled={isInitializing}
-            className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            type="button"
+            onClick={() => setConfirmingInit(true)}
+            className="rounded-md bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
           >
-            {isInitializing ? "Initializing…" : "Initialize Campaign"}
+            Queue campaign
           </button>
         ) : isComplete ? (
-          <div className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold text-center">
-            ✓ Campaign Completed!
-          </div>
+          <p className="flex items-center gap-2 text-sm font-medium text-white">
+            <CheckCircleIcon aria-hidden="true" className="size-5 text-green-400" />
+            Every email has been processed.
+          </p>
         ) : (
           <>
             <button
+              type="button"
               onClick={handleSendBatch}
               disabled={isSending || stats?.remainingQuota === 0}
-              className="flex-1 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="flex items-center justify-center gap-2 rounded-md bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              <EnvelopeIcon className="h-5 w-5" />
-              {isSending ? "Sending…" : "Send Next Batch"}
+              <EnvelopeIcon aria-hidden="true" className="size-5" />
+              {isSending ? "Sending…" : "Send next batch"}
             </button>
 
             {stats && stats.failed > 0 && (
               <button
+                type="button"
                 onClick={handleRetryFailed}
                 disabled={isRetrying}
-                className="bg-yellow-600 hover:bg-yellow-500 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="flex items-center justify-center gap-2 rounded-md bg-white/10 px-5 py-2.5 text-sm font-semibold text-white ring-1 ring-inset ring-white/15 transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <ArrowPathIcon className="h-5 w-5" />
-                {isRetrying ? "Retrying…" : `Retry ${stats.failed} Failed`}
+                <ArrowPathIcon aria-hidden="true" className="size-5" />
+                {isRetrying ? "Retrying…" : `Retry ${stats.failed} failed`}
               </button>
             )}
           </>
         )}
       </div>
 
-      {/* Info Messages */}
-      {!isInitialized && (
-        <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-          <p className="text-sm text-blue-300">
-            💡 <strong>First time?</strong> Click &quot;Initialize Campaign&quot; to
-            prepare the email list for this campaign.
-          </p>
-        </div>
-      )}
-
-      {stats && stats.remainingQuota === 0 && stats.pending > 0 && (
-        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
-          <p className="text-sm text-yellow-300">
-            ⚠️ <strong>Daily limit reached.</strong> You&apos;ve sent 100 emails
-            today. Come back tomorrow to send the next batch of {stats.pending}{" "}
-            emails.
-          </p>
-        </div>
-      )}
-    </div>
+      <ConfirmDialog
+        open={confirmingInit}
+        onClose={() => setConfirmingInit(false)}
+        onConfirm={handleInitialize}
+        tone="primary"
+        title="Queue this campaign for every subscriber?"
+        description={
+          <>
+            <strong className="font-semibold text-white">{campaignTitle}</strong>{" "}
+            gets one email per subscriber. Emails go out in daily batches of up
+            to 100 and can&apos;t be recalled once sent.
+          </>
+        }
+        confirmLabel="Queue campaign"
+        pendingLabel="Queuing…"
+        isPending={isInitializing}
+      />
+    </section>
   );
 }
