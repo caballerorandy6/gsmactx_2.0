@@ -1,19 +1,18 @@
 "use server";
 
 import { prisma } from "@/lib/db/prisma";
+import {
+  getBusinessDayRange,
+  getBusinessWeekRange,
+  timeToMinutes,
+} from "@/lib/utils/bookingTime";
 
 export async function getDashboardStatsAction() {
   try {
-    // Calculate date ranges for appointments
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
-    const weekStart = new Date(today);
-    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
-    const weekEnd = new Date(weekStart);
-    weekEnd.setDate(weekEnd.getDate() + 7);
+    // Appointment dates are stored as the calendar day at 12:00 UTC;
+    // "today" and "this week" follow the Houston calendar.
+    const { start: today, end: tomorrow } = getBusinessDayRange();
+    const { start: weekStart, end: weekEnd } = getBusinessWeekRange();
 
     const [
       // Email-related stats
@@ -35,6 +34,7 @@ export async function getDashboardStatsAction() {
       cancelledAppointments,
       todayAppointments,
       weekAppointments,
+      upcomingCandidates,
     ] = await Promise.all([
       // Email
       prisma.subscriber.count(),
@@ -65,7 +65,36 @@ export async function getDashboardStatsAction() {
       prisma.appointment.count({
         where: { scheduledDate: { gte: weekStart, lt: weekEnd } },
       }),
+      prisma.appointment.findMany({
+        where: {
+          scheduledDate: { gte: today },
+          status: { in: ["PENDING", "CONFIRMED", "IN_PROGRESS"] },
+        },
+        orderBy: { scheduledDate: "asc" },
+        take: 20,
+        select: {
+          id: true,
+          clientName: true,
+          serviceType: true,
+          scheduledDate: true,
+          scheduledTime: true,
+          status: true,
+        },
+      }),
     ]);
+
+    // scheduledTime is a "2:00 PM" string, so order within each day in JS.
+    const upcomingAppointments = upcomingCandidates
+      .sort(
+        (a, b) =>
+          a.scheduledDate.getTime() - b.scheduledDate.getTime() ||
+          timeToMinutes(a.scheduledTime) - timeToMinutes(b.scheduledTime)
+      )
+      .slice(0, 6)
+      .map((a) => ({
+        ...a,
+        scheduledDate: a.scheduledDate.toISOString().slice(0, 10),
+      }));
 
     const emailStats = emailLogs.reduce(
       (acc, log) => {
@@ -135,6 +164,7 @@ export async function getDashboardStatsAction() {
         todayAppointments,
         weekAppointments,
       },
+      upcomingAppointments,
       recentCampaigns: recentCampaigns.map((campaign) => ({
         id: campaign.id,
         title: campaign.title,
@@ -151,6 +181,7 @@ export async function getDashboardStatsAction() {
     return {
       success: false,
       stats: null,
+      upcomingAppointments: [],
       recentCampaigns: [],
     };
   }

@@ -1,252 +1,161 @@
-"use client";
+import Link from "next/link";
+import clsx from "clsx";
 
-import {
-  EnvelopeIcon,
-  UserGroupIcon,
-  CheckCircleIcon,
-  XCircleIcon,
-  ChatBubbleLeftRightIcon,
-  DevicePhoneMobileIcon,
-  CalendarDaysIcon,
-  ClockIcon,
-  WrenchScrewdriverIcon,
-} from "@heroicons/react/24/outline";
-
-interface DashboardStatsProps {
-  stats: {
-    // Email Campaign Stats
-    totalSubscribers: number;
-    activeSubscribers: number;
-    totalCampaigns: number;
-    sentCampaigns: number;
-    emailsSent: number;
-    emailsFailed: number;
-    // SMS Campaign Stats
-    totalSMSCampaigns: number;
-    sentSMSCampaigns: number;
-    smsSent: number;
-    smsFailed: number;
-    // Appointment Stats
-    totalAppointments: number;
-    pendingAppointments: number;
-    confirmedAppointments: number;
-    inProgressAppointments: number;
-    completedAppointments: number;
-    cancelledAppointments: number;
-    todayAppointments: number;
-    weekAppointments: number;
-  };
+export interface DashboardStatsData {
+  totalSubscribers: number;
+  activeSubscribers: number;
+  totalCampaigns: number;
+  sentCampaigns: number;
+  notSentCampaigns: number;
+  emailsSent: number;
+  emailsFailed: number;
+  totalSMSCampaigns: number;
+  sentSMSCampaigns: number;
+  smsSent: number;
+  smsFailed: number;
+  pendingAppointments: number;
+  confirmedAppointments: number;
+  todayAppointments: number;
+  weekAppointments: number;
 }
 
-const DashboardStats = ({ stats }: DashboardStatsProps) => {
-  const emailStatCards = [
-    {
-      name: "Total Subscribers",
-      value: stats.totalSubscribers,
-      icon: UserGroupIcon,
-      color: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-      iconBg: "bg-blue-500/20",
-    },
-    {
-      name: "Active Subscribers",
-      value: stats.activeSubscribers,
-      icon: CheckCircleIcon,
-      color: "bg-green-500/10 text-green-400 border-green-500/20",
-      iconBg: "bg-green-500/20",
-    },
-    {
-      name: "Email Campaigns",
-      value: stats.totalCampaigns,
-      icon: EnvelopeIcon,
-      color: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-      iconBg: "bg-purple-500/20",
-    },
-    {
-      name: "Sent Campaigns",
-      value: stats.sentCampaigns,
-      icon: CheckCircleIcon,
-      color: "bg-primary-500/10 text-primary-400 border-primary-500/20",
-      iconBg: "bg-primary-500/20",
-    },
-    {
-      name: "Emails Sent",
-      value: stats.emailsSent,
-      icon: EnvelopeIcon,
-      color: "bg-teal-500/10 text-teal-400 border-teal-500/20",
-      iconBg: "bg-teal-500/20",
-    },
-    {
-      name: "Emails Failed",
-      value: stats.emailsFailed,
-      icon: XCircleIcon,
-      color: "bg-red-500/10 text-red-400 border-red-500/20",
-      iconBg: "bg-red-500/20",
-    },
-  ];
+const fmt = (n: number) => n.toLocaleString("en-US");
 
-  const smsStatCards = [
+/** One strip of the four numbers that drive the day, not a grid of cards. */
+export const AppointmentSummary = ({ stats }: { stats: DashboardStatsData }) => {
+  const items = [
+    { label: "Today", value: stats.todayAppointments },
+    { label: "This week", value: stats.weekAppointments },
     {
-      name: "SMS Campaigns",
-      value: stats.totalSMSCampaigns,
-      icon: ChatBubbleLeftRightIcon,
-      color: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
-      iconBg: "bg-cyan-500/20",
-    },
-    {
-      name: "Sent SMS Campaigns",
-      value: stats.sentSMSCampaigns,
-      icon: CheckCircleIcon,
-      color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-      iconBg: "bg-emerald-500/20",
-    },
-    {
-      name: "SMS Sent",
-      value: stats.smsSent,
-      icon: DevicePhoneMobileIcon,
-      color: "bg-sky-500/10 text-sky-400 border-sky-500/20",
-      iconBg: "bg-sky-500/20",
-    },
-    {
-      name: "SMS Failed",
-      value: stats.smsFailed,
-      icon: XCircleIcon,
-      color: "bg-orange-500/10 text-orange-400 border-orange-500/20",
-      iconBg: "bg-orange-500/20",
-    },
-  ];
-
-  const appointmentStatCards = [
-    {
-      name: "Today",
-      value: stats.todayAppointments,
-      icon: CalendarDaysIcon,
-      color: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-      iconBg: "bg-amber-500/20",
-    },
-    {
-      name: "This Week",
-      value: stats.weekAppointments,
-      icon: CalendarDaysIcon,
-      color: "bg-lime-500/10 text-lime-400 border-lime-500/20",
-      iconBg: "bg-lime-500/20",
-    },
-    {
-      name: "Pending",
+      label: "Need confirmation",
       value: stats.pendingAppointments,
-      icon: ClockIcon,
-      color: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
-      iconBg: "bg-yellow-500/20",
+      attention: stats.pendingAppointments > 0,
     },
-    {
-      name: "Confirmed",
-      value: stats.confirmedAppointments,
-      icon: CheckCircleIcon,
-      color: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-      iconBg: "bg-blue-500/20",
-    },
-    {
-      name: "In Progress",
-      value: stats.inProgressAppointments,
-      icon: WrenchScrewdriverIcon,
-      color: "bg-primary-500/10 text-primary-400 border-primary-500/20",
-      iconBg: "bg-primary-500/20",
-    },
-    {
-      name: "Completed",
-      value: stats.completedAppointments,
-      icon: CheckCircleIcon,
-      color: "bg-green-500/10 text-green-400 border-green-500/20",
-      iconBg: "bg-green-500/20",
-    },
+    { label: "Confirmed", value: stats.confirmedAppointments },
   ];
 
   return (
-    <div className="space-y-6 mb-6 lg:mb-8">
-      {/* Appointment Stats - Most important for daily operations */}
-      <div>
-        <div className="flex items-center gap-2 mb-3">
-          <CalendarDaysIcon aria-hidden="true" className="h-5 w-5 text-amber-400" />
-          <h3 className="text-lg font-semibold text-white">Appointments</h3>
+    <dl className="grid grid-cols-2 overflow-hidden rounded-lg border border-white/10 bg-gray-900/60 lg:grid-cols-4">
+      {items.map((item, i) => (
+        <div
+          key={item.label}
+          className={clsx(
+            "px-4 py-4 sm:px-5",
+            i % 2 === 1 && "border-l border-white/10",
+            i >= 2 && "border-t border-white/10 lg:border-t-0",
+            i === 2 && "lg:border-l"
+          )}
+        >
+          <dt
+            className={clsx(
+              "flex items-center gap-1.5 text-sm",
+              item.attention ? "text-yellow-300" : "text-gray-400"
+            )}
+          >
+            {item.attention && (
+              <span aria-hidden="true" className="size-1.5 rounded-full bg-yellow-400" />
+            )}
+            {item.label}
+          </dt>
+          <dd className="mt-1 text-2xl font-semibold tabular-nums text-white sm:text-3xl">
+            {fmt(item.value)}
+          </dd>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-          {appointmentStatCards.map((stat) => (
-            <div
-              key={stat.name}
-              className={`rounded-xl border p-3 sm:p-4 backdrop-blur-sm transition-transform motion-reduce:transition-none hover:scale-[1.02] ${stat.color}`}
-            >
-              <div className="flex items-center justify-between gap-2 mb-2">
-                <p className="text-xs sm:text-sm font-medium text-gray-400 leading-tight">
-                  {stat.name}
-                </p>
-                <div className={`rounded-full p-1.5 sm:p-2 shrink-0 ${stat.iconBg}`}>
-                  <stat.icon aria-hidden="true" className="h-4 w-4" />
-                </div>
-              </div>
-              <p className="text-xl sm:text-2xl lg:text-3xl font-bold tabular-nums">
-                {stat.value.toLocaleString()}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Email Campaign Stats */}
-      <div>
-        <div className="flex items-center gap-2 mb-3">
-          <EnvelopeIcon aria-hidden="true" className="h-5 w-5 text-blue-400" />
-          <h3 className="text-lg font-semibold text-white">Email Campaigns</h3>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-          {emailStatCards.map((stat) => (
-            <div
-              key={stat.name}
-              className={`rounded-xl border p-3 sm:p-4 backdrop-blur-sm transition-transform motion-reduce:transition-none hover:scale-[1.02] ${stat.color}`}
-            >
-              <div className="flex items-center justify-between gap-2 mb-2">
-                <p className="text-xs sm:text-sm font-medium text-gray-400 leading-tight">
-                  {stat.name}
-                </p>
-                <div className={`rounded-full p-1.5 sm:p-2 shrink-0 ${stat.iconBg}`}>
-                  <stat.icon aria-hidden="true" className="h-4 w-4" />
-                </div>
-              </div>
-              <p className="text-xl sm:text-2xl lg:text-3xl font-bold tabular-nums">
-                {stat.value.toLocaleString()}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* SMS Campaign Stats */}
-      <div>
-        <div className="flex items-center gap-2 mb-3">
-          <ChatBubbleLeftRightIcon aria-hidden="true" className="h-5 w-5 text-cyan-400" />
-          <h3 className="text-lg font-semibold text-white">SMS Campaigns</h3>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-          {smsStatCards.map((stat) => (
-            <div
-              key={stat.name}
-              className={`rounded-xl border p-3 sm:p-4 backdrop-blur-sm transition-transform motion-reduce:transition-none hover:scale-[1.02] ${stat.color}`}
-            >
-              <div className="flex items-center justify-between gap-2 mb-2">
-                <p className="text-xs sm:text-sm font-medium text-gray-400 leading-tight">
-                  {stat.name}
-                </p>
-                <div className={`rounded-full p-1.5 sm:p-2 shrink-0 ${stat.iconBg}`}>
-                  <stat.icon aria-hidden="true" className="h-4 w-4" />
-                </div>
-              </div>
-              <p className="text-xl sm:text-2xl lg:text-3xl font-bold tabular-nums">
-                {stat.value.toLocaleString()}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+      ))}
+    </dl>
   );
 };
 
-export default DashboardStats;
+interface Row {
+  label: string;
+  value: string;
+  alert?: boolean;
+}
+
+const MetricList = ({
+  title,
+  href,
+  rows,
+}: {
+  title: string;
+  href?: string;
+  rows: Row[];
+}) => (
+  <div>
+    <div className="flex items-center justify-between gap-4">
+      <h3 className="text-sm font-semibold text-white">{title}</h3>
+      {href && (
+      <Link
+        href={href}
+        className="rounded text-xs font-medium text-primary-300 hover:text-primary-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+      >
+        Manage
+      </Link>
+      )}
+    </div>
+    <dl className="mt-2 divide-y divide-white/5">
+      {rows.map((row) => (
+        <div key={row.label} className="flex items-baseline justify-between gap-4 py-2">
+          <dt className="text-sm text-gray-400">{row.label}</dt>
+          <dd
+            className={clsx(
+              "text-sm font-medium tabular-nums",
+              row.alert ? "text-red-400" : "text-white"
+            )}
+          >
+            {row.value}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+);
+
+/** Email and SMS outreach numbers as compact label/value lists. */
+export const OutreachStats = ({ stats }: { stats: DashboardStatsData }) => (
+  <section
+    aria-labelledby="outreach-heading"
+    className="rounded-lg border border-white/10 bg-gray-900/60 px-4 py-4 sm:px-5"
+  >
+    <h2 id="outreach-heading" className="sr-only">
+      Outreach
+    </h2>
+    <div className="space-y-6">
+      <MetricList
+        title="Email"
+        href="/view-campaigns"
+        rows={[
+          {
+            label: "Subscribers",
+            value: `${fmt(stats.activeSubscribers)} active of ${fmt(stats.totalSubscribers)}`,
+          },
+          {
+            label: "Campaigns",
+            value: `${fmt(stats.sentCampaigns)} sent · ${fmt(stats.notSentCampaigns)} draft`,
+          },
+          { label: "Emails delivered", value: fmt(stats.emailsSent) },
+          {
+            label: "Emails failed",
+            value: fmt(stats.emailsFailed),
+            alert: stats.emailsFailed > 0,
+          },
+        ]}
+      />
+      <MetricList
+        title="SMS"
+        rows={[
+          {
+            label: "Campaigns",
+            value: `${fmt(stats.sentSMSCampaigns)} sent of ${fmt(stats.totalSMSCampaigns)}`,
+          },
+          { label: "Messages delivered", value: fmt(stats.smsSent) },
+          {
+            label: "Messages failed",
+            value: fmt(stats.smsFailed),
+            alert: stats.smsFailed > 0,
+          },
+        ]}
+      />
+    </div>
+  </section>
+);

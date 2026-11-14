@@ -63,3 +63,21 @@ export const formatBookingDate = (date: string): string => {
     year: "numeric",
   }).format(new Date(`${date}T12:00:00Z`));
 };
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * Today's Houston calendar day as UTC-midnight bounds [start, end).
+ * Appointment dates are stored as the calendar day at 12:00 UTC, so they fall inside.
+ */
+export const getBusinessDayRange = (now: Date = new Date()) => {
+  const start = new Date(`${getBusinessToday(now)}T00:00:00Z`);
+  return { start, end: new Date(start.getTime() + DAY_MS) };
+};
+
+/** The Houston week (Sunday through Saturday) containing `now`, as UTC-midnight bounds [start, end). */
+export const getBusinessWeekRange = (now: Date = new Date()) => {
+  const today = getBusinessDayRange(now).start;
+  const start = new Date(today.getTime() - today.getUTCDay() * DAY_MS);
+  return { start, end: new Date(start.getTime() + 7 * DAY_MS) };
+};

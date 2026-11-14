@@ -1,7 +1,9 @@
 import { describe, it, expect } from "vitest";
 import {
   formatBookingDate,
+  getBusinessDayRange,
   getBusinessToday,
+  getBusinessWeekRange,
   isSlotInPast,
   timeToMinutes,
 } from "@/lib/utils/bookingTime";
@@ -70,5 +72,27 @@ describe("formatBookingDate", () => {
 
   it("returns an empty string for an empty value", () => {
     expect(formatBookingDate("")).toBe("");
+  });
+});
+
+// Appointment dates are stored as the calendar day at 12:00 UTC.
+describe("getBusinessDayRange", () => {
+  it("covers the Houston calendar day as UTC midnight bounds", () => {
+    const { start, end } = getBusinessDayRange(new Date("2026-11-14T02:00:00Z")); // Fri 8 PM CST
+    expect(start.toISOString()).toBe("2026-11-13T00:00:00.000Z");
+    expect(end.toISOString()).toBe("2026-11-14T00:00:00.000Z");
+  });
+});
+
+describe("getBusinessWeekRange", () => {
+  it("starts on the Houston Sunday and spans seven days", () => {
+    const { start, end } = getBusinessWeekRange(new Date("2026-11-14T02:00:00Z")); // Fri Nov 13 CST
+    expect(start.toISOString()).toBe("2026-11-08T00:00:00.000Z");
+    expect(end.toISOString()).toBe("2026-11-15T00:00:00.000Z");
+  });
+
+  it("treats Sunday evening in Houston as the start of the week", () => {
+    const { start } = getBusinessWeekRange(new Date("2026-11-16T03:00:00Z")); // Sun Nov 15 9 PM CST
+    expect(start.toISOString()).toBe("2026-11-15T00:00:00.000Z");
   });
 });
