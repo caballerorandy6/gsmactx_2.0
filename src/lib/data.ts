@@ -254,9 +254,9 @@ export const features = [
       "Many homeowners and businesses in Cypress, TX have made us their go-to company because we offer quality HVAC services. Our experienced and well-trained technicians will help with the selection of your system by explaining the advantages and disadvantages of your available options. They will provide you with the details you need to make an educated decision suitable for your needs and budget. Once you have made your choice, they will handle the installation work and make sure your unit is working at optimal efficiency. Let us make things easier for you.",
   },
   {
-    name: "Call us at (281) 235-4684 to take advantage of our impeccable heating repair services!",
+    name: "How do you book a service?",
     description:
-      "Book our affordable AC replacement services and other options by calling us now. Our phone operators will gladly answer your questions. You can find our number on our homepage. Let us know how we can help you!",
+      "Call us at (281) 235-4684 to book our impeccable heating repair services, our affordable AC replacement services and our other options. Our phone operators will gladly answer your questions. Let us know how we can help you!",
   },
 ];
 

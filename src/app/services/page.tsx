@@ -3,7 +3,7 @@ import Image from "next/image";
 import Footer from "@/components/layout/Footer";
 import FAQ from "@/components/landing/FAQ";
 import { genPageMetadata } from "@/seo/genPageMetadata";
-import { JsonLdForArticle } from "@/components/seo/JsonLdForArticle";
+import { JsonLdForServiceList } from "@/components/seo/JsonLdForServiceList";
 import { JsonLdForBreadcrumb } from "@/components/seo/JsonLdForBreadcrumb";
 import { JsonLdForFaq } from "@/components/seo/JsonLdForFaq";
 import { JsonLdForLocalBusiness } from "@/components/seo/JsonLdForLocalBusiness";
@@ -148,17 +148,13 @@ export default async function ServicesOverviewPage() {
       </section>
 
       {/* JSON-LD Structured Data */}
-      <JsonLdForArticle
-        url="https://www.gsmactx.com/services"
-        headline="Professional HVAC Services in Cypress & Houston, TX"
-        description="Professional HVAC solutions including air conditioning installation and repair, heating services, attic insulation, and air duct sanitizing in Texas."
-        image="/worker6.avif"
-        datePublished={new Date("2024-01-01").toISOString()}
-        dateModified={new Date().toISOString()}
-        author={{
-          name: "GSM A/C General & Contractor Inc",
-          url: "https://www.gsmactx.com",
-        }}
+      <JsonLdForServiceList
+        url={`${businessInfo.website}/services`}
+        name="HVAC services by GSM A/C & General Contractor INC."
+        services={allServices.map((service) => ({
+          name: service.name,
+          url: `${businessInfo.website}${service.href}`,
+        }))}
       />
       <JsonLdForBreadcrumb
         itemList={[
