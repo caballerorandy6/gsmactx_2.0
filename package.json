@@ -27,7 +27,7 @@
     "@prisma/client": "^7.10.1",
     "@react-email/components": "^1.0.7",
     "@react-email/render": "^2.0.4",
-    "@vercel/blob": "^2.2.0",
+    "@vercel/blob": "^2.9.0",
     "@vercel/speed-insights": "^1.2.0",
     "bcrypt": "^6.0.0",
     "clsx": "^2.1.1",
@@ -86,5 +86,10 @@
     "last 2 Firefox versions",
     "last 2 Safari versions",
     "last 2 Edge versions"
-  ]
+  ],
+  "overrides": {
+    "@vercel/cli-config": {
+      "zod": "^4.6.7"
+    }
+  }
 }
