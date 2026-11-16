@@ -3,6 +3,7 @@
 import { Resend } from "resend";
 import { UserFormData, UserSchema } from "@/lib/validations/zod";
 import { ActionResult } from "@/lib/types";
+import { ensureSent } from "@/lib/email/ensureSent";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -81,7 +82,7 @@ export async function sendEmailContactAction(
       to: ["contactus@gsmactx.com"],
       subject: `New message from ${firstName} ${lastName}`,
       text: `You have received a new message from ${firstName} ${lastName}.\n\nCustomer request details:\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`,
-    });
+    }).then(ensureSent);
 
     return { success: true, message: "Email sent successfully." };
   } catch (error) {

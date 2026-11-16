@@ -6,6 +6,7 @@ import { Resend } from "resend";
 import { randomUUID } from "crypto";
 import bcrypt from "bcrypt";
 import { ResetPasswordSchema } from "@/lib/validations/zod";
+import { ensureSent } from "@/lib/email/ensureSent";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM_EMAIL = process.env.FROM_EMAIL || "GSM A/C <no-reply@gsmactx.com>";
@@ -106,7 +107,7 @@ export async function requestPasswordResetAction(
           </body>
         </html>
       `,
-    });
+    }).then(ensureSent);
 
     return {
       success: true,

@@ -8,6 +8,7 @@ import { SERVICE_TYPE_LABELS } from "@/lib/interfaces";
 import { formatPhone, formatPhoneForTel } from "@/lib/utils/phone";
 import { escapeHtml } from "@/lib/utils/escapeHtml";
 import { after } from "next/server";
+import { ensureSent } from "@/lib/email/ensureSent";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -181,7 +182,7 @@ export async function createPublicAppointmentAction(
                 </div>
               </div>
             `,
-          }),
+          }).then(ensureSent),
           // Notification email to admin
           resend.emails.send({
             from: "GSM A/C <no-reply@gsmactx.com>",
@@ -215,7 +216,7 @@ export async function createPublicAppointmentAction(
                 </div>
               </div>
             `,
-          }),
+          }).then(ensureSent),
         ]);
         console.log("✅ Appointment confirmation emails sent successfully");
       } catch (error) {
