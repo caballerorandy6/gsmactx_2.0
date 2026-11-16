@@ -1,5 +1,9 @@
-import "dotenv/config";
+import { config } from "dotenv";
 import { defineConfig } from "prisma/config";
+
+// .env.local points to the local dev database (RAN-77); production
+// credentials only exist in Vercel, where neither file is present.
+config({ path: [".env.local", ".env"], quiet: true });
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
