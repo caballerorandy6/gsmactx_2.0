@@ -14,7 +14,7 @@ const NotFound = async () => {
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <Link
             href="/#home"
-            className="rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+            className="inline-flex min-h-11 items-center rounded-md bg-primary-600 px-4 py-3 text-sm font-semibold text-white shadow-xs hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
           >
             Go back home
           </Link>

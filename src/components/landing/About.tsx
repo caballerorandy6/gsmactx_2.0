@@ -3,6 +3,10 @@
 import Image from "next/image";
 import useSectionObserver from "@/hooks/useSectionObserver";
 
+// Rendered width of each About photo: 2 columns on phones, 4 from sm,
+// 2 in the side column from lg (measured: ~180, ~170, 240–264px).
+const WORKER_SIZES = "(min-width: 1024px) 264px, (min-width: 640px) 25vw, 50vw";
+
 const About = () => {
   const ref = useSectionObserver({ sectionName: "About" });
 
@@ -68,6 +72,7 @@ const About = () => {
                   <Image
                     width={560}
                     height={560}
+                    sizes={WORKER_SIZES}
                     alt="HVAC technician performing air conditioning maintenance in Cypress, TX"
                     src="/worker.avif"
                     className="block size-full object-cover"
@@ -82,6 +87,7 @@ const About = () => {
                   <Image
                     width={560}
                     height={560}
+                    sizes={WORKER_SIZES}
                     alt="Professional AC installation service by GSM team"
                     src="/worker2.avif"
                     className="block size-full object-cover"
@@ -96,6 +102,7 @@ const About = () => {
                   <Image
                     width={560}
                     height={560}
+                    sizes={WORKER_SIZES}
                     alt="Heating system repair specialist working on HVAC unit"
                     src="/worker4.avif"
                     className="block size-full object-cover"
@@ -110,6 +117,7 @@ const About = () => {
                   <Image
                     width={560}
                     height={560}
+                    sizes={WORKER_SIZES}
                     alt="Licensed HVAC contractor inspecting air duct system"
                     src="/worker6.avif"
                     className="block size-full object-cover"
