@@ -94,7 +94,7 @@ const AdminDashboard = ({
       {stats ? (
         <>
           <AppointmentSummary stats={stats} />
-          <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <UpcomingAppointments
                 appointments={dashboardStats?.upcomingAppointments ?? []}
@@ -113,11 +113,30 @@ const AdminDashboard = ({
       )}
 
       {/* Campaigns Section */}
-      {campaigns.length > 0 && (
+      {campaigns.length === 0 ? (
+        <section
+          aria-labelledby="campaigns-heading"
+          className="rounded-lg border border-dashed border-white/15 px-4 py-8 text-center sm:px-6"
+        >
+          <h2 id="campaigns-heading" className="text-base font-semibold text-white">
+            No email campaigns yet
+          </h2>
+          <p className="mt-1 text-sm text-gray-400">
+            Campaigns you create will show up here with their delivery status.
+          </p>
+          <Link
+            href="/create-campaign"
+            className="mt-4 inline-flex items-center gap-1.5 rounded-md border border-white/15 px-3.5 py-2 text-sm font-semibold text-white hover:bg-white/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+          >
+            <PlusIcon aria-hidden="true" className="size-4" />
+            New campaign
+          </Link>
+        </section>
+      ) : (
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <h2 className="text-lg font-semibold text-white">
-              Email Campaigns
+              Email campaigns
             </h2>
 
             {/* Inline Filter Buttons */}
@@ -136,7 +155,7 @@ const AdminDashboard = ({
                   )}
                 >
                   <filter.icon aria-hidden="true" className="h-4 w-4" />
-                  <span className="hidden sm:inline">{filter.label}</span>
+                  <span>{filter.label}</span>
                   <span className="tabular-nums bg-white/10 px-1.5 py-0.5 rounded text-xs">
                     {filter.count}
                   </span>
@@ -146,10 +165,7 @@ const AdminDashboard = ({
           </div>
 
           {/* Campaigns List */}
-          <CampaignsListDashboard
-            campaigns={filteredCampaigns}
-            totalCount={campaigns.length}
-          />
+          <CampaignsListDashboard campaigns={filteredCampaigns} />
         </div>
       )}
     </div>
