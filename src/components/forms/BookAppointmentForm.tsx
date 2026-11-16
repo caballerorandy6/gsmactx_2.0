@@ -21,8 +21,6 @@ import {
   CalendarDaysIcon,
   ClockIcon,
   UserIcon,
-  EnvelopeIcon,
-  PhoneIcon,
   MapPinIcon,
   WrenchScrewdriverIcon,
   CheckCircleIcon,
@@ -260,7 +258,7 @@ const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps
         {/* Service Selection */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <WrenchScrewdriverIcon className="h-5 w-5 text-primary-400" />
+            <WrenchScrewdriverIcon className="h-5 w-5 text-primary-400" aria-hidden="true" />
             <h3 className="text-lg font-semibold text-white">
               Select Your Service
             </h3>
@@ -316,7 +314,7 @@ const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps
         {/* Date & Time */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <CalendarDaysIcon className="h-5 w-5 text-primary-400" />
+            <CalendarDaysIcon className="h-5 w-5 text-primary-400" aria-hidden="true" />
             <h3 className="text-lg font-semibold text-white">
               Choose Date & Time
             </h3>
@@ -327,7 +325,6 @@ const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps
                 htmlFor="scheduledDate"
                 className="block text-sm font-medium text-gray-300 mb-2"
               >
-                <CalendarDaysIcon className="h-4 w-4 inline mr-1" />
                 Preferred Date *
               </label>
               <input
@@ -347,10 +344,10 @@ const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                <ClockIcon className="h-4 w-4 inline mr-1" />
+              {/* Not a <label>: each slot group below is its own fieldset. */}
+              <p className="block text-sm font-medium text-gray-300 mb-2">
                 Preferred Time *
-              </label>
+              </p>
               {!selectedDate ? (
                 <p className="text-gray-500 text-sm py-4 text-center border border-dashed border-white/10 rounded-lg">
                   Select a date first to see available times
@@ -381,18 +378,17 @@ const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps
                         ) : (
                           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                             {group.slots.map((time) => {
-                              const isUnavailable = isSlotBooked(time) || isSlotInPast(time);
-                              const isSelected = selectedTime === time;
+                              const isBooked = isSlotBooked(time);
+                              const isPast = !isBooked && isSlotInPast(time);
+                              const isUnavailable = isBooked || isPast;
 
                               return (
                                 <label
                                   key={time}
-                                  className={`relative flex items-center justify-center rounded-lg border p-3 text-sm font-medium tabular-nums transition-colors has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-400 ${
+                                  className={`relative flex min-h-12 items-center justify-center rounded-lg border px-2 py-3 text-sm tabular-nums transition-colors has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-400 ${
                                     isUnavailable
-                                      ? "border-white/5 text-gray-600 line-through cursor-not-allowed"
-                                      : isSelected
-                                        ? "border-primary-500 bg-primary-500/20 text-white ring-2 ring-primary-500"
-                                        : "border-white/10 bg-gray-900/50 text-white cursor-pointer hover:border-white/20 hover:bg-gray-800"
+                                      ? `cursor-not-allowed border-white/5 text-gray-500 ${isBooked ? "line-through" : ""}`
+                                      : "cursor-pointer border-white/10 bg-gray-900/50 text-white hover:bg-gray-900 has-checked:border-primary-500 has-checked:bg-primary-500/10 has-checked:font-semibold"
                                   }`}
                                 >
                                   <input
@@ -403,7 +399,8 @@ const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps
                                     className="sr-only"
                                   />
                                   {time}
-                                  {isUnavailable && <span className="sr-only"> (unavailable)</span>}
+                                  {isBooked && <span className="sr-only"> (booked)</span>}
+                                  {isPast && <span className="sr-only"> (too soon to book)</span>}
                                 </label>
                               );
                             })}
@@ -428,7 +425,7 @@ const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps
         {/* Contact Information */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <UserIcon className="h-5 w-5 text-primary-400" />
+            <UserIcon className="h-5 w-5 text-primary-400" aria-hidden="true" />
             <h3 className="text-lg font-semibold text-white">
               Your Information
             </h3>
@@ -439,7 +436,6 @@ const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps
                 htmlFor="clientName"
                 className="block text-sm font-medium text-gray-300 mb-2"
               >
-                <UserIcon className="h-4 w-4 inline mr-1" />
                 Full Name *
               </label>
               <input
@@ -464,7 +460,6 @@ const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps
                 htmlFor="clientEmail"
                 className="block text-sm font-medium text-gray-300 mb-2"
               >
-                <EnvelopeIcon className="h-4 w-4 inline mr-1" />
                 Email *
               </label>
               <input
@@ -490,7 +485,6 @@ const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps
                 htmlFor="clientPhone"
                 className="block text-sm font-medium text-gray-300 mb-2"
               >
-                <PhoneIcon className="h-4 w-4 inline mr-1" />
                 Phone *
               </label>
               <input
@@ -515,7 +509,7 @@ const BookAppointmentForm = ({ initialService, offer }: BookAppointmentFormProps
         {/* Address */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <MapPinIcon className="h-5 w-5 text-primary-400" />
+            <MapPinIcon className="h-5 w-5 text-primary-400" aria-hidden="true" />
             <h3 className="text-lg font-semibold text-white">
               Service Location
             </h3>
