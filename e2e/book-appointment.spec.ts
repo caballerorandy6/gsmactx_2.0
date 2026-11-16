@@ -53,9 +53,12 @@ test.describe("Book Appointment Page", () => {
     const dateInput = page.locator("#scheduledDate");
     await expect(dateInput).toBeVisible();
 
-    // Should have min date set to today
+    // Should have min date set to today in Houston (the business time zone),
+    // not UTC, which is already tomorrow after 6 PM Central
     const minDate = await dateInput.getAttribute("min");
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "America/Chicago",
+    }).format(new Date());
     expect(minDate).toBe(today);
   });
 
