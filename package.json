@@ -16,6 +16,7 @@
     "lighthouse": "lighthouse https://www.gsmactx.com --output html --output-path ./lighthouse-report.html --view",
     "lighthouse:local": "lighthouse http://localhost:3000 --output html --output-path ./lighthouse-report.html --view",
     "seed": "tsx prisma/seed.ts",
+    "seed:dev": "tsx prisma/seed.dev.ts",
     "db:push": "prisma db push",
     "db:studio": "prisma studio"
   },

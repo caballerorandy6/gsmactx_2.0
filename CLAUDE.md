@@ -136,10 +136,12 @@ npm run test:e2e         # Playwright E2E tests (starts its own dev server on po
 E2E_BASE_URL=http://localhost:3011 npm run test:e2e  # test an already running dev server (Next allows one `next dev` per folder)
 npm run test:e2e:ui      # Playwright with UI
 
-# Database
-npm run db:push          # Push Prisma schema to DB
+# Database (.env.local points to the local Postgres 17 `gsmactx_dev`; production URLs live only in Vercel)
+createdb gsmactx_dev && npx prisma migrate deploy && npm run seed:dev   # fresh local DB
+npm run seed:dev         # Wipe and reseed with fake data (dev@gsmactx.test / DevAdmin123!); refuses production
 npm run db:studio        # Open Prisma Studio GUI
-npm run seed             # Seed database with initial data
+npm run seed             # Real admins + real subscriber emails: do NOT use for dev
+# Schema changes: `npx prisma migrate dev --name x` locally. Never `db push` against production.
 
 # Performance
 npm run lighthouse       # Audit production site
