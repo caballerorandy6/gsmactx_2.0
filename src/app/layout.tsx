@@ -90,7 +90,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} scroll-smooth!`}
+      className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}
+      // Lets Next turn smooth scrolling off during route changes, so new pages
+      // start at the top instead of animating there.
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <head>

@@ -76,13 +76,16 @@ const TestimonialsCarousel = ({ reviews }: TestimonialsCarouselProps) => {
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-white truncate">
+                    {/* A name, not a section heading: keeps the h2 → h3 outline intact. */}
+                    <p className="font-semibold text-white truncate">
                       {review.author_name}
-                    </h4>
+                    </p>
                     <div className="flex gap-0.5">
+                      <span className="sr-only">Rated {review.rating} out of 5</span>
                       {Array.from({ length: 5 }).map((_, i) => (
                         <StarIcon
                           key={i}
+                          aria-hidden="true"
                           className={`h-4 w-4 ${
                             i < review.rating
                               ? "text-yellow-400"
@@ -126,19 +129,25 @@ const TestimonialsCarousel = ({ reviews }: TestimonialsCarouselProps) => {
         </div>
       </div>
 
-      {/* Dots Navigation */}
-      <div className="flex justify-center gap-2 mt-8 h-2">
+      {/* Dots Navigation: 24px hit area around each small dot */}
+      <div className="flex justify-center gap-1 mt-8 h-6">
         {scrollSnaps.map((_, index) => (
           <button
             key={index}
             onClick={() => scrollTo(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              index === selectedIndex
-                ? "bg-primary-500 w-6"
-                : "bg-gray-600 hover:bg-gray-500"
-            }`}
+            className="group flex h-6 min-w-6 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-primary-400"
             aria-label={`Go to slide ${index + 1}`}
-          />
+            aria-current={index === selectedIndex ? "true" : undefined}
+          >
+            <span
+              aria-hidden="true"
+              className={`h-2 rounded-full transition-all duration-300 ${
+                index === selectedIndex
+                  ? "w-6 bg-primary-500"
+                  : "w-2 bg-gray-600 group-hover:bg-gray-500"
+              }`}
+            />
+          </button>
         ))}
       </div>
     </div>

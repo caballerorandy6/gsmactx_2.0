@@ -152,9 +152,9 @@ const BookAppointmentPage = async ({ searchParams }: BookAppointmentPageProps) =
             </p>
             <Link
               href="tel:+12812354684"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-white/10 text-white font-semibold hover:bg-white/20 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 bg-white/10 text-white font-semibold hover:bg-white/20 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
             >
-              <PhoneIcon className="h-5 w-5" />
+              <PhoneIcon className="h-5 w-5" aria-hidden="true" />
               Call (281) 235-4684
             </Link>
           </div>
