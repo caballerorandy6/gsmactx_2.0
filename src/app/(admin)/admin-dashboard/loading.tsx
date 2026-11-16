@@ -21,7 +21,7 @@ export default function DashboardLoading() {
         ))}
       </div>
 
-      <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-3">
         <div className="rounded-lg border border-white/10 bg-gray-900/60 lg:col-span-2">
           <div className="border-b border-white/10 px-4 py-3 sm:px-5">
             <Skeleton className="h-5 w-48" />
