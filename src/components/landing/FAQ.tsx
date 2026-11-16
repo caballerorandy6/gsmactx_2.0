@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import useSectionObserver from "@/hooks/useSectionObserver";
 
@@ -15,69 +14,17 @@ interface FAQProps {
 
 export default function FAQ({ faqs }: FAQProps) {
   const ref = useSectionObserver({ sectionName: "FAQ" });
-  const shouldReduceMotion = useReducedMotion();
-
-  // Spring-based animation for natural feel
-  // Using GPU-accelerated properties only (opacity, transform)
-  const springTransition = {
-    type: "spring" as const,
-    stiffness: 300,
-    damping: 24,
-  };
-
-  const fadeInUp = {
-    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
-    },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
-    visible: {
-      opacity: 1,
-      transition: shouldReduceMotion
-        ? { duration: 0 }
-        : {
-            staggerChildren: 0.1,
-            delayChildren: 0.2,
-          },
-    },
-  };
-
-  const itemVariant = {
-    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
-    },
-  };
 
   return (
     <section ref={ref} id="faq" className="bg-gray-900">
       <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="mx-auto max-w-4xl"
-        >
-          <motion.h2
-            variants={fadeInUp}
-            className="heading-section"
-          >
+        <div className="mx-auto max-w-4xl">
+          <h2 className="heading-section">
             Frequently Asked Questions
-          </motion.h2>
-          <motion.div
-            variants={staggerContainer}
-            className="mt-12 divide-y divide-white/10"
-          >
+          </h2>
+          <div className="mt-12 divide-y divide-white/10">
             {faqs.map((faq) => (
-              <motion.div key={faq.question} variants={itemVariant}>
+              <div className="reveal" key={faq.question}>
                 {/* Native details: answers stay in the HTML even when closed */}
                 <details className="group py-6">
                   <summary className="flex w-full cursor-pointer list-none items-start justify-between text-left text-white transition-colors hover:text-gray-300 [&::-webkit-details-marker]:hidden">
@@ -93,10 +40,10 @@ export default function FAQ({ faqs }: FAQProps) {
                     {faq.answer}
                   </p>
                 </details>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );

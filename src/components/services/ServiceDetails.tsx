@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import {
   ArrowRightIcon,
@@ -13,7 +12,6 @@ import { allServices, servicePageContent } from "@/lib/data";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
 
 const ServiceDetails = ({ id, imageSrc, array }: ServiceDetailsProps) => {
-  const shouldReduceMotion = useReducedMotion();
   const content = servicePageContent[id];
   const title = content.heading;
   const serviceName =
@@ -22,67 +20,13 @@ const ServiceDetails = ({ id, imageSrc, array }: ServiceDetailsProps) => {
     allServices.filter((service) => service.id === relatedId),
   );
 
-  // Spring-based animation for natural feel
-  // Using GPU-accelerated properties only (opacity, transform)
-  const springTransition = {
-    type: "spring" as const,
-    stiffness: 300,
-    damping: 24,
-  };
-
-  const fadeInUp = {
-    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
-    },
-  };
-
-  const fadeInScale = {
-    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
-    },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
-    visible: {
-      opacity: 1,
-      transition: shouldReduceMotion
-        ? { duration: 0 }
-        : {
-            staggerChildren: 0.15,
-            delayChildren: 0.2,
-          },
-    },
-  };
-
-  const itemVariant = {
-    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
-    },
-  };
-
   return (
     <section
       id={id}
       className="overflow-hidden bg-white pt-32 pb-24 sm:pt-36 sm:pb-32 custom-blue"
     >
       <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8 flex flex-col items-center">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          className="max-w-3xl text-center"
-        >
+        <div className="max-w-3xl text-center">
           <Breadcrumbs
             className="mb-6"
             items={[
@@ -95,13 +39,9 @@ const ServiceDetails = ({ id, imageSrc, array }: ServiceDetailsProps) => {
           <p className="mt-4 text-lg/8 text-gray-300 text-pretty">
             {content.tagline}
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInScale}
+        <div
           className="relative w-full h-72 sm:h-88 md:h-104 my-8 sm:my-10 rounded-2xl overflow-hidden shadow-2xl"
         >
           {/* Files are pre-exported at 800w and 1536w, so the browser picks via srcSet
@@ -121,17 +61,11 @@ const ServiceDetails = ({ id, imageSrc, array }: ServiceDetailsProps) => {
             className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent"
             aria-hidden="true"
           />
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="mt-6 w-full max-w-2xl space-y-10"
-        >
+        <div className="mt-6 w-full max-w-2xl space-y-10">
           {array.map((item, index) => (
-            <motion.div key={index} variants={itemVariant}>
+            <div className="reveal" key={index}>
               {item.name && <h2 className="heading-sub mb-3">{item.name}</h2>}
               <div className="space-y-4">
                 {item.description.split("\n\n").map((paragraph) => (
@@ -143,9 +77,9 @@ const ServiceDetails = ({ id, imageSrc, array }: ServiceDetailsProps) => {
                   </p>
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
-          <motion.div variants={itemVariant}>
+          <div className="reveal">
             <h2 className="heading-sub mb-4">{content.signsHeading}</h2>
             <ul role="list" className="space-y-3">
               {content.signs.map((sign) => (
@@ -161,7 +95,7 @@ const ServiceDetails = ({ id, imageSrc, array }: ServiceDetailsProps) => {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
           <div className="flex flex-col gap-3 border-t border-white/10 pt-8 sm:flex-row">
             <Link
               href="/book-appointment"
@@ -199,7 +133,7 @@ const ServiceDetails = ({ id, imageSrc, array }: ServiceDetailsProps) => {
               ))}
             </ul>
           </nav>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

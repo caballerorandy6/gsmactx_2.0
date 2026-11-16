@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import { useRef, useEffect, useState, type ReactNode } from "react";
 import useSectionObserver from "@/hooks/useSectionObserver";
 
@@ -11,7 +10,6 @@ interface TestimonialsProps {
 
 const Testimonials = ({ reviewsSlot }: TestimonialsProps) => {
   const ref = useSectionObserver({ sectionName: "Testimonials" });
-  const shouldReduceMotion = useReducedMotion();
   const [isVideoVisible, setIsVideoVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -41,77 +39,22 @@ const Testimonials = ({ reviewsSlot }: TestimonialsProps) => {
     }
   }, [isVideoVisible]);
 
-  // Spring-based animation for natural feel
-  // Using GPU-accelerated properties only (opacity, transform)
-  const springTransition = {
-    type: "spring" as const,
-    stiffness: 300,
-    damping: 24,
-  };
-
-  const fadeInUp = {
-    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
-    },
-  };
-
-  const fadeIn = {
-    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
-    visible: {
-      opacity: 1,
-      transition: shouldReduceMotion ? { duration: 0 } : { duration: 0.5 },
-    },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
-    visible: {
-      opacity: 1,
-      transition: shouldReduceMotion
-        ? { duration: 0 }
-        : {
-            staggerChildren: 0.2,
-            delayChildren: 0.1,
-          },
-    },
-  };
-
   return (
     <section
       ref={ref}
       id="testimonials"
       className="py-24 sm:py-32 mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8"
     >
-      <motion.h2
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={fadeInUp}
-        className="mt-2 max-w-lg heading-section"
-      >
+      <h2 className="mt-2 max-w-lg heading-section">
         What our customers say?
-      </motion.h2>
+      </h2>
 
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={fadeIn}
-      >
+      <div>
         {reviewsSlot}
-      </motion.div>
+      </div>
 
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={staggerContainer}
-        className="flex flex-col xl:flex-row justify-between gap-8 items-center rounded-r-4xl"
-      >
-        <motion.div variants={fadeInUp} className="xl:w-1/2">
+      <div className="flex flex-col xl:flex-row justify-between gap-8 items-center rounded-r-4xl">
+        <div className="xl:w-1/2">
           <h3 className="heading-sub">
             Committed to Excellence: Our Clients&apos; Satisfaction Speaks for
             Itself
@@ -133,10 +76,9 @@ const Testimonials = ({ reviewsSlot }: TestimonialsProps) => {
             peace of mind are our top priorities, and we work every day to live
             up to that commitment.
           </p>
-        </motion.div>
-        <motion.div
+        </div>
+        <div
           ref={videoContainerRef}
-          variants={fadeInUp}
           className="w-full xl:w-1/2 mt-20"
         >
           {isVideoVisible ? (
@@ -167,8 +109,8 @@ const Testimonials = ({ reviewsSlot }: TestimonialsProps) => {
               aria-hidden="true"
             />
           )}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 };

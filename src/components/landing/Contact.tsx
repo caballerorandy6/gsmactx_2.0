@@ -1,7 +1,6 @@
 "use client";
 
 import { useTransition } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,48 +20,8 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 export default function Contact() {
   const ref = useSectionObserver({ sectionName: "Contact" });
-  const shouldReduceMotion = useReducedMotion();
   const [isPending, startTransition] = useTransition();
   const { executeRecaptcha } = useGoogleReCaptcha();
-
-  // Spring-based animation for natural feel
-  // Using GPU-accelerated properties only (opacity, transform)
-  const springTransition = {
-    type: "spring" as const,
-    stiffness: 300,
-    damping: 24,
-  };
-
-  const fadeInUp = {
-    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
-    },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
-    visible: {
-      opacity: 1,
-      transition: shouldReduceMotion
-        ? { duration: 0 }
-        : {
-            staggerChildren: 0.1,
-            delayChildren: 0.2,
-          },
-    },
-  };
-
-  const itemVariant = {
-    hidden: shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -20 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: shouldReduceMotion ? { duration: 0 } : springTransition,
-    },
-  };
 
   const {
     register,
@@ -118,13 +77,7 @@ export default function Contact() {
   return (
     <section id="contact" ref={ref} className="relative isolate bg-gray-900">
       <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="relative px-6 pt-24 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48"
-        >
+        <div className="relative px-6 pt-24 pb-20 sm:pt-32 lg:static lg:px-8 lg:py-48">
           <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
             <div className="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden lg:w-1/2" aria-hidden="true">
               <svg className="absolute inset-0 size-full mask-[radial-gradient(100%_100%_at_top_right,white,transparent)] stroke-gray-700">
@@ -164,28 +117,19 @@ export default function Contact() {
                 />
               </div>
             </div>
-            <motion.h2
-              variants={fadeInUp}
-              className="heading-section"
-            >
+            <h2 className="heading-section">
               Get in touch
-            </motion.h2>
-            <motion.p
-              variants={fadeInUp}
-              className="mt-6 text-base/7 text-gray-300"
-            >
+            </h2>
+            <p className="mt-6 text-base/7 text-gray-300">
               Call now to schedule an appointment. At GSM A/C & General
               Contractor INC., we take pride in offering quality HVAC services
               suitable for residential and commercial projects. We can install
               and repair a wide variety of AC, HVAC, and heating units. We can
               also clean air ducts and insulate attics. Quality assistance is a
               phone call away!
-            </motion.p>
-            <motion.div
-              variants={staggerContainer}
-              className="mt-10 space-y-4 text-base/7 text-gray-300"
-            >
-              <motion.div variants={itemVariant} className="flex gap-x-4">
+            </p>
+            <div className="mt-10 space-y-4 text-base/7 text-gray-300">
+              <div className="reveal flex gap-x-4">
                 <div className="flex-none">
                   <span className="sr-only">Address</span>
                   <BuildingOffice2Icon className="h-7 w-6 text-gray-400" />
@@ -205,8 +149,8 @@ export default function Contact() {
                     {businessInfo.address.zip}
                   </a>
                 </address>
-              </motion.div>
-              <motion.div variants={itemVariant} className="flex gap-x-4">
+              </div>
+              <div className="reveal flex gap-x-4">
                 <div className="flex-none">
                   <span className="sr-only">Telephone</span>
                   <PhoneIcon className="h-7 w-6 text-gray-400" />
@@ -219,8 +163,8 @@ export default function Contact() {
                     (281) 235-4684
                   </Link>
                 </div>
-              </motion.div>
-              <motion.div variants={itemVariant} className="flex gap-x-4">
+              </div>
+              <div className="reveal flex gap-x-4">
                 <div className="flex-none">
                   <span className="sr-only">Email</span>
                   <EnvelopeIcon className="h-7 w-6 text-gray-400" />
@@ -233,24 +177,17 @@ export default function Contact() {
                     contactus@gsmactx.com
                   </Link>
                 </div>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </div>
-        </motion.div>
-        <motion.form
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
+        </div>
+        <form
           onSubmit={handleSubmit(onSubmit)}
           noValidate
           className="px-6 pt-20 pb-24 sm:pb-32 lg:px-8 lg:py-48"
         >
           <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
-            <motion.div
-              variants={staggerContainer}
-              className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2"
-            >
+            <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
               <div>
                 <label
                   htmlFor="firstName"
@@ -389,12 +326,9 @@ export default function Contact() {
                   />
                 </div>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              variants={fadeInUp}
-              className="mt-6 flex items-center gap-x-3"
-            >
+            <div className="mt-6 flex items-center gap-x-3">
               <input
                 {...register("subscribe")}
                 id="subscribe"
@@ -408,8 +342,8 @@ export default function Contact() {
               >
                 Subscribe to our newsletter
               </label>
-            </motion.div>
-            <motion.div variants={fadeInUp} className="mt-4">
+            </div>
+            <div className="mt-4">
               <p className="text-xs text-gray-400">
                 This site is protected by reCAPTCHA and the Google{" "}
                 <Link
@@ -431,8 +365,8 @@ export default function Contact() {
                 </Link>{" "}
                 apply.
               </p>
-            </motion.div>
-            <motion.div variants={fadeInUp} className="mt-8 flex justify-end">
+            </div>
+            <div className="mt-8 flex justify-end">
               <button
                 type="submit"
                 disabled={isPending}
@@ -440,9 +374,9 @@ export default function Contact() {
               >
                 {isPending ? "Sending…" : "Send Message"}
               </button>
-            </motion.div>
+            </div>
           </div>
-        </motion.form>
+        </form>
       </div>
     </section>
   );
