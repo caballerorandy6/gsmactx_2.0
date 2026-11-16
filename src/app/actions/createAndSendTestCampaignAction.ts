@@ -8,6 +8,7 @@ import { cookies } from "next/headers";
 import { put } from "@vercel/blob";
 import { renderCampaignEmail } from "@/lib/email/emailRenderer";
 import { TEST_RECIPIENTS } from "@/lib/email/testRecipients";
+import { ensureSent } from "@/lib/email/ensureSent";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -114,7 +115,7 @@ export async function createAndSendTestCampaignAction(
     );
 
     // Send test emails immediately
-    await resend.batch.send(emailBatch);
+    await resend.batch.send(emailBatch).then(ensureSent);
 
     return {
       success: true,

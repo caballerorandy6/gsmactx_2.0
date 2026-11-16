@@ -10,6 +10,7 @@ import { randomUUID } from "crypto";
 import { renderCampaignEmail } from "@/lib/email/emailRenderer";
 import { after } from "next/server";
 import { notifyAdminsOfCompletion } from "@/lib/email/notifyAdminsOfCompletion";
+import { ensureSent } from "@/lib/email/ensureSent";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const DAILY_LIMIT = 100; // Resend free tier limit
@@ -304,7 +305,7 @@ export async function sendCampaignBatchAction(
       console.log(`📤 Sending batch via Resend...`);
 
       const emailsToSend = emailBatch.map((item) => item.email);
-      await resend.batch.send(emailsToSend);
+      await resend.batch.send(emailsToSend).then(ensureSent);
 
       // Mark all as sent (Resend batch doesn't provide per-email status in free tier)
       await prisma.campaignEmailLog.updateMany({

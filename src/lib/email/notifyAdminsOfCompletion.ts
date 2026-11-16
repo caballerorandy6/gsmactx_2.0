@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { prisma } from "@/lib/db/prisma";
 import { buildCampaignCompletedEmail } from "@/lib/email/campaignCompletedEmail";
+import { ensureSent } from "@/lib/email/ensureSent";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM_EMAIL = process.env.FROM_EMAIL || "GSMACTX <no-reply@gsmactx.com>";
@@ -41,7 +42,7 @@ export async function notifyAdminsOfCompletion(campaign: CompletedCampaign) {
       });
 
       try {
-        await resend.emails.send({ from: FROM_EMAIL, to: admin.email, subject, html });
+        await resend.emails.send({ from: FROM_EMAIL, to: admin.email, subject, html }).then(ensureSent);
       } catch (error) {
         console.error(`Failed to notify admin ${admin.email}:`, error);
       }

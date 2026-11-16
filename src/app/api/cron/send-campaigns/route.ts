@@ -4,6 +4,7 @@ import { Resend } from "resend";
 import { render } from "@react-email/components";
 import CampaignEmailTemplate from "@/components/admin/campaigns/CampaignEmailPreview";
 import { notifyAdminsOfCompletion } from "@/lib/email/notifyAdminsOfCompletion";
+import { ensureSent } from "@/lib/email/ensureSent";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const DAILY_LIMIT = 100;
@@ -134,7 +135,7 @@ export async function GET(request: Request) {
             to: log.subscriber.email,
             subject: campaign.subject,
             html: emailHtml,
-          });
+          }).then(ensureSent);
 
           // Update log status
           await prisma.campaignEmailLog.update({
