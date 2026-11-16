@@ -26,7 +26,7 @@ export function GoogleReviewsSkeleton() {
         ))}
       </div>
       {/* Same height as the carousel dots row, so nothing shifts on swap */}
-      <div className="mt-8 h-2" aria-hidden="true" />
+      <div className="mt-8 h-6" aria-hidden="true" />
     </div>
   );
 }
