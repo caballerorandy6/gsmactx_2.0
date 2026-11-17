@@ -240,6 +240,25 @@ export default function Footer() {
             {`© ${new Date().getFullYear()} GSM A/C & General Contractor INC.`}
           </p>
           <p className="text-xs text-gray-400">All rights reserved.</p>
+          <p className="text-xs text-gray-400">
+            <span className="block sm:inline">
+              {businessInfo.license.issuerShort} Licensed{" "}
+              {businessInfo.license.type}
+            </span>
+            <span className="hidden sm:inline"> · </span>
+            Lic.{" "}
+            <a
+              href={businessInfo.license.verifyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-sm font-semibold tabular-nums text-gray-300 underline underline-offset-2 hover:text-white transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+            >
+              #{businessInfo.license.number}
+              <span className="sr-only">
+                {" "}(verify on the {businessInfo.license.issuer} website, opens in a new tab)
+              </span>
+            </a>
+          </p>
           <p className="mt-4 text-xs text-gray-400">
             Developed by{" "}
             <Link

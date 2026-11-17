@@ -1,3 +1,5 @@
+import { businessInfo } from "@/lib/data";
+
 interface OpeningHours {
   dayOfWeek: string;
   opens: string;
@@ -146,6 +148,20 @@ export const JsonLdForLocalBusiness = ({
       name: area,
     }));
   }
+
+  // State contractor license (TDLR), so search engines can read it
+  const { license } = businessInfo;
+  jsonLd.hasCredential = {
+    "@type": "EducationalOccupationalCredential",
+    credentialCategory: "license",
+    name: `${license.type} License`,
+    identifier: license.number,
+    recognizedBy: {
+      "@type": "Organization",
+      name: license.issuer,
+      url: license.issuerUrl,
+    },
+  };
 
   // Add social profiles if provided (Facebook, Google Business, etc.)
   if (sameAs && sameAs.length > 0) {

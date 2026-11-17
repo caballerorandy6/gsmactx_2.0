@@ -35,6 +35,7 @@ export function GET() {
 - Hours: ${firstDay.dayOfWeek}–${lastDay.dayOfWeek}, ${to12h(firstDay.opens)} to ${to12h(firstDay.closes)}; Sunday closed
 - Service areas: ${serviceAreas.join(", ")}, TX
 - In business since: ${established}
+- License: ${businessInfo.license.type}, ${businessInfo.license.issuer} (${businessInfo.license.issuerShort}) Lic. #${businessInfo.license.number}. Verify at ${businessInfo.license.verifyUrl}
 - Book online: ${website}/book-appointment
 - Google Maps: ${businessInfo.mapsUrl}
 

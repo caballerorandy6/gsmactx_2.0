@@ -44,6 +44,15 @@ export const businessInfo = {
     // Confirmed by the user 2026-11-14; owner will update hours on Yelp
     { name: "Yelp", href: "https://www.yelp.com/biz/gsm-air-conditioning-cypress" },
   ],
+  // State license from the TDLR card (photo shared by the owner 2026-11-13)
+  license: {
+    number: "TACLB166148E",
+    type: "Air Conditioning & Refrigeration Contractor",
+    issuer: "Texas Department of Licensing and Regulation",
+    issuerShort: "TDLR",
+    issuerUrl: "https://www.tdlr.texas.gov",
+    verifyUrl: "https://www.tdlr.texas.gov/LicenseSearch/",
+  },
   // Older Facebook page ("GSM AC TX"), still the company's; schema only
   legacyFacebook: "https://www.facebook.com/gsmactx/",
 

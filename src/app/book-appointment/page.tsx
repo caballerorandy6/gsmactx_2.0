@@ -75,7 +75,10 @@ const BookAppointmentPage = async ({ searchParams }: BookAppointmentPageProps) =
           <div className="flex flex-wrap justify-center gap-6 mb-12">
             <div className="flex items-center gap-2 text-gray-300">
               <ShieldCheckIcon className="h-5 w-5 text-green-400" />
-              <span className="text-sm">Licensed & Insured</span>
+              <span className="text-sm">
+                Licensed & Insured · {businessInfo.license.issuerShort} Lic. #
+                {businessInfo.license.number}
+              </span>
             </div>
             <div className="flex items-center gap-2 text-gray-300">
               <ClockIcon className="h-5 w-5 text-primary-400" />
