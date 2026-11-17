@@ -163,6 +163,9 @@ export default function HeroClient({ ratingSlot }: HeroClientProps) {
             style={{ "--hero-delay": "400ms" } as CSSProperties}
           >
             Serving the Houston area since {businessInfo.established} · Licensed & Insured
+            <span className="whitespace-nowrap">
+              {" "}· {businessInfo.license.issuerShort} Lic. #{businessInfo.license.number}
+            </span>
           </p>
         </div>
       </div>
